@@ -1,7 +1,6 @@
 ![](http://project-management.com/wp-content/uploads/2013/09/Mavenlink-Logo.jpg)
 
 ## Mavenlink API
-[![Build Status](http://travis-ci.org/einzige/mavenlink.png?branch=master)](https://travis-ci.org/einzige/mavenlink)
 [![Build Status](https://travis-ci.org/einzige/mavenlink.svg?branch=master)](https://travis-ci.org/einzige/mavenlink)
 
 Uses "ActiveRecord" style of accessing your records. You can also perform any custom request.
