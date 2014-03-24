@@ -25,6 +25,8 @@ workspace.participants(true) # flushes association cache
 workspace.reload # reloads from remote host
 workspace.title = 'new title'
 
+workspace.invite(email: 'szinin@mgail.com', full_name: 'Sergei Zinin', invitee_role: 'maven')
+
 participant = workspace.participants.first
 participant.full_name = 'new name'
 participant.save # performs "update" query now
