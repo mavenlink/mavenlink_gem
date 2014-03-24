@@ -1,9 +1,10 @@
-!()[http://project-management.com/wp-content/uploads/2013/09/Mavenlink-Logo.jpg]
+![](http://project-management.com/wp-content/uploads/2013/09/Mavenlink-Logo.jpg)
 
 ## Mavenlink API
+[![Build Status](http://travis-ci.org/einzige/mavenlink.png?branch=master)](https://travis-ci.org/einzige/mavenlink)
 
 Uses "ActiveRecord" style of accessing your records. You can also perform any custom request.
-Utilizes (Brainstem API Adaptor gem)[http://github.com/einzige/brainstem-ruby]
+Utilizes [Brainstem API Adaptor gem](http://github.com/einzige/brainstem-ruby)
 See (Specification first)[lib/config/specification.yml]
 
 ### Style #1
@@ -19,8 +20,14 @@ workspace.save # will call "create" and store record in Mavenlink db
 
 workspace.participants # will return participants, will do http API call if not "included"
 workspace.participants # now it returns cached value
+workspace.participants.first # returns Mavenlink::User record
 workspace.participants(true) # flushes association cache
 workspace.reload # reloads from remote host
+workspace.title = 'new title'
+
+participant = workspace.participants.first
+participant.full_name = 'new name'
+participant.save # performs "update" query now
 
 # same thing...
 Mavenlink::Workspace.create(title: 'new workspace')
