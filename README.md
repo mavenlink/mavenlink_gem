@@ -36,7 +36,7 @@ Mavenlink::Workspace.find(9)
 
 Mavenlink::Workspace.scoped.include(:participants).search('Sergei Workspace') # similar to activerecord scope...
 
-Mavenlink::Workspace.scoped.search('Sergei Workspace').each do |workspace|
+Mavenlink::Workspace.scoped.search('Sergei Workspace').order(:updated_at, :desc).each do |workspace|
   if workspace.valid?
     workspace.destroy
   end
@@ -60,7 +60,7 @@ client.workspaces.include('participants', 'creator')
 client.workspaces.include(['participants', 'creator'])
 client.workspaces.include(:participants, :creator)
 
-client.workspaces.find(2) # Returns one BrainstemAdaptor::Record
+client.workspaces.find(2) # Returns one Mavenlink::Workspace
 
 client.workspaces      # Returns sort of "active record relation collection"
 client.workspaces.to_a # Same as calling #to_a on activerecord scope
