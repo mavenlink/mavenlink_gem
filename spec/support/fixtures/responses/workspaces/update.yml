@@ -1,0 +1,45 @@
+---
+collection: 'workspaces'
+name: 'update'
+request:
+  uri: 'https://api.mavenlink.com/api/v1/workspaces/4894095'
+  method: 'put'
+  params:
+    workspace:
+      title: 'I just changed the title'
+response:
+  count: 1
+  workspaces:
+    '4894095':
+      title: I just changed the title
+      archived: false
+      description: ''
+      effective_due_date: ''
+      budgeted: true
+      change_orders_enabled: true
+      updated_at: '2014-03-23T01:49:31-07:00'
+      created_at: '2014-03-23T00:42:56-07:00'
+      consultant_role_name: Consultants
+      client_role_name: Clients
+      can_create_line_items: true
+      default_rate:
+      currency_symbol: $
+      currency_base_unit: 100
+      can_invite: true
+      has_budget_access: true
+      price: TBD
+      price_in_cents:
+      budget_used: $0
+      over_budget: false
+      currency: USD
+      status:
+        color: grey
+        message: Not Started
+      permissions:
+        can_upload_files: true
+        can_private_message: true
+      id: '4894095'
+      creator_id: '4576975'
+  results:
+  - key: workspaces
+    id: '4894095'

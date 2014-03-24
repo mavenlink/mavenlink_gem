@@ -1,4 +1,4 @@
 source 'http://rubygems.org'
 gemspec
-gem 'brainstem-adaptor', path: '/Users/szinin/git/brainstem-ruby'
+gem 'brainstem-adaptor', github: 'einzige/brainstem-ruby', branch: 'master'
 gem 'rake'

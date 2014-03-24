@@ -19,7 +19,15 @@ Gem::Specification.new do |s|
   s.summary = %q{Mavenlink API}
 
   # s.add_dependency 'brainstem-ruby' or 'brainstem-adaptor'
+  s.add_runtime_dependency 'activesupport', ">= 3.0.0"
+  s.add_runtime_dependency 'activemodel'
+  s.add_runtime_dependency 'brainstem-adaptor'
+  s.add_runtime_dependency 'faraday'
+  s.add_runtime_dependency 'faraday_middleware'
+  s.add_runtime_dependency 'memoist'
   s.add_development_dependency 'rspec'
+  s.add_development_dependency 'shoulda-matchers'
+  s.add_development_dependency 'awesome_print'
 end
 
 

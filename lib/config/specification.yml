@@ -1,0 +1,220 @@
+---
+assignments:
+  attributes:
+    - id # the unique identifier for this assignment object
+    - created_at # the date the assignment was recorded in Mavenlink
+    - updated_at # the date the assignment was last updated
+    - current # whether or not the assignment is active
+    - estimated_minutes # a user defined number of minutes that the user is expected to work on this story (task)
+    - allocated_minutes # the calculated sum of the assignment's Story Allocation Day minutes
+    - story_id # the id of the Story (Task) that owns the assignment
+    - assignee_id # the id of the user who owns the assignment
+    - story_allocation_day_ids # the ids of Story Allocation Days belonging to the assignment
+  create_attributes:
+    - story_id # (required) the ID of the Story for which the assignment will be created
+    - assignee_id # (required) the ID of the User for which the assignment will be created
+    - current # (optional) whether the assignment is active or not
+    - estimated_minutes # (optional) the number of minutes that the user is expected to work on this story
+  update_attributes:
+    - current
+    - estimated_minutes
+  associations:
+    # story - when included, the story_id will reference the story for which the assignment belongs
+    # assignee - when included, the assignee_id will reference the user for which the assignment belongs
+    # story_allocation_days - when included, the story_allocation_day_ids array will reference all of the
+    # Story Allocation Days that belong to the assignment.
+    # Including story allocation days requires the request to be filtered with the plannable filter
+    story:
+      foreign_key: story_id
+      collection: stories
+    assignee:
+      foreign_key: assignee_id
+      collection: users
+    story_allocation_days:
+      foreign_key: story_allocation_day_ids
+      collection: story_allocation_days
+
+roles: # TODO(SZ): find it out
+
+stories: # tasks
+  associations:
+    # workspace - the workspace (project) that owns this story, returned in the workspaces top-level key
+    # parent - when you include this association, stories that are sub-stories will have a parent_id key referencing their parent story in the stories top-level key
+    # assignees - an array of User IDs called assignee_ids that contains the users assigned to this story, returned in the users top-level key
+    # sub_stories - sub-stories of this story, returned in the stories top-level key; stories will contain a sub_story_ids array
+    # tags - an array of Tag IDs returned in the tags top-level key; stories will contain a tag_ids array
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    parent:
+      foreign_key: parent_id
+      collection: stories
+    assignees:
+      foreign_key: assignee_ids
+      collection: users
+    sub_stories:
+      foreign_key: sub_story_ids
+      collection: stories
+    # tags: NOTE(SZ) moved in read-only attributes
+    #   foreign_key: tag_ids
+
+  attributes:
+    - id # the internal story id
+    - workspace_id # the internal id for the workspace of the story
+    - parent_id # the internal story id of a story's parent story (only for sub-stories)
+    - title # the title of the story
+    - description # a user provided description of the story
+    - story_type # the story's type (task, deliverable, or milestone)
+    - state # the current state of the story (started, not started, or completed)
+    - position # a number corresponding to the story's order relative to all other stories
+    - archived # the archived status of the story (true of false)
+    - deleted_at # the date the story was deleted
+    - updated_at # the date the story was last updated
+    - created_at # the date the story was created in Mavenlink
+    - due_date # the due date given to the story
+    - start_date # the start date given to the story
+    - sub_story_count # the number of sub-stories under this story
+    - budget_estimate_in_cents # the budget for the story in cents (integer). Only present if the Workspace has budgets enabled and the authenticated user can view budget information.
+    - sub_stories_budget_estimate_in_cents # the budget for the sub-stories in cents (integer). Only present if the Workspace has budgets enabled and the authenticated user can view budget information.
+    - budget_used_in_cents # the value of all time entries logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view budget information.
+    - sub_stories_budget_used_in_cents # the value of all sub-stories' time entries logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view budget information.
+    - time_estimate_in_minutes # the time estimate for the story in minutes (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
+    - sub_stories_time_estimate_in_minutes # the time estimate for the sub-stories in minutes (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
+    - logged_billable_time_in_minutes # the sum of all billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
+    - sub_stories_billable_time_in_minutes # the sum of all sub-stories' billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
+    - logged_nonbillable_time_in_minutes # the sum of all non-billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
+    - tag_ids
+  create_attributes:
+    - title # (required) the title of the story # max 200 characters
+    - story_type # (required) the type of the story: task, deliverable, or milestone
+    - workspace_id # (required) the ID of the Workspace in which the story will be created
+    - description # (optional) a description of the new story # max 1000 characters
+    - parent_id # (optional) represents the parent of this story, making this a sub-story
+    - start_date # (optional) the date the story should be started; format should look like YYYY-MM-DD
+    - archived # (optional) the archived status of the story (true or false)
+    - due_date # (optional) the date the story is due; format should look like YYYY-MM-DD
+    - assignees # (optional) an array of User IDs that the new story should be assigned to
+    - budget_estimate_in_cents # (optional) the budget in cents of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
+    - time_estimate_in_minutes # (optional) the time estimate in minutes of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
+    - tag_list # (optional) a comma separated String of tags
+  update_attributes:
+    - title
+    - description
+    - story_type
+    - state
+    - position
+    - archived
+    - deleted_at
+    - updated_at
+    - created_at
+    - due_date
+    - start_date
+    - sub_story_count
+    - budget_estimate_in_cents
+    - sub_stories_budget_estimate_in_cents
+    - budget_used_in_cents
+    - sub_stories_budget_used_in_cents
+    - time_estimate_in_minutes
+    - sub_stories_time_estimate_in_minutes
+    - logged_billable_time_in_minutes
+    - sub_stories_billable_time_in_minutes
+    - logged_nonbillable_time_in_minutes
+
+story_allocation_days:
+  attributes:
+    - id # the unique identifier for this story allocation day object
+    - updated_at # the date the story allocation day was last updated
+    - date # the date of the story allocation day
+    - minutes # the minutes allocated to the story allocation day
+    - current # a calculated attribute that indicates whether or not the story allocation day's assignment is active
+    - assignment_id # the id of the assignment that owns the story allocation day
+    - story_id # the id of the story who owns the story allocation day's assignment
+    - workspace_id # the id of the workspace who owns the story allocation day's assignment
+  create_attributes:
+    - assignment_id # required
+    - date # required
+    - minutes # required
+  update_attributes:
+    - minutes
+  associations:
+    # assignment - when included, the assignment_id will reference the assignment for which the story allocation day belongs
+    # story - when included, the story_id will reference the story for which the story allocation day belongs
+    # workspace - when included, the workspace_id will reference the workspace for which the story allocation day belongs
+    assignment:
+      foreign_key: assignment_id
+      collection: assignments
+    story:
+      foreign_key: story_id
+      collection: stories
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+
+users:
+  attributes:
+    - user_id       # the internal ID of the user
+    - full_name     # the full name of the user
+    - photo_path    # the full url to the user's thumbnail
+    - email_address # the user's primary email address
+    - headline      # the short description of the user as found in the user's profile
+  associations:
+    role:
+      foreign_key: role_id
+      collection: roles
+
+workspaces:
+  associations:
+    primary_counterpart:
+      foreign_key: primary_counterpart_id
+      collection: users
+    participants:
+      foreign_key: participant_ids
+      collection: users
+    creator:
+      foreign_key: creator_id
+      collection: users
+    workspace_groups:
+      foreign_key: workspace_group_ids
+      collection: workspace_groups
+  attributes:
+    - id # the internal expense ID
+    - title # the title of the project
+    - archived # whether the project is archived
+    - description # the description of the project
+    - effective_due_date # effective due date of the project
+    - budgeted # whether the project is budgeted
+    - change_orders_enabled # whether change orders are enabled in the project
+    - updated_at # the date the project was last updated
+    - created_at # the date the project was created
+    - consultant_role_name # the name of the provider role for the project
+    - client_role_name # the name of the customer role for the project
+    - can_create_line_items # whether you can create line items in this workspace
+    - default_rate # the default billing rate for this project
+    - currency_symbol # the currency symbol of the currency of this project
+    - currency_base_unit # the currency base unit of the currency of this project (i.e. USD is 100)
+    - can_invite # whether you can invite others to the workspace
+    - has_budget_access # whether you have budget access in this project
+    - price # the budget for this project, only included if the current user has financial access in the workspace
+    - price_in_cents # the project budget in cents, only included if the current user has financial access in the workspace
+    - budget_used # the amount of the project budget already burned, only included if the current user has financial access in the workspace
+    - over_budget # whether the project is over budget, only included if the current user has financial access in the workspace
+    - currency # the currency of the project, only included if the current user has financial access in the workspace
+  create_attributes:
+    - title
+    - creator_role
+    - budgeted
+    - description
+    - currency
+    - price
+    - due_date
+    - change_orders
+    - consultant_role_name
+    - client_role_name
+    - access_level
+    - project_tracker_template_id
+  update_attributes:
+    - title
+    - budgeted
+    - description
+    - archived
+    - access_level

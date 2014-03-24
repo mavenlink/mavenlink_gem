@@ -1,0 +1,55 @@
+---
+collection: 'workspaces'
+name: 'update'
+request:
+  uri: 'https://api.mavenlink.com/api/v1/workspaces/4894095'
+  method: 'get'
+response:
+  count: 1
+  workspaces:
+    '4894095':
+      title: Changed Title via API
+      archived: false
+      description: ''
+      effective_due_date: ''
+      budgeted: true
+      change_orders_enabled: true
+      updated_at: '2014-03-23T00:54:20-07:00'
+      created_at: '2014-03-23T00:42:56-07:00'
+      consultant_role_name: Consultants
+      client_role_name: Clients
+      can_create_line_items: true
+      default_rate:
+      currency_symbol: $
+      currency_base_unit: 100
+      can_invite: true
+      has_budget_access: true
+      price: TBD
+      price_in_cents:
+      budget_used: $0
+      over_budget: false
+      currency: USD
+      status:
+        color: grey
+        message: Not Started
+      permissions:
+        can_upload_files: true
+        can_private_message: true
+      id: '4894095'
+      creator_id: '4576975'
+      primary_counterpart_id:
+      participant_ids:
+      - '4576975'
+      workspace_group_ids: []
+  results:
+  - key: workspaces
+    id: '4894095'
+  users:
+    '4576975':
+      full_name: Sergei Zinin
+      photo_path: https://app.mavenlink.com/images/default_profile_photo/default.png
+      email_address: szinin@gmail.com
+      headline:
+      account_id: 2953995
+      id: '4576975'
+  workspace_groups: {}
