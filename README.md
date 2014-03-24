@@ -2,6 +2,7 @@
 
 ## Mavenlink API
 [![Build Status](http://travis-ci.org/einzige/mavenlink.png?branch=master)](https://travis-ci.org/einzige/mavenlink)
+[![Build Status](https://travis-ci.org/einzige/mavenlink.svg?branch=master)](https://travis-ci.org/einzige/mavenlink)
 
 Uses "ActiveRecord" style of accessing your records. You can also perform any custom request.
 Utilizes [Brainstem API Adaptor gem](http://github.com/einzige/brainstem-ruby)
