@@ -1,8 +1,5 @@
 module Mavenlink
   class Model < BrainstemAdaptor::Record
-    extend Memoist
-
-    include Memoist::InstanceMethods
     include ActiveModel::Validations
 
     # Sets collection name
@@ -158,7 +155,6 @@ module Mavenlink
       response ||= request.find(id).try(:response) or raise RecordNotFoundError.new(request)
       @id ||= response.results.first.try(:[], 'id')
       load_fields_with(response)
-      unmemoize_all # memoist gem
       self
     end
 

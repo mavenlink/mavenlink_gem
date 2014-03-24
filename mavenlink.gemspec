@@ -24,7 +24,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'brainstem-adaptor'
   s.add_runtime_dependency 'faraday'
   s.add_runtime_dependency 'faraday_middleware'
-  s.add_runtime_dependency 'memoist'
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'shoulda-matchers'
   s.add_development_dependency 'awesome_print'
