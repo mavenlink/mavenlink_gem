@@ -5,7 +5,7 @@
 
 Uses "ActiveRecord" style of accessing your records. You can also perform any custom request.
 Utilizes [Brainstem API Adaptor gem](http://github.com/einzige/brainstem-ruby)
-See (Specification first)[lib/config/specification.yml]
+See [Specification first](lib/config/specification.yml)
 
 ### Style #1
 
