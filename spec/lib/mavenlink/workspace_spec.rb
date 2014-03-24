@@ -22,15 +22,8 @@ describe Mavenlink::Workspace, stub_requests: true do
 
   describe 'validations' do
     it { should validate_presence_of :title }
-    it { should_not ensure_inclusion_of(:creator_role).in_array(%w[maven buyer]) }
-
-    context 'persisted record' do
-      subject { described_class.new(id: '12') }
-
-      it { should validate_presence_of :title }
-      it { should ensure_inclusion_of(:creator_role).in_array(%w[maven buyer]) }
-      it { should allow_value(nil).for(:creator_role) }
-    end
+    it { should ensure_inclusion_of(:creator_role).in_array(%w[maven buyer]) }
+    it { should_not allow_value(nil).for(:creator_role) }
   end
 
   describe 'class methods' do
@@ -176,7 +169,7 @@ describe Mavenlink::Workspace, stub_requests: true do
       end
 
       context 'valid record' do
-        subject { model.new(title: 'New workspace title') }
+        subject { model.new(title: 'New workspace title', creator_role: 'maven') }
 
         specify do
           expect(subject.save).to be_true
