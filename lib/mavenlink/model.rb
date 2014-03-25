@@ -45,6 +45,19 @@ module Mavenlink
       (model_class.specification['associations'] || {}).keys.each do |association_name|
         model_class.association association_name
       end
+
+      # Declare validations (REFACTOR)
+      to_validation_options = -> (options) {
+        if options.is_a?(Hash)
+          options.symbolize_keys!
+          options.keys.each { |key| to_validation_options.call(options[key]) }
+        end
+        options
+      }
+
+      (model_class.specification['validations'] || {}).each do |field, options|
+        model_class.validates field, to_validation_options.call(options)
+      end
     end
 
     # Returns all models registered in the app

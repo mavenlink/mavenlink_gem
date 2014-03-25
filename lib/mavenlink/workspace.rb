@@ -1,7 +1,5 @@
 module Mavenlink
   class Workspace < Model
-    validates :title, presence: true
-    validates :creator_role, inclusion: {in: %w(maven buyer)}
     # validates :due_date, format: 'YYYY-MM-DD'
     # ...
 
