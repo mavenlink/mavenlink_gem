@@ -26,7 +26,7 @@ describe Mavenlink::Workspace, stub_requests: true do
   describe 'validations' do
     it { should validate_presence_of :title }
     it { should ensure_inclusion_of(:creator_role).in_array(%w[maven buyer]) }
-    it { should_not allow_value(nil).for(:creator_role) }
+    it { should allow_value(nil).for(:creator_role) }
   end
 
   describe 'class methods' do

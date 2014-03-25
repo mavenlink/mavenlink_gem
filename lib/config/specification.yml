@@ -171,6 +171,7 @@ workspaces:
         in:
           - maven
           - buyer
+        allow_blank: true
   associations:
     primary_counterpart:
       foreign_key: primary_counterpart_id
