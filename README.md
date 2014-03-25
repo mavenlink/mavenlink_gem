@@ -3,6 +3,11 @@
 ## Mavenlink API
 [![Build Status](https://travis-ci.org/einzige/mavenlink.svg?branch=master)](https://travis-ci.org/einzige/mavenlink)
 
+Use console FTW. Just run `bundle exec foreman run rake console`. Pretty handy stuff:
+![http://img-fotki.yandex.ru/get/9803/14651338.3/0_c4b57_95051af0_orig](http://img-fotki.yandex.ru/get/9803/14651338.3/0_c4b57_95051af0_orig)
+
+Use Guard FTW. `bundle exec guard start`.
+
 Uses "ActiveRecord" style of accessing your records. You can also perform any custom request.
 Utilizes [Brainstem API Adaptor gem](http://github.com/einzige/brainstem-ruby)
 See [Specification first](lib/config/specification.yml)
