@@ -55,8 +55,8 @@ module Mavenlink
         options
       }
 
-      (model_class.specification['validations'] || {}).each do |field, options|
-        model_class.validates field, to_validation_options.call(options)
+      (model_class.specification['validations'] || []).each do |field_rules|
+        model_class.validates *field_rules.keys.first, to_validation_options.call(field_rules.values.first)
       end
     end
 
@@ -175,7 +175,7 @@ module Mavenlink
     # @param context [:create, :update]
     # @return [true, false]
     def valid?(context = saving_context)
-      super
+      super(context.try(:to_sym))
     end
 
     protected

@@ -164,14 +164,18 @@ users:
 
 workspaces:
   validations:
-    title:
-      presence: true
-    creator_role:
-      inclusion:
-        in:
-          - maven
-          - buyer
-        allow_blank: true
+    - title:
+        presence: true
+    - creator_role:
+        'on': update
+        inclusion:
+          in: [maven, buyer]
+          allow_blank: true
+    - creator_role:
+        'on': create
+        inclusion:
+          in: [maven, buyer]
+          allow_blank: false
   associations:
     primary_counterpart:
       foreign_key: primary_counterpart_id
