@@ -18,6 +18,9 @@ shared_context 'stubbed requests', stub_requests: true do
   end
 end
 
+Mavenlink.logger = Mavenlink::Logger.new(STDOUT)
+Mavenlink.logger.level = Logger::INFO
+
 RSpec.configure do |config|
   config.mock_with :rspec
   config.color_enabled = true
