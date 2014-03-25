@@ -31,6 +31,14 @@ module Mavenlink
     Mavenlink::Settings[:default]
   end
 
+  def self.logger
+    @logger ||= Mavenlink::Logger.new(nil)
+  end
+
+  def self.logger=(value)
+    @logger = value
+  end
+
   # @param token [String]
   def self.oauth_token=(token)
     default_settings[:oauth_token] = token
@@ -56,6 +64,7 @@ require 'mavenlink/record_locked_error'
 require 'mavenlink/request'
 require 'mavenlink/response'
 require 'mavenlink/client'
+require 'mavenlink/logger'
 require 'mavenlink/concerns/indestructible'
 require 'mavenlink/concerns/locked_record'
 require 'mavenlink/model'

@@ -284,7 +284,7 @@ describe Mavenlink::Request, stub_requests: true do
 
   describe '#inspect' do
     specify do
-      expect(request.inspect).to eq("#<Mavenlink::Request [{\"title\"=>\"My new project\"}, {\"title\"=>\"My second project\"}]>")
+      expect(request.inspect).to eq('#<Mavenlink::Request [<Mavenlink::Workspace:>, <Mavenlink::Workspace:>]>')
     end
   end
 end

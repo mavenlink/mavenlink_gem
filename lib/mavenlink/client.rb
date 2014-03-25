@@ -32,6 +32,7 @@ module Mavenlink
     # @param [String] path
     # @param [Hash] arguments
     def get(path, arguments = {})
+      Mavenlink.logger.note "Started GET /#{path} with #{arguments.inspect}"
       perform_request { connection.get(path, arguments).body }
     end
 
@@ -39,6 +40,7 @@ module Mavenlink
     # @param [String] path
     # @param [Hash] arguments
     def post(path, arguments = {})
+      Mavenlink.logger.note "Started POST /#{path} with #{arguments.inspect}"
       perform_request { connection.post(path, arguments).body }
     end
 
@@ -46,6 +48,7 @@ module Mavenlink
     # @param [String] path
     # @param [Hash] arguments
     def put(path, arguments = {})
+      Mavenlink.logger.note "Started PUT /#{path} with #{arguments.inspect}"
       perform_request { connection.put(path, arguments).body }
     end
 
@@ -53,6 +56,7 @@ module Mavenlink
     # @param [String] path
     # @param [Hash] arguments
     def delete(path, arguments = {})
+      Mavenlink.logger.note "Started DELETE /#{path} with #{arguments.inspect}"
       perform_request { connection.delete(path, arguments).body }
     end
 
@@ -71,7 +75,14 @@ module Mavenlink
 
     def perform_request
       yield.tap do |response|
-        raise InvalidRequestError.new(response) if response['errors']
+        if response['errors']
+          Mavenlink.logger.disappointment 'REQUEST FAILED:'
+          Mavenlink.logger.inspection response['errors']
+          raise InvalidRequestError.new(response)
+        else
+          Mavenlink.logger.whisper 'Received response:'
+          Mavenlink.logger.inspection response
+        end
       end
     end
   end

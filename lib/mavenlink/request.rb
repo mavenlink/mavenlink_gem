@@ -157,9 +157,7 @@ module Mavenlink
     # @see https://github.com/rails/rails/blob/682d7c7035fed76c42ba6fefa38973387e80409e/activerecord/lib/active_record/relation.rb#L572
     # @return [String]
     def inspect
-      entries = to_a.take([scope[:limit], scope[:per_page], 11].compact.min).map!(&:inspect)
-      entries[10] = '...' if entries.size == 11
-
+      entries = to_a.map { |e| "<#{e.class.name}:#{e['id']}>" }
       "#<#{self.class.name} [#{entries.join(', ')}]>"
     end
 
