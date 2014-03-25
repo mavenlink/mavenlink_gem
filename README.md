@@ -3,7 +3,9 @@
 ## Mavenlink API
 [![Build Status](https://travis-ci.org/einzige/mavenlink.svg?branch=master)](https://travis-ci.org/einzige/mavenlink)
 
-Use console FTW. Just run `bundle exec foreman run rake console`. Pretty handy stuff:
+Use console FTW. Just run `bundle exec foreman run rake console` or `TOKEN=your_oauth_token bundle exec rake console`
+
+Pretty handy stuff:
 ![http://img-fotki.yandex.ru/get/9803/14651338.3/0_c4b57_95051af0_orig](http://img-fotki.yandex.ru/get/9803/14651338.3/0_c4b57_95051af0_orig)
 
 Use Guard FTW. `bundle exec guard start`.
