@@ -6,5 +6,6 @@ coverage
 .ruby-version
 .rvmrc
 .idea
+.env
 Gemfile.lock
 

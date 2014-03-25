@@ -1,6 +1,7 @@
 module Mavenlink
   module Concerns
     module LockedRecord
+      include Indestructible
       extend ActiveSupport::Concern
 
       included do
@@ -13,11 +14,6 @@ module Mavenlink
       # @overload
       def save
         raise RecordLockedError, 'The model is locked and cannot be changed'
-      end
-
-      # @overload
-      def destroy
-        raise RecordLockedError, 'The model is locked and cannot be deleted'
       end
 
       # @overload

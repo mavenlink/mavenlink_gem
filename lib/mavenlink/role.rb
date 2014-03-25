@@ -1,5 +1,5 @@
 module Mavenlink
-  class Role < Model
+  class Role < Model # TODO(SZ): remove
     include Concerns::LockedRecord
   end
 end

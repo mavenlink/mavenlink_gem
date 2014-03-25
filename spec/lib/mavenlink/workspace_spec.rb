@@ -3,6 +3,9 @@ require 'spec_helper'
 describe Mavenlink::Workspace, stub_requests: true do
   let(:model) { described_class }
 
+  it { should be_a Mavenlink::Model }
+  it { should be_a Mavenlink::Concerns::Indestructible }
+
   let(:response) {
     {
       'count' => 1,
@@ -186,7 +189,7 @@ describe Mavenlink::Workspace, stub_requests: true do
     # NOTE(SZ) missing specs
     # ... pending do ...
     specify do
-      expect { model.new(id: '4').destroy }.not_to raise_error
+      expect { model.new(id: '4').destroy }.to raise_error Mavenlink::RecordLockedError, /locked.*deleted/
     end
   end
 end

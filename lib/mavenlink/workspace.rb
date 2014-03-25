@@ -1,5 +1,7 @@
 module Mavenlink
   class Workspace < Model
+    include Concerns::Indestructible
+
     # validates :due_date, format: 'YYYY-MM-DD'
     # ...
 
