@@ -47,7 +47,7 @@ module Mavenlink
       end
 
       # Declare validations (REFACTOR)
-      to_validation_options = -> (options) {
+      to_validation_options = lambda { |options|
         if options.is_a?(Hash)
           options.symbolize_keys!
           options.keys.each { |key| to_validation_options.call(options[key]) }
