@@ -35,7 +35,7 @@ describe Mavenlink::Workspace, stub_requests: true do
       subject { described_class.new(id: 12) }
       it { should be_persisted }
       it { should validate_presence_of :title }
-      it { should ensure_inclusion_of(:creator_role).in_array(%w[maven buyer]) }
+      it { should_not ensure_inclusion_of(:creator_role).in_array(%w[maven buyer]) }
       it { should allow_value(nil).for(:creator_role) }
     end
   end

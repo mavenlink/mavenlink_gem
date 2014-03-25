@@ -167,11 +167,6 @@ workspaces:
     - title:
         presence: true
     - creator_role:
-        'on': update
-        inclusion:
-          in: [maven, buyer]
-          allow_blank: true
-    - creator_role:
         'on': create
         inclusion:
           in: [maven, buyer]
