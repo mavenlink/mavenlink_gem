@@ -16,10 +16,21 @@ describe Mavenlink::Workspace, stub_requests: true do
     }
   }
 
+  let(:updated_response) {
+    {
+      'count' => 1,
+      'results' => [{'key' => 'workspaces', 'id' => '7'}],
+      'workspaces' => {
+        '7' => {'title' => 'Updated project', 'id' => '7'}
+      }
+    }
+  }
+
   before do
     stub_request :get,    '/api/v1/workspaces?only=7', response
     stub_request :get,    '/api/v1/workspaces?only=8', {'count' => 0, 'results' => []}
     stub_request :post,   '/api/v1/workspaces', response
+    stub_request :put,    '/api/v1/workspaces', updated_response
     stub_request :delete, '/api/v1/workspaces/4', {'count' => 0, 'results' => []} # TODO: replace with real one
   end
 
@@ -65,6 +76,50 @@ describe Mavenlink::Workspace, stub_requests: true do
       end
     end
 
+    describe '.create' do
+      context 'valid record' do
+        specify do
+          expect(model.create(title: 'Some title', creator_role: 'maven')).to be_a model
+        end
+
+        specify do
+          expect(model.create(title: 'Some title', creator_role: 'maven')).to be_valid
+        end
+
+        specify do
+          expect(model.create(title: 'Some title', creator_role: 'maven')).to be_persisted
+        end
+      end
+
+      context 'invalid record' do
+        specify do
+          expect(model.create(title: '', creator_role: '')).to be_a model
+        end
+
+        specify do
+          expect(model.create(title: '', creator_role: '')).not_to be_valid
+        end
+
+        specify do
+          expect(model.create(title: '', creator_role: '')).to be_a_new_record
+        end
+      end
+    end
+
+    describe '.create!' do
+      context 'valid record' do
+        specify do
+          expect { model.create!(title: 'Some title', creator_role: 'maven') }.not_to raise_error
+        end
+      end
+
+      context 'invalid record' do
+        specify do
+          expect { model.create!(title: '', creator_role: '') }.to raise_error Mavenlink::RecordInvalidError, /Title.*blank.*Creator.*included/
+        end
+      end
+    end
+
     describe '.models' do
       specify do
         expect(model.models).to be_empty
@@ -84,7 +139,7 @@ describe Mavenlink::Workspace, stub_requests: true do
         expect(model.specification).not_to be_empty
       end
     end
-    
+
     describe '.attributes' do
       specify do
         expect(model.attributes).to be_an Array
@@ -173,24 +228,150 @@ describe Mavenlink::Workspace, stub_requests: true do
   end
 
   describe '#save' do
-    context 'new record' do
-      subject { model.new }
+    context 'valid record' do
+      context 'new record' do
+        subject { model.new(title: 'Some title', creator_role: 'maven') }
 
-      context 'invalid record' do
         specify do
-          expect(subject.save).to be_false
+          expect(subject.save).to eq(true)
         end
-      end
-
-      context 'valid record' do
-        subject { model.new(title: 'New workspace title', creator_role: 'maven') }
 
         specify do
-          expect(subject.save).to be_true
+          expect { subject.save }.to change(subject, :persisted?).from(false).to(true)
         end
 
         it 'reloads record fields taking it from response' do
-          expect { subject.save }.to change { subject.title }.from('New workspace title').to('My new project')
+          expect { subject.save }.to change { subject.title }.from('Some title').to('My new project')
+        end
+      end
+
+      context 'persisted record' do
+        subject { model.create(title: 'Some title', creator_role: 'maven') }
+
+        it { should be_persisted }
+
+        specify do
+          expect(subject.save).to eq(true)
+        end
+
+        specify do
+          expect { subject.save }.not_to change(subject, :persisted?)
+        end
+
+        it 'reloads record fields taking it from response' do
+          expect { subject.save }.to change { subject.title }.from('My new project').to('Updated project')
+        end
+      end
+    end
+
+    context 'invalid record' do
+      context 'new record' do
+        subject { model.new(title: '', creator_role: '') }
+
+        specify do
+          expect(subject.save).to eq(false)
+        end
+
+        specify do
+          expect { subject.save }.not_to change(subject, :persisted?)
+        end
+
+        it 'does not perform any requests' do
+          expect { subject.save }.not_to change { subject.title }
+        end
+      end
+
+      context 'persisted record' do
+        subject { model.create(title: 'Some title', creator_role: 'maven') }
+        before { subject.title = '' }
+
+        it { should be_persisted }
+
+        specify do
+          expect(subject.save).to eq(false)
+        end
+
+        specify do
+          expect { subject.save }.not_to change(subject, :persisted?)
+        end
+
+        it 'does not change anything' do
+          expect { subject.save }.not_to change { subject.title }
+        end
+      end
+    end
+  end
+
+  describe '#save!' do
+    context 'valid record' do
+      context 'new record' do
+        subject { model.new(title: 'Some title', creator_role: 'maven') }
+
+        specify do
+          expect(subject.save!).to eq(true)
+        end
+
+        specify do
+          expect { subject.save! }.to change(subject, :persisted?).from(false).to(true)
+        end
+
+        it 'reloads record fields taking it from response' do
+          expect { subject.save! }.to change { subject.title }.from('Some title').to('My new project')
+        end
+      end
+
+      context 'persisted record' do
+        subject { model.create(title: 'Some title', creator_role: 'maven') }
+
+        it { should be_persisted }
+
+        specify do
+          expect(subject.save!).to eq(true)
+        end
+
+        specify do
+          expect { subject.save! }.not_to change(subject, :persisted?)
+        end
+
+        it 'reloads record fields taking it from response' do
+          expect { subject.save! }.to change { subject.title }.from('My new project').to('Updated project')
+        end
+      end
+    end
+
+    context 'invalid record' do
+      context 'new record' do
+        subject { model.new(title: '', creator_role: '') }
+
+        specify do
+          expect { subject.save! }.to raise_error Mavenlink::RecordInvalidError, /Title.*blank.*Creator.*included/
+        end
+
+        specify do
+          expect { subject.save! rescue nil }.not_to change(subject, :persisted?)
+        end
+
+        it 'does not perform any requests' do
+          expect { subject.save! rescue nil }.not_to change { subject.title }
+        end
+      end
+
+      context 'persisted record' do
+        subject { model.create(title: 'Some title', creator_role: 'maven') }
+        before { subject.title = '' }
+
+        it { should be_persisted }
+
+        specify do
+          expect { subject.save! }.to raise_error Mavenlink::RecordInvalidError, /Title.*blank/
+        end
+
+        specify do
+          expect { subject.save! rescue nil }.not_to change(subject, :persisted?)
+        end
+
+        it 'does not change anything' do
+          expect { subject.save! rescue nil }.not_to change { subject.title }
         end
       end
     end

@@ -57,10 +57,7 @@ module Mavenlink
 end
 
 require 'mavenlink/settings'
-require 'mavenlink/error'
-require 'mavenlink/invalid_request_error'
-require 'mavenlink/record_not_found_error'
-require 'mavenlink/record_locked_error'
+require 'mavenlink/errors'
 require 'mavenlink/request'
 require 'mavenlink/response'
 require 'mavenlink/client'

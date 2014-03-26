@@ -22,6 +22,15 @@ module Mavenlink
       self.new(attributes).tap(&:save)
     end
 
+    # @raise [Mavenlink::RecordInvalidError]
+    # @param attributes [Hash]
+    # @return [Mavenlink::Model]
+    def self.create!(attributes = {})
+      create(attributes).tap do |record|
+        record.valid? or raise RecordInvalidError.new(record)
+      end
+    end
+
     # @return [Mavenlink::Request]
     def self.scoped
       Mavenlink::Request.new(collection_name)
@@ -153,6 +162,12 @@ module Mavenlink
       else
         false
       end
+    end
+
+    # @raise [Mavenlink::RecordInvalidError]
+    # @return [true]
+    def save!
+      save or raise Mavenlink::RecordInvalidError.new(self)
     end
 
     # @note does not work, don't know what to do with removed record.
