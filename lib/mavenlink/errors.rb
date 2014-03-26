@@ -5,6 +5,11 @@ module Mavenlink
   class Error < StandardError
   end
 
+  # Happens by internal reasons on server side
+  # Eg. client cannot parse response format
+  class InvalidResponseError < Error
+  end
+
   # Another generic API error idenfitying that request is invalid.
   # Eg. invalid parameters passsed in request.
   class InvalidRequestError < Error

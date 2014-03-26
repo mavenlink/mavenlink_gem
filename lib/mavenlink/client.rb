@@ -84,6 +84,8 @@ module Mavenlink
           Mavenlink.logger.inspection response
         end
       end
+    rescue Faraday::Error::ParsingError => e
+      raise Mavenlink::InvalidResponseError.new(e.message)
     end
   end
 end
