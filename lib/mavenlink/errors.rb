@@ -16,7 +16,7 @@ module Mavenlink
     attr_reader :request
 
     # @param request [Mavenlink::Request]
-    # @param message [Stirng]
+    # @param message [String]
     def initialize(request, message = request.inspect)
       @request = request
       super(message)
