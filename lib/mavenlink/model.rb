@@ -55,8 +55,8 @@ module Mavenlink
         options
       }
 
-      (model_class.specification['validations'] || []).each do |field_rules|
-        model_class.validates *field_rules.keys.first, to_validation_options.call(field_rules.values.first)
+      (model_class.specification['validations'] || {}).each do |fields, options|
+        model_class.validates(*fields, to_validation_options.call(options))
       end
     end
 
