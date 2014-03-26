@@ -30,7 +30,7 @@ describe Mavenlink::Workspace, stub_requests: true do
     stub_request :get,    '/api/v1/workspaces?only=7', response
     stub_request :get,    '/api/v1/workspaces?only=8', {'count' => 0, 'results' => []}
     stub_request :post,   '/api/v1/workspaces', response
-    stub_request :put,    '/api/v1/workspaces', updated_response
+    stub_request :put,    '/api/v1/workspaces/7', updated_response
     stub_request :delete, '/api/v1/workspaces/4', {'count' => 0, 'results' => []} # TODO: replace with real one
   end
 

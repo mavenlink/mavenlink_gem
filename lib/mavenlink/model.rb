@@ -207,7 +207,7 @@ module Mavenlink
 
     # @return [Mavenlink::Request]
     def request
-      @request ||= self.class.scoped.only(id)
+      self.class.scoped.only(id)
     end
 
     private
