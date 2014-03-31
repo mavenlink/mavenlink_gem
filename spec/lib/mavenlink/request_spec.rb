@@ -324,7 +324,7 @@ describe Mavenlink::Request, stub_requests: true do
 
   describe '#each_page' do
     specify do
-      subject.each_page.map.to_a.should == [[{"title"=>"My new project!"}, {"title"=>"My second project!"}],
+      expect(subject.each_page.to_a).to eq [[{"title"=>"My new project!"}, {"title"=>"My second project!"}],
                                             [{"title"=>"My last project!"}]]
     end
 
