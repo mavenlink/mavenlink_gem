@@ -44,6 +44,14 @@ module Mavenlink
     default_settings[:oauth_token] = token
   end
 
+  # Forces models to perform validations if true
+  # If false performs requests without running validations described in specification file
+  # Default behavior is not to validate anything
+  # @param enabled [true, false]
+  def self.perform_validations=(enabled)
+    default_settings[:perform_validations] = enabled
+  end
+
   # @param [String] version
   # @return [Api]
   def self.specification
@@ -64,6 +72,10 @@ require 'mavenlink/client'
 require 'mavenlink/logger'
 require 'mavenlink/concerns/indestructible'
 require 'mavenlink/concerns/locked_record'
+require 'mavenlink/specificators/base'
+require 'mavenlink/specificators/attribute'
+require 'mavenlink/specificators/association'
+require 'mavenlink/specificators/validation'
 require 'mavenlink/model'
 require 'mavenlink/assignment'
 require 'mavenlink/story'

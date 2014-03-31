@@ -18,6 +18,7 @@ shared_context 'stubbed requests', stub_requests: true do
   end
 end
 
+Mavenlink.perform_validations = true
 Mavenlink.logger = Mavenlink::Logger.new(STDOUT)
 Mavenlink.logger.level = Logger::INFO
 

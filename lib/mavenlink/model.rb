@@ -13,7 +13,7 @@ module Mavenlink
 
     # @return [String]
     def self.collection_name
-      @collection_name || self.name.split(/\W+/).last.tableize.pluralize
+      @collection_name || (self.name || 'undefined').split(/\W+/).last.tableize.pluralize
     end
 
     # @param attributes [Hash]
@@ -45,28 +45,10 @@ module Mavenlink
     def self.inherited(model_class)
       ::Mavenlink::Model.models[model_class.collection_name] = model_class
 
-      # Declare attribute accessors (TODO: replace with Hashie?)
-      (model_class.available_attributes).each do |attr|
-        model_class.attribute attr
-      end
-
-      # Declare relations
-      (model_class.specification['associations'] || {}).keys.each do |association_name|
-        model_class.association association_name
-      end
-
-      # Declare validations (REFACTOR)
-      to_validation_options = lambda { |options|
-        if options.is_a?(Hash)
-          options.symbolize_keys!
-          options.keys.each { |key| to_validation_options.call(options[key]) }
-        end
-        options
-      }
-
-      (model_class.specification['validations'] || {}).each do |fields, options|
-        model_class.validates(*fields, to_validation_options.call(options))
-      end
+      # Applies specification file to the model
+      Mavenlink::Specificators::Attribute.apply(model_class)
+      Mavenlink::Specificators::Association.apply(model_class)
+      Mavenlink::Specificators::Validation.apply(model_class)
     end
 
     # Returns all models registered in the app
@@ -190,7 +172,7 @@ module Mavenlink
     # @param context [:create, :update]
     # @return [true, false]
     def valid?(context = saving_context)
-      super(context.try(:to_sym))
+      Mavenlink::Settings[:default][:perform_validations] ? super(context.try(:to_sym)) : true
     end
 
     protected
