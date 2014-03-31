@@ -27,7 +27,41 @@ describe Mavenlink::Request, stub_requests: true do
     }
   }
 
+  let(:first_page) {
+    {
+      'count' => 3,
+      'results' => [{'key' => 'workspaces', 'id' => '7'}, {'key' => 'workspaces', 'id' => '9'}],
+      'workspaces' => {
+        '7' => {'title' => 'My new project!'},
+        '9' => {'title' => 'My second project!'},
+      }
+    }
+  }
+
+  let(:second_page) {
+    {
+      'count' => 3,
+      'results' => [{'key' => 'workspaces', 'id' => '10'}],
+      'workspaces' => {
+        '10' => {'title' => 'My last project!'}
+      }
+    }
+  }
+
+  let(:third_invalid_page) {
+    {
+      'count' => 3,
+      'results' => [{'key' => 'workspaces', 'id' => '11'}],
+      'workspaces' => {
+        '11' => {'title' => 'Not existed project'}
+      }
+    }
+  }
+
   before do
+    stub_request :get, '/api/v1/workspaces?page=1', first_page
+    stub_request :get, '/api/v1/workspaces?page=2', second_page
+    stub_request :get, '/api/v1/workspaces?page=3', third_invalid_page
     stub_request :get,    '/api/v1/workspaces?only=7', one_record_response
     stub_request :get,    '/api/v1/workspaces?only=8', { 'count' => 0, 'results' => [] }
     stub_request :put,    '/api/v1/workspaces/7',      one_record_response
@@ -285,6 +319,21 @@ describe Mavenlink::Request, stub_requests: true do
   describe '#inspect' do
     specify do
       expect(request.inspect).to eq('#<Mavenlink::Request [<Mavenlink::Workspace:>, <Mavenlink::Workspace:>]>')
+    end
+  end
+
+  describe '#each_page' do
+    specify do
+      subject.each_page.map.to_a.should == [[{"title"=>"My new project!"}, {"title"=>"My second project!"}],
+                                            [{"title"=>"My last project!"}]]
+    end
+
+    specify do
+      subject.each_page.to_a.flatten.tap do |records|
+        expect(records[0]).to be_a Mavenlink::Model
+        expect(records[1]).to be_a Mavenlink::Model
+        expect(records[2]).to be_a Mavenlink::Model
+      end
     end
   end
 end

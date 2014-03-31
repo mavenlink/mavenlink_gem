@@ -146,6 +146,26 @@ module Mavenlink
       results.each(&block)
     end
 
+    # Iterates through each page, similar to ActiveRecord's #find_in_batches.
+    # @todo replace with lazy enumerator for ruby 2.0
+    # @param batch_size [Integer]
+    # @return [Enumerator<Array<Mavenlink::Model>>]
+    def each_page(batch_size = 200, &block)
+      Enumerator.new do |result|
+        i = 0
+        records_passed = 0
+        request = per_page(batch_size)
+        page_records = []
+        total_count = Float::INFINITY
+
+        while (records_passed += page_records.count) < total_count
+          response = request.page(i+=1).perform
+          total_count = response.total_count
+          result << page_records = response.results
+        end
+      end.each(&block)
+    end
+
     def scoped
       self
     end

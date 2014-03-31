@@ -14,6 +14,20 @@ Uses "ActiveRecord" style of accessing your records. You can also perform any cu
 Utilizes [Brainstem API Adaptor gem](http://github.com/einzige/brainstem-ruby)
 See [Specification first](lib/config/specification.yml)
 
+### Pagination
+
+```ruby
+Mavenlink::Workspace.scoped.each_page do |page|
+  page.each do |workspace|
+    p workspace.inspect
+  end
+end
+
+Mavenlink::Workspace.scoped.each_page(200).to_a
+Mavenlink::Workspace.scoped.each_page.to_a.flatten
+Mavenlink::Workspace.scoped.each_page(2).each_with_index { |page, i| puts i.inspect }
+```
+
 ### Style #1
 
 Pretty similar to ActiveRecord. I do use ActiveModel to deal with records.
