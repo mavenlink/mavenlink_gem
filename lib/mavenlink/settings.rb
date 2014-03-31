@@ -1,6 +1,6 @@
 module Mavenlink
   class Settings < ActiveSupport::HashWithIndifferentAccess
-    DEFAULTS = {enable_validations: false}.freeze
+    DEFAULTS = {perform_validations: false}.freeze
 
     def self.[](key)
       (@instances ||= {})[key] ||= self.new.tap do |defaults|
