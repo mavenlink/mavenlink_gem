@@ -297,3 +297,14 @@ posts:
     attachments:
       foreign_key: attachment_ids
       collection: attachments
+
+attachments:
+  validations:
+    [data, type]:
+      presence: true
+  attributes:
+    - data
+    - type
+  create_attributes:
+    - data
+    - type

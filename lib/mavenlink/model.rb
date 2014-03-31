@@ -129,8 +129,7 @@ module Mavenlink
     # @return [true, false]
     def save
       if valid?
-        response = new_record? ? request.create(create_attributes) : request.update(update_attributes)
-        reload(response)
+        reload(new_record? ? create : update)
         true
       else
         false
@@ -167,6 +166,16 @@ module Mavenlink
     end
 
     protected
+
+    # @return [Mavenlink::Response]
+    def create
+      request.create(create_attributes)
+    end
+
+    # @return [Mavenlink::Response]
+    def update
+      request.update(update_attributes)
+    end
 
     # @return [Hash]
     def create_attributes

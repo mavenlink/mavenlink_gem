@@ -97,10 +97,6 @@ shared_context 'model' do |collection_name|
       specify do
         expect(model.update_attributes).to be_an Array
       end
-
-      specify do
-        expect(model.update_attributes).not_to be_empty
-      end
     end
 
     describe '.wrap' do
