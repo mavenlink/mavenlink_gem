@@ -226,3 +226,35 @@ workspaces:
     - description
     - archived
     - access_level
+
+posts:
+  attributes:
+    - id # the internal id of the post
+    - newest_reply_at # the date of the newest reply
+    - message # the message of the post
+    - has_attachment # whether the post has any attachments
+    - created_at # the date the post was created
+    - updated_at # the date the post was last updated
+    - reply_count # the number of replies to the post
+    - private # whether this post is private
+    - user_id # the internal id of the user who made the post
+    - workspace_id # the internal id of the project workspace this post is associated with
+    - workspace_type # the class name of the workspace
+    - reply # whether this post is a reply
+    - subject_id # if this post is a reply, the internal id of the parent post or object being replied to
+    - subject_type # the class name of the object being replied to
+    - story_id # the internal id of the story that this post is linked to
+  create_attributes:
+    - message # - (required) the content to be created in the new post
+    - workspace_id # - (required) the ID of the Workspace in which the post will be created
+    - subject_id # - (optional, required for replies) the ID of the item the new post is replying to if it is a reply
+    - subject_type # - (optional, required for replies) the type of the item the new post is replying to; accepted values are Post
+    - story_id # - (optional) the ID of the Story (task) that the new post should be linked to
+    - recipient_ids # - (optional) an array of User IDs for whom the post is visible. These users must be participating in the target Workspace and including this parameter will make the post private
+    - attachment_ids # - (optional) an array of PostAttachment IDs that should be associated with the post. Create PostAttachments using the attachments endpoint.
+  update_attributes:
+    - message
+    - story_id
+  validations:
+    [message, workspace_id]:
+      presence: true

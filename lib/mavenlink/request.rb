@@ -120,10 +120,10 @@ module Mavenlink
       perform { client.put(resource_path, {collection_name.singularize => attributes}) }
     end
 
-    # @note Does not work?
-    # @return [Mavenlink::Response]
+    # @note Weird non-json response?
+    # @return [nil]
     def delete
-      perform { client.delete(resource_path) }
+      client.delete(resource_path)
     end
 
     # @return [Mavenlink::Response]
@@ -181,8 +181,6 @@ module Mavenlink
       "#<#{self.class.name} [#{entries.join(', ')}]>"
     end
 
-    private
-
     # Returns "show" path for the resource
     # @raise [ArgumentError] when ID is not included in criteria
     # @return [String]
@@ -190,6 +188,8 @@ module Mavenlink
       id = @scope[:only] or raise ArgumentError, 'No route matches source path without an ID'
       "#{collection_name}/#{id}"
     end
+
+    private
 
     # Builds comma-separated query param
     # @param param [Array, String]

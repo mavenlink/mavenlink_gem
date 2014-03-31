@@ -378,8 +378,6 @@ describe Mavenlink::Workspace, stub_requests: true do
   end
 
   describe '#destroy' do
-    # NOTE(SZ) missing specs
-    # ... pending do ...
     specify do
       expect { model.new(id: '4').destroy }.to raise_error Mavenlink::RecordLockedError, /locked.*deleted/
     end

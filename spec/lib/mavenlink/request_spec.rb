@@ -65,7 +65,7 @@ describe Mavenlink::Request, stub_requests: true do
     stub_request :get,    '/api/v1/workspaces?only=7', one_record_response
     stub_request :get,    '/api/v1/workspaces?only=8', { 'count' => 0, 'results' => [] }
     stub_request :put,    '/api/v1/workspaces/7',      one_record_response
-    stub_request :delete, '/api/v1/workspaces/7',      one_record_response # NOTE(SZ): is this really true?
+    stub_request :delete, '/api/v1/workspaces/7',      {}
     stub_request :get,    '/api/v1/workspaces',        response
     stub_request :post,   '/api/v1/workspaces',        one_record_response
   end
@@ -255,11 +255,7 @@ describe Mavenlink::Request, stub_requests: true do
 
   describe '#delete' do
     specify do
-      expect(request.only(7).delete).to be_a Mavenlink::Response # NOTE(SZ) really?
-    end
-
-    specify do
-      expect(request.only(7).delete).to eq(one_record_response)
+      expect(request.only(7).delete).to be_blank
     end
 
     context 'no id specified' do

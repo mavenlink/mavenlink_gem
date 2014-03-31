@@ -2,18 +2,9 @@ module Mavenlink
   class Model < BrainstemAdaptor::Record
     include ActiveModel::Validations
 
-    # Sets collection name
-    # @example
-    #   class Customer < Mavenlink::Model
-    #     collection :users
-    #   end
-    def self.collection(name)
-      @collection_name = name
-    end
-
     # @return [String]
     def self.collection_name
-      @collection_name || (self.name || 'undefined').split(/\W+/).last.tableize.pluralize
+      (self.name || 'undefined').split(/\W+/).last.tableize.pluralize
     end
 
     # @param attributes [Hash]
@@ -123,7 +114,7 @@ module Mavenlink
     # @param attributes [Hash]
     # @param source_record [BrainstemAdaptor::Record]
     def initialize(attributes = {}, source_record = nil)
-      super(self.class.collection_name, source_record.try(:id), source_record.try(:response))
+      super(self.class.collection_name, (attributes[:id] || attributes['id'] || source_record.try(:id)), source_record.try(:response))
       merge!(attributes)
     end
 

@@ -31,7 +31,7 @@ describe Mavenlink::Story, stub_requests: true do
     stub_request :get,    "/api/v1/stories?only=7", response
     stub_request :get,    "/api/v1/stories?only=8", {'count' => 0, 'results' => []}
     stub_request :post,   "/api/v1/stories", response
-    stub_request :delete, "/api/v1/stories/4", {'count' => 0, 'results' => []} # TODO: replace with real one
+    stub_request :delete, "/api/v1/stories/4", {}
   end
 
   describe '#save' do
@@ -59,10 +59,8 @@ describe Mavenlink::Story, stub_requests: true do
   end
 
   describe '#destroy' do
-    # NOTE(SZ) missing specs
-    # ... pending do ...
     specify do
-      expect { described_class.new(id: '4').destroy }.not_to raise_error
+      expect(described_class.new(id: '4').destroy).to be_blank
     end
   end
 end

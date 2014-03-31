@@ -75,7 +75,7 @@ module Mavenlink
 
     def perform_request
       yield.tap do |response|
-        if response['errors']
+        if response && response['errors']
           Mavenlink.logger.disappointment 'REQUEST FAILED:'
           Mavenlink.logger.inspection response['errors']
           raise InvalidRequestError.new(response)
