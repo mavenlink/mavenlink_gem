@@ -2,19 +2,109 @@
 
 ## Mavenlink API
 [![Build Status](https://travis-ci.org/einzige/mavenlink.svg?branch=master&update_cache=true)](https://travis-ci.org/einzige/mavenlink)
+[![Dependency Status](https://gemnasium.com/einzige/mavenlink.svg)](https://gemnasium.com/einzige/mavenlink)
 
-Use console FTW. Just run `bundle exec foreman run rake console` or `TOKEN=your_oauth_token bundle exec rake console`
+### Console
 
-Pretty handy stuff:
-![http://img-fotki.yandex.ru/get/9803/14651338.3/0_c4b57_95051af0_orig](http://img-fotki.yandex.ru/get/9803/14651338.3/0_c4b57_95051af0_orig)
+Run in your project directory `bundle exec mavenlink-console` or `TOKEN=your_oauth_token bundle exec mavenlink-console`.
+Or just `mavenlink-console` (depending on your current setup).
 
-Use Guard FTW. `bundle exec guard start`.
+### Usage
 
-Uses "ActiveRecord" style of accessing your records. You can also perform any custom request.
-Utilizes [Brainstem API Adaptor gem](http://github.com/einzige/brainstem-ruby)
-See [Specification first](lib/config/specification.yml)
+#### Setting up access token
 
-### Pagination
+In order to be able to perform any requests you should set `outh_token` obtained by your Mavenlink Account.
+
+```ruby
+Mavenlink.oauth_token = "your_token"
+```
+
+If you are using __Rails__, put this line into `config/initializers/mavenlink.rb`
+
+#### Creating new records
+```ruby
+workspace = Mavenlink::Workspace.create(title: 'new workspace', creator_role: 'buyer')
+
+# same thing...
+workspace = Mavenlink::Workspace.new(title: 'New workspace', creator_role: 'maven')
+workspace.save # will call "create" and store record in Mavenlink db
+workspace.new_record? # -> false
+```
+
+#### Fetching records
+```ruby
+Mavenlink::Workspace.find(9)
+# Same as
+Mavenlink.client.workspaces.find(9)
+```
+
+#### Updating records
+```ruby
+workspace = Mavenlink::Workspace.find(1)
+
+workspace.title = 'new title' # writes attribute
+workspace.save                # returns true if record has been saved
+workspace.save!               # will raise exception if record is invalid
+```
+
+#### Destroying records
+```ruby
+post = Mavenlink::Post.find(1)
+post.destroy
+```
+
+#### Associations
+```ruby
+workspace.participants        # will return participants as an array of Mavenlink::User instances, will do http API call if association is not "included"
+workspace.participants        # now it returns cached value
+workspace.participants.first  # returns Mavenlink::User record
+workspace.participants(true)  # flushes association cache
+workspace.reload              # reloads from remote host
+
+participant = workspace.participants.first
+participant.full_name = 'new name'
+participant.save # performs "update" query, full_name will be changed
+```
+
+In order to include association use `include` as follows:
+```ruby
+Mavenlink::Workspace.scoped.include(:participants).search('My Workspace')
+
+Mavenlink::Workspace.scoped.search('My Workspace').order(:updated_at, :desc).each do |workspace|
+  if workspace.valid?
+    workspace.destroy
+  end
+end
+```
+
+#### Search
+
+```ruby
+Mavenlink::Workspace.scoped.search('Something')
+Mavenlink.client.workspaces.search('Something')
+```
+
+#### Filtering
+
+```ruby
+Mavenlink::Workspace.scoped.filter(include_archived: true).all
+Mavenlink.client.workspaces.filter(include_archived: true).all
+```
+
+#### Pagination
+
+```ruby
+Mavenlink::Workspace.scoped.page(2).per_page(3)
+Mavenlink.client.workspaces.page(2).per_page(3)
+```
+
+```ruby
+Mavenlink::Workspace.scoped.limit(2).offset(3)
+Mavenlink.client.workspaces.limit(2).offset(3)
+```
+
+You'll never receive full results set if number of records in requested collection is greater than 200.
+Pagination allows you to go through entire collection.
 
 ```ruby
 Mavenlink::Workspace.scoped.each_page do |page|
@@ -22,59 +112,47 @@ Mavenlink::Workspace.scoped.each_page do |page|
     p workspace.inspect
   end
 end
+```
 
-Mavenlink::Workspace.scoped.each_page(200).to_a
-Mavenlink::Workspace.scoped.each_page.to_a.flatten
+#### Client side validation
+By default client side validation is disabled, you can enable it by setting `perform_validations` to `true`
+
+```ruby
+Mavenlink.perform_validations = true
+```
+
+Now any record will be validated before you perform any request to change its attributes.
+
+```ruby
+workspace = Workspace.new(title: 'My workspace')
+workspace.save # -> returns false
+workspace.errors.full_messages # -> ["Creator role is not included in the list"]
+```
+
+Mavenlink::Workspace.scoped.each_page(200).to_a     # 200 records per page
+Mavenlink::Workspace.scoped.each_page.to_a.flatten  # Returns full collection
 Mavenlink::Workspace.scoped.each_page(2).each_with_index { |page, i| puts i.inspect }
 ```
 
-### Style #1
-
-Pretty similar to ActiveRecord. I do use ActiveModel to deal with records.
-Pretty similar to Stripe API (people like it).
+#### Invite new user
 
 ```ruby
-Mavenlink.oauth_token = token
-
-workspace = Mavenlink::Workspace.new(title: 'New workspace')
-workspace.save # will call "create" and store record in Mavenlink db
-
-workspace.participants # will return participants, will do http API call if not "included"
-workspace.participants # now it returns cached value
-workspace.participants.first # returns Mavenlink::User record
-workspace.participants(true) # flushes association cache
-workspace.reload # reloads from remote host
-workspace.title = 'new title'
-
-workspace.invite(email: 'szinin@mgail.com', full_name: 'Sergei Zinin', invitee_role: 'maven')
-
-participant = workspace.participants.first
-participant.full_name = 'new name'
-participant.save # performs "update" query now
-
-# same thing...
-Mavenlink::Workspace.create(title: 'new workspace')
-
-Mavenlink::Workspace.find(9)
-
-Mavenlink::Workspace.scoped.include(:participants).search('Sergei Workspace') # similar to activerecord scope...
-
-Mavenlink::Workspace.scoped.search('Sergei Workspace').order(:updated_at, :desc).each do |workspace|
-  if workspace.valid?
-    workspace.destroy
-  end
-end
-
-# ... find more in code, in specs...
+Mavenlink::Workspace.find(7).invite(email: 'john@doe.com', full_name: 'John Doe', invitee_role: 'maven')
 ```
 
-### Style #2
+#### Custom requests
 
-Old fashioned way, slightly improved...
+```ruby
+client.get('/custom_path', {param: 'anything'})
+client.post('/custom_path', {param: 'anything'})
+client.put('/custom_path', {param: 'anything'})
+client.delete('/custom_path', {param: 'anything'})
+```
+
+### More examples
 
 ```ruby
 client = Mavenlink::Client.new(oauth_token: '...')
-
 client.workspaces.each { |workspace| do_something(workspace) }
 
 client.workspaces.include('participants')
@@ -104,16 +182,17 @@ client.workspaces.create(title: 'New workspace')
 client.workspaces.only(8).update(title: 'new title')
 client.workspaces.only(8).delete
 
-# ... too much to describe ... see the code
+# ...
 ```
 
-### Other examples
+## Contributing
 
-```ruby
-Mavenlink.client.users
-client.get('/custom_path', {param: 'anything'})
-client.post('/custom_path', {param: 'anything'})
-client.put('/custom_path', {param: 'anything'})
-client.delete('/custom_path', {param: 'anything'})
-```
+1. Fork
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Added some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request (`git pull-request`)
 
+## License
+
+Created by Mavenlink, Inc. and available under the MIT License.

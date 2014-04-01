@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.name = %q{mavenlink}
   s.version = "0.0.1"
 
-  s.date = %q{2014-03-10}
-  s.authors = ["Sergei Zinin (einzige)"]
+  s.date = %q{2014-04-01}
+  s.authors = ["Mavenlink"]
   s.email = %q{szinin@gmail.com}
   s.homepage = %q{http://github.com/einzige/mavenlink}
 
@@ -19,10 +19,9 @@ Gem::Specification.new do |s|
   s.description = %q{Simple Ruby API for Mavenlink}
   s.summary = %q{Mavenlink API}
 
-  # s.add_dependency 'brainstem-ruby' or 'brainstem-adaptor'
   s.add_runtime_dependency 'activesupport', ">= 3.0.0"
   s.add_runtime_dependency 'activemodel'
-  s.add_runtime_dependency 'brainstem-adaptor'
+  s.add_runtime_dependency 'brainstem-adaptor', ">= 0.0.3"
   s.add_runtime_dependency 'faraday'
   s.add_runtime_dependency 'faraday_middleware'
   s.add_development_dependency 'rspec'
