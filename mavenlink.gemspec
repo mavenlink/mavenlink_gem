@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
 
   s.date = %q{2014-04-01}
   s.authors = ["Mavenlink"]
-  s.email = %q{szinin@gmail.com}
-  s.homepage = %q{http://github.com/einzige/mavenlink}
+  s.email = %q{opensource@mavenlink.com}
+  s.homepage = %q{http://github.com/mavenlink/mavenlink_gem}
 
   s.licenses = ["MIT"]
 
@@ -16,8 +16,8 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.extra_rdoc_files = ["README.md"]
 
-  s.description = %q{Simple Ruby API for Mavenlink}
-  s.summary = %q{Mavenlink API}
+  s.description = %q{Simple Ruby API for the Mavenlink API}
+  s.summary = %q{Mavenlink API Ruby Wrapper}
 
   s.add_runtime_dependency 'activesupport', ">= 3.0.0"
   s.add_runtime_dependency 'activemodel'
