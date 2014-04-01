@@ -34,6 +34,181 @@ assignments:
       foreign_key: story_allocation_day_ids
       collection: story_allocation_days
 
+attachments:
+  validations:
+    [data, type]:
+      presence: true
+    type:
+      inclusion:
+        in: [post_attachment, receipt]
+  attributes:
+    - data
+    - type
+  create_attributes:
+    - data
+    - type
+
+expenses:
+  validations:
+    [workspace_id, date, category, amount_in_cents]:
+      presence: true
+  attributes:
+    - id # the unique identifier for this expense object
+    - created_at # the date the expense was recorded in Mavenlink
+    - updated_at # the date the expense was last updated
+    - date # the date the expense was incurred
+    - notes # any notes added to the expense
+    - category # the category of the expense, which can be any string. Built-in categories are: "Travel", "Mileage", "Lodging", "Food", "Entertainment", "Other"
+    - amount_in_cents # the amount of the expense, in cents
+    - currency # the currency of the expense
+    - currency_symbol # the symbol that represents the currency of the expense
+    - currency_base_unit # the number of the units in the amount_as_cents attribute that are required to make up a single unit of the currency
+    - user_can_edit # can the viewing user edit this expense?
+    - is_invoiced # has this expense been included on an invoice?
+    - is_billable # is this a billable expense?
+    - workspace_id # the id of the project Workspace this expense is associated with
+    - user_id # the id of the user who created this expense
+    - receipt_id # the id of an attached Receipt Attachment
+  create_attributes:
+    - workspace_id # (required) the ID of the Workspace in which the expense will be created
+    - date # (required) the date of the expense in ISO8601 format
+    - category # (required) the category of the expense as a string
+    - amount_in_cents # the amount of the expense, expressed in cents
+    - notes # freeform text related to the expense
+    - currency # the three-letter currency code for the currency of the expense
+    - user_id # the internal ID of the user the expense is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
+  update_attributes:
+    # NOTE(AC): check
+    - date # (required) the date of the expense in ISO8601 format
+    - category # (required) the category of the expense as a string
+    - amount_in_cents # the amount of the expense, expressed in cents
+    - notes # freeform text related to the expense
+    - currency # the three-letter currency code for the currency of the expense
+    - user_id # the internal ID of the user the expense is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
+  associations:
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    user:
+      foreign_key: user_id
+      collection: users
+    receipt:
+      foreign_key: receipt_id
+      collection: attachments
+
+invoices:
+  attributes:
+    - id # the internal invoice id
+    - created_at # the date the invoice was recorded in Mavenlink, format: YY-MM-DD[T]HH:MM:SS-TIMEZONE
+    - updated_at # the date the invoice was last updated, format: YY-MM-DD[T]HH:MM:SS-TIMEZONE
+    - invoice_date # the date the invoice was incurred, format: YYYY-MM-DD
+    - due_date # the date the invoice is due, format: YYYY-MM-DD
+    - message # any notes added to the invoice
+    - title # A string of the format "(Draft )Invoice #<user-invoice-number>"
+    - draft # whether the invoice is a draft or not
+    - status # the current status of the invoice
+    - balance_in_cents # the balance of invoice in cents
+    - currency # the currency of this invoice
+    - currency_symbol # the symbol that represents the currency of the invoice
+    - currency_base_unit # the number of the units in the balance_in_cents attribute that are required to make up a single unit of the currency
+    - payment_schedule # the payment schedule (i.e. 30) in days of this invoice
+    - workspace_ids # the internal ids of the project workspaces this invoice is associated with
+    - user_id # the internal id of the user who created this invoice
+    - recipient_id # the internal id of the user who received this invoice; this will be the client lead at the time that the invoice was created, or null if no lead client existed at that time.
+  associations:
+    # time_entries - when included, the time_entry_ids array will reference all of the time entries included in the Invoice
+    time_entries:
+      foreign_key: time_entry_id
+      collection: time_entries
+    # expenses - when included, the expense_ids array will reference all of the expenses included in the Invoice
+    expenses:
+      foreign_key: expense_ids
+      collection: expenses
+    # NOTE(AC): ? additional_items - when included, the additional_item_ids array will reference all of the additional items (additional invoice line items) included in the Invoice
+    # workspaces - when included, the workspace_ids array will reference the workspaces that this Invoice covers
+    workspaces:
+      foreign_key: workspace_ids
+      collection: workspaces
+    # user - user_id will reference the User who created this Invoice
+    user:
+      foreign_key: user_id
+      collection: users
+    # recipient - recipient_id will reference the User who received this Invoice. This will be the client lead at the time that the invoice was created, or null if no lead client existed at that time.
+    recipient:
+      foreign_key: recipient_id
+      collection: users
+
+posts:
+  attributes:
+    - id # the internal id of the post
+    - newest_reply_at # the date of the newest reply
+    - message # the message of the post
+    - has_attachment # whether the post has any attachments
+    - created_at # the date the post was created
+    - updated_at # the date the post was last updated
+    - reply_count # the number of replies to the post
+    - private # whether this post is private
+    - user_id # the internal id of the user who made the post
+    - workspace_id # the internal id of the project workspace this post is associated with
+    - workspace_type # the class name of the workspace
+    - reply # whether this post is a reply
+    - subject_id # if this post is a reply, the internal id of the parent post or object being replied to
+    - subject_type # the class name of the object being replied to
+    - story_id # the internal id of the story that this post is linked to
+    - google_documents # NOTE: NOT AN ASSOCIATION?
+  create_attributes:
+    - message # - (required) the content to be created in the new post
+    - workspace_id # - (required) the ID of the Workspace in which the post will be created
+    - subject_id # - (optional, required for replies) the ID of the item the new post is replying to if it is a reply
+    - subject_type # - (optional, required for replies) the type of the item the new post is replying to; accepted values are Post
+    - story_id # - (optional) the ID of the Story (task) that the new post should be linked to
+    - recipient_ids # - (optional) an array of User IDs for whom the post is visible. These users must be participating in the target Workspace and including this parameter will make the post private
+    - attachment_ids # - (optional) an array of PostAttachment IDs that should be associated with the post. Create PostAttachments using the attachments endpoint.
+  update_attributes:
+    - message
+    - story_id
+  validations:
+    [message, workspace_id]:
+      presence: true
+  associations:
+    #  subject - when you include this association, posts that are replies will have a subject_id key referencing their parent post in the posts top-level key
+    subject:
+      foreign_key: subject_id
+      collection: posts
+    #  user - the user object of the post creator, returned in the users top-level key
+    user:
+      foreign_key: user_id
+      collection: users
+    #  workspace - the workspace (project) that owns this post, returned in the workspaces top-level key
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    #  story - linked story (task), returned in the stories top-level key
+    story:
+      foreign_key: story_id
+      collection: stories
+    #  replies - replies to this post, returned in the posts top-level key; posts will contain a reply_ids array
+    replies:
+      foreign_key: reply_ids
+      collection: posts
+    #  newest_reply - newest reply to this post, available in newest_reply_id and returned in the posts top-level key
+    newest_reply:
+      foreign_key: newest_reply_id
+      collection: posts
+    #  newest_reply_user- user of the newest reply to this post, available in newest_reply_user_id and returned in the users top-level key
+    newest_reply_user:
+      foreign_key: newest_reply_user_id
+      collection: users
+    #  recipients - on private posts, the recipient_ids array contains the ids of recipients, returned in the users top-level key
+    recipients:
+      foreign_key: recipient_ids
+      collection: users
+    # NOTE(?) google_documents - the post's google document objects, available in google_document_ids and returned in the google_documents top-level key
+    #  attachments - file attachments, available in attachment_ids and returned in the attachments top-level key
+    attachments:
+      foreign_key: attachment_ids
+      collection: attachments
+
 roles: # TODO(SZ): find it out
 
 stories: # tasks
@@ -150,6 +325,55 @@ story_allocation_days:
       foreign_key: workspace_id
       collection: workspaces
 
+time_entries:
+  associations:
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    user:
+      foreign_key: user_id
+      collection: users
+    story:
+      foreign_key: story_id
+      collection: stories
+  validations:
+    [workspace_id, date_performed, time_in_minutes]:
+      presence: true
+  attributes:
+    - id # the internal time entry ID
+    - created_at # the date the time entry was created in Mavenlink
+    - updated_at # the date the time entry was last updated
+    - date_performed # the date the time entry was performed
+    - story_id # the internal story ID of the story this time entry is associated with
+    - time_in_minutes # the amount of time entered in minutes
+    - billable # whether this time entry is billable time
+    - notes # any notes added to the time entry
+    - rate_in_cents # the hourly rate for this time entry in cents
+    - currency # the currency of this time entry's rate
+    - currency_symbol # the currency symbol for this time entry's currency
+    - currency_base_unit # the amount of cents in each of the currency's dollars, for example 100 for USD.
+    - user_can_edit # whether the current user can edit this time entry or not
+    - workspace_id # the internal ID of the project workspace this time entry is associated with
+    - user_id # the internal ID of the user who created this time entry
+  create_attributes:
+    - workspace_id # (required) the internal ID of the project workspace this time entry is associated with
+    - date_performed # (required) the date the activity for which the time is being entered was performed, format: YYYY-MM-DD
+    - time_in_minutes # (required) the amount of time entered in minutes
+    - billable # (optional) whether this time entry is billable time, you must also provide rate_in_cents if you set billable to true
+    - notes # (optional) any notes added to the time entry
+    - rate_in_cents # (optional, required if billable is true) the hourly rate for this time entry in cents, you must also set billable to true when setting this
+    - story_id # (optional) the internal ID of the story this time entry is associated with
+    - user_id # (optional) the internal ID of the user the time entry is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
+  update_attributes:
+    - workspace_id # (required) the internal ID of the project workspace this time entry is associated with
+    - date_performed # (required) the date the activity for which the time is being entered was performed, format: YYYY-MM-DD
+    - time_in_minutes # (required) the amount of time entered in minutes
+    - billable # (optional) whether this time entry is billable time, you must also provide rate_in_cents if you set billable to true
+    - notes # (optional) any notes added to the time entry
+    - rate_in_cents # (optional, required if billable is true) the hourly rate for this time entry in cents, you must also set billable to true when setting this
+    - story_id # (optional) the internal ID of the story this time entry is associated with
+    - user_id # (optional) the internal ID of the user the time entry is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
+
 users:
   attributes:
     - user_id       # the internal ID of the user
@@ -226,230 +450,6 @@ workspaces:
     - description
     - archived
     - access_level
-
-posts:
-  attributes:
-    - id # the internal id of the post
-    - newest_reply_at # the date of the newest reply
-    - message # the message of the post
-    - has_attachment # whether the post has any attachments
-    - created_at # the date the post was created
-    - updated_at # the date the post was last updated
-    - reply_count # the number of replies to the post
-    - private # whether this post is private
-    - user_id # the internal id of the user who made the post
-    - workspace_id # the internal id of the project workspace this post is associated with
-    - workspace_type # the class name of the workspace
-    - reply # whether this post is a reply
-    - subject_id # if this post is a reply, the internal id of the parent post or object being replied to
-    - subject_type # the class name of the object being replied to
-    - story_id # the internal id of the story that this post is linked to
-    - google_documents # NOTE: NOT AN ASSOCIATION?
-  create_attributes:
-    - message # - (required) the content to be created in the new post
-    - workspace_id # - (required) the ID of the Workspace in which the post will be created
-    - subject_id # - (optional, required for replies) the ID of the item the new post is replying to if it is a reply
-    - subject_type # - (optional, required for replies) the type of the item the new post is replying to; accepted values are Post
-    - story_id # - (optional) the ID of the Story (task) that the new post should be linked to
-    - recipient_ids # - (optional) an array of User IDs for whom the post is visible. These users must be participating in the target Workspace and including this parameter will make the post private
-    - attachment_ids # - (optional) an array of PostAttachment IDs that should be associated with the post. Create PostAttachments using the attachments endpoint.
-  update_attributes:
-    - message
-    - story_id
-  validations:
-    [message, workspace_id]:
-      presence: true
-  associations:
-    #  subject - when you include this association, posts that are replies will have a subject_id key referencing their parent post in the posts top-level key
-    subject:
-      foreign_key: subject_id
-      collection: posts
-    #  user - the user object of the post creator, returned in the users top-level key
-    user:
-      foreign_key: user_id
-      collection: users
-    #  workspace - the workspace (project) that owns this post, returned in the workspaces top-level key
-    workspace:
-      foreign_key: workspace_id
-      collection: workspaces
-    #  story - linked story (task), returned in the stories top-level key
-    story:
-      foreign_key: story_id
-      collection: stories
-    #  replies - replies to this post, returned in the posts top-level key; posts will contain a reply_ids array
-    replies:
-      foreign_key: reply_ids
-      collection: posts
-    #  newest_reply - newest reply to this post, available in newest_reply_id and returned in the posts top-level key
-    newest_reply:
-      foreign_key: newest_reply_id
-      collection: posts
-    #  newest_reply_user- user of the newest reply to this post, available in newest_reply_user_id and returned in the users top-level key
-    newest_reply_user:
-      foreign_key: newest_reply_user_id
-      collection: users
-    #  recipients - on private posts, the recipient_ids array contains the ids of recipients, returned in the users top-level key
-    recipients:
-      foreign_key: recipient_ids
-      collection: users
-    # NOTE(?) google_documents - the post's google document objects, available in google_document_ids and returned in the google_documents top-level key
-    #  attachments - file attachments, available in attachment_ids and returned in the attachments top-level key
-    attachments:
-      foreign_key: attachment_ids
-      collection: attachments
-
-attachments:
-  validations:
-    [data, type]:
-      presence: true
-    type:
-      inclusion:
-        in: [post_attachment, receipt]
-  attributes:
-    - data
-    - type
-  create_attributes:
-    - data
-    - type
-
-expenses:
-  validations:
-    [workspace_id, date, category, amount_in_cents]:
-      presence: true
-  attributes:
-    - id # the unique identifier for this expense object
-    - created_at # the date the expense was recorded in Mavenlink
-    - updated_at # the date the expense was last updated
-    - date # the date the expense was incurred
-    - notes # any notes added to the expense
-    - category # the category of the expense, which can be any string. Built-in categories are: "Travel", "Mileage", "Lodging", "Food", "Entertainment", "Other"
-    - amount_in_cents # the amount of the expense, in cents
-    - currency # the currency of the expense
-    - currency_symbol # the symbol that represents the currency of the expense
-    - currency_base_unit # the number of the units in the amount_as_cents attribute that are required to make up a single unit of the currency
-    - user_can_edit # can the viewing user edit this expense?
-    - is_invoiced # has this expense been included on an invoice?
-    - is_billable # is this a billable expense?
-    - workspace_id # the id of the project Workspace this expense is associated with
-    - user_id # the id of the user who created this expense
-    - receipt_id # the id of an attached Receipt Attachment
-  create_attributes:
-    - workspace_id # (required) the ID of the Workspace in which the expense will be created
-    - date # (required) the date of the expense in ISO8601 format
-    - category # (required) the category of the expense as a string
-    - amount_in_cents # the amount of the expense, expressed in cents
-    - notes # freeform text related to the expense
-    - currency # the three-letter currency code for the currency of the expense
-    - user_id # the internal ID of the user the expense is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
-  update_attributes:
-    # NOTE(AC): check
-    - date # (required) the date of the expense in ISO8601 format
-    - category # (required) the category of the expense as a string
-    - amount_in_cents # the amount of the expense, expressed in cents
-    - notes # freeform text related to the expense
-    - currency # the three-letter currency code for the currency of the expense
-    - user_id # the internal ID of the user the expense is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
-  associations:
-    workspace:
-      foreign_key: workspace_id
-      collection: workspaces
-    user:
-      foreign_key: user_id
-      collection: users
-    receipt:
-      foreign_key: receipt_id
-      collection: attachments
-
-invoices:
-  attributes:
-    - id # the internal invoice id
-    - created_at # the date the invoice was recorded in Mavenlink, format: YY-MM-DD[T]HH:MM:SS-TIMEZONE
-    - updated_at # the date the invoice was last updated, format: YY-MM-DD[T]HH:MM:SS-TIMEZONE
-    - invoice_date # the date the invoice was incurred, format: YYYY-MM-DD
-    - due_date # the date the invoice is due, format: YYYY-MM-DD
-    - message # any notes added to the invoice
-    - title # A string of the format "(Draft )Invoice #<user-invoice-number>"
-    - draft # whether the invoice is a draft or not
-    - status # the current status of the invoice
-    - balance_in_cents # the balance of invoice in cents
-    - currency # the currency of this invoice
-    - currency_symbol # the symbol that represents the currency of the invoice
-    - currency_base_unit # the number of the units in the balance_in_cents attribute that are required to make up a single unit of the currency
-    - payment_schedule # the payment schedule (i.e. 30) in days of this invoice
-    - workspace_ids # the internal ids of the project workspaces this invoice is associated with
-    - user_id # the internal id of the user who created this invoice
-    - recipient_id # the internal id of the user who received this invoice; this will be the client lead at the time that the invoice was created, or null if no lead client existed at that time.
-  associations:
-    # time_entries - when included, the time_entry_ids array will reference all of the time entries included in the Invoice
-    time_entries:
-      foreign_key: time_entry_id
-      collection: time_entries
-    # expenses - when included, the expense_ids array will reference all of the expenses included in the Invoice
-    expenses:
-      foreign_key: expense_ids
-      collection: expenses
-    # NOTE(AC): ? additional_items - when included, the additional_item_ids array will reference all of the additional items (additional invoice line items) included in the Invoice
-    # workspaces - when included, the workspace_ids array will reference the workspaces that this Invoice covers
-    workspaces:
-      foreign_key: workspace_ids
-      collection: workspaces
-    # user - user_id will reference the User who created this Invoice
-    user:
-      foreign_key: user_id
-      collection: users
-    # recipient - recipient_id will reference the User who received this Invoice. This will be the client lead at the time that the invoice was created, or null if no lead client existed at that time.
-    recipient:
-      foreign_key: recipient_id
-      collection: users
-
-time_entries:
-  associations:
-    workspace:
-      foreign_key: workspace_id
-      collection: workspaces
-    user:
-      foreign_key: user_id
-      collection: users
-    story:
-      foreign_key: story_id
-      collection: stories
-  validations:
-    [workspace_id, date_performed, time_in_minutes]:
-      presence: true
-  attributes:
-    - id # the internal time entry ID
-    - created_at # the date the time entry was created in Mavenlink
-    - updated_at # the date the time entry was last updated
-    - date_performed # the date the time entry was performed
-    - story_id # the internal story ID of the story this time entry is associated with
-    - time_in_minutes # the amount of time entered in minutes
-    - billable # whether this time entry is billable time
-    - notes # any notes added to the time entry
-    - rate_in_cents # the hourly rate for this time entry in cents
-    - currency # the currency of this time entry's rate
-    - currency_symbol # the currency symbol for this time entry's currency
-    - currency_base_unit # the amount of cents in each of the currency's dollars, for example 100 for USD.
-    - user_can_edit # whether the current user can edit this time entry or not
-    - workspace_id # the internal ID of the project workspace this time entry is associated with
-    - user_id # the internal ID of the user who created this time entry
-  create_attributes:
-    - workspace_id # (required) the internal ID of the project workspace this time entry is associated with
-    - date_performed # (required) the date the activity for which the time is being entered was performed, format: YYYY-MM-DD
-    - time_in_minutes # (required) the amount of time entered in minutes
-    - billable # (optional) whether this time entry is billable time, you must also provide rate_in_cents if you set billable to true
-    - notes # (optional) any notes added to the time entry
-    - rate_in_cents # (optional, required if billable is true) the hourly rate for this time entry in cents, you must also set billable to true when setting this
-    - story_id # (optional) the internal ID of the story this time entry is associated with
-    - user_id # (optional) the internal ID of the user the time entry is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
-  update_attributes:
-    - workspace_id # (required) the internal ID of the project workspace this time entry is associated with
-    - date_performed # (required) the date the activity for which the time is being entered was performed, format: YYYY-MM-DD
-    - time_in_minutes # (required) the amount of time entered in minutes
-    - billable # (optional) whether this time entry is billable time, you must also provide rate_in_cents if you set billable to true
-    - notes # (optional) any notes added to the time entry
-    - rate_in_cents # (optional, required if billable is true) the hourly rate for this time entry in cents, you must also set billable to true when setting this
-    - story_id # (optional) the internal ID of the story this time entry is associated with
-    - user_id # (optional) the internal ID of the user the time entry is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
 
 workspace_groups:
   attributes:
