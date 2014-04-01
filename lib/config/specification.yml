@@ -397,9 +397,6 @@ invoices:
     user:
       foreign_key: user_id
       collection: users
-    creator: # NOTE(AC): alias for user
-      foreign_key: user_id
-      collection: users
     # recipient - recipient_id will reference the User who received this Invoice. This will be the client lead at the time that the invoice was created, or null if no lead client existed at that time.
     recipient:
       foreign_key: recipient_id
