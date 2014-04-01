@@ -4,11 +4,6 @@
 [![Build Status](https://travis-ci.org/einzige/mavenlink.svg?branch=master&update_cache=true)](https://travis-ci.org/einzige/mavenlink)
 [![Dependency Status](https://gemnasium.com/einzige/mavenlink.svg)](https://gemnasium.com/einzige/mavenlink)
 
-### Console
-
-Run in your project directory `bundle exec mavenlink-console` or `TOKEN=your_oauth_token bundle exec mavenlink-console`.
-Or just `mavenlink-console` (depending on your current setup).
-
 ### Usage
 
 #### Setting up access token
@@ -184,6 +179,11 @@ client.workspaces.only(8).delete
 
 # ...
 ```
+
+### Running Developer Console
+
+Run in your project directory `bundle exec mavenlink-console` or `TOKEN=your_oauth_token bundle exec mavenlink-console`.
+Or just `mavenlink-console` (depending on your current setup).
 
 ## Contributing
 
