@@ -20,7 +20,7 @@ If you are using __Rails__, put this line into `config/initializers/mavenlink.rb
 ```ruby
 workspace = Mavenlink::Workspace.create(title: 'new workspace', creator_role: 'buyer')
 
-# same thing...
+# Exactly the same:
 workspace = Mavenlink::Workspace.new(title: 'New workspace', creator_role: 'maven')
 workspace.save # will call "create" and store record in Mavenlink db
 workspace.new_record? # -> false
@@ -29,7 +29,7 @@ workspace.new_record? # -> false
 #### Fetching records
 ```ruby
 Mavenlink::Workspace.find(9)
-# Same as
+# Same as:
 Mavenlink.client.workspaces.find(9)
 ```
 
