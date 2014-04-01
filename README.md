@@ -47,7 +47,10 @@ workspace.new_record? # -> false
 ```ruby
 Mavenlink::Workspace.find(9)
 # Same as:
-Mavenlink.client.workspaces.find(9)
+workspace = Mavenlink.client.workspaces.find(9)
+
+# Reload record from remote host:
+workspace.reload
 ```
 
 #### Updating records
@@ -71,7 +74,6 @@ workspace.participants        # will return participants as an array of Mavenlin
 workspace.participants        # now it returns cached value
 workspace.participants.first  # returns Mavenlink::User record
 workspace.participants(true)  # flushes association cache
-workspace.reload              # reloads from remote host
 
 participant = workspace.participants.first
 participant.full_name = 'new name'
