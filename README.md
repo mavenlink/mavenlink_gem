@@ -6,6 +6,23 @@
 
 ### Usage
 
+Examples below will use `Mavenlink::Workspace`.
+You also have other collections to use in similar way:
+
+```ruby
+Mavenlink::Assignment # assignments collection Mavenlink.client.assignments
+Mavenlink::Attachment # attachments collection Mavenlink.client.attachments
+Mavenlink::Expense    # expenses collection Mavenlink.client.expenses
+Mavenlink::Invoice    # invoices collection Mavenlink.client.invoices
+Mavenlink::Post       # posts collection Mavenlink.client.posts
+Mavenlink::Story      # stories collection Mavenlink.client.stories
+Mavenlink::StoryAllocationDay
+Mavenlink::TimeEntry  # time_enties collection Mavenlink.client.time_entries
+Mavenlink::User       # users collection Mavenlink.client.users
+Mavenlink::WorkspaceGroup
+Mavenlink::Workspace
+```
+
 #### Setting up access token
 
 In order to be able to perform any requests you should set `outh_token` obtained by your Mavenlink Account.
