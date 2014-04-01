@@ -6,7 +6,7 @@
 
 ### Usage
 
-Examples below will use `Mavenlink::Workspace`.
+Examples below use `Mavenlink::Workspace` as an instance.
 You also have other collections to use in similar way:
 
 ```ruby
