@@ -58,7 +58,7 @@ module Mavenlink
     # @param association_name [String, Symbol]
     def self.association(association_name)
       define_method association_name do |reload = false|
-        return [] if new_record?
+        return nil if new_record?
 
         association = association_by_name(association_name)
         reload = true unless association.loaded?
@@ -207,7 +207,7 @@ module Mavenlink
 
       if records
         wrapper = proc { |record| Mavenlink::Model.models[association.collection_name].wrap(record) }
-        records.kind_of?(Enumerable) ? records.map(&wrapper) : wrapper.call(records)
+        records.kind_of?(Array) ? records.map(&wrapper) : wrapper.call(records)
       end
     end
 
