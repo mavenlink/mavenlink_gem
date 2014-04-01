@@ -1,5 +1,7 @@
 module Mavenlink
   module Specificators
+
+    # Specificator is used to inject anything described in specification file into your model.
     class Base
       attr_reader :model_class
 
