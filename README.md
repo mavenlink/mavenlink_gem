@@ -113,7 +113,7 @@ Use your paginator as Enumerable:
 ```ruby
 Mavenlink::Workspace.scoped.each_page(200).to_a     # 200 records per page
 Mavenlink::Workspace.scoped.each_page.to_a.flatten  # Returns full collection
-Mavenlink::Workspace.scoped.each_page(2).each_with_index { |page, i| puts i.inspect }
+Mavenlink::Workspace.scoped.each_page(2).each_with_index { |page, i| puts i }
 ```
 
 #### Client side validation
