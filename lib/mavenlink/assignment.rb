@@ -1,5 +1,5 @@
 module Mavenlink
   class Assignment < Model
-    validates :story_id, :assignee_id, presence: true, on: :create
+    include Concerns::Indestructible
   end
 end

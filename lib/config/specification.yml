@@ -33,6 +33,10 @@ assignments:
     story_allocation_days:
       foreign_key: story_allocation_day_ids
       collection: story_allocation_days
+  validations:
+    [story_id, assignee_id]:
+      presence: true
+      'on': create
 
 attachments:
   validations:
