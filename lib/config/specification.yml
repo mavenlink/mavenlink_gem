@@ -311,3 +311,51 @@ attachments:
   create_attributes:
     - data
     - type
+
+expenses:
+  validations:
+    [workspace_id, date, category, amount_in_cents]:
+      presence: true
+  attributes:
+    - id # the unique identifier for this expense object
+    - created_at # the date the expense was recorded in Mavenlink
+    - updated_at # the date the expense was last updated
+    - date # the date the expense was incurred
+    - notes # any notes added to the expense
+    - category # the category of the expense, which can be any string. Built-in categories are: "Travel", "Mileage", "Lodging", "Food", "Entertainment", "Other"
+    - amount_in_cents # the amount of the expense, in cents
+    - currency # the currency of the expense
+    - currency_symbol # the symbol that represents the currency of the expense
+    - currency_base_unit # the number of the units in the amount_as_cents attribute that are required to make up a single unit of the currency
+    - user_can_edit # can the viewing user edit this expense?
+    - is_invoiced # has this expense been included on an invoice?
+    - is_billable # is this a billable expense?
+    - workspace_id # the id of the project Workspace this expense is associated with
+    - user_id # the id of the user who created this expense
+    - receipt_id # the id of an attached Receipt Attachment
+  create_attributes:
+    - workspace_id # (required) the ID of the Workspace in which the expense will be created
+    - date # (required) the date of the expense in ISO8601 format
+    - category # (required) the category of the expense as a string
+    - amount_in_cents # the amount of the expense, expressed in cents
+    - notes # freeform text related to the expense
+    - currency # the three-letter currency code for the currency of the expense
+    - user_id # the internal ID of the user the expense is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
+  update_attributes:
+    # NOTE(AC): check
+    - date # (required) the date of the expense in ISO8601 format
+    - category # (required) the category of the expense as a string
+    - amount_in_cents # the amount of the expense, expressed in cents
+    - notes # freeform text related to the expense
+    - currency # the three-letter currency code for the currency of the expense
+    - user_id # the internal ID of the user the expense is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
+  associations:
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    user:
+      foreign_key: user_id
+      collection: users
+    receipt:
+      foreign_key: receipt_id
+      collection: attachments
