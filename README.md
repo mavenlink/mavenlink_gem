@@ -109,6 +109,13 @@ Mavenlink::Workspace.scoped.each_page do |page|
 end
 ```
 
+Use your paginator as Enumerable:
+```ruby
+Mavenlink::Workspace.scoped.each_page(200).to_a     # 200 records per page
+Mavenlink::Workspace.scoped.each_page.to_a.flatten  # Returns full collection
+Mavenlink::Workspace.scoped.each_page(2).each_with_index { |page, i| puts i.inspect }
+```
+
 #### Client side validation
 By default client side validation is disabled, you can enable it by setting `perform_validations` to `true`
 
@@ -122,11 +129,6 @@ Now any record will be validated before you perform any request to change its at
 workspace = Workspace.new(title: 'My workspace')
 workspace.save # -> returns false
 workspace.errors.full_messages # -> ["Creator role is not included in the list"]
-```
-
-Mavenlink::Workspace.scoped.each_page(200).to_a     # 200 records per page
-Mavenlink::Workspace.scoped.each_page.to_a.flatten  # Returns full collection
-Mavenlink::Workspace.scoped.each_page(2).each_with_index { |page, i| puts i.inspect }
 ```
 
 #### Invite new user
