@@ -1,7 +1,7 @@
 ![](http://project-management.com/wp-content/uploads/2013/09/Mavenlink-Logo.jpg)
 
 ## Mavenlink API
-[![Build Status](https://travis-ci.org/einzige/mavenlink.svg?branch=master)](https://travis-ci.org/einzige/mavenlink)
+[![Build Status](https://travis-ci.org/einzige/mavenlink.svg?branch=master&update_cache=true)](https://travis-ci.org/einzige/mavenlink)
 
 Use console FTW. Just run `bundle exec foreman run rake console` or `TOKEN=your_oauth_token bundle exec rake console`
 
