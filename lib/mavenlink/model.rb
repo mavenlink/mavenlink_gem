@@ -207,7 +207,7 @@ module Mavenlink
 
       if records
         wrapper = proc { |record| Mavenlink::Model.models[association.collection_name].wrap(record) }
-        records.kind_of?(Array) ? records.map(&wrapper) : wrapper.call(records)
+        records.kind_of?(BrainstemAdaptor::Association) ? records.map(&wrapper) : wrapper.call(records)
       end
     end
 

@@ -450,3 +450,28 @@ time_entries:
     - rate_in_cents # (optional, required if billable is true) the hourly rate for this time entry in cents, you must also set billable to true when setting this
     - story_id # (optional) the internal ID of the story this time entry is associated with
     - user_id # (optional) the internal ID of the user the time entry is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
+
+workspace_groups:
+  attributes:
+    - id # the internal workspace group ID
+    - name # the name of the workspace group
+    - company # whether the workspace group represents a company
+  create_attributes:
+    - name
+    - company
+    - add_workspace_ids
+  update_attributes:
+    - name
+    - company
+    - add_workspace_ids
+    - remove_workspace_ids
+  validations:
+    name:
+      presence: true
+    company:
+      inclusion:
+        in: [true, false]
+  associations:
+    workspaces:
+      foreign_key: workspace_ids
+      collection: workspaces
