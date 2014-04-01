@@ -1,7 +1,15 @@
 require 'spec_helper'
 
-describe Mavenlink::User, stub_requests: true do
+describe Mavenlink::Invoice, stub_requests: true do
   subject { described_class.send(:new) }
+
+  describe 'associations' do
+    it { should respond_to :workspaces }
+    it { should respond_to :user }
+    it { should respond_to :recipient }
+    it { should respond_to :time_entries }
+    it { should respond_to :expenses }
+  end
 
   it { should be_a Mavenlink::Concerns::LockedRecord }
   it { should be_a Mavenlink::Concerns::Indestructible }
@@ -14,7 +22,7 @@ describe Mavenlink::User, stub_requests: true do
     specify { expect { subject.destroy }.to raise_error Mavenlink::RecordLockedError }
   end
 
-  let(:collection_name) { 'users' }
+  let(:collection_name) { 'invoices' }
 
   let(:model) { described_class }
 

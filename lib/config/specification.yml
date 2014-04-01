@@ -359,3 +359,48 @@ expenses:
     receipt:
       foreign_key: receipt_id
       collection: attachments
+
+invoices:
+  attributes:
+    - id # the internal invoice id
+    - created_at # the date the invoice was recorded in Mavenlink, format: YY-MM-DD[T]HH:MM:SS-TIMEZONE
+    - updated_at # the date the invoice was last updated, format: YY-MM-DD[T]HH:MM:SS-TIMEZONE
+    - invoice_date # the date the invoice was incurred, format: YYYY-MM-DD
+    - due_date # the date the invoice is due, format: YYYY-MM-DD
+    - message # any notes added to the invoice
+    - title # A string of the format "(Draft )Invoice #<user-invoice-number>"
+    - draft # whether the invoice is a draft or not
+    - status # the current status of the invoice
+    - balance_in_cents # the balance of invoice in cents
+    - currency # the currency of this invoice
+    - currency_symbol # the symbol that represents the currency of the invoice
+    - currency_base_unit # the number of the units in the balance_in_cents attribute that are required to make up a single unit of the currency
+    - payment_schedule # the payment schedule (i.e. 30) in days of this invoice
+    - workspace_ids # the internal ids of the project workspaces this invoice is associated with
+    - user_id # the internal id of the user who created this invoice
+    - recipient_id # the internal id of the user who received this invoice; this will be the client lead at the time that the invoice was created, or null if no lead client existed at that time.
+  associations:
+    # time_entries - when included, the time_entry_ids array will reference all of the time entries included in the Invoice
+    time_entries:
+      foreign_key: time_entry_id
+      collection: time_entries
+    # expenses - when included, the expense_ids array will reference all of the expenses included in the Invoice
+    expenses:
+      foreign_key: expense_ids
+      collection: expenses
+    # NOTE(AC): ? additional_items - when included, the additional_item_ids array will reference all of the additional items (additional invoice line items) included in the Invoice
+    # workspaces - when included, the workspace_ids array will reference the workspaces that this Invoice covers
+    workspaces:
+      foreign_key: workspace_ids
+      collection: workspaces
+    # user - user_id will reference the User who created this Invoice
+    user:
+      foreign_key: user_id
+      collection: users
+    creator: # NOTE(AC): alias for user
+      foreign_key: user_id
+      collection: users
+    # recipient - recipient_id will reference the User who received this Invoice. This will be the client lead at the time that the invoice was created, or null if no lead client existed at that time.
+    recipient:
+      foreign_key: recipient_id
+      collection: users
