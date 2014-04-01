@@ -60,6 +60,13 @@ module Mavenlink
       perform_request { connection.delete(path, arguments).body }
     end
 
+    # @note(AC): would you consider this to be inconsistent?
+    # @return [Array<String>]
+    def expense_categories
+      Mavenlink.logger.note 'Started GET /expense_categories'
+      perform_request { connection.get('expense_categories').body }
+    end
+
     private
 
     # @return [Hash]
@@ -75,13 +82,18 @@ module Mavenlink
 
     def perform_request
       yield.tap do |response|
-        if response && response['errors']
-          Mavenlink.logger.disappointment 'REQUEST FAILED:'
-          Mavenlink.logger.inspection response['errors']
-          raise InvalidRequestError.new(response)
-        else
-          Mavenlink.logger.whisper 'Received response:'
-          Mavenlink.logger.inspection response
+        Mavenlink.logger.whisper 'Received response:'
+        Mavenlink.logger.inspection response
+
+        case response
+        when Array
+          Mavenlink.logger.whisper 'Returned as a plain collection'
+        when Hash
+          if response['errors']
+            Mavenlink.logger.disappointment 'REQUEST FAILED:'
+            Mavenlink.logger.inspection response['errors']
+            raise InvalidRequestError.new(response)
+          end
         end
       end
     rescue Faraday::Error::ParsingError => e

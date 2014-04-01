@@ -109,6 +109,7 @@ describe Mavenlink::Client, stub_requests: true do
       stub_request :post,   post_path,   post_response
       stub_request :put,    put_path,    put_response
       stub_request :delete, delete_path, delete_response
+      stub_request :get, '/api/v1/expense_categories', ['Travel', 'Mileage', 'Lodging', 'Food', 'Entertainment', 'Other']
     end
 
     describe '#get' do
@@ -134,6 +135,12 @@ describe Mavenlink::Client, stub_requests: true do
         expect(subject.delete(delete_path)).to eq(delete_response)
       end
     end
+
+    describe '#expense_categories' do
+      specify do
+        expect(subject.expense_categories).to eq(['Travel', 'Mileage', 'Lodging', 'Food', 'Entertainment', 'Other'])
+      end
+    end
   end
 
 =begin
@@ -143,7 +150,7 @@ describe Mavenlink::Client, stub_requests: true do
     resp_data = subject.put('workspaces/4894095.json', {workspace: {title: 'I just changed the title'}})
 
     resp = Mavenlink::Response.new(resp_data)
-    resp.to_hash.to_yaml.split("\n").each do |line|
+    resp.to_hash.to_yaml.split('\n').each do |line|
       puts line
     end
 
