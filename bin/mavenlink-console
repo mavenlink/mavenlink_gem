@@ -1,0 +1,18 @@
+require 'irb'
+require 'mavenlink'
+
+token = ENV['TOKEN']
+Mavenlink.oauth_token = token
+
+Mavenlink.logger = Mavenlink::Logger.new(STDOUT)
+Mavenlink.logger.level = Logger::INFO # Change to Logger::DEBUG in order to display responses
+
+if token
+  Mavenlink.logger.hint "Using #{token} token."
+else
+  Mavenlink.logger.disappointment 'No token set! Please put TOKEN=xxxx into your .env file or set manually.'
+end
+
+AwesomePrint.irb! if defined?(AwesomePrint)
+ARGV.clear
+IRB.start
