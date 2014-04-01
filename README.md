@@ -137,6 +137,12 @@ workspace.errors.full_messages # -> ["Creator role is not included in the list"]
 Mavenlink::Workspace.find(7).invite(email: 'john@doe.com', full_name: 'John Doe', invitee_role: 'maven')
 ```
 
+#### Requesting expense categories
+
+```ruby
+Mavenlink.client.expense_categories
+```
+
 #### Custom requests
 
 ```ruby
