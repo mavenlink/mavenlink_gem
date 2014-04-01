@@ -302,6 +302,9 @@ attachments:
   validations:
     [data, type]:
       presence: true
+    type:
+      inclusion:
+        in: [post_attachment, receipt]
   attributes:
     - data
     - type

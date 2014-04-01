@@ -6,11 +6,13 @@ describe Mavenlink::Attachment, stub_requests: true do
   describe 'validations' do
     it { should validate_presence_of :data }
     it { should validate_presence_of :type }
+    it { should ensure_inclusion_of(:type).in_array(%w[receipt post_attachment]) }
+    it { should_not allow_value(nil).for(:type) }
   end
 
   describe '#save' do
     context 'persisted record' do
-      subject { described_class.new(id: 1, data: 'some data', type: 'text') }
+      subject { described_class.new(id: 1, data: 'some data', type: 'receipt') }
 
       it { should be_persisted }
 
