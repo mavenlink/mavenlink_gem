@@ -146,6 +146,7 @@ Mavenlink.client.expense_categories
 #### Custom requests
 
 ```ruby
+client = Mavenlink.client
 client.get('/custom_path', {param: 'anything'})
 client.post('/custom_path', {param: 'anything'})
 client.put('/custom_path', {param: 'anything'})
