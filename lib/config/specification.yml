@@ -401,3 +401,52 @@ invoices:
     recipient:
       foreign_key: recipient_id
       collection: users
+
+time_entries:
+  associations:
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    user:
+      foreign_key: user_id
+      collection: users
+    story:
+      foreign_key: story_id
+      collection: stories
+  validations:
+    [workspace_id, date_performed, time_in_minutes]:
+      presence: true
+  attributes:
+    - id # the internal time entry ID
+    - created_at # the date the time entry was created in Mavenlink
+    - updated_at # the date the time entry was last updated
+    - date_performed # the date the time entry was performed
+    - story_id # the internal story ID of the story this time entry is associated with
+    - time_in_minutes # the amount of time entered in minutes
+    - billable # whether this time entry is billable time
+    - notes # any notes added to the time entry
+    - rate_in_cents # the hourly rate for this time entry in cents
+    - currency # the currency of this time entry's rate
+    - currency_symbol # the currency symbol for this time entry's currency
+    - currency_base_unit # the amount of cents in each of the currency's dollars, for example 100 for USD.
+    - user_can_edit # whether the current user can edit this time entry or not
+    - workspace_id # the internal ID of the project workspace this time entry is associated with
+    - user_id # the internal ID of the user who created this time entry
+  create_attributes:
+    - workspace_id # (required) the internal ID of the project workspace this time entry is associated with
+    - date_performed # (required) the date the activity for which the time is being entered was performed, format: YYYY-MM-DD
+    - time_in_minutes # (required) the amount of time entered in minutes
+    - billable # (optional) whether this time entry is billable time, you must also provide rate_in_cents if you set billable to true
+    - notes # (optional) any notes added to the time entry
+    - rate_in_cents # (optional, required if billable is true) the hourly rate for this time entry in cents, you must also set billable to true when setting this
+    - story_id # (optional) the internal ID of the story this time entry is associated with
+    - user_id # (optional) the internal ID of the user the time entry is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
+  update_attributes:
+    - workspace_id # (required) the internal ID of the project workspace this time entry is associated with
+    - date_performed # (required) the date the activity for which the time is being entered was performed, format: YYYY-MM-DD
+    - time_in_minutes # (required) the amount of time entered in minutes
+    - billable # (optional) whether this time entry is billable time, you must also provide rate_in_cents if you set billable to true
+    - notes # (optional) any notes added to the time entry
+    - rate_in_cents # (optional, required if billable is true) the hourly rate for this time entry in cents, you must also set billable to true when setting this
+    - story_id # (optional) the internal ID of the story this time entry is associated with
+    - user_id # (optional) the internal ID of the user the time entry is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
