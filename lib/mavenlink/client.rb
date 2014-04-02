@@ -73,7 +73,7 @@ module Mavenlink
     def connection_options
       {
         headers: { 'Accept'        => "application/json",
-                   'User-Agent'    => "Mavenlink",
+                   'User-Agent'    => "Mavenlink Ruby Gem",
                    'Authorization' => "Bearer #@oauth_token" },
         ssl: { verify: false },
         url: ENDPOINT
