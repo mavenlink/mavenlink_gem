@@ -118,6 +118,11 @@ module Mavenlink
       merge!(attributes)
     end
 
+    # @param attributes [Hash]
+    def attributes=(attributes)
+      merge!(attributes)
+    end
+
     def persisted?
       !!id
     end
@@ -140,6 +145,21 @@ module Mavenlink
     # @return [true]
     def save!
       save or raise Mavenlink::RecordInvalidError.new(self)
+    end
+
+    # @param attributes [Hash]
+    # @return [true, false]
+    def update_attributes(attributes)
+      self.attributes = attributes
+      save
+    end
+
+    # @param attributes [Hash]
+    # @raise [Mavenlink::RecordInvalidError]
+    # @return [true]
+    def update_attributes!(attributes)
+      self.attributes = attributes
+      save!
     end
 
     # @note does not work, don't know what to do with removed record.
@@ -165,25 +185,30 @@ module Mavenlink
       Mavenlink::Settings[:default][:perform_validations] ? super(context.try(:to_sym)) : true
     end
 
+    # @return [String, nil]
+    def to_param
+      id.try(:to_s)
+    end
+
     protected
 
     # @return [Mavenlink::Response]
     def create
-      request.create(create_attributes)
+      request.create(attributes_for_create)
     end
 
     # @return [Mavenlink::Response]
     def update
-      request.update(update_attributes)
+      request.update(attributes_for_update)
     end
 
     # @return [Hash]
-    def create_attributes
+    def attributes_for_create
       specification_attributes('create_attributes')
     end
 
     # @return [Hash]
-    def update_attributes
+    def attributes_for_update
       specification_attributes('update_attributes')
     end
 

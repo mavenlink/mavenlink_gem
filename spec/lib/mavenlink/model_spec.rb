@@ -193,6 +193,24 @@ describe Mavenlink::Model, stub_requests: true do
     end
   end
 
+  describe '#attributes=' do
+    subject { model.new(name: 'old') }
+
+    specify do
+      expect { subject.attributes = {name: 'new'} }.to change { subject['name'] }.from('old').to('new')
+    end
+  end
+
+  describe '#to_param' do
+    specify do
+      expect(model.new(id: 1).to_param).to eq('1')
+    end
+
+    specify do
+      expect(model.new(id: nil).to_param).to eq(nil)
+    end
+  end
+
   describe '#save' do
     context 'valid record' do
       context 'new record' do
@@ -341,6 +359,42 @@ describe Mavenlink::Model, stub_requests: true do
         end
       end
     end
+  end
+
+  describe '#update_attributes' do
+    context 'valid record' do
+      context 'new record' do
+        subject { model.new }
+
+        specify do
+          expect(subject.update_attributes(name: 'Maria')).to eq(true)
+        end
+
+        specify do
+          expect { subject.update_attributes(name: 'Maria') }.to change(subject, :persisted?).from(false).to(true)
+        end
+      end
+
+      context 'persisted record' do
+        subject { model.create(name: 'Maria') }
+
+        it { should be_persisted }
+
+        specify do
+          expect(subject.update_attributes(name: 'mashka')).to eq(true)
+        end
+
+        specify do
+          expect { subject.update_attributes(name: 'test') }.not_to change(subject, :persisted?)
+        end
+
+        it 'reloads record fields taking it from response' do
+          expect { subject.update_attributes(name: 'test') }.to change { subject.name }.from('Masha').to('Mashka')
+        end
+      end
+    end
+
+    # TODO: invalid record, update_attributes!
   end
 
   describe '#destroy' do

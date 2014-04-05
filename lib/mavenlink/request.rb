@@ -62,6 +62,14 @@ module Mavenlink
       chain(page: number)
     end
 
+    def current_page
+      @scope[:page] || 1
+    end
+
+    def total_pages
+      perform.total_count
+    end
+
     # @param [Integer, String]
     # @return [Mavenlink::Request]
     def per_page(number)

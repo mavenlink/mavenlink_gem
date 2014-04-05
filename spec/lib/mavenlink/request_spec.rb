@@ -83,6 +83,16 @@ describe Mavenlink::Request, stub_requests: true do
     end
   end
 
+  describe '#current_page' do
+    specify do
+      expect(request.current_page).to eq(1)
+    end
+
+    specify do
+      expect(request.page(2).current_page).to eq(2)
+    end
+  end
+
   describe '#chain' do
     specify do
       expect(request.chain({})).to be_a described_class

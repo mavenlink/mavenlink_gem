@@ -272,32 +272,21 @@ stories: # tasks
     - start_date # (optional) the date the story should be started; format should look like YYYY-MM-DD
     - archived # (optional) the archived status of the story (true or false)
     - due_date # (optional) the date the story is due; format should look like YYYY-MM-DD
-    - assignees # (optional) an array of User IDs that the new story should be assigned to
+    - assignee_ids # (optional) an array of User IDs that the new story should be assigned to
     - budget_estimate_in_cents # (optional) the budget in cents of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
     - time_estimate_in_minutes # (optional) the time estimate in minutes of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
     - tag_list # (optional) a comma separated String of tags
   update_attributes:
-    - title
-    - description
-    - story_type
-    - state
-    - position
-    - archived
-    - deleted_at
-    - updated_at
-    - created_at
-    - due_date
-    - start_date
-    - sub_story_count
-    - budget_estimate_in_cents
-    - sub_stories_budget_estimate_in_cents
-    - budget_used_in_cents
-    - sub_stories_budget_used_in_cents
-    - time_estimate_in_minutes
-    - sub_stories_time_estimate_in_minutes
-    - logged_billable_time_in_minutes
-    - sub_stories_billable_time_in_minutes
-    - logged_nonbillable_time_in_minutes
+    - title # (required) the title of the story # max 200 characters
+    - story_type # (required) the type of the story: task, deliverable, or milestone
+    - description # (optional) a description of the new story # max 1000 characters
+    - start_date # (optional) the date the story should be started; format should look like YYYY-MM-DD
+    - archived # (optional) the archived status of the story (true or false)
+    - due_date # (optional) the date the story is due; format should look like YYYY-MM-DD
+    - assignee_ids # (optional) an array of User IDs that the new story should be assigned to
+    - budget_estimate_in_cents # (optional) the budget in cents of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
+    - time_estimate_in_minutes # (optional) the time estimate in minutes of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
+    - tag_list # (optional) a comma separated String of tags
 
 story_allocation_days:
   attributes:
