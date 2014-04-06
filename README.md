@@ -147,6 +147,8 @@ Mavenlink::Workspace.scoped.each_page.to_a.flatten  # Returns full collection
 Mavenlink::Workspace.scoped.each_page(2).each_with_index { |page, i| puts i }
 ```
 
+__Kaminari__ pagination is also supported.
+
 #### Client side validation
 By default client side validation is disabled, you can enable it by setting `perform_validations` to `true`
 
