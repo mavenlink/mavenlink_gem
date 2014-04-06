@@ -59,9 +59,9 @@ describe Mavenlink::Request, stub_requests: true do
   }
 
   before do
-    stub_request :get, '/api/v1/workspaces?page=1', first_page
-    stub_request :get, '/api/v1/workspaces?page=2', second_page
-    stub_request :get, '/api/v1/workspaces?page=3', third_invalid_page
+    stub_request :get,    '/api/v1/workspaces?page=1', first_page
+    stub_request :get,    '/api/v1/workspaces?page=2', second_page
+    stub_request :get,    '/api/v1/workspaces?page=3', third_invalid_page
     stub_request :get,    '/api/v1/workspaces?only=7', one_record_response
     stub_request :get,    '/api/v1/workspaces?only=8', { 'count' => 0, 'results' => [] }
     stub_request :put,    '/api/v1/workspaces/7',      one_record_response
@@ -320,6 +320,24 @@ describe Mavenlink::Request, stub_requests: true do
     end
 
     # NOTE(SZ): missing specs
+  end
+
+  describe '#total_pages' do
+    specify do
+      expect(request.total_pages).to eq(1)
+    end
+
+    # NOTE(SZ): missing specs
+  end
+
+  describe '#limit_value' do
+    specify do
+      expect(request.limit_value).to eq(2)
+    end
+
+    specify do
+      expect(request.limit(5).limit_value).to eq(5)
+    end
   end
 
   describe '#scoped' do

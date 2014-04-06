@@ -64,11 +64,24 @@ module Mavenlink
     end
 
     def current_page
-      @scope[:page] || 1
+      @scope[:page].try(:to_i) || 1
     end
 
+    # @return [Integer]
     def total_count
       response.total_count
+    end
+
+    # Kaminari support
+    # @return [Integer]
+    def total_pages
+      (total_count / (@scope[:per_page].try(:to_f) || 200.0)).ceil
+    end
+
+    # Kaminari support
+    # @return [Integer]
+    def limit_value
+      @scope[:limit].try(:to_i) || total_count
     end
 
     # @param [Integer, String]
