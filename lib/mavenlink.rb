@@ -7,7 +7,6 @@ require 'yaml'
 require 'json'
 require 'brainstem-adaptor'
 require 'faraday'
-require 'faraday_middleware'
 
 module Mavenlink
   VERSION = '0.0.1'

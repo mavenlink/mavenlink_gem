@@ -22,8 +22,6 @@ module Mavenlink
     def connection
       Faraday.new(connection_options) do |builder|
         builder.use Faraday::Request::UrlEncoded
-        builder.use Faraday::Response::ParseJson
-
         builder.adapter(*Mavenlink.adapter)
       end
     end
@@ -33,7 +31,7 @@ module Mavenlink
     # @param [Hash] arguments
     def get(path, arguments = {})
       Mavenlink.logger.note "Started GET /#{path} with #{arguments.inspect}"
-      perform_request { connection.get(path, arguments).body }
+      parse_request(connection.get(path, arguments).body)
     end
 
     # Performs custom POST request
@@ -41,7 +39,7 @@ module Mavenlink
     # @param [Hash] arguments
     def post(path, arguments = {})
       Mavenlink.logger.note "Started POST /#{path} with #{arguments.inspect}"
-      perform_request { connection.post(path, arguments).body }
+      parse_request(connection.post(path, arguments).body)
     end
 
     # Performs custom PUT request
@@ -49,7 +47,7 @@ module Mavenlink
     # @param [Hash] arguments
     def put(path, arguments = {})
       Mavenlink.logger.note "Started PUT /#{path} with #{arguments.inspect}"
-      perform_request { connection.put(path, arguments).body }
+      parse_request(connection.put(path, arguments).body)
     end
 
     # Performs custom PUT request
@@ -57,14 +55,14 @@ module Mavenlink
     # @param [Hash] arguments
     def delete(path, arguments = {})
       Mavenlink.logger.note "Started DELETE /#{path} with #{arguments.inspect}"
-      perform_request { connection.delete(path, arguments).body }
+      parse_request(connection.delete(path, arguments).body)
     end
 
     # @note(AC): would you consider this to be inconsistent?
     # @return [Array<String>]
     def expense_categories
       Mavenlink.logger.note 'Started GET /expense_categories'
-      perform_request { connection.get('expense_categories').body }
+      parse_request(connection.get('expense_categories').body)
     end
 
     private
@@ -80,8 +78,10 @@ module Mavenlink
       }.freeze
     end
 
-    def perform_request
-      yield.tap do |response|
+    def parse_request(response)
+      response = JSON.parse(response) if response
+
+      response.tap do
         Mavenlink.logger.whisper 'Received response:'
         Mavenlink.logger.inspection response
 
@@ -96,7 +96,7 @@ module Mavenlink
           end
         end
       end
-    rescue Faraday::Error::ParsingError => e
+    rescue JSON::ParserError => e
       raise Mavenlink::InvalidResponseError.new(e.message)
     end
   end
