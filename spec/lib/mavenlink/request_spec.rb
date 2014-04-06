@@ -202,7 +202,7 @@ describe Mavenlink::Request, stub_requests: true do
     end
   end
 
-  describe 'order' do
+  describe '#order' do
     specify do
       expect(request.order(:id, :desc).scope).to include(order: 'id:desc')
     end
@@ -273,6 +273,18 @@ describe Mavenlink::Request, stub_requests: true do
         # NOTE(SZ): should we raise InvalidRequestError instead?
         expect { request.delete }.to raise_error ArgumentError, /route.*ID/
       end
+    end
+  end
+
+  describe '#response' do
+    subject { request.response }
+
+    specify do
+      expect(subject).to be_a Mavenlink::Response
+    end
+
+    specify do
+      expect(subject).to eq(response)
     end
   end
 

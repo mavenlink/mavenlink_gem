@@ -5,7 +5,7 @@ module Mavenlink
     # @param settings [ActiveSuppport::HashWithIndifferentAccess]
     def initialize(settings = Mavenlink.default_settings)
       @settings = settings
-      @oauth_token = settings[:oauth_token] or raise ArgumentError, 'OAuth token is not set'
+      @oauth_token = settings[:oauth_token]
 
       # TODO: implement with method_missing?
       # Declare API calls client.-->>workspaces<<---.create({})
@@ -71,6 +71,7 @@ module Mavenlink
 
     # @return [Hash]
     def connection_options
+      @oauth_token or raise Mavenlink::InvalidRequestError, 'OAuth token is not set'
       {
         headers: { 'Accept'        => "application/json",
                    'User-Agent'    => "Mavenlink Ruby Gem",

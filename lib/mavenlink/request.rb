@@ -66,8 +66,8 @@ module Mavenlink
       @scope[:page] || 1
     end
 
-    def total_pages
-      perform.total_count
+    def total_count
+      response.total_count
     end
 
     # @param [Integer, String]
@@ -140,8 +140,14 @@ module Mavenlink
       Mavenlink::Response.new(response)
     end
 
+    # Returns cached response
+    # @return [Mavenlink::Response]
+    def response
+      @response ||= perform
+    end
+
     def results
-      @results ||= perform.results
+      @results ||= response.results
     end
     alias_method :all, :results
 

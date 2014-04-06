@@ -9,7 +9,7 @@ describe Mavenlink::Client, stub_requests: true do
 
   context 'oauth token is not set' do
     specify do
-      expect { described_class.new({}) }.to raise_error ArgumentError, /token/
+      expect { described_class.new({}).connection }.to raise_error Mavenlink::InvalidRequestError, /token/
     end
   end
 
