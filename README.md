@@ -1,7 +1,7 @@
 ![](http://project-management.com/wp-content/uploads/2013/09/Mavenlink-Logo.jpg)
 
 ## Mavenlink API
-[![Build Status](https://travis-ci.org/einzige/mavenlink.svg?branch=master&update_cache=true)](https://travis-ci.org/einzige/mavenlink)
+[![Build Status](https://travis-ci.org/einzige/mavenlink_gem.svg?branch=master)](https://travis-ci.org/einzige/mavenlink_gem)
 [![Dependency Status](https://gemnasium.com/einzige/mavenlink.svg)](https://gemnasium.com/einzige/mavenlink)
 
 ### Usage
@@ -31,7 +31,8 @@ In order to be able to perform any requests you should set `outh_token` obtained
 Mavenlink.oauth_token = "your_token"
 ```
 
-If you are using __Rails__, put this line into `config/initializers/mavenlink.rb`
+If you are using __Rails__, put this line into `config/initializers/mavenlink.rb`.
+If you are using __Heroku__ or __Foreman__, set MAVENLINK_OAUTH_TOKEN env var.
 
 #### Creating new records
 ```ruby
@@ -60,6 +61,12 @@ workspace = Mavenlink::Workspace.find(1)
 workspace.title = 'new title' # writes attribute
 workspace.save                # returns true if record has been saved
 workspace.save!               # will raise exception if record is invalid
+
+workspace.update_attributes(title: 'title')
+workspace.update_attributes!(title: 'title')
+
+workspace.attributes = {title: 'title'}
+workspace.save
 ```
 
 #### Destroying records
@@ -82,7 +89,8 @@ participant.save # performs "update" query, full_name will be changed
 
 In order to include association use `include` as follows:
 ```ruby
-Mavenlink::Workspace.scoped.include(:participants).search('My Workspace')
+Mavenlink::Workspace.scoped.includes(:participants).search('My Workspace')
+Mavenlink::Workspace.includes(:participants).search('My Workspace')
 
 Mavenlink::Workspace.scoped.search('My Workspace').order(:updated_at, :desc).each do |workspace|
   if workspace.valid?
@@ -94,6 +102,7 @@ end
 #### Search
 
 ```ruby
+Mavenlink::Workspace.search('Something')
 Mavenlink::Workspace.scoped.search('Something')
 Mavenlink.client.workspaces.search('Something')
 ```
@@ -101,6 +110,7 @@ Mavenlink.client.workspaces.search('Something')
 #### Filtering
 
 ```ruby
+Mavenlink::Workspace.filter(include_archived: true).all
 Mavenlink::Workspace.scoped.filter(include_archived: true).all
 Mavenlink.client.workspaces.filter(include_archived: true).all
 ```
@@ -108,11 +118,13 @@ Mavenlink.client.workspaces.filter(include_archived: true).all
 #### Pagination
 
 ```ruby
+Mavenlink::Workspace.page(2).per_page(3)
 Mavenlink::Workspace.scoped.page(2).per_page(3)
 Mavenlink.client.workspaces.page(2).per_page(3)
 ```
 
 ```ruby
+Mavenlink::Workspace.limit(2).offset(3)
 Mavenlink::Workspace.scoped.limit(2).offset(3)
 Mavenlink.client.workspaces.limit(2).offset(3)
 ```
@@ -178,11 +190,12 @@ client.delete('/custom_path', {param: 'anything'})
 client = Mavenlink::Client.new(oauth_token: '...')
 client.workspaces.each { |workspace| do_something(workspace) }
 
-client.workspaces.include('participants')
-client.workspaces.include('participants, creator')
-client.workspaces.include('participants', 'creator')
-client.workspaces.include(['participants', 'creator'])
-client.workspaces.include(:participants, :creator)
+client.workspaces.includes('participants')
+client.workspaces.includes('participants')
+client.workspaces.includes('participants, creator')
+client.workspaces.includes('participants', 'creator')
+client.workspaces.includes(['participants', 'creator'])
+client.workspaces.includes(:participants, :creator)
 
 client.workspaces.find(2) # Returns one Mavenlink::Workspace
 
