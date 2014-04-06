@@ -2,6 +2,10 @@ module Mavenlink
   class Model < BrainstemAdaptor::Record
     include ActiveModel::Validations
 
+    class << self
+      delegate :only, :find, :search, :filter, :page, :total_count, :per_page, :limit, :offset, :order, :all, to: :scoped
+    end
+
     # @return [String]
     def self.collection_name
       (self.name || 'undefined').split(/\W+/).last.tableize.pluralize
@@ -23,13 +27,13 @@ module Mavenlink
     end
 
     # @return [Mavenlink::Request]
-    def self.scoped
-      Mavenlink::Request.new(collection_name)
+    def self.includes(*args)
+      scoped.include(*args)
     end
 
-    # @param id [Integer, String]
-    def self.find(id)
-      scoped.find(id)
+    # @return [Mavenlink::Request]
+    def self.scoped
+      Mavenlink::Request.new(collection_name)
     end
 
     # @param model_class [Mavenlink::Model]

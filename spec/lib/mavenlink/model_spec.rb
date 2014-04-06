@@ -49,6 +49,20 @@ describe Mavenlink::Model, stub_requests: true do
     stub_request :delete, '/api/v1/monkeys/7', {}
   end
 
+  describe '.find' do
+    specify do
+      expect(model.find(7)).to be_a model
+    end
+
+    specify do
+      expect(model.find(7).id).to eq('7')
+    end
+
+    specify do
+      expect(model.find(8)).to be_nil
+    end
+  end
+
   describe '.create' do
     context 'valid record' do
       specify do

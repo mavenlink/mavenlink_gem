@@ -52,9 +52,10 @@ module Mavenlink
 
     # @param associations [String, Array]
     # @return [Mavenlink::Request]
-    def include(*associations)
+    def includes(*associations)
       chain(include: param_to_request_array(associations))
     end
+    alias_method :include, :includes
 
     # @param [Integer, String]
     # @return [Mavenlink::Request]
