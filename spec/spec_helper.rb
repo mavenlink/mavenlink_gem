@@ -1,5 +1,7 @@
 require 'mavenlink'
-require 'shoulda/matchers/active_model'
+require 'rspec'
+require 'rspec/its'
+require 'shoulda/matchers'
 require 'awesome_print'
 require 'support/shared_examples'
 
@@ -24,7 +26,7 @@ Mavenlink.logger.level = Logger::INFO
 
 RSpec.configure do |config|
   config.mock_with :rspec
-  config.color_enabled = true
+  config.color = true
   config.formatter = :documentation
   config.include Shoulda::Matchers::ActiveModel
   config.extend Shoulda::Matchers::ActiveModel
