@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'awesome_print'
   s.add_development_dependency 'foreman'
   s.add_development_dependency 'guard-rspec'
+  s.add_development_dependency 'pry'
 end
 
 

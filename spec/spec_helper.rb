@@ -3,6 +3,7 @@ require 'rspec'
 require 'rspec/its'
 require 'shoulda/matchers'
 require 'awesome_print'
+require 'pry'
 require 'support/shared_examples'
 
 shared_context 'stubbed requests', stub_requests: true do

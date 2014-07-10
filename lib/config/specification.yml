@@ -36,7 +36,7 @@ assignments:
   validations:
     [story_id, assignee_id]:
       presence: true
-      'on': create
+      'on': :create
 
 attachments:
   validations:
@@ -100,6 +100,21 @@ expenses:
       foreign_key: receipt_id
       collection: attachments
 
+google_documents:
+  attributes:
+    - id
+    - created_at
+    - updated_at
+    - deleted_at
+    - filename
+    - type
+    - url
+    - private
+    - creator_name
+    - icon_link
+    - icon_type
+    - mime_type
+
 invoices:
   attributes:
     - id # the internal invoice id
@@ -159,7 +174,6 @@ posts:
     - subject_id # if this post is a reply, the internal id of the parent post or object being replied to
     - subject_type # the class name of the object being replied to
     - story_id # the internal id of the story that this post is linked to
-    - google_documents # NOTE: NOT AN ASSOCIATION?
   create_attributes:
     - message # - (required) the content to be created in the new post
     - workspace_id # - (required) the ID of the Workspace in which the post will be created
@@ -168,6 +182,7 @@ posts:
     - story_id # - (optional) the ID of the Story (task) that the new post should be linked to
     - recipient_ids # - (optional) an array of User IDs for whom the post is visible. These users must be participating in the target Workspace and including this parameter will make the post private
     - attachment_ids # - (optional) an array of PostAttachment IDs that should be associated with the post. Create PostAttachments using the attachments endpoint.
+    - google_document_ids
   update_attributes:
     - message
     - story_id
@@ -212,6 +227,10 @@ posts:
     attachments:
       foreign_key: attachment_ids
       collection: attachments
+
+    google_documents:
+      foreign_key: google_document_ids
+      collection: google_documents
 
 roles: # TODO(SZ): find it out
 
