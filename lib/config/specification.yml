@@ -36,7 +36,7 @@ assignments:
   validations:
     [story_id, assignee_id]:
       presence: true
-      'on': :create
+      'on': create
 
 attachments:
   validations:
