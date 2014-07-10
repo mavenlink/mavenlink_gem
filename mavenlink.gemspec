@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'brainstem-adaptor', ">= 0.0.3"
   s.add_runtime_dependency 'faraday'
   s.add_development_dependency 'rspec'
+  s.add_development_dependency 'rspec-its'
   s.add_development_dependency 'shoulda-matchers'
   s.add_development_dependency 'awesome_print'
   s.add_development_dependency 'foreman'
