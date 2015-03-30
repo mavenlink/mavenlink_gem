@@ -1,7 +1,7 @@
 ![](http://project-management.com/wp-content/uploads/2013/09/Mavenlink-Logo.jpg)
 
 ## Mavenlink API
-[![Build Status](https://travis-ci.org/einzige/mavenlink_gem.svg?branch=master)](https://travis-ci.org/einzige/mavenlink_gem)
+[![Circle CI](https://circleci.com/gh/mavenlink/mavenlink_gem/tree/master.svg?style=svg)](https://circleci.com/gh/mavenlink/mavenlink_gem/tree/master)
 [![Dependency Status](https://gemnasium.com/einzige/mavenlink.svg)](https://gemnasium.com/einzige/mavenlink)
 
 ### Usage
