@@ -2,6 +2,8 @@ module Mavenlink
   class Model < BrainstemAdaptor::Record
     include ActiveModel::Validations
 
+    attr_reader :client
+
     class << self
       delegate :only, :find, :search, :filter, :page, :total_count, :per_page, :limit, :offset, :order, :all, to: :scoped
     end
@@ -34,6 +36,11 @@ module Mavenlink
     # @return [Mavenlink::Request]
     def self.scoped
       Mavenlink::Request.new(collection_name)
+    end
+
+    # @return [Mavenlink::Request]
+    def _scoped
+      Mavenlink::Request.new(collection_name, client)
     end
 
     # @param model_class [Mavenlink::Model]
@@ -111,14 +118,23 @@ module Mavenlink
     end
 
     # @param source_record [Brainstem::Record, nil]
-    def self.wrap(source_record = nil)
-      self.new({}, source_record)
+    # @param client [Mavenlink::Client]
+    def self.wrap(source_record = nil, client = Mavenlink.client)
+      self.new({}, source_record, client)
     end
 
     # @param attributes [Hash]
     # @param source_record [BrainstemAdaptor::Record]
-    def initialize(attributes = {}, source_record = nil)
+    # @param client [Mavenlink::Client]
+    def initialize(attributes = {}, source_record = nil, client = nil)
       super(self.class.collection_name, (attributes[:id] || attributes['id'] || source_record.try(:id)), source_record.try(:response))
+      if client == nil
+        begin
+          @client = Mavenlink.client
+        end
+      else
+        @client = client
+      end
       merge!(attributes)
     end
 
@@ -218,7 +234,7 @@ module Mavenlink
 
     # @return [Mavenlink::Request]
     def request
-      self.class.scoped.only(id)
+      _scoped.only(id)
     end
 
     private
@@ -235,8 +251,8 @@ module Mavenlink
       records = association.reflect
 
       if records
-        wrapper = proc { |record| Mavenlink::Model.models[association.collection_name].wrap(record) }
-        records.kind_of?(BrainstemAdaptor::Association) ? records.map(&wrapper) : wrapper.call(records)
+        wrapper = proc { |record| Mavenlink::Model.models[association.collection_name].wrap(record, client) }
+        records.kind_of?(BrainstemAdaptor::Association) ? records.map(&wrapper) : wrapper.call(records, client)
       end
     end
 
