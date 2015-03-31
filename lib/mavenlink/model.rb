@@ -2,6 +2,8 @@ module Mavenlink
   class Model < BrainstemAdaptor::Record
     include ActiveModel::Validations
 
+    attr_reader :client
+
     class << self
       delegate :only, :find, :search, :filter, :page, :total_count, :per_page, :limit, :offset, :order, :all, to: :scoped
     end
@@ -31,9 +33,10 @@ module Mavenlink
       scoped.include(*args)
     end
 
+    # @param client [Mavenlink::Client]
     # @return [Mavenlink::Request]
-    def self.scoped
-      Mavenlink::Request.new(collection_name)
+    def self.scoped(client = Mavenlink.client)
+      Mavenlink::Request.new(collection_name, client)
     end
 
     # @param model_class [Mavenlink::Model]
@@ -111,14 +114,17 @@ module Mavenlink
     end
 
     # @param source_record [Brainstem::Record, nil]
-    def self.wrap(source_record = nil)
-      self.new({}, source_record)
+    # @param client [Mavenlink::Client]
+    def self.wrap(source_record = nil, client = Mavenlink.client)
+      self.new({}, source_record, client)
     end
 
     # @param attributes [Hash]
     # @param source_record [BrainstemAdaptor::Record]
-    def initialize(attributes = {}, source_record = nil)
+    # @param client [Mavenlink::Client]
+    def initialize(attributes = {}, source_record = nil, client = Mavenlink.client)
       super(self.class.collection_name, (attributes[:id] || attributes['id'] || source_record.try(:id)), source_record.try(:response))
+      @client = client
       merge!(attributes)
     end
 
@@ -218,7 +224,7 @@ module Mavenlink
 
     # @return [Mavenlink::Request]
     def request
-      self.class.scoped.only(id)
+      collection_scope.only(id)
     end
 
     private
@@ -229,14 +235,19 @@ module Mavenlink
       @associations_cache ||= {}.with_indifferent_access
     end
 
+    # @return [Mavenlink::Request]
+    def collection_scope
+      @collection_scope ||= self.class.scoped(client)
+    end
+
     # @param association [BrainstemAdaptor::Association]
     # @return [Array<Mavenlink::Model>, nil]
     def fetch_association_records(association)
       records = association.reflect
 
       if records
-        wrapper = proc { |record| Mavenlink::Model.models[association.collection_name].wrap(record) }
-        records.kind_of?(BrainstemAdaptor::Association) ? records.map(&wrapper) : wrapper.call(records)
+        wrapper = proc { |record| Mavenlink::Model.models[association.collection_name].wrap(record, client) }
+        records.kind_of?(BrainstemAdaptor::Association) ? records.map(&wrapper) : wrapper.call(records, client)
       end
     end
 
@@ -254,7 +265,7 @@ module Mavenlink
     # @return [Hash]
     def specification_attributes(key)
       {}.tap do |result|
-        self.slice(*self.class.specification[key]).each do |attr_name, value|
+        self.to_hash.slice(*self.class.specification[key]).each do |attr_name, value|
           result[attr_name] = value
         end
       end
