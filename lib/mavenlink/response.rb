@@ -6,7 +6,7 @@ module Mavenlink
     # @param response_data [String, Hash]
     # @param specification [BrainstemAdaptor::Specification]
     # @param client [Mavenlink::Client]
-    def initialize(response_data, specification = Mavenlink.specification, client = Mavenlink.client)
+    def initialize(response_data, client = Mavenlink.client, specification = Mavenlink.specification)
       @client = client
       super(response_data, specification)
     end

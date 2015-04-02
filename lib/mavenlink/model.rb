@@ -39,7 +39,7 @@ module Mavenlink
     end
 
     # @return [Mavenlink::Request]
-    def _scoped
+    def scoped_im
       Mavenlink::Request.new(collection_name, client)
     end
 
@@ -128,12 +128,10 @@ module Mavenlink
     # @param client [Mavenlink::Client]
     def initialize(attributes = {}, source_record = nil, client = nil)
       super(self.class.collection_name, (attributes[:id] || attributes['id'] || source_record.try(:id)), source_record.try(:response))
-      if client == nil
-        begin
-          @client = Mavenlink.client
-        end
-      else
+      if client
         @client = client
+      else
+        @client ||= Mavenlink.client
       end
       merge!(attributes)
     end
@@ -234,7 +232,7 @@ module Mavenlink
 
     # @return [Mavenlink::Request]
     def request
-      _scoped.only(id)
+      scoped_im.only(id)
     end
 
     private
