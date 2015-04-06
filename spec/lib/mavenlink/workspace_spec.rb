@@ -51,6 +51,14 @@ describe Mavenlink::Workspace, stub_requests: true do
     end
   end
 
+  describe 'instance methods' do
+    subject { model.new(title: 'Some title', creator_role: 'maven') }
+
+    specify do
+      expect(subject.scoped_im).to be_a Mavenlink::Request
+    end
+  end
+
   describe 'class methods' do
     subject { model }
     its(:collection_name) { should == 'workspaces' }
@@ -205,6 +213,7 @@ describe Mavenlink::Workspace, stub_requests: true do
     it 'accepts attributes' do
       expect(model.new(any_custom_key: 'value set')).to include(any_custom_key: 'value set')
     end
+
   end
 
   describe '#persisted?' do
