@@ -268,7 +268,7 @@ module Mavenlink
     # @return [Hash]
     def specification_attributes(key)
       {}.tap do |result|
-        self.slice(*self.class.specification[key]).each do |attr_name, value|
+        self.to_hash.slice(*self.class.specification[key]).each do |attr_name, value|
           result[attr_name] = value
         end
       end
