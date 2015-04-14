@@ -126,13 +126,9 @@ module Mavenlink
     # @param attributes [Hash]
     # @param source_record [BrainstemAdaptor::Record]
     # @param client [Mavenlink::Client]
-    def initialize(attributes = {}, source_record = nil, client = nil)
+    def initialize(attributes = {}, source_record = nil, client = Mavenlink.client)
       super(self.class.collection_name, (attributes[:id] || attributes['id'] || source_record.try(:id)), source_record.try(:response))
-      if client
-        @client = client
-      else
-        @client ||= Mavenlink.client
-      end
+      @client = client
       merge!(attributes)
     end
 
