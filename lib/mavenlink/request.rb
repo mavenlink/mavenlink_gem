@@ -131,6 +131,12 @@ module Mavenlink
     end
 
     # @param attributes [Hash]
+    # @return [Mavenlink::Model]
+    def build(attributes)
+      "Mavenlink::#{collection_name.classify}".constantize.new(attributes, nil, client)
+    end
+
+    # @param attributes [Hash]
     # @return [Mavenlink::Response]
     def create(attributes)
       perform { client.post(collection_name, {collection_name.singularize => attributes}) }
@@ -151,7 +157,7 @@ module Mavenlink
     # @return [Mavenlink::Response]
     def perform
       response = block_given? ? yield : client.get(collection_name, scope)
-      Mavenlink::Response.new(response)
+      Mavenlink::Response.new(response, client)
     end
 
     # Returns cached response
