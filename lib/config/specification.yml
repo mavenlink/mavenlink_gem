@@ -234,8 +234,12 @@ stories: # tasks
     sub_stories:
       foreign_key: sub_story_ids
       collection: stories
-    # tags: NOTE(SZ) moved in read-only attributes
-    #   foreign_key: tag_ids
+    tags: #NOTE(SZ) moved in read-only attributes
+      foreign_key: tag_ids
+      collection: tags
+    story_tasks:
+      foreign_key: story_task_ids
+      collection: story_tasks
 
   attributes:
     - id # the internal story id
@@ -262,7 +266,6 @@ stories: # tasks
     - logged_billable_time_in_minutes # the sum of all billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
     - sub_stories_billable_time_in_minutes # the sum of all sub-stories' billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
     - logged_nonbillable_time_in_minutes # the sum of all non-billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
-    - tag_ids
   create_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
@@ -317,6 +320,28 @@ story_allocation_days:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
+
+story_tasks:
+  associations:
+    story:
+      foreign_key: story_id
+      collection: stories
+  attributes:
+    - id
+    - name
+    - completed
+    - completed_at
+    - position
+    - complted_by_id
+    - story_id
+
+tags:
+  attributes:
+    - id
+    - name
+    - status
+  create_attributes:
+    - name
 
 time_entries:
   associations:

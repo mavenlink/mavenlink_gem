@@ -83,6 +83,8 @@ require 'mavenlink/invoice'
 require 'mavenlink/post'
 require 'mavenlink/story'
 require 'mavenlink/story_allocation_day'
+require 'mavenlink/story_task'
+require 'mavenlink/tag'
 require 'mavenlink/time_entry'
 require 'mavenlink/role' # NOTE(SZ): remove
 require 'mavenlink/user'
