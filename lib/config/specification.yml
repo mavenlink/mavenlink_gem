@@ -213,6 +213,42 @@ posts:
       foreign_key: attachment_ids
       collection: attachments
 
+project_templates:
+  attributes:
+    - id # the internal project template ID
+    - title # the title of the project template
+    - shared # whether or not the project template is shared with other users on the account other than the creator
+    - is_budgeted # whether or not the project template has financial attributes including overall budget, story budgets, and story time estimates
+    - budget # the estimated overall budget of the project associated with the template
+    - item_count # the number of stories (tasks) inside the project template
+    - duration # the estimated number of days that the associated project will take
+    - currency # the currency of the project template
+    - description # the description of the project template which does not map over to the project description when applied
+    - user_id # the id of the user who created the project template
+    - raw_json # (Optional Field) a json hash that contains all the project templates tasks - See below for explanation on optional fields and go to the bottom for and explanation on the raw_json field
+  create_attributes:
+    - title # (required) the title of the new project template
+    - description # the description of the project template
+    - raw_json # (optional) a json hash that contains all the project templates tasks
+    - shared # (optional) whether or not the project template is shared with other users on the account other than the creator (default: false)
+    - is_budgeted # (optional) whether or not the project template has financial attributes including overall budget, story budgets, and story time estimates (default: false)
+    - budget # (optional) the estimated overall budget of the project associated with the template
+    - currency # (optional) the currency of the project template (default: 'USD')
+    - duration # (optional) the estimated number of days that the associated project will take
+  update_attributes:
+    - title # (required) the title of the new project template
+    - description # the description of the project template
+    - raw_json # (optional) a json hash that contains all the project templates tasks
+    - shared # (optional) whether or not the project template is shared with other users on the account other than the creator (default: false)
+    - is_budgeted # (optional) whether or not the project template has financial attributes including overall budget, story budgets, and story time estimates (default: false)
+    - budget # (optional) the estimated overall budget of the project associated with the template
+    - currency # (optional) the currency of the project template (default: 'USD')
+    - duration # (optional) the estimated number of days that the associated project will take
+  associations:
+    user:
+      foreign_key: user_id
+      collection: users
+
 roles: # TODO(SZ): find it out
 
 stories: # tasks
