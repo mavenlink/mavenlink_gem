@@ -131,6 +131,12 @@ module Mavenlink
     end
 
     # @param attributes [Hash]
+    # @return [Mavenlink::Model]
+    def build(attributes)
+      "Mavenlink::#{collection_name.classify}".constantize.new(attributes, nil, client)
+    end
+
+    # @param attributes [Hash]
     # @return [Mavenlink::Response]
     def create(attributes)
       perform { client.post(collection_name, {collection_name.singularize => attributes}) }
