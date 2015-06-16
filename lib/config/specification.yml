@@ -431,6 +431,7 @@ workspaces:
     - description
     - currency
     - price
+    - start_date
     - due_date
     - change_orders
     - consultant_role_name
@@ -443,6 +444,12 @@ workspaces:
     - description
     - archived
     - access_level
+    - price
+    - start_date
+    - due_date
+    - posts_require_privacy_decision
+    - tasks_default_non_billable
+    - expenses_in_burn_rate
 
 workspace_groups:
   attributes:
