@@ -517,15 +517,35 @@ workspace_groups:
     - id # the internal workspace group ID
     - name # the name of the workspace group
     - company # whether the workspace group represents a company
+    - contact_name
+    - email
+    - phone_number
+    - address
+    - website
+    - notes
   create_attributes:
     - name
     - company
     - add_workspace_ids
+    - company
+    - contact_name
+    - email
+    - phone_number
+    - address
+    - website
+    - notes
   update_attributes:
     - name
     - company
     - add_workspace_ids
     - remove_workspace_ids
+    - company
+    - contact_name
+    - email
+    - phone_number
+    - address
+    - website
+    - notes
   validations:
     name:
       presence: true
