@@ -52,6 +52,66 @@ attachments:
     - data
     - type
 
+custom_fields:
+  attributes:
+    - id # the internal id of the custom field
+    - name # the given field name
+    - value_type # the types the Custom Field Values use defaulting to 'string'. The current types include: 'string', 'date', 'number', 'currency', 'single', and 'multi'
+    - creator_id # the internal id of the User who created the custom field
+    - default_text # the placeholder text
+    - unique_constraint # an optional boolean constraint which forces the Custom Field Values' value to be unique across a subject_type. The default is false
+    - choices # the choices only valid for a 'single' and 'multi' type custom fields
+    - custom_field_set_id # the custom field set the field belongs in. All custom fields are contained in a custom field set which contain many sets.
+    - write_access # the permission level required to create, update, and destroy values for this custom field
+    - read_access # the permission level required to read values for this custom field
+    - created_at # the date the CF was created
+    - updated_at # the date the CF was last updated
+  create_attributes:
+    - name # (required) the given field name
+    - value_type # (optional) the types the Custom Field Values use. The current types include: 'string', 'date', 'number', and 'currency'
+    - default_text # (optional) the placeholder text
+    - unique_constraint # (optional) a boolean constraint which forces the Custom Field Values' value to be unique across a subject_type. The default is false
+    - choices # (optional) the choices a custom field may have and only valid for a 'single' and 'multi' type custom fields. eg. [{'label' => 'first choice'}, {'label' => 'another choice'}]
+    - custom_field_set_id # (optional) the custom field set the custom field will belong to. If the custom_field_set_id is omitted this field will belong to a Workspace set named 'Default Project Set'. Note omitting the set id will restrict this field to only be applied to workspaces.
+  update_attributes:
+    - name # (required) the given field name
+    - default_text # (optional) the placeholder text
+    - choices # choices may be updated through their CF's choices attribute. To change a choice's name, specify the id. To add new choices, do not specify and id. eg. [{'id' => '1', 'label' => 'new first choice name'}, {'label' => 'a brand new choice'}]. If a previous choice of the custom field is omitted, that choice will be soft deleted so that the values will not point to invalid choices.
+    - write_access # (optional) the permission level required for a user to create, update, or delete a custom field value for an object.
+    - read_access # (optional) the permission level required to read a custom field value for an object.
+  associations:
+    creator:
+      foreign_key: creator_id
+      collection: users
+
+custom_field_values:
+  attributes:
+    - id # the internal custom field value id
+    - subject_type # the type of entity the custom field value is associated with. Valid types include 'Workspace', 'Story', and 'User'
+    - subject_id # the internal id of the entity type defined by the subject_type field
+    - value # the value applied to the subject
+    - type # they type of value. The Current valid values are: 'string', 'date', 'number', 'currency' 'single', and 'multi'
+    - setter_id # the internal id of the User who has set value
+    - account_id # the id of the account the custom field value is on
+    - custom_field_id # the internal id of the associated custom field
+    - custom_field_name # the name of the associated custom field
+    - created_at # the date the custom field value was created in Mavenlink
+    - updated_at # the date the custom field value was last updated
+  create_attributes:
+    - subject_type # (required)
+    - subject_id # (required)
+    - custom_field_id # (required)
+    - value # (required)
+  update_attributes:
+    - value # (required)
+  associations:
+    setter:
+      - foreign_key: setter_id
+      - collection: users
+    custom_field:
+      - foreign_key: custom_field_id
+      - collection: custom_fields
+
 expenses:
   validations:
     [workspace_id, date, category, amount_in_cents]:
