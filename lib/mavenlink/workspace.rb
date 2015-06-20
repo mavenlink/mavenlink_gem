@@ -16,5 +16,9 @@ module Mavenlink
     def invite(invitation)
       Mavenlink.client.post("workspaces/#@id/invite", invitation: invitation) if persisted?
     end
+
+    def custom_field_values
+      client.custom_field_values.filter(subject_type: 'workspace', subject_id: self.id)
+    end
   end
 end
