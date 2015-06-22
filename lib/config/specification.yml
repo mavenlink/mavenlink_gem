@@ -545,6 +545,7 @@ workspaces:
     - budget_used # the amount of the project budget already burned, only included if the current user has financial access in the workspace
     - over_budget # whether the project is over budget, only included if the current user has financial access in the workspace
     - currency # the currency of the project, only included if the current user has financial access in the workspace
+    - status # a hash with information about the status of the project (color, message, key)
   create_attributes:
     - title
     - creator_role
