@@ -18,7 +18,7 @@ module Mavenlink
     end
 
     def custom_field_values
-      client.custom_field_values.filter(subject_type: 'workspace', subject_id: self.id)
+      client.custom_field_values.filter(subject_type: 'workspace', with_subject_id: self.id)
     end
   end
 end
