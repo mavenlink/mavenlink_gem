@@ -83,6 +83,9 @@ custom_fields:
     creator:
       foreign_key: creator_id
       collection: users
+    choices:
+      foreign_key: choice_ids
+      collection: custom_field_choices
 
 custom_field_values:
   attributes:
@@ -108,6 +111,18 @@ custom_field_values:
     setter:
       - foreign_key: setter_id
       - collection: users
+    custom_field:
+      - foreign_key: custom_field_id
+      - collection: custom_fields
+
+custom_field_choices:
+  attributes:
+    - id
+    - updated_at
+    - created_at
+    - label
+    - custom_field_id
+  associations:
     custom_field:
       - foreign_key: custom_field_id
       - collection: custom_fields
