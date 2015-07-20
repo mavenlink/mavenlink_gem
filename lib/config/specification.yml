@@ -324,6 +324,99 @@ project_templates:
       foreign_key: user_id
       collection: users
 
+rate_cards:
+  associations:
+    rate_card_set:
+      foreign_key: rate_card_set_id
+      collection: rate_card_sets
+    rate_card_versions:
+      foreign_key: rate_card_version_ids
+      collection: rate_card_versions
+  attributes:
+    - currency
+    - uses
+    - id
+    - rate_card_set_id
+    - rate_card_version_ids
+  create_attributes:
+    - rate_card_set_id
+    - rate_card_set_version_id
+    - currency
+  update_attributes:
+    - currency
+
+rate_card_sets:
+  associations:
+    rate_cards:
+      foriegn_key: rate_card_ids
+      collection: rate_cards
+    rate_card_set_versions:
+      foreign_key: rate_card_set_version_ids
+      collection: rate_card_set_versions
+  attributes:
+    - title
+    - account_default
+    - active_currencies
+    - default_currencies
+    - destroyable
+  create_attributes:
+    - clone_version_id
+    - title
+  update_attributes:
+    - title
+
+rate_card_set_versions:
+  associations:
+    rate_card_set:
+      foreign_key: rate_card_set_id
+      collection: rate_card_sets
+    rate_card_versions:
+      foreign_key: rate_card_version_ids
+      collection: rate_card_versions
+  attributes:
+    - active
+    - effective_date
+    - used_currencies
+  create_attributes:
+    - rate_card_set_id
+    - effective_date
+  update_attributes:
+    - effective_date
+
+rate_card_versions:
+  associations:
+    rate_card:
+      foreign_key: rate_card_id
+      collection: rate_cards
+    rate_card_set_version:
+      foreign_key: rate_card_set_version_id
+      collection: rate_card_set_versions
+    rate_card_roles:
+      foreign_key: rate_card_role_ids
+      collection: rate_card_roles
+  attributes:
+    - default_rate
+  create_attributes:
+  update_attributes:
+    - default_rate
+
+rate_card_roles:
+  associations:
+    role:
+      foreign_key: role_id
+      collection: roles
+    rate_card_version:
+      foreign_key: rate_card_version_id
+      collection: rate_card_versions
+  attributes:
+    - rate
+  create_attributes:
+    - rate_card_version_id
+    - role_id
+    - rate
+  update_attributes:
+    - rate
+
 roles: # TODO(SZ): find it out
 
 stories: # tasks
