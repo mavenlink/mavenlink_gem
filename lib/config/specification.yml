@@ -202,6 +202,28 @@ invoices:
       foreign_key: recipient_id
       collection: users
 
+participations:
+  attributes:
+    - id
+    - role
+    - is_team_lead
+    - active_role
+    - estimated_workspace_minutes
+    - allocated_workspace_minutes
+    - user_id
+    - workspace_id
+    - workspace_role_id
+  associations:
+    user:
+      foreign_key: user_id
+      collection: users
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    role:
+      foreign_key: workspace_role_id
+      collection: roles
+
 posts:
   attributes:
     - id # the internal id of the post
