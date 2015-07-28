@@ -490,6 +490,7 @@ stories: # tasks
     - budget_estimate_in_cents # (optional) the budget in cents of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
     - time_estimate_in_minutes # (optional) the time estimate in minutes of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
     - tag_list # (optional) a comma separated String of tags
+    - state # (optional) the current status of the story
   update_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
@@ -501,6 +502,7 @@ stories: # tasks
     - budget_estimate_in_cents # (optional) the budget in cents of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
     - time_estimate_in_minutes # (optional) the time estimate in minutes of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
     - tag_list # (optional) a comma separated String of tags
+    - state # (optional) the current status of the story
 
 story_allocation_days:
   attributes:
