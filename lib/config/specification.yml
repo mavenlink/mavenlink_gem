@@ -213,6 +213,12 @@ participations:
     - user_id
     - workspace_id
     - workspace_role_id
+  create_attributes:
+    - workspace_id # (required)
+    - role # (required) either `maven` or `buyer`
+    - user_id # (required)
+  update_attributes:
+    - team_lead # (required) boolean to set the team lead on the workspace
   associations:
     user:
       foreign_key: user_id
