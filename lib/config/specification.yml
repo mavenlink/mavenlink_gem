@@ -551,7 +551,7 @@ story_tasks:
     - completed
     - completed_at
     - position
-    - complted_by_id
+    - completed_by_id
     - story_id
 
 tags:
