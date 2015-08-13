@@ -698,6 +698,13 @@ workspaces:
     - client_role_name
     - access_level
     - project_tracker_template_id
+    - change_orders_enabled
+    - expenses_in_burn_rate
+    - posts_require_privacy_decision
+    - stories_are_fixed_fee_by_default
+    - posts_require_privacy_decision
+    - rate_card_id
+
   update_attributes:
     - title
     - budgeted
@@ -710,6 +717,11 @@ workspaces:
     - posts_require_privacy_decision
     - tasks_default_non_billable
     - expenses_in_burn_rate
+    - rate_card_id
+    - client_role_name
+    - consultant_role_name
+    - posts_require_privacy_decision
+    - stories_are_fixed_fee_by_default
 
 workspace_groups:
   attributes:
