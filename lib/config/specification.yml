@@ -175,6 +175,45 @@ expenses:
       foreign_key: receipt_id
       collection: attachments
 
+expense_report_submissions:
+  attributes:
+    - id
+    - created_at
+    - updated_at
+    - status
+    - title
+    - comment
+    - type
+    - resolution_description
+    - line_item_total_formatted
+    - line_item_total_in_cents
+    - currency
+    - currency_symbol
+    - currency_base_unit
+    - current_resolution_description
+    - current_resolution_creator_id
+    - current_resolution_created_at_date
+    - expense_ids
+    - resolution_ids
+  create_attributes:
+    - title
+    - comment
+    - workspace_id
+    - line_item_ids
+  associations:
+    user:
+      foreign_key: user_id
+      collection: users
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    expenses:
+      foreign_key: expense_ids
+      collection: expenses
+    resolutions:
+      foreign_key: resolution_ids
+      collection: resolutions
+
 invoices:
   attributes:
     - id # the internal invoice id
@@ -444,6 +483,16 @@ rate_card_roles:
     - rate
   update_attributes:
     - rate
+
+resolutions:
+  attributes:
+    - type
+    - created_at
+    - updated_at
+    - description
+    - target_type
+    - target_id
+    - user_id
 
 roles: # TODO(SZ): find it out
 
