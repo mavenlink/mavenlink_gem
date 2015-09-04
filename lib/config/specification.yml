@@ -154,16 +154,20 @@ expenses:
     - category # (required) the category of the expense as a string
     - amount_in_cents # the amount of the expense, expressed in cents
     - notes # freeform text related to the expense
-    - currency # the three-letter currency code for the currency of the expense
     - user_id # the internal ID of the user the expense is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
+    - receipt_id
+    - billable
+    - story_id
   update_attributes:
     # NOTE(AC): check
     - date # (required) the date of the expense in ISO8601 format
     - category # (required) the category of the expense as a string
     - amount_in_cents # the amount of the expense, expressed in cents
     - notes # freeform text related to the expense
-    - currency # the three-letter currency code for the currency of the expense
     - user_id # the internal ID of the user the expense is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
+    - receipt_id
+    - billable
+    - story_id
   associations:
     workspace:
       foreign_key: workspace_id
@@ -174,6 +178,9 @@ expenses:
     receipt:
       foreign_key: receipt_id
       collection: attachments
+    story:
+      foreign_key: story_id
+      collection: stories
 
 expense_report_submissions:
   attributes:
