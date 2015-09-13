@@ -206,6 +206,7 @@ expense_report_submissions:
     - title
     - comment
     - workspace_id
+    - user_id
     - line_item_ids
   associations:
     user:
