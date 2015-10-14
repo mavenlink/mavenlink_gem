@@ -179,6 +179,33 @@ invoices:
     - workspace_ids # the internal ids of the project workspaces this invoice is associated with
     - user_id # the internal id of the user who created this invoice
     - recipient_id # the internal id of the user who received this invoice; this will be the client lead at the time that the invoice was created, or null if no lead client existed at that time.
+    - user_invoice_title
+    - user_invoice_number
+    - tax_rate
+  create_attributes:
+    - time_entry_ids # (required) An array of time entry IDs to associate with the invoice
+    - expense_ids # (required) An array of expense IDs to associate with the invoice
+    - workspace_id # (required) The ID of the workspace this invoice is associated with
+    - payment_schedule # (required) The payment schedule (i.e. 30) in days of this invoice
+    - invoice_date # The date the invoice was incurred, format: YYYY-MM-DD#
+    - user_invoice_number #
+    - user_invoice_title #
+    - draft # Whether the invoice is a draft or not
+    - message # Any notes added to the invoice
+    - purchase_order # A string
+    - project_code # A string
+    - fixed_fee_items # Nested params for FixedFeeItem
+    - additional_items # Nested params for AdditionalItem
+  update_attributes:
+    - expense_ids # (required)
+    - time_entry_ids # (required)
+    - payment_schedule
+    - user_invoice_number
+    - draft
+    - message
+    - user_invoice_title
+    - purchase_order
+    - project_code
   associations:
     # time_entries - when included, the time_entry_ids array will reference all of the time entries included in the Invoice
     time_entries:
