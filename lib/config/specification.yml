@@ -304,6 +304,23 @@ organizations:
     - name
     - parent_id
 
+organization_memberships:
+  attributes:
+    - member_id
+    - member_type
+  create_attributes:
+    - geography_id
+    - department_id
+    - member_id
+    - member_type
+  associations:
+    geography:
+      foreign_key: geography_id
+      collection: organizations
+    department:
+      foreign_key: department_id
+      collection: organizations
+
 participations:
   attributes:
     - id
