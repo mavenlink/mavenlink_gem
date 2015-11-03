@@ -291,6 +291,19 @@ invoices:
       foreign_key: recipient_id
       collection: users
 
+organizations:
+  attributes:
+    - name
+    - type
+    - parent_id
+    - ancestor_ids
+  create_attributes:
+    - name
+    - parent_id
+  update_attributes:
+    - name
+    - parent_id
+
 participations:
   attributes:
     - id
