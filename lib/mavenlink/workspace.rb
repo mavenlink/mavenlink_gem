@@ -1,6 +1,7 @@
 module Mavenlink
   class Workspace < Model
-    include Concerns::Indestructible
+    include Mavenlink::Concerns::CustomFieldable
+    include Mavenlink::Concerns::Indestructible
 
     # validates :due_date, format: 'YYYY-MM-DD'
     # ...
@@ -17,8 +18,5 @@ module Mavenlink
       client.post("workspaces/#@id/invite", invitation: invitation) if persisted?
     end
 
-    def custom_field_values
-      client.custom_field_values.filter(subject_type: 'workspace', with_subject_id: self.id)
-    end
   end
 end
