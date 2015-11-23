@@ -560,6 +560,8 @@ resolutions:
     - user_id
 
 roles: # TODO(SZ): find it out
+  attributes:
+    - name
 
 stories: # tasks
   associations:
