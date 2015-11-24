@@ -723,6 +723,7 @@ time_entries:
     - user_can_edit # whether the current user can edit this time entry or not
     - workspace_id # the internal ID of the project workspace this time entry is associated with
     - user_id # the internal ID of the user who created this time entry
+    - approved # whether or not the time entry has been approved
   create_attributes:
     - workspace_id # (required) the internal ID of the project workspace this time entry is associated with
     - date_performed # (required) the date the activity for which the time is being entered was performed, format: YYYY-MM-DD
