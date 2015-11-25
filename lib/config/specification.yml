@@ -771,6 +771,9 @@ workspaces:
     participants:
       foreign_key: participant_ids
       collection: users
+    participations:
+      foreign_key: participation_ids
+      collection: participations
     creator:
       foreign_key: creator_id
       collection: users
