@@ -464,6 +464,9 @@ rate_cards:
     rate_card_versions:
       foreign_key: rate_card_version_ids
       collection: rate_card_versions
+    effective_rate_card_version:
+      foreign_key: effective_rate_card_version_id
+      collection: rate_card_versions
   attributes:
     - currency
     - uses
@@ -704,6 +707,9 @@ time_entries:
     story:
       foreign_key: story_id
       collection: stories
+    role:
+      foreign_key: role_id
+      collection: roles
   validations:
     [workspace_id, date_performed, time_in_minutes]:
       presence: true
@@ -724,6 +730,7 @@ time_entries:
     - workspace_id # the internal ID of the project workspace this time entry is associated with
     - user_id # the internal ID of the user who created this time entry
     - approved # whether or not the time entry has been approved
+    - role_id # The internal ID of the Role that is associated with this time entry
   create_attributes:
     - workspace_id # (required) the internal ID of the project workspace this time entry is associated with
     - date_performed # (required) the date the activity for which the time is being entered was performed, format: YYYY-MM-DD
