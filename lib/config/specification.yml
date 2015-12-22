@@ -1,4 +1,12 @@
 ---
+additional_items:
+  attributes:
+    - created_at
+    - notes
+    - amount_in_cents
+    - taxable
+    - currency
+
 assignments:
   attributes:
     - id # the unique identifier for this assignment object
@@ -222,6 +230,17 @@ expense_report_submissions:
       foreign_key: resolution_ids
       collection: resolutions
 
+fixed_fee_items:
+  attributes:
+    - id
+    - created_at
+    - notes
+    - amount_in_cents
+    - taxable
+    - currency
+    - story_id
+    - workspace_id
+
 invoices:
   attributes:
     - id # the internal invoice id
@@ -271,12 +290,18 @@ invoices:
   associations:
     # time_entries - when included, the time_entry_ids array will reference all of the time entries included in the Invoice
     time_entries:
-      foreign_key: time_entry_id
+      foreign_key: time_entry_ids
       collection: time_entries
     # expenses - when included, the expense_ids array will reference all of the expenses included in the Invoice
     expenses:
       foreign_key: expense_ids
       collection: expenses
+    additional_items:
+      foreign_key: additional_item_ids
+      collection: additional_items
+    fixed_fee_items:
+      foreign_key: fixed_fee_item_ids
+      collection: fixed_fee_items
     # NOTE(AC): ? additional_items - when included, the additional_item_ids array will reference all of the additional items (additional invoice line items) included in the Invoice
     # workspaces - when included, the workspace_ids array will reference the workspaces that this Invoice covers
     workspaces:
