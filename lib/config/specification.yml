@@ -596,6 +596,7 @@ stories: # tasks
     - id # the internal story id
     - workspace_id # the internal id for the workspace of the story
     - parent_id # the internal story id of a story's parent story (only for sub-stories)
+    - billable # whether or not the task is billable
     - title # the title of the story
     - description # a user provided description of the story
     - story_type # the story's type (task, deliverable, or milestone)
@@ -631,6 +632,7 @@ stories: # tasks
     - time_estimate_in_minutes # (optional) the time estimate in minutes of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
     - tag_list # (optional) a comma separated String of tags
     - state # (optional) the current status of the story
+    - billable # whether or not the task is billable
   update_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
@@ -643,6 +645,7 @@ stories: # tasks
     - time_estimate_in_minutes # (optional) the time estimate in minutes of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
     - tag_list # (optional) a comma separated String of tags
     - state # (optional) the current status of the story
+    - billable # whether or not the task is billable
 
 story_allocation_days:
   attributes:
