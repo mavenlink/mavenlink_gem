@@ -1,4 +1,36 @@
 ---
+account_invitations:
+  attributes:
+    - full_name
+    - email_address
+    - headline
+    - pending
+    - permission
+    - bill_rate_in_cents
+    - cost_rate_in_cents
+  create_attributes:
+    - full_name
+    - email_address
+    - headline
+    - permission
+    - bill_rate_in_cents
+    - cost_rate_in_cents
+    - default_role_id
+  update_attributes:
+    - permission
+    - bill_rate_in_cents
+    - cost_rate_in_cents
+    - default_role_id
+  associations:
+    inviter:
+      foreign_key: inviter_id
+      collection: users
+    invitee:
+      foreign_key: invitee_id
+      collection: users
+    default_role:
+      foreign_key: default_role_id
+      collection: roles
 additional_items:
   attributes:
     - created_at
