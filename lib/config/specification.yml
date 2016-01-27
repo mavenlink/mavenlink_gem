@@ -8,6 +8,8 @@ account_invitations:
     - permission
     - bill_rate_in_cents
     - cost_rate_in_cents
+    - inviter_id
+    - invitee_id
   create_attributes:
     - full_name
     - email_address
