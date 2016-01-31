@@ -896,6 +896,7 @@ workspaces:
     - title # the title of the project
     - archived # whether the project is archived
     - description # the description of the project
+    - due_date # the due date of the project
     - effective_due_date # effective due date of the project
     - budgeted # whether the project is budgeted
     - change_orders_enabled # whether change orders are enabled in the project
@@ -914,6 +915,7 @@ workspaces:
     - budget_used # the amount of the project budget already burned, only included if the current user has financial access in the workspace
     - over_budget # whether the project is over budget, only included if the current user has financial access in the workspace
     - currency # the currency of the project, only included if the current user has financial access in the workspace
+    - start_date # the start date of the project
     - status # a hash with information about the status of the project (color, message, key)
     - stories_are_fixed_fee_by_default # whether stories default to Fixed Fee or T&M
   create_attributes:
