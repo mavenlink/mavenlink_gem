@@ -108,5 +108,6 @@ require 'mavenlink/resolution'
 require 'mavenlink/role' # NOTE(SZ): remove
 require 'mavenlink/user'
 require 'mavenlink/workspace'
+require 'mavenlink/workspace_invoice_preference'
 require 'mavenlink/workspace_group'
 require 'mavenlink/railtie' if defined?(Rails)
