@@ -264,6 +264,22 @@ expense_report_submissions:
       foreign_key: resolution_ids
       collection: resolutions
 
+external_payments:
+  attributes:
+    - id
+    - created_at
+    - updated_at
+    - user_id
+    - amount_in_cents
+    - message
+    - invoice_id
+    - workspace_id
+  create_attributes:
+    - amount_in_cents
+    - message
+    - invoice_id
+    - workspace_id
+
 fixed_fee_items:
   attributes:
     - id
