@@ -279,6 +279,16 @@ external_payments:
     - message
     - invoice_id
     - workspace_id
+  associations:
+    user:
+      foreign_key: user_id
+      collection: users
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    invoice:
+      foreign_key: invoice_id
+      collection: invoices
 
 fixed_fee_items:
   attributes:
