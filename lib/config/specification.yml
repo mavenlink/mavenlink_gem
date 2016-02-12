@@ -677,6 +677,7 @@ stories: # tasks
     - logged_billable_time_in_minutes # the sum of all billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
     - sub_stories_billable_time_in_minutes # the sum of all sub-stories' billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
     - logged_nonbillable_time_in_minutes # the sum of all non-billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
+    - fixed_fee # whether or not the story is fixed fee
   create_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
