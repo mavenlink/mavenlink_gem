@@ -264,6 +264,32 @@ expense_report_submissions:
       foreign_key: resolution_ids
       collection: resolutions
 
+external_payments:
+  attributes:
+    - id
+    - created_at
+    - updated_at
+    - user_id
+    - amount_in_cents
+    - message
+    - invoice_id
+    - workspace_id
+  create_attributes:
+    - amount_in_cents
+    - message
+    - invoice_id
+    - workspace_id
+  associations:
+    user:
+      foreign_key: user_id
+      collection: users
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    invoice:
+      foreign_key: invoice_id
+      collection: invoices
+
 fixed_fee_items:
   attributes:
     - id
@@ -919,6 +945,7 @@ workspaces:
     - start_date # the start date of the project
     - status # a hash with information about the status of the project (color, message, key)
     - stories_are_fixed_fee_by_default # whether stories default to Fixed Fee or T&M
+    - workspace_invoice_preference_id
   create_attributes:
     - title
     - creator_role
@@ -957,6 +984,31 @@ workspaces:
     - consultant_role_name
     - posts_require_privacy_decision
     - stories_are_fixed_fee_by_default
+
+workspace_invoice_preferences:
+  attributes:
+    - workspace_id
+    - purchase_order
+    - project_code
+    - client_invoice_name
+    - client_invoice_address
+    - consultant_invoice_name
+    - consultant_invoice_address
+  create_attributes:
+    - workspace_id # required
+    - project_code # optional
+    - purchase_order # optional
+    - client_invoice_name # optional
+    - client_invoice_address # optional
+    - consultant_invoice_name # optional
+    - consultant_invoice_address # optional
+  update_attributes:
+    - project_code  # optional
+    - purchase_order  # optional
+    - client_invoice_name  # optional
+    - client_invoice_address  # optional
+    - consultant_invoice_name  # optional
+    - consultant_invoice_address  # optional
 
 workspace_groups:
   attributes:
