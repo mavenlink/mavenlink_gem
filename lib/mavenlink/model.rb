@@ -39,6 +39,11 @@ module Mavenlink
       Mavenlink::Request.new(collection_name, client)
     end
 
+    # @return [Mavenlink::Request]
+    def scoped_im
+      Mavenlink::Request.new(collection_name, client)
+    end
+
     # @param model_class [Mavenlink::Model]
     def self.inherited(model_class)
       ::Mavenlink::Model.models[model_class.collection_name] = model_class

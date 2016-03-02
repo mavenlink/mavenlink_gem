@@ -175,6 +175,11 @@ describe Mavenlink::Model, stub_requests: true do
     it 'accepts attributes' do
       expect(model.new(any_custom_key: 'value set')).to include(any_custom_key: 'value set')
     end
+
+    it 'checks for client' do
+      expect(model.new).to respond_to (:client)
+      expect(model.new.client).to be_a Mavenlink::Client
+    end
   end
 
   describe '#client' do

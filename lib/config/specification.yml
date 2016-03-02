@@ -1,4 +1,46 @@
 ---
+account_invitations:
+  attributes:
+    - full_name
+    - email_address
+    - headline
+    - pending
+    - permission
+    - bill_rate_in_cents
+    - cost_rate_in_cents
+    - inviter_id
+    - invitee_id
+  create_attributes:
+    - full_name
+    - email_address
+    - headline
+    - permission
+    - bill_rate_in_cents
+    - cost_rate_in_cents
+    - default_role_id
+  update_attributes:
+    - permission
+    - bill_rate_in_cents
+    - cost_rate_in_cents
+    - default_role_id
+  associations:
+    inviter:
+      foreign_key: inviter_id
+      collection: users
+    invitee:
+      foreign_key: invitee_id
+      collection: users
+    default_role:
+      foreign_key: default_role_id
+      collection: roles
+additional_items:
+  attributes:
+    - created_at
+    - notes
+    - amount_in_cents
+    - taxable
+    - currency
+
 assignments:
   attributes:
     - id # the unique identifier for this assignment object
@@ -83,6 +125,9 @@ custom_fields:
     creator:
       foreign_key: creator_id
       collection: users
+    choices:
+      foreign_key: choice_ids
+      collection: custom_field_choices
 
 custom_field_values:
   attributes:
@@ -108,6 +153,18 @@ custom_field_values:
     setter:
       - foreign_key: setter_id
       - collection: users
+    custom_field:
+      - foreign_key: custom_field_id
+      - collection: custom_fields
+
+custom_field_choices:
+  attributes:
+    - id
+    - updated_at
+    - created_at
+    - label
+    - custom_field_id
+  associations:
     custom_field:
       - foreign_key: custom_field_id
       - collection: custom_fields
@@ -139,16 +196,20 @@ expenses:
     - category # (required) the category of the expense as a string
     - amount_in_cents # the amount of the expense, expressed in cents
     - notes # freeform text related to the expense
-    - currency # the three-letter currency code for the currency of the expense
     - user_id # the internal ID of the user the expense is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
+    - receipt_id
+    - billable
+    - story_id
   update_attributes:
     # NOTE(AC): check
     - date # (required) the date of the expense in ISO8601 format
     - category # (required) the category of the expense as a string
     - amount_in_cents # the amount of the expense, expressed in cents
     - notes # freeform text related to the expense
-    - currency # the three-letter currency code for the currency of the expense
     - user_id # the internal ID of the user the expense is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
+    - receipt_id
+    - billable
+    - story_id
   associations:
     workspace:
       foreign_key: workspace_id
@@ -159,6 +220,86 @@ expenses:
     receipt:
       foreign_key: receipt_id
       collection: attachments
+    story:
+      foreign_key: story_id
+      collection: stories
+
+expense_report_submissions:
+  attributes:
+    - id
+    - created_at
+    - updated_at
+    - status
+    - title
+    - comment
+    - type
+    - resolution_description
+    - line_item_total_formatted
+    - line_item_total_in_cents
+    - currency
+    - currency_symbol
+    - currency_base_unit
+    - current_resolution_description
+    - current_resolution_creator_id
+    - current_resolution_created_at_date
+    - expense_ids
+    - resolution_ids
+  create_attributes:
+    - title
+    - comment
+    - workspace_id
+    - user_id
+    - line_item_ids
+  associations:
+    user:
+      foreign_key: user_id
+      collection: users
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    expenses:
+      foreign_key: expense_ids
+      collection: expenses
+    resolutions:
+      foreign_key: resolution_ids
+      collection: resolutions
+
+external_payments:
+  attributes:
+    - id
+    - created_at
+    - updated_at
+    - user_id
+    - amount_in_cents
+    - message
+    - invoice_id
+    - workspace_id
+  create_attributes:
+    - amount_in_cents
+    - message
+    - invoice_id
+    - workspace_id
+  associations:
+    user:
+      foreign_key: user_id
+      collection: users
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    invoice:
+      foreign_key: invoice_id
+      collection: invoices
+
+fixed_fee_items:
+  attributes:
+    - id
+    - created_at
+    - notes
+    - amount_in_cents
+    - taxable
+    - currency
+    - story_id
+    - workspace_id
 
 invoices:
   attributes:
@@ -179,15 +320,48 @@ invoices:
     - workspace_ids # the internal ids of the project workspaces this invoice is associated with
     - user_id # the internal id of the user who created this invoice
     - recipient_id # the internal id of the user who received this invoice; this will be the client lead at the time that the invoice was created, or null if no lead client existed at that time.
+    - user_invoice_title
+    - user_invoice_number
+    - tax_rate
+  create_attributes:
+    - time_entry_ids # (required) An array of time entry IDs to associate with the invoice
+    - expense_ids # (required) An array of expense IDs to associate with the invoice
+    - workspace_id # (required) The ID of the workspace this invoice is associated with
+    - payment_schedule # (required) The payment schedule (i.e. 30) in days of this invoice
+    - invoice_date # The date the invoice was incurred, format: YYYY-MM-DD#
+    - user_invoice_number #
+    - user_invoice_title #
+    - draft # Whether the invoice is a draft or not
+    - message # Any notes added to the invoice
+    - purchase_order # A string
+    - project_code # A string
+    - fixed_fee_items # Nested params for FixedFeeItem
+    - additional_items # Nested params for AdditionalItem
+  update_attributes:
+    - expense_ids # (required)
+    - time_entry_ids # (required)
+    - payment_schedule
+    - user_invoice_number
+    - draft
+    - message
+    - user_invoice_title
+    - purchase_order
+    - project_code
   associations:
     # time_entries - when included, the time_entry_ids array will reference all of the time entries included in the Invoice
     time_entries:
-      foreign_key: time_entry_id
+      foreign_key: time_entry_ids
       collection: time_entries
     # expenses - when included, the expense_ids array will reference all of the expenses included in the Invoice
     expenses:
       foreign_key: expense_ids
       collection: expenses
+    additional_items:
+      foreign_key: additional_item_ids
+      collection: additional_items
+    fixed_fee_items:
+      foreign_key: fixed_fee_item_ids
+      collection: fixed_fee_items
     # NOTE(AC): ? additional_items - when included, the additional_item_ids array will reference all of the additional items (additional invoice line items) included in the Invoice
     # workspaces - when included, the workspace_ids array will reference the workspaces that this Invoice covers
     workspaces:
@@ -201,6 +375,36 @@ invoices:
     recipient:
       foreign_key: recipient_id
       collection: users
+
+organizations:
+  attributes:
+    - name
+    - type
+    - parent_id
+    - ancestor_ids
+  create_attributes:
+    - name
+    - parent_id
+  update_attributes:
+    - name
+    - parent_id
+
+organization_memberships:
+  attributes:
+    - member_id
+    - member_type
+  create_attributes:
+    - geography_id
+    - department_id
+    - member_id
+    - member_type
+  associations:
+    geography:
+      foreign_key: geography_id
+      collection: organizations
+    department:
+      foreign_key: department_id
+      collection: organizations
 
 participations:
   attributes:
@@ -345,6 +549,9 @@ rate_cards:
     rate_card_versions:
       foreign_key: rate_card_version_ids
       collection: rate_card_versions
+    effective_rate_card_version:
+      foreign_key: effective_rate_card_version_id
+      collection: rate_card_versions
   attributes:
     - currency
     - uses
@@ -430,7 +637,19 @@ rate_card_roles:
   update_attributes:
     - rate
 
+resolutions:
+  attributes:
+    - type
+    - created_at
+    - updated_at
+    - description
+    - target_type
+    - target_id
+    - user_id
+
 roles: # TODO(SZ): find it out
+  attributes:
+    - name
 
 stories: # tasks
   associations:
@@ -462,7 +681,9 @@ stories: # tasks
     - id # the internal story id
     - workspace_id # the internal id for the workspace of the story
     - parent_id # the internal story id of a story's parent story (only for sub-stories)
+    - billable # whether or not the task is billable
     - title # the title of the story
+    - assignee_ids # an array of User IDs that are assigned to the story
     - description # a user provided description of the story
     - story_type # the story's type (task, deliverable, or milestone)
     - state # the current state of the story (started, not started, or completed)
@@ -483,6 +704,7 @@ stories: # tasks
     - logged_billable_time_in_minutes # the sum of all billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
     - sub_stories_billable_time_in_minutes # the sum of all sub-stories' billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
     - logged_nonbillable_time_in_minutes # the sum of all non-billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
+    - fixed_fee # whether or not the story is fixed fee
   create_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
@@ -497,6 +719,7 @@ stories: # tasks
     - time_estimate_in_minutes # (optional) the time estimate in minutes of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
     - tag_list # (optional) a comma separated String of tags
     - state # (optional) the current status of the story
+    - billable # whether or not the task is billable
   update_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
@@ -509,6 +732,7 @@ stories: # tasks
     - time_estimate_in_minutes # (optional) the time estimate in minutes of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
     - tag_list # (optional) a comma separated String of tags
     - state # (optional) the current status of the story
+    - billable # whether or not the task is billable
 
 story_allocation_days:
   attributes:
@@ -573,6 +797,9 @@ time_entries:
     story:
       foreign_key: story_id
       collection: stories
+    role:
+      foreign_key: role_id
+      collection: roles
   validations:
     [workspace_id, date_performed, time_in_minutes]:
       presence: true
@@ -592,6 +819,8 @@ time_entries:
     - user_can_edit # whether the current user can edit this time entry or not
     - workspace_id # the internal ID of the project workspace this time entry is associated with
     - user_id # the internal ID of the user who created this time entry
+    - approved # whether or not the time entry has been approved
+    - role_id # The internal ID of the Role that is associated with this time entry
   create_attributes:
     - workspace_id # (required) the internal ID of the project workspace this time entry is associated with
     - date_performed # (required) the date the activity for which the time is being entered was performed, format: YYYY-MM-DD
@@ -610,6 +839,48 @@ time_entries:
     - rate_in_cents # (optional, required if billable is true) the hourly rate for this time entry in cents, you must also set billable to true when setting this
     - story_id # (optional) the internal ID of the story this time entry is associated with
     - user_id # (optional) the internal ID of the user the time entry is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
+
+timesheet_submissions:
+    attributes:
+      - id
+      - start_date
+      - end_date
+      - created_at
+      - updated_at
+      - status
+      - title
+      - comment
+      - type
+      - resolution_description
+      - line_item_total_formatted
+      - line_item_total_in_cents
+      - currency
+      - currency_symbol
+      - currency_base_unit
+      - current_resolution_description
+      - current_resolution_creator_id
+      - current_resolution_created_at_date
+      - time_entry_ids
+      - resolution_ids
+    create_attributes:
+      - title
+      - comment
+      - workspace_id
+      - user_id
+      - line_item_ids
+    associations:
+      user:
+        foreign_key: user_id
+        collection: users
+      workspace:
+        foreign_key: workspace_id
+        collection: workspaces
+      time_entries:
+        foreign_key: time_entry_ids
+        collection: time_entries
+      resolutions:
+        foreign_key: resolution_ids
+        collection: resolutions
 
 users:
   attributes:
@@ -639,6 +910,9 @@ workspaces:
     participants:
       foreign_key: participant_ids
       collection: users
+    participations:
+      foreign_key: participation_ids
+      collection: participations
     creator:
       foreign_key: creator_id
       collection: users
@@ -650,6 +924,7 @@ workspaces:
     - title # the title of the project
     - archived # whether the project is archived
     - description # the description of the project
+    - due_date # the due date of the project
     - effective_due_date # effective due date of the project
     - budgeted # whether the project is budgeted
     - change_orders_enabled # whether change orders are enabled in the project
@@ -668,7 +943,10 @@ workspaces:
     - budget_used # the amount of the project budget already burned, only included if the current user has financial access in the workspace
     - over_budget # whether the project is over budget, only included if the current user has financial access in the workspace
     - currency # the currency of the project, only included if the current user has financial access in the workspace
+    - start_date # the start date of the project
     - status # a hash with information about the status of the project (color, message, key)
+    - stories_are_fixed_fee_by_default # whether stories default to Fixed Fee or T&M
+    - workspace_invoice_preference_id
   create_attributes:
     - title
     - creator_role
@@ -683,6 +961,13 @@ workspaces:
     - client_role_name
     - access_level
     - project_tracker_template_id
+    - change_orders_enabled
+    - expenses_in_burn_rate
+    - posts_require_privacy_decision
+    - stories_are_fixed_fee_by_default
+    - posts_require_privacy_decision
+    - rate_card_id
+
   update_attributes:
     - title
     - budgeted
@@ -695,6 +980,36 @@ workspaces:
     - posts_require_privacy_decision
     - tasks_default_non_billable
     - expenses_in_burn_rate
+    - rate_card_id
+    - client_role_name
+    - consultant_role_name
+    - posts_require_privacy_decision
+    - stories_are_fixed_fee_by_default
+
+workspace_invoice_preferences:
+  attributes:
+    - workspace_id
+    - purchase_order
+    - project_code
+    - client_invoice_name
+    - client_invoice_address
+    - consultant_invoice_name
+    - consultant_invoice_address
+  create_attributes:
+    - workspace_id # required
+    - project_code # optional
+    - purchase_order # optional
+    - client_invoice_name # optional
+    - client_invoice_address # optional
+    - consultant_invoice_name # optional
+    - consultant_invoice_address # optional
+  update_attributes:
+    - project_code  # optional
+    - purchase_order  # optional
+    - client_invoice_name  # optional
+    - client_invoice_address  # optional
+    - consultant_invoice_name  # optional
+    - consultant_invoice_address  # optional
 
 workspace_groups:
   attributes:
