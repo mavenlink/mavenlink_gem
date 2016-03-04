@@ -41,6 +41,30 @@ additional_items:
     - taxable
     - currency
 
+account_memberships:
+  attributes:
+    - disabled_at
+    - permission
+    - is_administrator
+    - is_project_lead
+    - is_punch_clock_user
+    - can_create_workspace
+    - can_view_reports
+    - bill_rate_in_cents
+    - cost_rate_in_cents
+  update_attributes:
+    - bill_rate_in_cents # bill_rate_in_cents is optional"
+    - cost_rate_in_cents # cost_rate_in_cents is optional"
+    - default_role_id # default_role_id is the internal ID of the role of this user on this account"
+    - permission # permission is optional; it can be 'administrator', 'reports_viewer', 'project_lead', 'project_creator', 'punch_clock' or 'collaborator'"
+  associations:
+    user:
+      foreign_key: user_id
+      collection: users
+    default_role:
+      foreign_key: default_role_id
+      collection: roles
+
 assignments:
   attributes:
     - id # the unique identifier for this assignment object
@@ -892,6 +916,9 @@ users:
     role:
       foreign_key: role_id
       collection: roles
+    account_membership:
+      foreign_key: account_membership_id
+      collection: account_memberships
 
 workspaces:
   validations:
