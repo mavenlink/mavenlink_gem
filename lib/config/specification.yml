@@ -707,6 +707,7 @@ stories: # tasks
     - parent_id # the internal story id of a story's parent story (only for sub-stories)
     - billable # whether or not the task is billable
     - title # the title of the story
+    - assignee_ids # an array of User IDs that are assigned to the story
     - description # a user provided description of the story
     - story_type # the story's type (task, deliverable, or milestone)
     - state # the current state of the story (started, not started, or completed)
