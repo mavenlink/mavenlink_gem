@@ -710,6 +710,7 @@ stories: # tasks
     - assignee_ids # an array of User IDs that are assigned to the story
     - description # a user provided description of the story
     - story_type # the story's type (task, deliverable, or milestone)
+    - priority # the integer value of the priority for a task
     - state # the current state of the story (started, not started, or completed)
     - position # a number corresponding to the story's order relative to all other stories
     - archived # the archived status of the story (true of false)
