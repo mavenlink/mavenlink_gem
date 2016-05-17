@@ -749,6 +749,7 @@ stories: # tasks
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
     - description # (optional) a description of the new story # max 1000 characters
+    - parent_id # (optional) represents the parent of this story, making this a sub-story
     - start_date # (optional) the date the story should be started; format should look like YYYY-MM-DD
     - archived # (optional) the archived status of the story (true or false)
     - due_date # (optional) the date the story is due; format should look like YYYY-MM-DD
