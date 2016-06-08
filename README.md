@@ -1,4 +1,4 @@
-![](doc/ml_logo_lb-primary.png)
+![](http://project-management.com/wp-content/uploads/2013/09/Mavenlink-Logo.jpg)
 
 ## Mavenlink API
 [![Circle CI](https://circleci.com/gh/mavenlink/mavenlink_gem/tree/master.svg?style=svg)](https://circleci.com/gh/mavenlink/mavenlink_gem/tree/master)

@@ -182,18 +182,6 @@ describe Mavenlink::Model, stub_requests: true do
     end
   end
 
-  describe '#client' do
-    specify 'default client' do
-      expect(model.new.client).to be_a Mavenlink::Client
-    end
-
-    context 'custom client set' do
-      let(:client) { Mavenlink::Client.new(oauth_token: 'new one') }
-      subject { described_class.new({test: 'set'}, nil, client) }
-      its(:client) { should eq(client) }
-    end
-  end
-
   describe '#persisted?' do
     specify do
       expect(model.new).not_to be_persisted

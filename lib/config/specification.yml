@@ -1,70 +1,4 @@
 ---
-account_invitations:
-  attributes:
-    - full_name
-    - email_address
-    - headline
-    - pending
-    - permission
-    - bill_rate_in_cents
-    - cost_rate_in_cents
-    - inviter_id
-    - invitee_id
-  create_attributes:
-    - full_name
-    - email_address
-    - headline
-    - permission
-    - bill_rate_in_cents
-    - cost_rate_in_cents
-    - default_role_id
-  update_attributes:
-    - permission
-    - bill_rate_in_cents
-    - cost_rate_in_cents
-    - default_role_id
-  associations:
-    inviter:
-      foreign_key: inviter_id
-      collection: users
-    invitee:
-      foreign_key: invitee_id
-      collection: users
-    default_role:
-      foreign_key: default_role_id
-      collection: roles
-additional_items:
-  attributes:
-    - created_at
-    - notes
-    - amount_in_cents
-    - taxable
-    - currency
-
-account_memberships:
-  attributes:
-    - disabled_at
-    - permission
-    - is_administrator
-    - is_project_lead
-    - is_punch_clock_user
-    - can_create_workspace
-    - can_view_reports
-    - bill_rate_in_cents
-    - cost_rate_in_cents
-  update_attributes:
-    - bill_rate_in_cents # bill_rate_in_cents is optional"
-    - cost_rate_in_cents # cost_rate_in_cents is optional"
-    - default_role_id # default_role_id is the internal ID of the role of this user on this account"
-    - permission # permission is optional; it can be 'administrator', 'reports_viewer', 'project_lead', 'project_creator', 'punch_clock' or 'collaborator'"
-  associations:
-    user:
-      foreign_key: user_id
-      collection: users
-    default_role:
-      foreign_key: default_role_id
-      collection: roles
-
 assignments:
   attributes:
     - id # the unique identifier for this assignment object
@@ -118,81 +52,6 @@ attachments:
     - data
     - type
 
-custom_fields:
-  attributes:
-    - id # the internal id of the custom field
-    - name # the given field name
-    - value_type # the types the Custom Field Values use defaulting to 'string'. The current types include: 'string', 'date', 'number', 'currency', 'single', and 'multi'
-    - creator_id # the internal id of the User who created the custom field
-    - default_text # the placeholder text
-    - unique_constraint # an optional boolean constraint which forces the Custom Field Values' value to be unique across a subject_type. The default is false
-    - choices # the choices only valid for a 'single' and 'multi' type custom fields
-    - custom_field_set_id # the custom field set the field belongs in. All custom fields are contained in a custom field set which contain many sets.
-    - write_access # the permission level required to create, update, and destroy values for this custom field
-    - read_access # the permission level required to read values for this custom field
-    - created_at # the date the CF was created
-    - updated_at # the date the CF was last updated
-  create_attributes:
-    - name # (required) the given field name
-    - value_type # (optional) the types the Custom Field Values use. The current types include: 'string', 'date', 'number', and 'currency'
-    - default_text # (optional) the placeholder text
-    - unique_constraint # (optional) a boolean constraint which forces the Custom Field Values' value to be unique across a subject_type. The default is false
-    - choices # (optional) the choices a custom field may have and only valid for a 'single' and 'multi' type custom fields. eg. [{'label' => 'first choice'}, {'label' => 'another choice'}]
-    - custom_field_set_id # (optional) the custom field set the custom field will belong to. If the custom_field_set_id is omitted this field will belong to a Workspace set named 'Default Project Set'. Note omitting the set id will restrict this field to only be applied to workspaces.
-  update_attributes:
-    - name # (required) the given field name
-    - default_text # (optional) the placeholder text
-    - choices # choices may be updated through their CF's choices attribute. To change a choice's name, specify the id. To add new choices, do not specify and id. eg. [{'id' => '1', 'label' => 'new first choice name'}, {'label' => 'a brand new choice'}]. If a previous choice of the custom field is omitted, that choice will be soft deleted so that the values will not point to invalid choices.
-    - write_access # (optional) the permission level required for a user to create, update, or delete a custom field value for an object.
-    - read_access # (optional) the permission level required to read a custom field value for an object.
-  associations:
-    creator:
-      foreign_key: creator_id
-      collection: users
-    choices:
-      foreign_key: choice_ids
-      collection: custom_field_choices
-
-custom_field_values:
-  attributes:
-    - id # the internal custom field value id
-    - subject_type # the type of entity the custom field value is associated with. Valid types include 'Workspace', 'Story', and 'User'
-    - subject_id # the internal id of the entity type defined by the subject_type field
-    - value # the value applied to the subject
-    - type # they type of value. The Current valid values are: 'string', 'date', 'number', 'currency' 'single', and 'multi'
-    - setter_id # the internal id of the User who has set value
-    - account_id # the id of the account the custom field value is on
-    - custom_field_id # the internal id of the associated custom field
-    - custom_field_name # the name of the associated custom field
-    - created_at # the date the custom field value was created in Mavenlink
-    - updated_at # the date the custom field value was last updated
-  create_attributes:
-    - subject_type # (required)
-    - subject_id # (required)
-    - custom_field_id # (required)
-    - value # (required)
-  update_attributes:
-    - value # (required)
-  associations:
-    setter:
-      - foreign_key: setter_id
-      - collection: users
-    custom_field:
-      - foreign_key: custom_field_id
-      - collection: custom_fields
-
-custom_field_choices:
-  attributes:
-    - id
-    - updated_at
-    - created_at
-    - label
-    - custom_field_id
-  associations:
-    custom_field:
-      - foreign_key: custom_field_id
-      - collection: custom_fields
-
 expenses:
   validations:
     [workspace_id, date, category, amount_in_cents]:
@@ -220,20 +79,16 @@ expenses:
     - category # (required) the category of the expense as a string
     - amount_in_cents # the amount of the expense, expressed in cents
     - notes # freeform text related to the expense
+    - currency # the three-letter currency code for the currency of the expense
     - user_id # the internal ID of the user the expense is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
-    - receipt_id
-    - billable
-    - story_id
   update_attributes:
     # NOTE(AC): check
     - date # (required) the date of the expense in ISO8601 format
     - category # (required) the category of the expense as a string
     - amount_in_cents # the amount of the expense, expressed in cents
     - notes # freeform text related to the expense
+    - currency # the three-letter currency code for the currency of the expense
     - user_id # the internal ID of the user the expense is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
-    - receipt_id
-    - billable
-    - story_id
   associations:
     workspace:
       foreign_key: workspace_id
@@ -244,86 +99,6 @@ expenses:
     receipt:
       foreign_key: receipt_id
       collection: attachments
-    story:
-      foreign_key: story_id
-      collection: stories
-
-expense_report_submissions:
-  attributes:
-    - id
-    - created_at
-    - updated_at
-    - status
-    - title
-    - comment
-    - type
-    - resolution_description
-    - line_item_total_formatted
-    - line_item_total_in_cents
-    - currency
-    - currency_symbol
-    - currency_base_unit
-    - current_resolution_description
-    - current_resolution_creator_id
-    - current_resolution_created_at_date
-    - expense_ids
-    - resolution_ids
-  create_attributes:
-    - title
-    - comment
-    - workspace_id
-    - user_id
-    - line_item_ids
-  associations:
-    user:
-      foreign_key: user_id
-      collection: users
-    workspace:
-      foreign_key: workspace_id
-      collection: workspaces
-    expenses:
-      foreign_key: expense_ids
-      collection: expenses
-    resolutions:
-      foreign_key: resolution_ids
-      collection: resolutions
-
-external_payments:
-  attributes:
-    - id
-    - created_at
-    - updated_at
-    - user_id
-    - amount_in_cents
-    - message
-    - invoice_id
-    - workspace_id
-  create_attributes:
-    - amount_in_cents
-    - message
-    - invoice_id
-    - workspace_id
-  associations:
-    user:
-      foreign_key: user_id
-      collection: users
-    workspace:
-      foreign_key: workspace_id
-      collection: workspaces
-    invoice:
-      foreign_key: invoice_id
-      collection: invoices
-
-fixed_fee_items:
-  attributes:
-    - id
-    - created_at
-    - notes
-    - amount_in_cents
-    - taxable
-    - currency
-    - story_id
-    - workspace_id
 
 invoices:
   attributes:
@@ -344,48 +119,15 @@ invoices:
     - workspace_ids # the internal ids of the project workspaces this invoice is associated with
     - user_id # the internal id of the user who created this invoice
     - recipient_id # the internal id of the user who received this invoice; this will be the client lead at the time that the invoice was created, or null if no lead client existed at that time.
-    - user_invoice_title
-    - user_invoice_number
-    - tax_rate
-  create_attributes:
-    - time_entry_ids # (required) An array of time entry IDs to associate with the invoice
-    - expense_ids # (required) An array of expense IDs to associate with the invoice
-    - workspace_id # (required) The ID of the workspace this invoice is associated with
-    - payment_schedule # (required) The payment schedule (i.e. 30) in days of this invoice
-    - invoice_date # The date the invoice was incurred, format: YYYY-MM-DD#
-    - user_invoice_number #
-    - user_invoice_title #
-    - draft # Whether the invoice is a draft or not
-    - message # Any notes added to the invoice
-    - purchase_order # A string
-    - project_code # A string
-    - fixed_fee_items # Nested params for FixedFeeItem
-    - additional_items # Nested params for AdditionalItem
-  update_attributes:
-    - expense_ids # (required)
-    - time_entry_ids # (required)
-    - payment_schedule
-    - user_invoice_number
-    - draft
-    - message
-    - user_invoice_title
-    - purchase_order
-    - project_code
   associations:
     # time_entries - when included, the time_entry_ids array will reference all of the time entries included in the Invoice
     time_entries:
-      foreign_key: time_entry_ids
+      foreign_key: time_entry_id
       collection: time_entries
     # expenses - when included, the expense_ids array will reference all of the expenses included in the Invoice
     expenses:
       foreign_key: expense_ids
       collection: expenses
-    additional_items:
-      foreign_key: additional_item_ids
-      collection: additional_items
-    fixed_fee_items:
-      foreign_key: fixed_fee_item_ids
-      collection: fixed_fee_items
     # NOTE(AC): ? additional_items - when included, the additional_item_ids array will reference all of the additional items (additional invoice line items) included in the Invoice
     # workspaces - when included, the workspace_ids array will reference the workspaces that this Invoice covers
     workspaces:
@@ -399,64 +141,6 @@ invoices:
     recipient:
       foreign_key: recipient_id
       collection: users
-
-organizations:
-  attributes:
-    - name
-    - type
-    - parent_id
-    - ancestor_ids
-  create_attributes:
-    - name
-    - parent_id
-  update_attributes:
-    - name
-    - parent_id
-
-organization_memberships:
-  attributes:
-    - member_id
-    - member_type
-  create_attributes:
-    - geography_id
-    - department_id
-    - member_id
-    - member_type
-  associations:
-    geography:
-      foreign_key: geography_id
-      collection: organizations
-    department:
-      foreign_key: department_id
-      collection: organizations
-
-participations:
-  attributes:
-    - id
-    - role
-    - is_team_lead
-    - active_role
-    - estimated_workspace_minutes
-    - allocated_workspace_minutes
-    - user_id
-    - workspace_id
-    - workspace_role_id
-  create_attributes:
-    - workspace_id # (required)
-    - role # (required) either `maven` or `buyer`
-    - user_id # (required)
-  update_attributes:
-    - team_lead # (required) boolean to set the team lead on the workspace
-  associations:
-    user:
-      foreign_key: user_id
-      collection: users
-    workspace:
-      foreign_key: workspace_id
-      collection: workspaces
-    role:
-      foreign_key: workspace_role_id
-      collection: roles
 
 posts:
   attributes:
@@ -529,151 +213,7 @@ posts:
       foreign_key: attachment_ids
       collection: attachments
 
-project_templates:
-  attributes:
-    - id # the internal project template ID
-    - title # the title of the project template
-    - shared # whether or not the project template is shared with other users on the account other than the creator
-    - is_budgeted # whether or not the project template has financial attributes including overall budget, story budgets, and story time estimates
-    - budget # the estimated overall budget of the project associated with the template
-    - item_count # the number of stories (tasks) inside the project template
-    - duration # the estimated number of days that the associated project will take
-    - currency # the currency of the project template
-    - description # the description of the project template which does not map over to the project description when applied
-    - user_id # the id of the user who created the project template
-    - raw_json # (Optional Field) a json hash that contains all the project templates tasks - See below for explanation on optional fields and go to the bottom for and explanation on the raw_json field
-  create_attributes:
-    - title # (required) the title of the new project template
-    - description # the description of the project template
-    - raw_json # (optional) a json hash that contains all the project templates tasks
-    - shared # (optional) whether or not the project template is shared with other users on the account other than the creator (default: false)
-    - is_budgeted # (optional) whether or not the project template has financial attributes including overall budget, story budgets, and story time estimates (default: false)
-    - budget # (optional) the estimated overall budget of the project associated with the template
-    - currency # (optional) the currency of the project template (default: 'USD')
-    - duration # (optional) the estimated number of days that the associated project will take
-  update_attributes:
-    - title # (required) the title of the new project template
-    - description # the description of the project template
-    - raw_json # (optional) a json hash that contains all the project templates tasks
-    - shared # (optional) whether or not the project template is shared with other users on the account other than the creator (default: false)
-    - is_budgeted # (optional) whether or not the project template has financial attributes including overall budget, story budgets, and story time estimates (default: false)
-    - budget # (optional) the estimated overall budget of the project associated with the template
-    - currency # (optional) the currency of the project template (default: 'USD')
-    - duration # (optional) the estimated number of days that the associated project will take
-  associations:
-    user:
-      foreign_key: user_id
-      collection: users
-
-rate_cards:
-  associations:
-    rate_card_set:
-      foreign_key: rate_card_set_id
-      collection: rate_card_sets
-    rate_card_versions:
-      foreign_key: rate_card_version_ids
-      collection: rate_card_versions
-    effective_rate_card_version:
-      foreign_key: effective_rate_card_version_id
-      collection: rate_card_versions
-  attributes:
-    - currency
-    - uses
-    - id
-    - rate_card_set_id
-    - rate_card_version_ids
-  create_attributes:
-    - rate_card_set_id
-    - rate_card_set_version_id
-    - currency
-  update_attributes:
-    - currency
-
-rate_card_sets:
-  associations:
-    rate_cards:
-      foriegn_key: rate_card_ids
-      collection: rate_cards
-    rate_card_set_versions:
-      foreign_key: rate_card_set_version_ids
-      collection: rate_card_set_versions
-  attributes:
-    - title
-    - account_default
-    - active_currencies
-    - default_currencies
-    - destroyable
-  create_attributes:
-    - clone_version_id
-    - title
-  update_attributes:
-    - title
-
-rate_card_set_versions:
-  associations:
-    rate_card_set:
-      foreign_key: rate_card_set_id
-      collection: rate_card_sets
-    rate_card_versions:
-      foreign_key: rate_card_version_ids
-      collection: rate_card_versions
-  attributes:
-    - active
-    - effective_date
-    - used_currencies
-  create_attributes:
-    - rate_card_set_id
-    - effective_date
-  update_attributes:
-    - effective_date
-
-rate_card_versions:
-  associations:
-    rate_card:
-      foreign_key: rate_card_id
-      collection: rate_cards
-    rate_card_set_version:
-      foreign_key: rate_card_set_version_id
-      collection: rate_card_set_versions
-    rate_card_roles:
-      foreign_key: rate_card_role_ids
-      collection: rate_card_roles
-  attributes:
-    - default_rate
-  create_attributes:
-  update_attributes:
-    - default_rate
-
-rate_card_roles:
-  associations:
-    role:
-      foreign_key: role_id
-      collection: roles
-    rate_card_version:
-      foreign_key: rate_card_version_id
-      collection: rate_card_versions
-  attributes:
-    - rate
-  create_attributes:
-    - rate_card_version_id
-    - role_id
-    - rate
-  update_attributes:
-    - rate
-
-resolutions:
-  attributes:
-    - type
-    - created_at
-    - updated_at
-    - description
-    - target_type
-    - target_id
-    - user_id
-
 roles: # TODO(SZ): find it out
-  attributes:
-    - name
 
 stories: # tasks
   associations:
@@ -705,12 +245,9 @@ stories: # tasks
     - id # the internal story id
     - workspace_id # the internal id for the workspace of the story
     - parent_id # the internal story id of a story's parent story (only for sub-stories)
-    - billable # whether or not the task is billable
     - title # the title of the story
-    - assignee_ids # an array of User IDs that are assigned to the story
     - description # a user provided description of the story
     - story_type # the story's type (task, deliverable, or milestone)
-    - priority # the integer value of the priority for a task
     - state # the current state of the story (started, not started, or completed)
     - position # a number corresponding to the story's order relative to all other stories
     - archived # the archived status of the story (true of false)
@@ -729,7 +266,6 @@ stories: # tasks
     - logged_billable_time_in_minutes # the sum of all billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
     - sub_stories_billable_time_in_minutes # the sum of all sub-stories' billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
     - logged_nonbillable_time_in_minutes # the sum of all non-billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
-    - fixed_fee # whether or not the story is fixed fee
   create_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
@@ -743,7 +279,6 @@ stories: # tasks
     - budget_estimate_in_cents # (optional) the budget in cents of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
     - time_estimate_in_minutes # (optional) the time estimate in minutes of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
     - tag_list # (optional) a comma separated String of tags
-    - billable # whether or not the task is billable
     - percentage_complete # (optional) a number (0-100) representing the stage of the story
     - state # (optional) the state of the story: not started, started or completed
   update_attributes:
@@ -758,7 +293,6 @@ stories: # tasks
     - budget_estimate_in_cents # (optional) the budget in cents of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
     - time_estimate_in_minutes # (optional) the time estimate in minutes of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
     - tag_list # (optional) a comma separated String of tags
-    - billable # whether or not the task is billable
     - percentage_complete # (optional) a number (0-100) representing the stage of the story
     - state # (optional) the state of the story: not started, started or completed
 
@@ -803,7 +337,7 @@ story_tasks:
     - completed
     - completed_at
     - position
-    - completed_by_id
+    - complted_by_id
     - story_id
 
 tags:
@@ -825,9 +359,6 @@ time_entries:
     story:
       foreign_key: story_id
       collection: stories
-    role:
-      foreign_key: role_id
-      collection: roles
   validations:
     [workspace_id, date_performed, time_in_minutes]:
       presence: true
@@ -847,8 +378,6 @@ time_entries:
     - user_can_edit # whether the current user can edit this time entry or not
     - workspace_id # the internal ID of the project workspace this time entry is associated with
     - user_id # the internal ID of the user who created this time entry
-    - approved # whether or not the time entry has been approved
-    - role_id # The internal ID of the Role that is associated with this time entry
   create_attributes:
     - workspace_id # (required) the internal ID of the project workspace this time entry is associated with
     - date_performed # (required) the date the activity for which the time is being entered was performed, format: YYYY-MM-DD
@@ -868,48 +397,6 @@ time_entries:
     - story_id # (optional) the internal ID of the story this time entry is associated with
     - user_id # (optional) the internal ID of the user the time entry is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
 
-timesheet_submissions:
-    attributes:
-      - id
-      - start_date
-      - end_date
-      - created_at
-      - updated_at
-      - status
-      - title
-      - comment
-      - type
-      - resolution_description
-      - line_item_total_formatted
-      - line_item_total_in_cents
-      - currency
-      - currency_symbol
-      - currency_base_unit
-      - current_resolution_description
-      - current_resolution_creator_id
-      - current_resolution_created_at_date
-      - time_entry_ids
-      - resolution_ids
-    create_attributes:
-      - title
-      - comment
-      - workspace_id
-      - user_id
-      - line_item_ids
-    associations:
-      user:
-        foreign_key: user_id
-        collection: users
-      workspace:
-        foreign_key: workspace_id
-        collection: workspaces
-      time_entries:
-        foreign_key: time_entry_ids
-        collection: time_entries
-      resolutions:
-        foreign_key: resolution_ids
-        collection: resolutions
-
 users:
   attributes:
     - user_id       # the internal ID of the user
@@ -921,9 +408,6 @@ users:
     role:
       foreign_key: role_id
       collection: roles
-    account_membership:
-      foreign_key: account_membership_id
-      collection: account_memberships
 
 workspaces:
   validations:
@@ -941,9 +425,6 @@ workspaces:
     participants:
       foreign_key: participant_ids
       collection: users
-    participations:
-      foreign_key: participation_ids
-      collection: participations
     creator:
       foreign_key: creator_id
       collection: users
@@ -955,7 +436,6 @@ workspaces:
     - title # the title of the project
     - archived # whether the project is archived
     - description # the description of the project
-    - due_date # the due date of the project
     - effective_due_date # effective due date of the project
     - budgeted # whether the project is budgeted
     - change_orders_enabled # whether change orders are enabled in the project
@@ -974,10 +454,6 @@ workspaces:
     - budget_used # the amount of the project budget already burned, only included if the current user has financial access in the workspace
     - over_budget # whether the project is over budget, only included if the current user has financial access in the workspace
     - currency # the currency of the project, only included if the current user has financial access in the workspace
-    - start_date # the start date of the project
-    - status # a hash with information about the status of the project (color, message, key)
-    - stories_are_fixed_fee_by_default # whether stories default to Fixed Fee or T&M
-    - workspace_invoice_preference_id
   create_attributes:
     - title
     - creator_role
@@ -985,97 +461,33 @@ workspaces:
     - description
     - currency
     - price
-    - start_date
     - due_date
     - change_orders
     - consultant_role_name
     - client_role_name
     - access_level
     - project_tracker_template_id
-    - change_orders_enabled
-    - expenses_in_burn_rate
-    - posts_require_privacy_decision
-    - stories_are_fixed_fee_by_default
-    - posts_require_privacy_decision
-    - rate_card_id
-
   update_attributes:
     - title
     - budgeted
     - description
     - archived
     - access_level
-    - price
-    - start_date
-    - due_date
-    - posts_require_privacy_decision
-    - tasks_default_non_billable
-    - expenses_in_burn_rate
-    - rate_card_id
-    - client_role_name
-    - consultant_role_name
-    - posts_require_privacy_decision
-    - stories_are_fixed_fee_by_default
-
-workspace_invoice_preferences:
-  attributes:
-    - workspace_id
-    - purchase_order
-    - project_code
-    - client_invoice_name
-    - client_invoice_address
-    - consultant_invoice_name
-    - consultant_invoice_address
-  create_attributes:
-    - workspace_id # required
-    - project_code # optional
-    - purchase_order # optional
-    - client_invoice_name # optional
-    - client_invoice_address # optional
-    - consultant_invoice_name # optional
-    - consultant_invoice_address # optional
-  update_attributes:
-    - project_code  # optional
-    - purchase_order  # optional
-    - client_invoice_name  # optional
-    - client_invoice_address  # optional
-    - consultant_invoice_name  # optional
-    - consultant_invoice_address  # optional
 
 workspace_groups:
   attributes:
     - id # the internal workspace group ID
     - name # the name of the workspace group
     - company # whether the workspace group represents a company
-    - contact_name
-    - email
-    - phone_number
-    - address
-    - website
-    - notes
   create_attributes:
     - name
     - company
     - add_workspace_ids
-    - company
-    - contact_name
-    - email
-    - phone_number
-    - address
-    - website
-    - notes
   update_attributes:
     - name
     - company
     - add_workspace_ids
     - remove_workspace_ids
-    - company
-    - contact_name
-    - email
-    - phone_number
-    - address
-    - website
-    - notes
   validations:
     name:
       presence: true

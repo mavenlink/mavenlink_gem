@@ -33,10 +33,9 @@ module Mavenlink
       scoped.include(*args)
     end
 
-    # @param client [Mavenlink::Client]
     # @return [Mavenlink::Request]
-    def self.scoped(client = Mavenlink.client)
-      Mavenlink::Request.new(collection_name, client)
+    def self.scoped
+      Mavenlink::Request.new(collection_name)
     end
 
     # @return [Mavenlink::Request]
@@ -127,9 +126,13 @@ module Mavenlink
     # @param attributes [Hash]
     # @param source_record [BrainstemAdaptor::Record]
     # @param client [Mavenlink::Client]
-    def initialize(attributes = {}, source_record = nil, client = Mavenlink.client)
+    def initialize(attributes = {}, source_record = nil, client = nil)
       super(self.class.collection_name, (attributes[:id] || attributes['id'] || source_record.try(:id)), source_record.try(:response))
-      @client = client
+      if client
+        @client = client
+      else
+        @client ||= Mavenlink.client
+      end
       merge!(attributes)
     end
 
@@ -229,7 +232,7 @@ module Mavenlink
 
     # @return [Mavenlink::Request]
     def request
-      collection_scope.only(id)
+      scoped_im.only(id)
     end
 
     private
@@ -238,11 +241,6 @@ module Mavenlink
     # @return [Hash]
     def associations_cache
       @associations_cache ||= {}.with_indifferent_access
-    end
-
-    # @return [Mavenlink::Request]
-    def collection_scope
-      @collection_scope ||= self.class.scoped(client)
     end
 
     # @param association [BrainstemAdaptor::Association]

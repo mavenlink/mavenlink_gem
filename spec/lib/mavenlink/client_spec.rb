@@ -13,46 +13,6 @@ describe Mavenlink::Client, stub_requests: true do
     end
   end
 
-  describe 'association calls' do
-    subject(:client) { described_class.new(oauth_token: '12345') }
-    let(:record) { client.workspaces.find(7) }
-
-    let(:response) {
-      {
-        'count' => 1,
-        'results' => [{'key' => 'workspaces', 'id' => '7'}, {'key' => 'users', 'id' => '2'}],
-        'users' => {
-          '2' => {
-            'id' => 2,
-            'full_name' => 'John Doe'
-          }
-        },
-        'workspaces' => {
-          '7' => {
-            'title' => 'My new project', 'id' => '7',
-            'participant_ids' => ['2'],
-          }
-        }
-      }
-    }
-
-    before do
-      stub_request :get, '/api/v1/workspaces?only=7', response
-    end
-
-    specify do
-      expect(record.participants.count).to eq(1)
-    end
-
-    specify do
-      expect(record.participants.first).to be_a(Mavenlink::User)
-    end
-
-    it 'saves the client scope' do
-      expect(record.participants.first.client).to eq(client)
-    end
-  end
-
   describe '#assignments' do
     let(:response) { { 'count' => 0, 'results' => [], 'assignments' => {} } }
 
@@ -68,7 +28,7 @@ describe Mavenlink::Client, stub_requests: true do
       expect(subject.assignments.collection_name).to eq('assignments')
     end
   end
-
+  
   describe '#stories' do
     let(:response) { { 'count' => 0, 'results' => [], 'stories' => {} } }
 
@@ -182,4 +142,30 @@ describe Mavenlink::Client, stub_requests: true do
       end
     end
   end
+
+=begin
+  it 'performs requests' do
+
+    #Mavenlink.oauth_token = token
+    resp_data = subject.put('workspaces/4894095.json', {workspace: {title: 'I just changed the title'}})
+
+    resp = Mavenlink::Response.new(resp_data)
+    resp.to_hash.to_yaml.split('\n').each do |line|
+      puts line
+    end
+
+    #puts '----------'
+
+    #ap resp.results.first['primary_counterpart']
+
+    #client = Mavenlink::Client.new
+    #ap client.workspaces.to_a
+    #resp = client.workspaces.create(title: 'Created VIA API', creator_role: 'maven')
+    #ap resp.inspect
+
+    #ap client.workspaces.only(4894095).delete
+    #ap client.assignments.all
+    #ap client.assignments.only('25911375').delete
+  end
+=end
 end

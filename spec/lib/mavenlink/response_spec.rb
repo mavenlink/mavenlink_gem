@@ -32,18 +32,5 @@ describe Mavenlink::Response, stub_requests: true do
       expect(response.results[0]).to be_a Mavenlink::Workspace
       expect(response.results[1]).to be_a Mavenlink::User
     end
-
-  end
-
-  describe '#client' do
-    specify 'default client' do
-      expect(response.client).to be_a Mavenlink::Client
-    end
-
-    context 'custom client set' do
-      let(:client) { Mavenlink::Client.new(oauth_token: 'new one') }
-      subject(:response) { described_class.new(response_data, client) }
-      its(:client) { should eq(client) }
-    end
   end
 end
