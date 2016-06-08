@@ -1,4 +1,4 @@
 module Mavenlink
-  class Invoice < Model
+  class Resolution < Model
   end
 end
