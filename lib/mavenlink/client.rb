@@ -79,20 +79,24 @@ module Mavenlink
     end
 
     def parse_request(response)
-      response = JSON.parse(response) if response
+      if response.present?
+        parsed_response = JSON.parse(response)
+      else
+        return
+      end
 
-      response.tap do
+      parsed_response.tap do
         Mavenlink.logger.whisper 'Received response:'
         Mavenlink.logger.inspection response
 
-        case response
+        case parsed_response
         when Array
           Mavenlink.logger.whisper 'Returned as a plain collection'
         when Hash
-          if response['errors']
+          if parsed_response['errors']
             Mavenlink.logger.disappointment 'REQUEST FAILED:'
-            Mavenlink.logger.inspection response['errors']
-            raise InvalidRequestError.new(response)
+            Mavenlink.logger.inspection parsed_response['errors']
+            raise InvalidRequestError.new(parsed_response)
           end
         end
       end
