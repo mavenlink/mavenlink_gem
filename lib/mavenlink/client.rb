@@ -6,6 +6,7 @@ module Mavenlink
     def initialize(settings = Mavenlink.default_settings)
       @settings = settings
       @oauth_token = settings[:oauth_token] or raise ArgumentError, 'OAuth token is not set'
+      @endpoint = settings[:endpoint] || ENDPOINT
 
       # TODO: implement with method_missing?
       # Declare API calls client.-->>workspaces<<---.create({})
@@ -67,14 +68,16 @@ module Mavenlink
 
     private
 
+    attr_reader :oauth_token, :endpoint
+
     # @return [Hash]
     def connection_options
       {
         headers: { 'Accept'        => "application/json",
                    'User-Agent'    => "Mavenlink Ruby Gem",
-                   'Authorization' => "Bearer #@oauth_token" },
+                   'Authorization' => "Bearer #{oauth_token}" },
         ssl: { verify: false },
-        url: ENDPOINT
+        url: endpoint
       }.freeze
     end
 
