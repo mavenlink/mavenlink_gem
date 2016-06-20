@@ -13,6 +13,15 @@ describe Mavenlink::Client, stub_requests: true do
     end
   end
 
+  context 'overriding the enpoint URL' do
+    specify do
+      endpoint = "http://api.mavenlink.test/api/v1"
+      client = described_class.new(oauth_token: '12345', endpoint: endpoint)
+
+      expect(client.send(:endpoint)).to eq endpoint
+    end
+  end
+
   describe 'association calls' do
     subject(:client) { described_class.new(oauth_token: '12345') }
     let(:record) { client.workspaces.find(7) }
