@@ -997,6 +997,7 @@ workspaces:
     - stories_are_fixed_fee_by_default
     - posts_require_privacy_decision
     - rate_card_id
+    - custom_fields
 
   update_attributes:
     - title
