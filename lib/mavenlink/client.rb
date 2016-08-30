@@ -7,6 +7,7 @@ module Mavenlink
       @settings = settings
       @oauth_token = settings[:oauth_token] or raise ArgumentError, 'OAuth token is not set'
       @endpoint = settings[:endpoint] || ENDPOINT
+      @use_json = settings[:use_json]
 
       # TODO: implement with method_missing?
       # Declare API calls client.-->>workspaces<<---.create({})
@@ -22,7 +23,11 @@ module Mavenlink
     # @return [Faraday::Connection]
     def connection
       Faraday.new(connection_options) do |builder|
-        builder.use Faraday::Request::UrlEncoded
+        if @use_json
+          builder.headers['Content-Type'] = 'application/json'
+        else
+          builder.use Faraday::Request::UrlEncoded
+        end
         builder.adapter(*Mavenlink.adapter)
       end
     end
