@@ -1016,6 +1016,7 @@ workspaces:
     - consultant_role_name
     - posts_require_privacy_decision
     - stories_are_fixed_fee_by_default
+    - currency
 
 workspace_invoice_preferences:
   attributes:
