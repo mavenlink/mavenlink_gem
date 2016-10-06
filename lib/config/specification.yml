@@ -669,6 +669,8 @@ workspaces:
     - over_budget # whether the project is over budget, only included if the current user has financial access in the workspace
     - currency # the currency of the project, only included if the current user has financial access in the workspace
     - status # a hash with information about the status of the project (color, message, key)
+    - require_expense_approvals
+    - require_time_approvals
   create_attributes:
     - title
     - creator_role
@@ -683,6 +685,8 @@ workspaces:
     - client_role_name
     - access_level
     - project_tracker_template_id
+    - require_expense_approvals
+    - require_time_approvals
   update_attributes:
     - title
     - budgeted
@@ -695,6 +699,8 @@ workspaces:
     - posts_require_privacy_decision
     - tasks_default_non_billable
     - expenses_in_burn_rate
+    - require_expense_approvals
+    - require_time_approvals
 
 workspace_groups:
   attributes:
