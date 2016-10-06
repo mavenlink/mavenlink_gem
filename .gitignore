@@ -3,8 +3,6 @@
 rdoc
 coverage
 .bundle
-.ruby-version
-.ruby-gemset
 .rvmrc
 .idea
 .env
