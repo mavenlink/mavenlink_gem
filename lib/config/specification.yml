@@ -977,6 +977,8 @@ workspaces:
     - status # a hash with information about the status of the project (color, message, key)
     - stories_are_fixed_fee_by_default # whether stories default to Fixed Fee or T&M
     - workspace_invoice_preference_id
+    - require_expense_approvals
+    - require_time_approvals
   create_attributes:
     - title
     - creator_role
@@ -998,7 +1000,8 @@ workspaces:
     - posts_require_privacy_decision
     - rate_card_id
     - custom_fields
-
+    - require_expense_approvals
+    - require_time_approvals
   update_attributes:
     - title
     - budgeted
@@ -1017,6 +1020,8 @@ workspaces:
     - posts_require_privacy_decision
     - stories_are_fixed_fee_by_default
     - currency
+    - require_expense_approvals
+    - require_time_approvals
 
 workspace_invoice_preferences:
   attributes:
