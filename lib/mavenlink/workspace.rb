@@ -17,6 +17,5 @@ module Mavenlink
     def invite(invitation)
       client.post("workspaces/#@id/invite", invitation: invitation) if persisted?
     end
-
   end
 end
