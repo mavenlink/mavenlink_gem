@@ -25,7 +25,6 @@ describe Mavenlink::Client, stub_requests: true do
   describe 'association calls' do
     subject(:client) { described_class.new(oauth_token: '12345') }
     let(:record) { client.workspaces.find(7) }
-
     let(:response) {
       {
         'count' => 1,

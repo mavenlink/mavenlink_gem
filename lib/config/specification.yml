@@ -34,6 +34,7 @@ account_invitations:
     default_role:
       foreign_key: default_role_id
       collection: roles
+
 additional_items:
   attributes:
     - created_at
