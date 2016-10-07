@@ -236,6 +236,12 @@ describe Mavenlink::Request, stub_requests: true do
     end
   end
 
+  describe '#build' do
+    it 'returns a model object of the same type as the collection name' do
+      expect(request.build(title: 'New Workspace')).to be_a Mavenlink::Workspace
+    end
+  end
+
   describe '#create' do
     specify do
       expect(request.create({})).to be_a Mavenlink::Response

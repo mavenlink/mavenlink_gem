@@ -6,6 +6,8 @@ module Mavenlink
     def initialize(settings = Mavenlink.default_settings)
       @settings = settings
       @oauth_token = settings[:oauth_token] or raise ArgumentError, 'OAuth token is not set'
+      @endpoint = settings[:endpoint] || ENDPOINT
+      @use_json = settings[:use_json]
 
       # TODO: implement with method_missing?
       # Declare API calls client.-->>workspaces<<---.create({})
@@ -21,7 +23,11 @@ module Mavenlink
     # @return [Faraday::Connection]
     def connection
       Faraday.new(connection_options) do |builder|
-        builder.use Faraday::Request::UrlEncoded
+        if @use_json
+          builder.headers['Content-Type'] = 'application/json'
+        else
+          builder.use Faraday::Request::UrlEncoded
+        end
         builder.adapter(*Mavenlink.adapter)
       end
     end
@@ -67,32 +73,38 @@ module Mavenlink
 
     private
 
+    attr_reader :oauth_token, :endpoint
+
     # @return [Hash]
     def connection_options
       {
         headers: { 'Accept'        => "application/json",
                    'User-Agent'    => "Mavenlink Ruby Gem",
-                   'Authorization' => "Bearer #@oauth_token" },
+                   'Authorization' => "Bearer #{oauth_token}" },
         ssl: { verify: false },
-        url: ENDPOINT
+        url: endpoint
       }.freeze
     end
 
     def parse_request(response)
-      response = JSON.parse(response) if response
+      if response.present?
+        parsed_response = JSON.parse(response)
+      else
+        return
+      end
 
-      response.tap do
+      parsed_response.tap do
         Mavenlink.logger.whisper 'Received response:'
         Mavenlink.logger.inspection response
 
-        case response
+        case parsed_response
         when Array
           Mavenlink.logger.whisper 'Returned as a plain collection'
         when Hash
-          if response['errors']
+          if parsed_response['errors']
             Mavenlink.logger.disappointment 'REQUEST FAILED:'
-            Mavenlink.logger.inspection response['errors']
-            raise InvalidRequestError.new(response)
+            Mavenlink.logger.inspection parsed_response['errors']
+            raise InvalidRequestError.new(parsed_response)
           end
         end
       end

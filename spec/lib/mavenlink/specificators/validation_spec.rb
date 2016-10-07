@@ -22,20 +22,18 @@ describe Mavenlink::Specificators::Validation do
   it { should validate_presence_of :name }
 
   describe 'real model' do
+    let(:client) { Object.new }
+
     context 'new record' do
-      subject { Mavenlink::Workspace.new }
+      subject { Mavenlink::Workspace.new({}, nil, client) }
 
       it { should validate_presence_of :title }
-      it { should ensure_inclusion_of(:creator_role).in_array(%w[maven buyer]) }
-      it { should_not allow_value(nil).for(:creator_role) }
     end
 
     context 'persisted record' do
-      subject { Mavenlink::Workspace.new(id: 12) }
+      subject { Mavenlink::Workspace.new({ id: 12 }, nil, client) }
 
       it { should validate_presence_of :title }
-      it { should_not ensure_inclusion_of(:creator_role).in_array(%w[maven buyer]) }
-      it { should allow_value(nil).for(:creator_role) }
     end
   end
 end

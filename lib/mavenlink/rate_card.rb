@@ -1,4 +1,4 @@
 module Mavenlink
-  class Invoice < Model
+  class RateCard < Model
   end
 end

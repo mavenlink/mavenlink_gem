@@ -34,12 +34,44 @@ describe Mavenlink::Workspace, stub_requests: true do
     stub_request :delete, '/api/v1/workspaces/4', {'count' => 0, 'results' => []} # TODO: replace with real one
   end
 
+  describe 'association calls' do
+    let(:record) { described_class.find(7) }
+    let(:response) {
+      {
+        'count' => 1,
+        'results' => [{'key' => 'workspaces', 'id' => '7'}, {'key' => 'users', 'id' => '2'}],
+        'users' => {
+          '2' => {
+            'id' => 2,
+            'full_name' => 'John Doe'
+          }
+        },
+        'workspaces' => {
+          '7' => {
+            'title' => 'My new project', 'id' => '7',
+            'participant_ids' => ['2'],
+          }
+        }
+      }
+    }
+
+    specify do
+      expect(record.participants.count).to eq(1)
+    end
+
+    specify do
+      expect(record.participants.first).to be_a(Mavenlink::User)
+    end
+
+    it 'saves the client scope' do
+      expect(record.participants.first.client).to eq(record.client)
+    end
+  end
+
   describe 'validations' do
     context 'new record' do
       it { should be_a_new_record }
       it { should validate_presence_of :title }
-      it { should ensure_inclusion_of(:creator_role).in_array(%w[maven buyer]) }
-      it { should_not allow_value(nil).for(:creator_role) }
     end
 
     context 'persisted record' do
@@ -123,7 +155,7 @@ describe Mavenlink::Workspace, stub_requests: true do
 
       context 'invalid record' do
         specify do
-          expect { model.create!(title: '', creator_role: '') }.to raise_error Mavenlink::RecordInvalidError, /Title.*blank.*Creator.*included/
+          expect { model.create!(title: '', creator_role: '') }.to raise_error Mavenlink::RecordInvalidError, /Title.*blank/
         end
       end
     end
@@ -353,7 +385,7 @@ describe Mavenlink::Workspace, stub_requests: true do
         subject { model.new(title: '', creator_role: '') }
 
         specify do
-          expect { subject.save! }.to raise_error Mavenlink::RecordInvalidError, /Title.*blank.*Creator.*included/
+          expect { subject.save! }.to raise_error Mavenlink::RecordInvalidError, /Title.*blank/
         end
 
         specify do

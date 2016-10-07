@@ -1,6 +1,5 @@
 module Mavenlink
-  class User < Model
-    include Concerns::CustomFieldable
+  class CustomFieldChoice < Model
     include Concerns::LockedRecord
   end
 end
