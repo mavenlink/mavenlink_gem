@@ -1,6 +1,7 @@
 ---
 account_invitations:
   attributes:
+    - id
     - full_name
     - email_address
     - headline
@@ -402,6 +403,7 @@ invoices:
 
 organizations:
   attributes:
+    - id
     - name
     - type
     - parent_id
@@ -415,6 +417,7 @@ organizations:
 
 organization_memberships:
   attributes:
+    - id
     - member_id
     - member_type
   create_attributes:
@@ -598,6 +601,7 @@ rate_card_sets:
       foreign_key: rate_card_set_version_ids
       collection: rate_card_set_versions
   attributes:
+    - id
     - title
     - account_default
     - active_currencies
@@ -618,6 +622,7 @@ rate_card_set_versions:
       foreign_key: rate_card_version_ids
       collection: rate_card_versions
   attributes:
+    - id
     - active
     - effective_date
     - used_currencies
@@ -639,8 +644,10 @@ rate_card_versions:
       foreign_key: rate_card_role_ids
       collection: rate_card_roles
   attributes:
+    - id
     - default_rate
   create_attributes:
+    - default_rate
   update_attributes:
     - default_rate
 
@@ -653,6 +660,7 @@ rate_card_roles:
       foreign_key: rate_card_version_id
       collection: rate_card_versions
   attributes:
+    - id
     - rate
   create_attributes:
     - rate_card_version_id
@@ -663,6 +671,7 @@ rate_card_roles:
 
 resolutions:
   attributes:
+    - id
     - type
     - created_at
     - updated_at
@@ -673,6 +682,7 @@ resolutions:
 
 roles: # TODO(SZ): find it out
   attributes:
+    - id
     - name
 
 stories: # tasks
@@ -911,6 +921,7 @@ timesheet_submissions:
 
 users:
   attributes:
+    - id
     - user_id       # the internal ID of the user
     - full_name     # the full name of the user
     - photo_path    # the full url to the user's thumbnail
@@ -1025,6 +1036,7 @@ workspaces:
 
 workspace_invoice_preferences:
   attributes:
+    - id
     - workspace_id
     - purchase_order
     - project_code
