@@ -43,6 +43,7 @@ describe Mavenlink::Response, stub_requests: true do
     context 'custom client set' do
       let(:client) { Mavenlink::Client.new(oauth_token: 'new one') }
       subject(:response) { described_class.new(response_data, client) }
+
       its(:client) { should eq(client) }
     end
   end

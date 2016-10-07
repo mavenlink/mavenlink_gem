@@ -190,6 +190,7 @@ describe Mavenlink::Model, stub_requests: true do
     context 'custom client set' do
       let(:client) { Mavenlink::Client.new(oauth_token: 'new one') }
       subject { described_class.new({test: 'set'}, nil, client) }
+
       its(:client) { should eq(client) }
     end
   end
