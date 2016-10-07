@@ -27,7 +27,4 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'shoulda-matchers', "2.5.0"
   s.add_development_dependency 'awesome_print'
   s.add_development_dependency 'foreman'
-  s.add_development_dependency 'guard-rspec'
 end
-
-
