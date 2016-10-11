@@ -11,17 +11,6 @@ describe Mavenlink::Invoice, stub_requests: true do
     it { should respond_to :expenses }
   end
 
-  it { should be_a Mavenlink::Concerns::LockedRecord }
-  it { should be_a Mavenlink::Concerns::Indestructible }
-
-  describe '#save' do
-    specify { expect { subject.save }.to raise_error Mavenlink::RecordLockedError }
-  end
-
-  describe '#destroy' do
-    specify { expect { subject.destroy }.to raise_error Mavenlink::RecordLockedError }
-  end
-
   let(:collection_name) { 'invoices' }
 
   let(:model) { described_class }
@@ -132,22 +121,54 @@ describe Mavenlink::Invoice, stub_requests: true do
   end
 
   describe '#persisted?' do
-    specify do
-      expect(model.send(:new)).to be_persisted
+    before do
+      @instance = model.new
     end
 
-    specify do
-      expect(model.send(:new, id: 1)).to be_persisted
+    context 'when the model does not have an ID' do
+      before do
+        expect(@instance.id).to be_nil
+      end
+
+      it 'is false' do
+        expect(@instance).to_not be_persisted
+      end
+    end
+
+    context 'when the model has an ID' do
+      before do
+        @instance.id = 5
+      end
+
+      it 'is true' do
+        expect(@instance).to be_persisted
+      end
     end
   end
 
   describe '#new_record?' do
-    specify do
-      expect(model.send(:new)).not_to be_new_record
+    before do
+      @instance = model.new
     end
 
-    specify do
-      expect(model.send(:new, id: 1)).not_to be_new_record
+    context 'when the model does not have an ID' do
+      before do
+        expect(@instance.id).to be_nil
+      end
+
+      it 'is true' do
+        expect(@instance).to be_new_record
+      end
+    end
+
+    context 'when the model has an ID' do
+      before do
+        @instance.id = 5
+      end
+
+      it 'is false' do
+        expect(@instance).to_not be_new_record
+      end
     end
   end
 end

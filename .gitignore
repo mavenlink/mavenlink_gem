@@ -8,5 +8,6 @@ coverage
 .rvmrc
 .idea
 .env
+.pairs
 Gemfile.lock
 

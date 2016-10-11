@@ -72,8 +72,6 @@ describe Mavenlink::Workspace, stub_requests: true do
     context 'new record' do
       it { should be_a_new_record }
       it { should validate_presence_of :title }
-      it { should ensure_inclusion_of(:creator_role).in_array(%w[maven buyer]) }
-      it { should_not allow_value(nil).for(:creator_role) }
     end
 
     context 'persisted record' do
@@ -82,6 +80,14 @@ describe Mavenlink::Workspace, stub_requests: true do
       it { should validate_presence_of :title }
       it { should_not ensure_inclusion_of(:creator_role).in_array(%w[maven buyer]) }
       it { should allow_value(nil).for(:creator_role) }
+    end
+  end
+
+  describe 'instance methods' do
+    subject { model.new(title: 'Some title', creator_role: 'maven') }
+
+    specify do
+      expect(subject.scoped_im).to be_a Mavenlink::Request
     end
   end
 
@@ -149,7 +155,7 @@ describe Mavenlink::Workspace, stub_requests: true do
 
       context 'invalid record' do
         specify do
-          expect { model.create!(title: '', creator_role: '') }.to raise_error Mavenlink::RecordInvalidError, /Title.*blank.*Creator.*included/
+          expect { model.create!(title: '', creator_role: '') }.to raise_error Mavenlink::RecordInvalidError, /Title.*blank/
         end
       end
     end
@@ -239,6 +245,7 @@ describe Mavenlink::Workspace, stub_requests: true do
     it 'accepts attributes' do
       expect(model.new(any_custom_key: 'value set')).to include(any_custom_key: 'value set')
     end
+
   end
 
   describe '#persisted?' do
@@ -378,7 +385,7 @@ describe Mavenlink::Workspace, stub_requests: true do
         subject { model.new(title: '', creator_role: '') }
 
         specify do
-          expect { subject.save! }.to raise_error Mavenlink::RecordInvalidError, /Title.*blank.*Creator.*included/
+          expect { subject.save! }.to raise_error Mavenlink::RecordInvalidError, /Title.*blank/
         end
 
         specify do

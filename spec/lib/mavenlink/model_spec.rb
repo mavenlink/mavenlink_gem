@@ -175,6 +175,11 @@ describe Mavenlink::Model, stub_requests: true do
     it 'accepts attributes' do
       expect(model.new(any_custom_key: 'value set')).to include(any_custom_key: 'value set')
     end
+
+    it 'checks for client' do
+      expect(model.new).to respond_to (:client)
+      expect(model.new.client).to be_a Mavenlink::Client
+    end
   end
 
   describe '#client' do
@@ -185,6 +190,7 @@ describe Mavenlink::Model, stub_requests: true do
     context 'custom client set' do
       let(:client) { Mavenlink::Client.new(oauth_token: 'new one') }
       subject { described_class.new({test: 'set'}, nil, client) }
+
       its(:client) { should eq(client) }
     end
   end

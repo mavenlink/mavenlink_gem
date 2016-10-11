@@ -23,6 +23,11 @@ describe Mavenlink::Response, stub_requests: true do
       expect(response.results).to have(2).records
     end
 
+    it 'checks for client' do
+      expect(response).to respond_to (:client)
+      expect(response.client).to be_a Mavenlink::Client
+    end
+
     it 'returns records in a proper order' do
       expect(response.results[0]).to be_a Mavenlink::Workspace
       expect(response.results[1]).to be_a Mavenlink::User
@@ -38,6 +43,7 @@ describe Mavenlink::Response, stub_requests: true do
     context 'custom client set' do
       let(:client) { Mavenlink::Client.new(oauth_token: 'new one') }
       subject(:response) { described_class.new(response_data, client) }
+
       its(:client) { should eq(client) }
     end
   end
