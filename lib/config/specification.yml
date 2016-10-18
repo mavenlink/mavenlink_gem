@@ -1032,8 +1032,6 @@ workspaces:
     - posts_require_privacy_decision
     - stories_are_fixed_fee_by_default
     - currency
-    - require_expense_approvals
-    - require_time_approvals
 
 workspace_invoice_preferences:
   attributes:
