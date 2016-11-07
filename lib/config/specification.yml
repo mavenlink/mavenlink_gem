@@ -711,6 +711,9 @@ stories: # tasks
     story_tasks:
       foreign_key: story_task_ids
       collection: story_tasks
+    descendants:
+      foreign_key: descendant_ids
+      collection: stories
 
   attributes:
     - id # the internal story id
