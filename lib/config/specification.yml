@@ -714,6 +714,9 @@ stories: # tasks
     descendants:
       foreign_key: descendant_ids
       collection: stories
+    custom_field_values:
+      foreign_key: custom_field_value_ids
+      collection: custom_field_values
 
   attributes:
     - id # the internal story id
