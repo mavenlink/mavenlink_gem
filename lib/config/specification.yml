@@ -748,6 +748,8 @@ stories: # tasks
     - logged_nonbillable_time_in_minutes # the sum of all non-billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
     - fixed_fee # whether or not the story is fixed fee
     - root_id # the id of its parent. It is nil if a top level story
+    - descendant_ids # an array of Story ids for it's descendants
+    - custom_field_value_ids # an array of Custom Field Value ids which are attached to the story
   create_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
