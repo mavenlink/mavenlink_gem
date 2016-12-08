@@ -3,10 +3,10 @@ require 'spec_helper'
 describe Mavenlink::ExpenseReportSubmission, stub_requests: true do
   let(:report) { described_class.new(id: 4) }
 
-  describe "#reject" do
+  describe "#reject_submission" do
     before do
       allow(report.client).to receive(:put)
-      report.reject
+      report.reject_submission
     end
 
     it "uses a put method with the correct api endpoint and id" do
