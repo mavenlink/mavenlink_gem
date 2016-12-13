@@ -216,6 +216,7 @@ expenses:
     - workspace_id # the id of the project Workspace this expense is associated with
     - user_id # the id of the user who created this expense
     - receipt_id # the id of an attached Receipt Attachment
+    - expense_category_id # the id of its category
   create_attributes:
     - workspace_id # (required) the ID of the Workspace in which the expense will be created
     - date # (required) the date of the expense in ISO8601 format
@@ -249,6 +250,9 @@ expenses:
     story:
       foreign_key: story_id
       collection: stories
+    expense_category:
+      foreign_key: expense_category_id
+      collection: expense_categories
 
 expense_categories:
   attributes:
