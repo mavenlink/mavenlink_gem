@@ -64,13 +64,6 @@ module Mavenlink
       parse_request(connection.delete(path, arguments).body)
     end
 
-    # @note(AC): would you consider this to be inconsistent?
-    # @return [Array<String>]
-    def expense_categories
-      Mavenlink.logger.note 'Started GET /expense_categories'
-      parse_request(connection.get('expense_categories').body)
-    end
-
     private
 
     attr_reader :oauth_token, :endpoint

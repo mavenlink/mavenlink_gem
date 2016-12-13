@@ -250,6 +250,19 @@ expenses:
       foreign_key: story_id
       collection: stories
 
+expense_categories:
+  attributes:
+    - id
+    - name
+    - deleted_at
+  create_attributes:
+    - name
+  update_attributes:
+    - name
+  validations:
+    name:
+      presence: true
+
 expense_report_submissions:
   attributes:
     - id
