@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Mavenlink::Client, stub_requests: true do
   it { should respond_to :assignments }
+  it { should respond_to :expense_categories }
   it { should respond_to :stories }
   it { should respond_to :story_allocation_days }
   it { should respond_to :users }
@@ -157,7 +158,6 @@ describe Mavenlink::Client, stub_requests: true do
       stub_request :post,   post_path,   post_response
       stub_request :put,    put_path,    put_response
       stub_request :delete, delete_path, delete_response
-      stub_request :get, '/api/v1/expense_categories', ['Travel', 'Mileage', 'Lodging', 'Food', 'Entertainment', 'Other']
     end
 
     describe '#get' do
@@ -181,12 +181,6 @@ describe Mavenlink::Client, stub_requests: true do
     describe '#delete' do
       specify do
         expect(subject.delete(delete_path)).to eq(delete_response)
-      end
-    end
-
-    describe '#expense_categories' do
-      specify do
-        expect(subject.expense_categories).to eq(['Travel', 'Mileage', 'Lodging', 'Food', 'Entertainment', 'Other'])
       end
     end
   end

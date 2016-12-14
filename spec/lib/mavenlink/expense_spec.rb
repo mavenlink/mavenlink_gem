@@ -11,6 +11,7 @@ describe Mavenlink::Expense, stub_requests: true do
   end
 
   describe 'associations' do
+    it { should respond_to :expense_category }
     it { should respond_to :workspace }
     it { should respond_to :user }
     it { should respond_to :receipt }
