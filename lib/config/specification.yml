@@ -954,6 +954,10 @@ users:
     - photo_path    # the full url to the user's thumbnail
     - email_address # the user's primary email address
     - headline      # the short description of the user as found in the user's profile
+  update_attributes:
+    - full_name
+    - headline
+    - email_address
   associations:
     role:
       foreign_key: role_id
