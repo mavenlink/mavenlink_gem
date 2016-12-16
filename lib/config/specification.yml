@@ -54,11 +54,13 @@ account_memberships:
     - can_view_reports
     - bill_rate_in_cents
     - cost_rate_in_cents
+    - manager_id
   update_attributes:
     - bill_rate_in_cents # bill_rate_in_cents is optional"
     - cost_rate_in_cents # cost_rate_in_cents is optional"
     - default_role_id # default_role_id is the internal ID of the role of this user on this account"
     - permission # permission is optional; it can be 'administrator', 'reports_viewer', 'project_lead', 'project_creator', 'punch_clock' or 'collaborator'"
+    - manager_id
   associations:
     user:
       foreign_key: user_id
