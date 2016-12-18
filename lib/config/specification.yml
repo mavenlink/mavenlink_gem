@@ -1135,3 +1135,35 @@ workspace_groups:
     workspaces:
       foreign_key: workspace_ids
       collection: workspaces
+
+workweeks:
+  attributes:
+    - default
+    - start_date
+    - end_date
+    - sunday_minutes
+    - monday_minutes
+    - tuesday_minutes
+    - wednesday_minutes
+    - thursday_minutes
+    - friday_minutes
+    - saturday_minutes
+    - total_minutes
+  create_attributes:
+    - start_date
+    - sunday_minutes
+    - monday_minutes
+    - tuesday_minutes
+    - wednesday_minutes
+    - thursday_minutes
+    - friday_minutes
+    - saturday_minutes
+  update_attributes:
+    - start_date
+    - sunday_minutes
+    - monday_minutes
+    - tuesday_minutes
+    - wednesday_minutes
+    - thursday_minutes
+    - friday_minutes
+    - saturday_minutes
