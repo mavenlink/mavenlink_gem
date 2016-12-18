@@ -1167,3 +1167,28 @@ workweeks:
     - thursday_minutes
     - friday_minutes
     - saturday_minutes
+
+workweek_memberships:
+  attributes:
+    - user_id
+    - start_date
+    - end_date
+  create_attributes:
+    - user_id
+    - start_date
+    - sunday_minutes
+    - monday_minutes
+    - tuesday_minutes
+    - wednesday_minutes
+    - thursday_minutes
+    - friday_minutes
+    - saturday_minutes
+  update_attributes:
+    - start_date
+    - sunday_minutes
+    - monday_minutes
+    - tuesday_minutes
+    - wednesday_minutes
+    - thursday_minutes
+    - friday_minutes
+    - saturday_minutes
