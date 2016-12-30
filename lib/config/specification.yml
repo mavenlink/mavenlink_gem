@@ -831,6 +831,36 @@ story_allocation_days:
       foreign_key: workspace_id
       collection: workspaces
 
+story_dependencies:
+  validations:
+    [source_id, target_id]:
+      presence: true
+    workspace_id:
+      presence: true
+      'on': create
+  attributes:
+    - id
+    - dependency_type
+    - lag
+    - source_id
+    - target_id
+  create_attributes:
+    - workspace_id
+    - source_id
+    - target_id
+    - dependency_type
+    - lag
+  update_attributes:
+    - dependency_type
+    - lag
+  associations:
+    source:
+      foreign_key: source_id
+      collection: stories
+    target:
+      foreign_key: target_id
+      collection: stories
+
 story_tasks:
   associations:
     story:
