@@ -3,17 +3,6 @@ require 'spec_helper'
 describe Mavenlink::User, stub_requests: true do
   subject { described_class.send(:new) }
 
-  it { should be_a Mavenlink::Concerns::LockedRecord }
-  it { should be_a Mavenlink::Concerns::Indestructible }
-
-  describe '#save' do
-    specify { expect { subject.save }.to raise_error Mavenlink::RecordLockedError }
-  end
-
-  describe '#destroy' do
-    specify { expect { subject.destroy }.to raise_error Mavenlink::RecordLockedError }
-  end
-
   let(:collection_name) { 'users' }
 
   let(:model) { described_class }
@@ -125,7 +114,7 @@ describe Mavenlink::User, stub_requests: true do
 
   describe '#persisted?' do
     specify do
-      expect(model.send(:new)).to be_persisted
+      expect(model.send(:new)).not_to be_persisted
     end
 
     specify do
@@ -135,7 +124,7 @@ describe Mavenlink::User, stub_requests: true do
 
   describe '#new_record?' do
     specify do
-      expect(model.send(:new)).not_to be_new_record
+      expect(model.send(:new)).to be_new_record
     end
 
     specify do

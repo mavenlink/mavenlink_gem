@@ -54,11 +54,13 @@ account_memberships:
     - can_view_reports
     - bill_rate_in_cents
     - cost_rate_in_cents
+    - manager_id
   update_attributes:
     - bill_rate_in_cents # bill_rate_in_cents is optional"
     - cost_rate_in_cents # cost_rate_in_cents is optional"
     - default_role_id # default_role_id is the internal ID of the role of this user on this account"
     - permission # permission is optional; it can be 'administrator', 'reports_viewer', 'project_lead', 'project_creator', 'punch_clock' or 'collaborator'"
+    - manager_id
   associations:
     user:
       foreign_key: user_id
@@ -984,6 +986,10 @@ users:
     - photo_path    # the full url to the user's thumbnail
     - email_address # the user's primary email address
     - headline      # the short description of the user as found in the user's profile
+  update_attributes:
+    - full_name
+    - headline
+    - email_address
   associations:
     role:
       foreign_key: role_id
@@ -1159,3 +1165,60 @@ workspace_groups:
     workspaces:
       foreign_key: workspace_ids
       collection: workspaces
+
+workweeks:
+  attributes:
+    - default
+    - start_date
+    - end_date
+    - sunday_minutes
+    - monday_minutes
+    - tuesday_minutes
+    - wednesday_minutes
+    - thursday_minutes
+    - friday_minutes
+    - saturday_minutes
+    - total_minutes
+  create_attributes:
+    - start_date
+    - sunday_minutes
+    - monday_minutes
+    - tuesday_minutes
+    - wednesday_minutes
+    - thursday_minutes
+    - friday_minutes
+    - saturday_minutes
+  update_attributes:
+    - start_date
+    - sunday_minutes
+    - monday_minutes
+    - tuesday_minutes
+    - wednesday_minutes
+    - thursday_minutes
+    - friday_minutes
+    - saturday_minutes
+
+workweek_memberships:
+  attributes:
+    - user_id
+    - start_date
+    - end_date
+  create_attributes:
+    - user_id
+    - start_date
+    - sunday_minutes
+    - monday_minutes
+    - tuesday_minutes
+    - wednesday_minutes
+    - thursday_minutes
+    - friday_minutes
+    - saturday_minutes
+  update_attributes:
+    - start_date
+    - sunday_minutes
+    - monday_minutes
+    - tuesday_minutes
+    - wednesday_minutes
+    - thursday_minutes
+    - friday_minutes
+    - saturday_minutes
