@@ -785,6 +785,7 @@ stories: # tasks
     - billable # whether or not the task is billable
     - percentage_complete # (optional) a number (0-100) representing the stage of the story
     - state # (optional) the state of the story: not started, started or completed
+    - sub_stories # (optional) sub stories to be created with the parent
   update_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
