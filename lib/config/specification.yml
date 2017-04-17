@@ -919,6 +919,7 @@ time_entries:
     - user_id # the internal ID of the user who created this time entry
     - approved # whether or not the time entry has been approved
     - role_id # The internal ID of the Role that is associated with this time entry
+    - integrated_resource # Object representing the status of integration synchronization
   create_attributes:
     - workspace_id # (required) the internal ID of the project workspace this time entry is associated with
     - date_performed # (required) the date the activity for which the time is being entered was performed, format: YYYY-MM-DD
@@ -928,6 +929,7 @@ time_entries:
     - rate_in_cents # (optional, required if billable is true) the hourly rate for this time entry in cents, you must also set billable to true when setting this
     - story_id # (optional) the internal ID of the story this time entry is associated with
     - user_id # (optional) the internal ID of the user the time entry is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
+    - integrated_resource # (optional) the object representing the status of integration synchronization.
   update_attributes:
     - date_performed # (required) the date the activity for which the time is being entered was performed, format: YYYY-MM-DD
     - time_in_minutes # (required) the amount of time entered in minutes
