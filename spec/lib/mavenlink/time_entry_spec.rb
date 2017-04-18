@@ -37,7 +37,7 @@ describe Mavenlink::TimeEntry, stub_requests: true do
 
     it 'includes expected attributes' do
       should match_array(%w(date_performed time_in_minutes billable notes
-                            rate_in_cents story_id user_id))
+                            rate_in_cents story_id user_id integrated_resource))
     end
   end
 end
