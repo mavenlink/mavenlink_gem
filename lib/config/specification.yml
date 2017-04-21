@@ -346,6 +346,19 @@ fixed_fee_items:
     - story_id
     - workspace_id
 
+integrated_resources:
+  attributes:
+    - service_model
+    - service_name
+    - subject_id
+    - subject_type
+    - status
+  create_attributes:
+    - id
+  validations:
+    [service_model, service_name, subject_id, subject_type]:
+      presence: true
+
 invoices:
   attributes:
     - id # the internal invoice id
