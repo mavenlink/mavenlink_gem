@@ -348,15 +348,21 @@ fixed_fee_items:
 
 integrated_resources:
   attributes:
-    - service_model
+    - service_id
     - service_name
+    - service_model
     - subject_id
     - subject_type
     - status
-  create_attributes:
-    - id
+  create_or_update_attributes:
+    - service_id
+    - service_name
+    - service_model
+    - subject_id
+    - subject_type
+    - status
   validations:
-    [service_model, service_name, subject_id, subject_type]:
+    [service_id, service_model, service_name, subject_id, subject_type]:
       presence: true
 
 invoices:
