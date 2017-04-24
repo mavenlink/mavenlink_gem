@@ -9,16 +9,6 @@ module Mavenlink
       end
     end
 
-    protected
-
-    def update
-      raise "Cannot use update, use save instead"
-    end
-
-    def create
-      raise "Cannot use create, use save instead"
-    end
-
     private
 
     def create_or_update(attributes)
