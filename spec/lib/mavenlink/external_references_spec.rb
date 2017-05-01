@@ -9,7 +9,7 @@ describe Mavenlink::ExternalReference, stub_requests: true do
       "subject_type" => "TimeEntry",
       "subject_id" => 1,
       "service_name" => "Netsuite",
-      "service_id" => "1",
+      "service_model_ref" => "1",
       "service_model" => "TimeBill"
     }.merge(attribute_options)
   }
@@ -23,7 +23,7 @@ describe Mavenlink::ExternalReference, stub_requests: true do
           "id" => "7",
           "subject_id" => "1",
           "subject_type" => "TimeEntry",
-          "service_id" => "1",
+          "service_model_ref" => "1",
           "service_name" => "Netsuite",
           "service_model" => "TimeBill"
         }
@@ -32,7 +32,7 @@ describe Mavenlink::ExternalReference, stub_requests: true do
   end
 
   describe "validations" do
-    it { should validate_presence_of :service_id }
+    it { should validate_presence_of :service_model_ref }
     it { should validate_presence_of :service_name }
     it { should validate_presence_of :service_model }
     it { should validate_presence_of :subject_id }
