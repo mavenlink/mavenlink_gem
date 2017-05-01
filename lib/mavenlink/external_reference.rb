@@ -1,5 +1,5 @@
 module Mavenlink
-  class IntegratedResource < Model
+  class ExternalReference < Model
     def save
       if valid?
         reload(create_or_update(attributes_for_create_or_update))
@@ -13,7 +13,7 @@ module Mavenlink
 
     def create_or_update(attributes)
       request.perform do
-        client.post("integrated_resources/create_or_update", { integrated_resource: attributes})
+        client.post("external_references/create_or_update", { external_reference: attributes})
       end
     end
 
