@@ -1,9 +1,9 @@
 require "spec_helper"
 
-describe Mavenlink::IntegratedResource, stub_requests: true do
+describe Mavenlink::ExternalReference, stub_requests: true do
   let(:model) { described_class }
-  let(:integrated_resource) { model.new(attributes) }
-  let(:uri) { "integrated_resources/create_or_update" }
+  let(:external_reference) { model.new(attributes) }
+  let(:uri) { "external_references/create_or_update" }
   let(:attributes) {
     {
       "subject_type" => "TimeEntry",
@@ -17,8 +17,8 @@ describe Mavenlink::IntegratedResource, stub_requests: true do
   let(:response) do
     {
       "count" => 1,
-      "results" => [{"key" => "integrated_resources", "id" => "7"}],
-      "integrated_resources" => {
+      "results" => [{"key" => "external_references", "id" => "7"}],
+      "external_references" => {
         "7" => {
           "id" => "7",
           "subject_id" => "1",
@@ -41,30 +41,30 @@ describe Mavenlink::IntegratedResource, stub_requests: true do
 
   describe "#save" do
     before do
-      allow(integrated_resource.client).to receive(:post).and_call_original
-      stub_request :post, "/api/v1/integrated_resources/create_or_update", response
+      allow(external_reference.client).to receive(:post).and_call_original
+      stub_request :post, "/api/v1/external_references/create_or_update", response
     end
 
     context "when the model is valid" do
       it "the record is valid" do
-        integrated_resource.save
-        expect(integrated_resource).to be_a model
-        expect(integrated_resource).to be_valid
-        expect(integrated_resource).to be_persisted
+        external_reference.save
+        expect(external_reference).to be_a model
+        expect(external_reference).to be_valid
+        expect(external_reference).to be_persisted
       end
 
       it "makes the request with the correct params" do
-        integrated_resource.save
-        expect(integrated_resource.client).to have_received(:post).with(uri, { integrated_resource: attributes })
+        external_reference.save
+        expect(external_reference.client).to have_received(:post).with(uri, { external_reference: attributes })
       end
 
       it "returns true" do
-        expect(integrated_resource.save).to be_true
+        expect(external_reference.save).to be_true
       end
 
-      it "loads the response attributes into the integrated resource model" do
-        integrated_resource.save
-        expect(integrated_resource).to eq(response["integrated_resources"]["7"])
+      it "loads the response attributes into the external_reference model" do
+        external_reference.save
+        expect(external_reference).to eq(response["external_references"]["7"])
       end
     end
 
@@ -72,24 +72,24 @@ describe Mavenlink::IntegratedResource, stub_requests: true do
         let(:attribute_options) { { foo: 666 } }
 
         it "the record is valid" do
-          integrated_resource.save
-          expect(integrated_resource).to be_a model
-          expect(integrated_resource).to be_valid
-          expect(integrated_resource).to be_persisted
+          external_reference.save
+          expect(external_reference).to be_a model
+          expect(external_reference).to be_valid
+          expect(external_reference).to be_persisted
         end
 
         it "ignores invalid attributes when making the request" do
-          integrated_resource.save
-          expect(integrated_resource.client).to have_received(:post).with(uri, { integrated_resource: attributes.except(:foo)})
+          external_reference.save
+          expect(external_reference.client).to have_received(:post).with(uri, { external_reference: attributes.except(:foo)})
         end
 
         it "returns true" do
-          expect(integrated_resource.save).to be_true
+          expect(external_reference.save).to be_true
         end
 
-        it "loads the response attributes into the integrated resource model" do
-          integrated_resource.save
-          expect(integrated_resource).to include(response["integrated_resources"]["7"])
+        it "loads the response attributes into the external_reference model" do
+          external_reference.save
+          expect(external_reference).to include(response["external_references"]["7"])
         end
       end
 
@@ -97,24 +97,24 @@ describe Mavenlink::IntegratedResource, stub_requests: true do
       let(:attribute_options) { { subject_type: nil } }
 
       it "the record is not valid" do
-        integrated_resource.save
-        expect(integrated_resource).to be_a model
-        expect(integrated_resource).to_not be_valid
-        expect(integrated_resource).to_not be_persisted
+        external_reference.save
+        expect(external_reference).to be_a model
+        expect(external_reference).to_not be_valid
+        expect(external_reference).to_not be_persisted
       end
 
       it "does not make the request" do
-        integrated_resource.save
-        expect(integrated_resource.client).to_not have_received(:post)
+        external_reference.save
+        expect(external_reference.client).to_not have_received(:post)
       end
 
       it "returns false" do
-        expect(integrated_resource.save).to be_false
+        expect(external_reference.save).to be_false
       end
 
       it "logs an error on the modal" do
-        integrated_resource.save
-        expect(integrated_resource.errors.full_messages).to eq(["Subject type can't be blank"])
+        external_reference.save
+        expect(external_reference.errors.full_messages).to eq(["Subject type can't be blank"])
       end
     end
 
@@ -131,13 +131,13 @@ describe Mavenlink::IntegratedResource, stub_requests: true do
       end
 
       after do
-        expect(integrated_resource).to be_a model
-        expect(integrated_resource).to be_valid
-        expect(integrated_resource).to_not be_persisted
+        expect(external_reference).to be_a model
+        expect(external_reference).to be_valid
+        expect(external_reference).to_not be_persisted
       end
 
       it "raise a Mavenlink InvalidRequestError" do
-        expect { integrated_resource.save }.to raise_error Mavenlink::InvalidRequestError, /Missing required parameters/
+        expect { external_reference.save }.to raise_error Mavenlink::InvalidRequestError, /Missing required parameters/
       end
     end
   end
