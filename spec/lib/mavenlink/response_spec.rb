@@ -24,7 +24,6 @@ describe Mavenlink::Response, stub_requests: true do
     end
 
     it 'checks for client' do
-      expect(response).to respond_to (:client)
       expect(response.client).to be_a Mavenlink::Client
     end
 

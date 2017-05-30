@@ -177,7 +177,6 @@ describe Mavenlink::Model, stub_requests: true do
     end
 
     it 'checks for client' do
-      expect(model.new).to respond_to (:client)
       expect(model.new.client).to be_a Mavenlink::Client
     end
   end
