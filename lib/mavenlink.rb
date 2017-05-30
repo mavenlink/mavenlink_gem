@@ -117,5 +117,4 @@ require 'mavenlink/workspace_invoice_preference'
 require 'mavenlink/workspace_group'
 require 'mavenlink/workweek'
 require 'mavenlink/workweek_membership'
-require 'mavenlink/external_reference'
 require 'mavenlink/railtie' if defined?(Rails)
