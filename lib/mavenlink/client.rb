@@ -27,7 +27,7 @@ module Mavenlink
     # @return [Faraday::Connection]
     def connection
       Faraday.new(connection_options) do |builder|
-        puts connection_options.inspect
+        puts builder.inspect
         if @use_json
           builder.headers['Content-Type'] = 'application/json'
         else
