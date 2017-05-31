@@ -10,7 +10,6 @@ module Mavenlink
       @use_json = settings[:use_json]
       if settings.key?(:user_agent_override)
         @user_agent_override = settings[:user_agent_override]
-        puts @user_agent_override
       end
 
       # TODO: implement with method_missing?
@@ -27,7 +26,6 @@ module Mavenlink
     # @return [Faraday::Connection]
     def connection
       Faraday.new(connection_options) do |builder|
-        puts builder.inspect
         if @use_json
           builder.headers['Content-Type'] = 'application/json'
         else
