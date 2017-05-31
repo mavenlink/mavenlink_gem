@@ -75,7 +75,7 @@ module Mavenlink
 
     # @return [Hash]
     def connection_options
-      if @user_agent_override && @user_agent_override > 1
+      if @user_agent_override && @user_agent_override.length > 1
         user_agent = "#{@user_agent_override}"
       else
         user_agent = "Mavenlink Ruby Gem"
