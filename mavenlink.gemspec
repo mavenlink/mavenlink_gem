@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mavenlink}
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.date = %q{2014-04-01}
   s.authors = ["Mavenlink"]

@@ -8,6 +8,9 @@ module Mavenlink
       @oauth_token = settings[:oauth_token] or raise ArgumentError, 'OAuth token is not set'
       @endpoint = settings[:endpoint] || ENDPOINT
       @use_json = settings[:use_json]
+      if settings.key?(:user_agent_override)
+        @user_agent_override = settings[:user_agent_override]
+      end
 
       # TODO: implement with method_missing?
       # Declare API calls client.-->>workspaces<<---.create({})
@@ -70,9 +73,14 @@ module Mavenlink
 
     # @return [Hash]
     def connection_options
+      if @user_agent_override && @user_agent_override.length > 1
+        user_agent = "#{@user_agent_override}"
+      else
+        user_agent = "Mavenlink Ruby Gem"
+      end
       {
         headers: { 'Accept'        => "application/json",
-                   'User-Agent'    => "Mavenlink Ruby Gem",
+                   'User-Agent'    => "#{user_agent}",
                    'Authorization' => "Bearer #{oauth_token}" },
         ssl: { verify: false },
         url: endpoint
