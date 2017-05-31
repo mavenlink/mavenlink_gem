@@ -75,13 +75,13 @@ module Mavenlink
     # @return [Hash]
     def connection_options
       if @user_agent_override && @user_agent_override > 1
-        @user_agent = "#{@user_agent_override}"
+        user_agent = "#{@user_agent_override}"
       else
-        @user_agent = "Mavenlink Ruby Gem"
+        user_agent = "Mavenlink Ruby Gem"
       end
       {
         headers: { 'Accept'        => "application/json",
-                   'User-Agent'    => "#{@user_agent}",
+                   'User-Agent'    => "#{user_agent}",
                    'Authorization' => "Bearer #{oauth_token}" },
         ssl: { verify: false },
         url: endpoint
