@@ -27,6 +27,7 @@ module Mavenlink
     # @return [Faraday::Connection]
     def connection
       Faraday.new(connection_options) do |builder|
+        puts connection_options.inspect
         if @use_json
           builder.headers['Content-Type'] = 'application/json'
         else
@@ -76,7 +77,6 @@ module Mavenlink
     def connection_options
       if @user_agent_override && @user_agent_override > 1
         user_agent = "#{@user_agent_override}"
-        puts user_agent
       else
         user_agent = "Mavenlink Ruby Gem"
       end
