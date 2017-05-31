@@ -9,8 +9,8 @@ module Mavenlink
       @endpoint = settings[:endpoint] || ENDPOINT
       @use_json = settings[:use_json]
       if settings.key?(:user_agent_override)
-        puts "HELLOOOOOOOOOOOOOO I AM A CLIENT"
         @user_agent_override = settings[:user_agent_override]
+        puts @user_agent_override
       end
 
       # TODO: implement with method_missing?
