@@ -731,6 +731,7 @@ stories: # tasks
     # workspace - the workspace (project) that owns this story, returned in the workspaces top-level key
     # parent - when you include this association, stories that are sub-stories will have a parent_id key referencing their parent story in the stories top-level key
     # assignees - an array of User IDs called assignee_ids that contains the users assigned to this story, returned in the users top-level key
+    # followers - an array of User IDs called folllower_ids that contains the users following this story, returned in the users top-level key
     # sub_stories - sub-stories of this story, returned in the stories top-level key; stories will contain a sub_story_ids array
     # tags - an array of Tag IDs returned in the tags top-level key; stories will contain a tag_ids array
     workspace:
@@ -741,6 +742,9 @@ stories: # tasks
       collection: stories
     assignees:
       foreign_key: assignee_ids
+      collection: users
+    followers:
+      foreign_key: follower_ids
       collection: users
     sub_stories:
       foreign_key: sub_story_ids
