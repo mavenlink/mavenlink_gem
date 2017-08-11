@@ -1082,6 +1082,7 @@ workspaces:
     - workspace_invoice_preference_id
     - require_expense_approvals
     - require_time_approvals
+    - percentage_complete
   create_attributes:
     - title
     - creator_role
