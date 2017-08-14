@@ -936,6 +936,7 @@ time_entries:
     - billable # whether this time entry is billable time
     - notes # any notes added to the time entry
     - rate_in_cents # the hourly rate for this time entry in cents
+    - cost_rate_in_cents
     - currency # the currency of this time entry's rate
     - currency_symbol # the currency symbol for this time entry's currency
     - currency_base_unit # the amount of cents in each of the currency's dollars, for example 100 for USD.
@@ -1082,6 +1083,7 @@ workspaces:
     - workspace_invoice_preference_id
     - require_expense_approvals
     - require_time_approvals
+    - percentage_complete
   create_attributes:
     - title
     - creator_role
