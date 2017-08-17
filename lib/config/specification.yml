@@ -794,6 +794,7 @@ stories: # tasks
     - root_id # the id of its parent. It is nil if a top level story
     - descendant_ids # an array of Story ids for it's descendants
     - custom_field_value_ids # an array of Custom Field Value ids which are attached to the story
+    - percentage_complete
   create_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
