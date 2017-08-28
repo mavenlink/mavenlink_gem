@@ -795,6 +795,8 @@ stories: # tasks
     - descendant_ids # an array of Story ids for it's descendants
     - custom_field_value_ids # an array of Custom Field Value ids which are attached to the story
     - percentage_complete
+    - checklist # an array of checklist items (optional)
+    - weight # integer representing the weight of the story. Can only be set on a parent-level milestone by a consultant with at least budget permissions (optional)
   create_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
@@ -812,6 +814,10 @@ stories: # tasks
     - percentage_complete # (optional) a number (0-100) representing the stage of the story
     - state # (optional) the state of the story: not started, started or completed
     - sub_stories # (optional) sub stories to be created with the parent
+    - fixed_fee # whether or not the story is fixed fee
+    - checklist # an array of checklist items (optional)
+    - weight # integer representing the weight of the story. Can only be set on a parent-level milestone by a consultant with at least budget permissions (optional)
+    - priority # the integer value of the priority for a task
   update_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
@@ -827,6 +833,9 @@ stories: # tasks
     - billable # whether or not the task is billable
     - percentage_complete # (optional) a number (0-100) representing the stage of the story
     - state # (optional) the state of the story: not started, started or completed
+    - fixed_fee # whether or not the story is fixed fee
+    - weight # integer representing the weight of the story. Can only be set on a parent-level milestone by a consultant with at least budget permissions (optional)
+    - priority # the integer value of the priority for a task
 
 story_allocation_days:
   attributes:
