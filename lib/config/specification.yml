@@ -1126,6 +1126,9 @@ workspaces:
     - posts_require_privacy_decision
     - stories_are_fixed_fee_by_default
     - currency
+    - target_margin
+    - approver_id
+    - change_orders_enabled
 
 workspace_invoice_preferences:
   attributes:
