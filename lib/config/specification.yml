@@ -1063,6 +1063,9 @@ workspaces:
     workspace_groups:
       foreign_key: workspace_group_ids
       collection: workspace_groups
+    primary_maven:
+      foreign_key: primary_maven_id
+      collection: users
   attributes:
     - id # the internal expense ID
     - title # the title of the project
