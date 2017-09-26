@@ -1097,6 +1097,7 @@ workspaces:
     - require_expense_approvals
     - require_time_approvals
     - percentage_complete
+    - access_level
   create_attributes:
     - title
     - creator_role
