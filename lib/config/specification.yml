@@ -608,6 +608,18 @@ project_templates:
     user:
       foreign_key: user_id
       collection: users
+    project_template_assignments:
+      foreign_key: project_template_assignment_ids
+      collection: project_template_assignments
+
+project_template_assignments:
+  associations:
+    project_template:
+      foreign_key: project_template_id
+      collection: project_templates
+  attributes:
+    - id
+    - name
 
 rate_cards:
   associations:
@@ -1121,6 +1133,10 @@ workspaces:
     - custom_fields
     - require_expense_approvals
     - require_time_approvals
+    - project_template_start_date
+    - project_template_assignment_mappings
+    - project_template_weekends_as_workdays
+    - project_tracker_template_id
   update_attributes:
     - title
     - budgeted
@@ -1142,6 +1158,11 @@ workspaces:
     - target_margin
     - approver_id
     - change_orders_enabled
+    - project_template_start_date
+    - project_template_assignment_mappings
+    - project_template_weekends_as_workdays
+    - project_tracker_template_id
+    - project_template_before_story_id
 
 workspace_invoice_preferences:
   attributes:
