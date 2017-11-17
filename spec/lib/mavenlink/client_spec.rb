@@ -147,22 +147,35 @@ describe Mavenlink::Client, stub_requests: true do
     let(:post_path)   { '/post_something' }
     let(:put_path)    { '/put_something' }
     let(:delete_path) { '/delete_something' }
+    let(:failing_get_path) { '/fail_to_get_something' }
 
-    let(:get_response)    { {'get'    => true} }
-    let(:post_response)   { {'post'   => true} }
-    let(:put_response)    { {'put'    => true} }
-    let(:delete_response) { {'delete' => true} }
+    let(:get_body)    { {'get'    => true} }
+    let(:post_body)   { {'post'   => true} }
+    let(:put_body)    { {'put'    => true} }
+    let(:delete_body) { {'delete' => true} }
+    let(:failing_get_body) { {'get' => "errors"} }
+
+    let(:get_response)    { get_body.merge({'status' => 200}) }
+    let(:post_response)   { post_body.merge({'status' => 200}) }
+    let(:put_response)    { put_body.merge({'status' => 200}) }
+    let(:delete_response) { delete_body.merge({'status' => 200}) }
+    let(:failing_get_response) { failing_get_body.merge({'status' => 403}) }
 
     before do
-      stub_request :get,    get_path,    get_response
-      stub_request :post,   post_path,   post_response
-      stub_request :put,    put_path,    put_response
-      stub_request :delete, delete_path, delete_response
+      stub_request :get,    get_path,    get_body
+      stub_request :post,   post_path,   post_body
+      stub_request :put,    put_path,    put_body
+      stub_request :delete, delete_path, delete_body
+      stub_request :get,    failing_get_path, failing_get_body, 403
     end
 
     describe '#get' do
       specify do
         expect(subject.get(get_path)).to eq(get_response)
+      end
+
+      specify do
+        expect(subject.get(failing_get_path)).to eq(failing_get_response)
       end
     end
 

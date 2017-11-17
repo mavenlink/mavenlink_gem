@@ -13,8 +13,8 @@ shared_context 'stubbed requests', stub_requests: true do
     Mavenlink.adapter = [:test, stubbed_requests]
   end
 
-  def stub_request(request_type, path, response)
-    stubbed_requests.public_send(request_type, path) { [200, {}, response.to_json] }
+  def stub_request(request_type, path, response, status = 200)
+    stubbed_requests.public_send(request_type, path) { [status, {}, response.to_json] }
   end
 end
 

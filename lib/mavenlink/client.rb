@@ -40,7 +40,8 @@ module Mavenlink
     # @param [Hash] arguments
     def get(path, arguments = {})
       Mavenlink.logger.note "Started GET /#{path} with #{arguments.inspect}"
-      parse_request(connection.get(path, arguments).body)
+      response = connection.get(path, arguments)
+      parse_request(response.body, response.status)
     end
 
     # Performs custom POST request
@@ -48,7 +49,8 @@ module Mavenlink
     # @param [Hash] arguments
     def post(path, arguments = {})
       Mavenlink.logger.note "Started POST /#{path} with #{arguments.inspect}"
-      parse_request(connection.post(path, arguments).body)
+      response = connection.post(path, arguments)
+      parse_request(response.body, response.status)
     end
 
     # Performs custom PUT request
@@ -56,7 +58,8 @@ module Mavenlink
     # @param [Hash] arguments
     def put(path, arguments = {})
       Mavenlink.logger.note "Started PUT /#{path} with #{arguments.inspect}"
-      parse_request(connection.put(path, arguments).body)
+      response = connection.put(path, arguments)
+      parse_request(response.body, response.status)
     end
 
     # Performs custom PUT request
@@ -64,7 +67,8 @@ module Mavenlink
     # @param [Hash] arguments
     def delete(path, arguments = {})
       Mavenlink.logger.note "Started DELETE /#{path} with #{arguments.inspect}"
-      parse_request(connection.delete(path, arguments).body)
+      response = connection.delete(path, arguments)
+      parse_request(response.body, response.status)
     end
 
     private
@@ -87,16 +91,16 @@ module Mavenlink
       }.freeze
     end
 
-    def parse_request(response)
-      if response.present?
-        parsed_response = JSON.parse(response)
+    def parse_request(body, status)
+      if body.present?
+        parsed_response = JSON.parse(body).merge("status" => status)
       else
         return
       end
 
       parsed_response.tap do
         Mavenlink.logger.whisper 'Received response:'
-        Mavenlink.logger.inspection response
+        Mavenlink.logger.inspection body
 
         case parsed_response
         when Array
