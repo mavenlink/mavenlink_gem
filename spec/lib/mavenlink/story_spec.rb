@@ -29,11 +29,17 @@ describe Mavenlink::Story, stub_requests: true do
     }
   }
 
+  let(:delete_response) {
+    {
+      'status' => 204
+    }
+  }
+
   before do
     stub_request :get,    "/api/v1/stories?only=7", response
     stub_request :get,    "/api/v1/stories?only=8", {'count' => 0, 'results' => []}
     stub_request :post,   "/api/v1/stories", response
-    stub_request :delete, "/api/v1/stories/4", {}
+    stub_request :delete, "/api/v1/stories/4", {}, 204
   end
 
   describe '#save' do
@@ -62,7 +68,7 @@ describe Mavenlink::Story, stub_requests: true do
 
   describe '#destroy' do
     specify do
-      expect(described_class.new(id: '4').destroy).to be_blank
+      expect(described_class.new(id: '4').destroy).to eq(delete_response)
     end
   end
 end

@@ -13,7 +13,8 @@ describe Mavenlink::Request, stub_requests: true do
       'workspaces' => {
         '7' => {'title' => 'My new project'},
         '9' => {'title' => 'My second project'},
-      }
+      },
+      'status' => 200,
     }
   }
 
@@ -22,8 +23,9 @@ describe Mavenlink::Request, stub_requests: true do
       'count' => 1,
       'results' => [{'key' => 'workspaces', 'id' => '7'}],
       'workspaces' => {
-        '7' => {'title' => 'My new project'}
-      }
+        '7' => {'title' => 'My new project'},
+      },
+      'status' => 200,
     }
   }
 
@@ -34,7 +36,8 @@ describe Mavenlink::Request, stub_requests: true do
       'workspaces' => {
         '7' => {'title' => 'My new project!'},
         '9' => {'title' => 'My second project!'},
-      }
+      },
+      'status' => 200,
     }
   }
 
@@ -44,7 +47,8 @@ describe Mavenlink::Request, stub_requests: true do
       'results' => [{'key' => 'workspaces', 'id' => '10'}],
       'workspaces' => {
         '10' => {'title' => 'My last project!'}
-      }
+      },
+      'status' => 200,
     }
   }
 
@@ -54,7 +58,14 @@ describe Mavenlink::Request, stub_requests: true do
       'results' => [{'key' => 'workspaces', 'id' => '11'}],
       'workspaces' => {
         '11' => {'title' => 'Not existed project'}
-      }
+      },
+      'status' => 200,
+    }
+  }
+
+  let(:delete_response) {
+    {
+      'status' => 204,
     }
   }
 
@@ -65,7 +76,7 @@ describe Mavenlink::Request, stub_requests: true do
     stub_request :get,    '/api/v1/workspaces?only=7', one_record_response
     stub_request :get,    '/api/v1/workspaces?only=8', { 'count' => 0, 'results' => [] }
     stub_request :put,    '/api/v1/workspaces/7',      one_record_response
-    stub_request :delete, '/api/v1/workspaces/7',      {}
+    stub_request :delete, '/api/v1/workspaces/7',      {}, 204
     stub_request :get,    '/api/v1/workspaces',        response
     stub_request :post,   '/api/v1/workspaces',        one_record_response
   end
@@ -271,7 +282,7 @@ describe Mavenlink::Request, stub_requests: true do
 
   describe '#delete' do
     specify do
-      expect(request.only(7).delete).to be_blank
+      expect(request.only(7).delete).to eq delete_response
     end
 
     context 'no id specified' do

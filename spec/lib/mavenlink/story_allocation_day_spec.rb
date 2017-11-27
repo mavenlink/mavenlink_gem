@@ -21,7 +21,14 @@ describe Mavenlink::StoryAllocationDay, stub_requests: true do
       'results' => [{'key' => 'story_allocation_days', 'id' => '7'}],
       'story_allocation_days' => {
         '7' => {'current' => true, 'id' => '7'}
-      }
+      },
+      'status' => 200,
+    }
+  }
+
+  let(:delete_response) {
+    {
+      'status' => 204,
     }
   }
 
@@ -29,7 +36,7 @@ describe Mavenlink::StoryAllocationDay, stub_requests: true do
     stub_request :get,    "/api/v1/story_allocation_days?only=7", response
     stub_request :get,    "/api/v1/story_allocation_days?only=8", {'count' => 0, 'results' => []}
     stub_request :post,   "/api/v1/story_allocation_days", response
-    stub_request :delete, "/api/v1/story_allocation_days/4", {}
+    stub_request :delete, "/api/v1/story_allocation_days/4", {}, 204
   end
 
   describe '#save' do
@@ -58,7 +65,7 @@ describe Mavenlink::StoryAllocationDay, stub_requests: true do
 
   describe '#destroy' do
     specify do
-      expect(described_class.new(id: '4').destroy).to be_blank
+      expect(described_class.new(id: '4').destroy).to eq(delete_response)
     end
   end
 end
