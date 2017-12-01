@@ -229,6 +229,7 @@ expenses:
     - receipt_id
     - billable
     - story_id
+    - expense_category_id # the id of its category
   update_attributes:
     # NOTE(AC): check
     - date # (required) the date of the expense in ISO8601 format
@@ -239,6 +240,7 @@ expenses:
     - receipt_id
     - billable
     - story_id
+    - expense_category_id # the id of its category
   associations:
     workspace:
       foreign_key: workspace_id
