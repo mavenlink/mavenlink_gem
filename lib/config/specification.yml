@@ -1112,6 +1112,7 @@ workspaces:
     - require_time_approvals
     - percentage_complete
     - access_level
+    - status_key
   create_attributes:
     - title
     - creator_role
@@ -1139,6 +1140,7 @@ workspaces:
     - project_template_assignment_mappings
     - project_template_weekends_as_workdays
     - project_tracker_template_id
+    - status_key
   update_attributes:
     - title
     - budgeted
@@ -1165,6 +1167,7 @@ workspaces:
     - project_template_weekends_as_workdays
     - project_tracker_template_id
     - project_template_before_story_id
+    - status_key
 
 workspace_invoice_preferences:
   attributes:
