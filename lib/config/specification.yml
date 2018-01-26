@@ -1082,6 +1082,9 @@ workspaces:
     primary_maven:
       foreign_key: primary_maven_id
       collection: users
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
   attributes:
     - id # the internal expense ID
     - title # the title of the project
@@ -1143,6 +1146,7 @@ workspaces:
     - project_template_weekends_as_workdays
     - project_tracker_template_id
     - status_key
+    - external_reference
   update_attributes:
     - title
     - budgeted
@@ -1170,6 +1174,7 @@ workspaces:
     - project_tracker_template_id
     - project_template_before_story_id
     - status_key
+    - external_reference
 
 workspace_invoice_preferences:
   attributes:
