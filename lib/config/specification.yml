@@ -1224,6 +1224,7 @@ workspace_groups:
     - address
     - website
     - notes
+    - external_reference
   update_attributes:
     - name
     - company
@@ -1236,6 +1237,7 @@ workspace_groups:
     - address
     - website
     - notes
+    - external_reference
   validations:
     name:
       presence: true
@@ -1246,6 +1248,9 @@ workspace_groups:
     workspaces:
       foreign_key: workspace_ids
       collection: workspaces
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
 workweeks:
   attributes:
