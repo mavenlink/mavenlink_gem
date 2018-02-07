@@ -6,7 +6,9 @@ describe Mavenlink::Workspace, stub_requests: true do
   it { should be_a Mavenlink::Model }
   it { should be_a Mavenlink::Concerns::Indestructible }
 
-  it { should respond_to :external_references }
+  describe "associations" do
+    it { should respond_to :external_references }
+  end
 
   let(:response) {
     {
