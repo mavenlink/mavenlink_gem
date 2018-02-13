@@ -1118,6 +1118,7 @@ workspaces:
     - percentage_complete
     - access_level
     - status_key
+    - workspace_group_ids
   create_attributes:
     - title
     - creator_role
@@ -1147,6 +1148,8 @@ workspaces:
     - project_tracker_template_id
     - status_key
     - external_reference
+    - workspace_group_ids
+
   update_attributes:
     - title
     - budgeted
@@ -1175,6 +1178,7 @@ workspaces:
     - project_template_before_story_id
     - status_key
     - external_reference
+    - workspace_group_ids
 
 workspace_invoice_preferences:
   attributes:
