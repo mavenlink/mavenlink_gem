@@ -1149,7 +1149,6 @@ workspaces:
     - status_key
     - external_reference
     - workspace_group_ids
-
   update_attributes:
     - title
     - budgeted
