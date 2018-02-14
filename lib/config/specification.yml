@@ -359,6 +359,7 @@ external_references:
     - subject_type
     - status
     - external_link
+    - external_message
   create_or_update_attributes:
    - service_name
    - service_model
@@ -367,6 +368,7 @@ external_references:
    - subject_type
    - status
    - external_link
+   - external_message
   validations:
     [service_model_ref, service_model, service_name, subject_id, subject_type]:
       presence: true
