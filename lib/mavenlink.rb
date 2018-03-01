@@ -113,6 +113,7 @@ require 'mavenlink/rate_card_version'
 require 'mavenlink/resolution'
 require 'mavenlink/role' # NOTE(SZ): remove
 require 'mavenlink/user'
+require 'mavenlink/vendor'
 require 'mavenlink/workspace'
 require 'mavenlink/workspace_invoice_preference'
 require 'mavenlink/workspace_group'

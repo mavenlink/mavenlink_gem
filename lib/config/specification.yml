@@ -1058,6 +1058,19 @@ users:
       foreign_key: account_membership_id
       collection: account_memberships
 
+vendors:
+  attributes:
+    - id
+    - name
+    - in_use
+  create_attributes:
+    - name
+  update_attributes:
+    - name
+  validations:
+    name:
+      presence: true
+
 workspaces:
   validations:
     title:
