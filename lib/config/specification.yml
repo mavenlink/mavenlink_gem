@@ -1137,6 +1137,8 @@ workspaces:
     - status_key
     - workspace_group_ids
     - exclude_archived_stories_percent_complete
+    - rate_card_id
+    - tasks_default_non_billable
   create_attributes:
     - title
     - creator_role
@@ -1168,6 +1170,8 @@ workspaces:
     - external_reference
     - workspace_group_ids
     - exclude_archived_stories_percent_complete
+    - rate_card_id
+    - tasks_default_non_billable
   update_attributes:
     - title
     - budgeted
@@ -1198,6 +1202,7 @@ workspaces:
     - external_reference
     - workspace_group_ids
     - exclude_archived_stories_percent_complete
+    - rate_card_id
 
 workspace_invoice_preferences:
   attributes:
