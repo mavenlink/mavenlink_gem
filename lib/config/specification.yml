@@ -1136,6 +1136,7 @@ workspaces:
     - access_level
     - status_key
     - workspace_group_ids
+    - exclude_archived_stories_percent_complete
   create_attributes:
     - title
     - creator_role
@@ -1166,6 +1167,7 @@ workspaces:
     - status_key
     - external_reference
     - workspace_group_ids
+    - exclude_archived_stories_percent_complete
   update_attributes:
     - title
     - budgeted
@@ -1195,6 +1197,7 @@ workspaces:
     - status_key
     - external_reference
     - workspace_group_ids
+    - exclude_archived_stories_percent_complete
 
 workspace_invoice_preferences:
   attributes:
