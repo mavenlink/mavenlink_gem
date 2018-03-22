@@ -746,6 +746,64 @@ roles: # TODO(SZ): find it out
     - id
     - name
 
+skills:
+  associations:
+    skill_category:
+      foreign_key: skill_category_id
+      collection: skill_categories
+    roles:
+      foreign_key: role_ids
+      collection: roles
+  attributes:
+    - name
+    - max_level
+    - description
+    - user_count
+  create_attributes:
+    - skill_category_id
+    - name
+    - max_level
+    - description
+    - role_ids
+  update_attributes:
+    - skill_category_id
+    - name
+    - max_level
+    - description
+    - role_ids
+
+skill_categories:
+  associations:
+    skills:
+      foreign_key: skill_ids
+      collection: skills
+  attributes:
+    - name
+
+skill_memberships:
+  associations:
+    skill:
+      foreign_key: skill_id
+      collection: skills
+    user:
+      foreign_key: user_id
+      collection: users
+    creator:
+      foreign_key: creator_id
+      collection: users
+  attributes:
+    - level
+    - max_level
+    - created_at
+    - updated_at
+    - cached_skill_name
+  create_attributes:
+    - skill_id
+    - user_id
+    - level
+  update_attributes:
+    - level
+
 stories: # tasks
   associations:
     # workspace - the workspace (project) that owns this story, returned in the workspaces top-level key
