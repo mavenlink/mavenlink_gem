@@ -754,7 +754,6 @@ skills:
     roles:
       foreign_key: role_ids
       collection: roles
-
   attributes:
     - name
     - max_level
@@ -778,7 +777,6 @@ skill_categories:
     skills:
       foreign_key: skill_ids
       collection: skills
-
   attributes:
     - name
 
@@ -793,7 +791,6 @@ skill_memberships:
     creator:
       foreign_key: creator_id
       collection: users
-
   attributes:
     - level
     - max_level
