@@ -375,6 +375,78 @@ external_references:
     [service_model_ref, service_model, service_name, subject_id, subject_type]:
       presence: true
 
+holidays:
+  attributes:
+    - name
+    - start_date
+    - end_date
+    - paid
+    - total_hours
+    - calendar_names_list
+  create_attributes:
+    - name
+    - start_date
+    - end_date
+    - paid
+    - holiday_calendar_ids
+  update_attributes:
+    - name
+    - start_date
+    - end_date
+    - paid
+    - holiday_calendar_ids
+  associations:
+    holiday_calendar_associations:
+      foreign_key: holiday_calendar_association_ids
+      collection: holiday_calendar_associations
+
+holiday_calendars:
+  attributes:
+    - name
+    - default
+    - active_user_count
+  create_attributes:
+    - name
+  update_attributes:
+    - name
+
+holiday_calendar_associations:
+  attributes:
+    - holiday_calendar_name
+    - holiday_name
+  create_attributes:
+    - holiday_id
+    - holiday_calendar_id
+  associations:
+    holiday:
+      foreign_key: holiday_id
+      collection: holidays
+    holiday_calendar:
+      foreign_key: holiday_calendar_id
+      collection: holiday_calendars
+
+holiday_calendar_memberships:
+  attributes:
+    - user_id
+    - created_at
+    - start_date
+    - end_date
+    - in_use
+  create_attributes:
+    - holiday_calendar_id
+    - user_id
+    - start_date
+  update_attributes:
+    - holiday_calendar_id
+    - start_date
+  associations:
+    holiday_calendar:
+      foreign_key: holiday_calendar_id
+      collection: holiday_calendars
+    user:
+      foreign_key: user_id
+      collection: users
+
 invoices:
   attributes:
     - id # the internal invoice id
