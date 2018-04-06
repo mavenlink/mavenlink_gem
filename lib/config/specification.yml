@@ -124,6 +124,23 @@ attachments:
     - data
     - type
 
+cost_rates:
+  attributes:
+    - id
+    - updated_at
+    - created_at
+    - currency
+    - amount_in_subunits
+    - in_use
+  create_attributes:
+    - currency
+    - amount_in_subunits
+    - account_membership_id
+  associations:
+    account_membership:
+      foreign_key: account_membership_id
+      collection: account_membership
+
 custom_fields:
   attributes:
     - id # the internal id of the custom field
