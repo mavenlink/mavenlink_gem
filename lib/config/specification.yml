@@ -70,6 +70,9 @@ account_memberships:
     default_role:
       foreign_key: default_role_id
       collection: roles
+    cost_rates:
+      foreign_key: cost_rate_ids
+      collection: cost_rates
 
 assignments:
   attributes:
