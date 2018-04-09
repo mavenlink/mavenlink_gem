@@ -896,6 +896,31 @@ skill_memberships:
   update_attributes:
     - level
 
+status_reports:
+  associations:
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    creator:
+      foreign_key: creator_id
+      collection: users
+  attributes:
+    - color
+    - description
+    - details
+    - created_at
+    - updated_at
+  create_attributes:
+    - workspace_id
+    - creator_id
+    - description
+    - color
+    - details
+  update_attributes:
+    - color
+    - description
+    - details
+
 stories: # tasks
   associations:
     # workspace - the workspace (project) that owns this story, returned in the workspaces top-level key
@@ -1252,6 +1277,9 @@ workspaces:
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
+    status_reports:
+      foreign_key: status_report_ids
+      collection: status_reports
   attributes:
     - id # the internal expense ID
     - title # the title of the project
