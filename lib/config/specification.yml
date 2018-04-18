@@ -56,6 +56,7 @@ account_memberships:
     - cost_rate_in_cents
     - manager_id
     - billability_target
+    - should_show_alert_on_timesheet_submission
   update_attributes:
     - bill_rate_in_cents # bill_rate_in_cents is optional"
     - cost_rate_in_cents # cost_rate_in_cents is optional"
@@ -63,6 +64,7 @@ account_memberships:
     - permission # permission is optional; it can be 'administrator', 'reports_viewer', 'project_lead', 'project_creator', 'punch_clock' or 'collaborator'"
     - manager_id
     - billability_target
+    - should_show_alert_on_timesheet_submission
   associations:
     user:
       foreign_key: user_id
