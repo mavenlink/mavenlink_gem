@@ -1338,7 +1338,6 @@ workspaces:
     - expenses_in_burn_rate
     - posts_require_privacy_decision
     - stories_are_fixed_fee_by_default
-    - posts_require_privacy_decision
     - rate_card_id
     - custom_fields
     - require_expense_approvals
@@ -1346,7 +1345,6 @@ workspaces:
     - project_template_start_date
     - project_template_assignment_mappings
     - project_template_weekends_as_workdays
-    - project_tracker_template_id
     - status_key
     - external_reference
     - workspace_group_ids
@@ -1368,7 +1366,6 @@ workspaces:
     - rate_card_id
     - client_role_name
     - consultant_role_name
-    - posts_require_privacy_decision
     - stories_are_fixed_fee_by_default
     - currency
     - target_margin
