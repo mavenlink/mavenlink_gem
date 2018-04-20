@@ -1282,6 +1282,9 @@ workspaces:
     status_reports:
       foreign_key: status_report_ids
       collection: status_reports
+    approver:
+            foreign_key: approver_id
+            collection: users
   attributes:
     - id # the internal expense ID
     - title # the title of the project
@@ -1346,6 +1349,7 @@ workspaces:
     - status_key
     - external_reference
     - workspace_group_ids
+    - approver_id
   update_attributes:
     - title
     - budgeted
