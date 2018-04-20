@@ -1352,6 +1352,7 @@ workspaces:
     - workspace_group_ids
     - approver_id
     - target_margin
+    - tasks_default_non_billable
   update_attributes:
     - title
     - budgeted
