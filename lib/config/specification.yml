@@ -1319,6 +1319,7 @@ workspaces:
     - access_level
     - status_key
     - workspace_group_ids
+    - target_margin
   create_attributes:
     - title
     - creator_role
@@ -1350,6 +1351,7 @@ workspaces:
     - external_reference
     - workspace_group_ids
     - approver_id
+    - target_margin
   update_attributes:
     - title
     - budgeted
