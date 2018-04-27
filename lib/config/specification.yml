@@ -1283,8 +1283,8 @@ workspaces:
       foreign_key: status_report_ids
       collection: status_reports
     approver:
-            foreign_key: approver_id
-            collection: users
+      foreign_key: approver_id
+      collection: users
   attributes:
     - id # the internal expense ID
     - title # the title of the project
