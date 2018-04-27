@@ -1282,6 +1282,9 @@ workspaces:
     status_reports:
       foreign_key: status_report_ids
       collection: status_reports
+    approver:
+      foreign_key: approver_id
+      collection: users
   attributes:
     - id # the internal expense ID
     - title # the title of the project
@@ -1316,6 +1319,7 @@ workspaces:
     - access_level
     - status_key
     - workspace_group_ids
+    - target_margin
   create_attributes:
     - title
     - creator_role
@@ -1334,7 +1338,6 @@ workspaces:
     - expenses_in_burn_rate
     - posts_require_privacy_decision
     - stories_are_fixed_fee_by_default
-    - posts_require_privacy_decision
     - rate_card_id
     - custom_fields
     - require_expense_approvals
@@ -1342,10 +1345,12 @@ workspaces:
     - project_template_start_date
     - project_template_assignment_mappings
     - project_template_weekends_as_workdays
-    - project_tracker_template_id
     - status_key
     - external_reference
     - workspace_group_ids
+    - approver_id
+    - target_margin
+    - tasks_default_non_billable
   update_attributes:
     - title
     - budgeted
@@ -1361,7 +1366,6 @@ workspaces:
     - rate_card_id
     - client_role_name
     - consultant_role_name
-    - posts_require_privacy_decision
     - stories_are_fixed_fee_by_default
     - currency
     - target_margin
