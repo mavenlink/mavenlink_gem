@@ -1116,6 +1116,64 @@ tags:
   create_attributes:
     - name
 
+time_adjustments:
+  associations:
+    story:
+      foreign_key: story_id
+      collection: stories
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    user:
+      foreign_key: user_id
+      collection: users
+    creator:
+      foreign_key: creator_id
+      collection: users
+    active_invoice:
+      foreign_key: active_invoice_id
+      collection: invoices
+  attributes:
+    - id
+    - adjustment_date
+    - bill_rate_in_cents
+    - billable
+    - cost_rate_in_cents
+    - currency
+    - currency_symbol
+    - currency_base_unit
+    - is_invoiced
+    - notes
+    - post_date
+    - taxable
+    - time
+    - created_at
+    - updated_at
+  create_attributes:
+    - workspace_id
+    - user_id
+    - adjustment_date
+    - bill_rate_in_cents
+    - billable
+    - cost_rate_in_cents
+    - currency
+    - post_date
+    - time
+    - notes
+    - story_id
+  update_attributes:
+    - workspace_id
+    - user_id
+    - adjustment_date
+    - bill_rate_in_cents
+    - billable
+    - cost_rate_in_cents
+    - currency
+    - post_date
+    - time
+    - notes
+    - story_id
+
 time_entries:
   associations:
     workspace:
