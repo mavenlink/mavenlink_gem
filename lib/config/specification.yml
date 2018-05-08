@@ -254,6 +254,7 @@ expenses:
     - billable
     - story_id
     - expense_category_id # the id of its category
+    - external_reference
   update_attributes:
     # NOTE(AC): check
     - date # (required) the date of the expense in ISO8601 format
@@ -265,6 +266,7 @@ expenses:
     - billable
     - story_id
     - expense_category_id # the id of its category
+    - external_reference
   associations:
     workspace:
       foreign_key: workspace_id
@@ -281,6 +283,9 @@ expenses:
     expense_category:
       foreign_key: expense_category_id
       collection: expense_categories
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
 expense_categories:
   attributes:
