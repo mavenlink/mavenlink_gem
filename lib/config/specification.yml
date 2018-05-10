@@ -1223,6 +1223,7 @@ time_entries:
     - billable # (optional) whether this time entry is billable time, you must also provide rate_in_cents if you set billable to true
     - notes # (optional) any notes added to the time entry
     - rate_in_cents # (optional, required if billable is true) the hourly rate for this time entry in cents, you must also set billable to true when setting this
+    - cost_rate_in_cents
     - story_id # (optional) the internal ID of the story this time entry is associated with
     - user_id # (optional) the internal ID of the user the time entry is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
     - external_reference # (optional) the object representing the status of integration synchronization.
@@ -1232,6 +1233,7 @@ time_entries:
     - billable # (optional) whether this time entry is billable time, you must also provide rate_in_cents if you set billable to true
     - notes # (optional) any notes added to the time entry
     - rate_in_cents # (optional, required if billable is true) the hourly rate for this time entry in cents, you must also set billable to true when setting this
+    - cost_rate_in_cents
     - story_id # (optional) the internal ID of the story this time entry is associated with
     - user_id # (optional) the internal ID of the user the time entry is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
     - external_reference # (optional) the object representing the status of integration synchronization.
