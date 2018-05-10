@@ -27,7 +27,7 @@ describe Mavenlink::TimeEntry, stub_requests: true do
     let(:subject) { described_class.create_attributes }
 
     it 'includes expected attributes' do
-      should match_array(%w(workspace_id date_performed time_in_minutes billable
+      should match_array(%w(workspace_id date_performed time_in_minutes billable cost_rate_in_cents
                             notes rate_in_cents story_id user_id external_reference))
     end
   end
@@ -36,7 +36,7 @@ describe Mavenlink::TimeEntry, stub_requests: true do
     let(:subject) { described_class.update_attributes }
 
     it 'includes expected attributes' do
-      should match_array(%w(date_performed time_in_minutes billable notes
+      should match_array(%w(date_performed time_in_minutes billable notes cost_rate_in_cents
                             rate_in_cents story_id user_id external_reference))
     end
   end
