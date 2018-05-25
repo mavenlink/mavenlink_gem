@@ -19,6 +19,7 @@ account_invitations:
     - bill_rate_in_cents
     - cost_rate_in_cents
     - default_role_id
+    - external_reference
   update_attributes:
     - permission
     - bill_rate_in_cents
@@ -1292,6 +1293,7 @@ users:
     - full_name
     - headline
     - email_address
+    - external_reference
   associations:
     role:
       foreign_key: role_id
@@ -1299,6 +1301,9 @@ users:
     account_membership:
       foreign_key: account_membership_id
       collection: account_memberships
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
 vendors:
   attributes:
