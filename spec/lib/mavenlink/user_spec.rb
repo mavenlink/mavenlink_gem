@@ -24,6 +24,10 @@ describe Mavenlink::User, stub_requests: true do
     stub_request :delete, "/api/v1/#{collection_name}/4", {}
   end
 
+  describe "associations" do
+    it { should respond_to :external_references }
+  end
+
   describe 'class methods' do
     subject { model }
     its(:collection_name) { should == collection_name }
