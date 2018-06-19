@@ -1141,7 +1141,7 @@ time_adjustments:
       collection: invoices
   attributes:
     - id
-    - adjustment_date
+    - original_date
     - bill_rate_in_cents
     - billable
     - cost_rate_in_cents
@@ -1150,7 +1150,7 @@ time_adjustments:
     - currency_base_unit
     - is_invoiced
     - notes
-    - post_date
+    - posted_on_date
     - taxable
     - time
     - created_at
@@ -1158,24 +1158,24 @@ time_adjustments:
   create_attributes:
     - workspace_id
     - user_id
-    - adjustment_date
+    - original_date
     - bill_rate_in_cents
     - billable
     - cost_rate_in_cents
     - currency
-    - post_date
+    - posted_on_date
     - time
     - notes
     - story_id
   update_attributes:
     - workspace_id
     - user_id
-    - adjustment_date
+    - original_date
     - bill_rate_in_cents
     - billable
     - cost_rate_in_cents
     - currency
-    - post_date
+    - posted_on_date
     - time
     - notes
     - story_id
