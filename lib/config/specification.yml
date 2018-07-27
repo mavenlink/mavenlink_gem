@@ -188,7 +188,9 @@ custom_field_values:
     - subject_type # the type of entity the custom field value is associated with. Valid types include 'Workspace', 'Story', and 'User'
     - subject_id # the internal id of the entity type defined by the subject_type field
     - value # the value applied to the subject
-    - type # they type of value. The Current valid values are: 'string', 'date', 'number', 'currency' 'single', and 'multi'
+    - display_value # the formatted version of the value
+    - can_edit # whether the custom field value can be edited by the user that is logged-in.
+    - type # the type of value. The Current valid values are: 'string', 'date', 'number', 'currency' 'single', and 'multi'
     - setter_id # the internal id of the User who has set value
     - account_id # the id of the account the custom field value is on
     - custom_field_id # the internal id of the associated custom field
