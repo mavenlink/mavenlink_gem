@@ -9,6 +9,8 @@ describe Mavenlink::Invoice, stub_requests: true do
     it { should respond_to :recipient }
     it { should respond_to :time_entries }
     it { should respond_to :expenses }
+    it { should respond_to :fixed_fee_items }
+    it { should respond_to :additional_items }
   end
 
   let(:collection_name) { 'invoices' }
