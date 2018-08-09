@@ -76,6 +76,9 @@ account_memberships:
     cost_rates:
       foreign_key: cost_rate_ids
       collection: cost_rates
+    backup_approver_associations:
+      foreign_key: backup_approver_association_ids
+      collection: backup_approver_associations
 
 assignments:
   attributes:
@@ -142,6 +145,22 @@ cost_rates:
     - currency
     - amount_in_subunits
     - account_membership_id
+  associations:
+    account_membership:
+      foreign_key: account_membership_id
+      collection: account_membership
+
+backup_approver_associations:
+  attributes:
+    - backup_approver_id
+    - approver_id
+    - start_date
+    - end_date
+  create_attributes:
+    - backup_approver_id
+    - approver_id
+    - start_date
+    - end_date
   associations:
     account_membership:
       foreign_key: account_membership_id
