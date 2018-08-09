@@ -1260,6 +1260,24 @@ time_entries:
     - user_id # (optional) the internal ID of the user the time entry is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
     - external_reference # (optional) the object representing the status of integration synchronization.
 
+time_off_entries:
+  attributes:
+    - id
+    - user_id
+    - hours
+    - requested_date
+    - submission_date
+  create_attributes:
+    - user_id
+    - hours
+    - requested_date
+  update_attributes:
+    - hours
+  associations:
+    user:
+      foreign_key: user_id
+      collection: users
+
 timesheet_submissions:
     attributes:
       - id
