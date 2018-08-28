@@ -409,6 +409,7 @@ external_references:
     - status
     - external_link
     - external_message
+    - external_status
     - locked
   create_or_update_attributes:
    - service_name
@@ -419,6 +420,7 @@ external_references:
    - status
    - external_link
    - external_message
+   - external_status
    - locked
   validations:
     [service_model_ref, service_model, service_name, subject_id, subject_type]:
