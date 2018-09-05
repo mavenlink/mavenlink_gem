@@ -66,7 +66,7 @@ describe Mavenlink::RateCardSetVersion, stub_requests: true do
       it "returns the new rate card set version" do
         expect_any_instance_of(Mavenlink::Client).to receive(:post).with("rate_card_set_versions",
                                                                          clone_id: subject.id,
-                                                                         rate_card_set_versions: {
+                                                                         rate_card_set_version: {
                                                                            rate_card_set_id: subject.rate_card_set_id,
                                                                            effective_date: nil
                                                                          }).and_call_original
@@ -77,7 +77,7 @@ describe Mavenlink::RateCardSetVersion, stub_requests: true do
         date = Date.new(2018, 9, 5)
         expect_any_instance_of(Mavenlink::Client).to receive(:post).with("rate_card_set_versions",
                                                                          clone_id: subject.id,
-                                                                         rate_card_set_versions: {
+                                                                         rate_card_set_version: {
                                                                            rate_card_set_id: subject.rate_card_set_id,
                                                                            effective_date: date
                                                                          }).and_call_original
