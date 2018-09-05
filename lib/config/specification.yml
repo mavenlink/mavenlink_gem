@@ -813,7 +813,6 @@ rate_card_set_versions:
   create_attributes:
     - rate_card_set_id
     - effective_date
-    - clone_id
   update_attributes:
     - effective_date
 
