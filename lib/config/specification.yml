@@ -76,6 +76,9 @@ account_memberships:
     cost_rates:
       foreign_key: cost_rate_ids
       collection: cost_rates
+    backup_approver_associations:
+      foreign_key: backup_approver_association_ids
+      collection: backup_approver_associations
 
 assignments:
   attributes:
@@ -147,6 +150,22 @@ cost_rates:
       foreign_key: account_membership_id
       collection: account_membership
 
+backup_approver_associations:
+  attributes:
+    - backup_approver_id
+    - approver_id
+    - start_date
+    - end_date
+  create_attributes:
+    - backup_approver_id
+    - approver_id
+    - start_date
+    - end_date
+  associations:
+    account_membership:
+      foreign_key: account_membership_id
+      collection: account_membership
+
 custom_fields:
   attributes:
     - id # the internal id of the custom field
@@ -161,6 +180,7 @@ custom_fields:
     - read_access # the permission level required to read values for this custom field
     - created_at # the date the CF was created
     - updated_at # the date the CF was last updated
+    - values_count
   create_attributes:
     - name # (required) the given field name
     - value_type # (optional) the types the Custom Field Values use. The current types include: 'string', 'date', 'number', and 'currency'
@@ -168,10 +188,15 @@ custom_fields:
     - unique_constraint # (optional) a boolean constraint which forces the Custom Field Values' value to be unique across a subject_type. The default is false
     - choices # (optional) the choices a custom field may have and only valid for a 'single' and 'multi' type custom fields. eg. [{'label' => 'first choice'}, {'label' => 'another choice'}]
     - custom_field_set_id # (optional) the custom field set the custom field will belong to. If the custom_field_set_id is omitted this field will belong to a Workspace set named 'Default Project Set'. Note omitting the set id will restrict this field to only be applied to workspaces.
+    - write_access
+    - read_access
   update_attributes:
     - name # (required) the given field name
+    - value_type
     - default_text # (optional) the placeholder text
+    - unique_constraint
     - choices # choices may be updated through their CF's choices attribute. To change a choice's name, specify the id. To add new choices, do not specify and id. eg. [{'id' => '1', 'label' => 'new first choice name'}, {'label' => 'a brand new choice'}]. If a previous choice of the custom field is omitted, that choice will be soft deleted so that the values will not point to invalid choices.
+    - custom_field_set_id
     - write_access # (optional) the permission level required for a user to create, update, or delete a custom field value for an object.
     - read_access # (optional) the permission level required to read a custom field value for an object.
   associations:
@@ -390,6 +415,7 @@ external_references:
     - status
     - external_link
     - external_message
+    - external_status
     - locked
   create_or_update_attributes:
    - service_name
@@ -400,6 +426,7 @@ external_references:
    - status
    - external_link
    - external_message
+   - external_status
    - locked
   validations:
     [service_model_ref, service_model, service_name, subject_id, subject_type]:
@@ -1244,6 +1271,24 @@ time_entries:
     - story_id # (optional) the internal ID of the story this time entry is associated with
     - user_id # (optional) the internal ID of the user the time entry is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
     - external_reference # (optional) the object representing the status of integration synchronization.
+
+time_off_entries:
+  attributes:
+    - id
+    - user_id
+    - hours
+    - requested_date
+    - submission_date
+  create_attributes:
+    - user_id
+    - hours
+    - requested_date
+  update_attributes:
+    - hours
+  associations:
+    user:
+      foreign_key: user_id
+      collection: users
 
 timesheet_submissions:
     attributes:
