@@ -526,6 +526,8 @@ invoices:
     - user_invoice_title
     - user_invoice_number
     - tax_rate
+    - purchase_order
+    - project_code
   create_attributes:
     - time_entry_ids # (required) An array of time entry IDs to associate with the invoice
     - expense_ids # (required) An array of expense IDs to associate with the invoice
@@ -540,6 +542,8 @@ invoices:
     - project_code # A string
     - fixed_fee_items # Nested params for FixedFeeItem
     - additional_items # Nested params for AdditionalItem
+    - suppress_emails
+    - tax_rate
   update_attributes:
     - expense_ids # (required)
     - time_entry_ids # (required)
