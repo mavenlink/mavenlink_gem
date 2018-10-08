@@ -267,10 +267,14 @@ expenses:
     - user_can_edit # can the viewing user edit this expense?
     - is_invoiced # has this expense been included on an invoice?
     - is_billable # is this a billable expense?
+    - taxable
+    - reimbursable
     - workspace_id # the id of the project Workspace this expense is associated with
     - user_id # the id of the user who created this expense
+    - story_id
     - receipt_id # the id of an attached Receipt Attachment
     - expense_category_id # the id of its category
+    - active_submission_id
   create_attributes:
     - workspace_id # (required) the ID of the Workspace in which the expense will be created
     - date # (required) the date of the expense in ISO8601 format
@@ -282,6 +286,8 @@ expenses:
     - billable
     - story_id
     - expense_category_id # the id of its category
+    - reimbursable
+    - vendor_id
     - external_reference
   update_attributes:
     # NOTE(AC): check
@@ -314,6 +320,15 @@ expenses:
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
+    active_submission:
+      foreign_key: active_submission_id
+      collection: active_submissions
+    role:
+      foreign_key: role_id
+      collection: roles
+    vendor:
+      foreign_key: vendor_id
+      collection: vendors
 
 expense_categories:
   attributes:

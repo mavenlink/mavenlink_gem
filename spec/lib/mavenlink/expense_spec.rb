@@ -16,5 +16,8 @@ describe Mavenlink::Expense, stub_requests: true do
     it { should respond_to :user }
     it { should respond_to :receipt }
     it { should respond_to :external_references }
+    it { should respond_to :active_submission }
+    it { should respond_to :role }
+    it { should respond_to :vendor }
   end
 end
