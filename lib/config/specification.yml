@@ -889,10 +889,17 @@ resolutions:
     - target_id
     - user_id
 
-roles: # TODO(SZ): find it out
+roles:
   attributes:
     - id
     - name
+  create_attributes:
+    - name
+  update_attributes:
+    - name
+  validations:
+    name:
+      presence: true
 
 skills:
   associations:

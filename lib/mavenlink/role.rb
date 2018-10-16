@@ -1,5 +1,5 @@
 module Mavenlink
-  class Role < Model # TODO(SZ): remove
-    include Concerns::LockedRecord
+  class Role < Model
+    validates :name, presence: true
   end
 end
