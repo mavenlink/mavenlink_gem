@@ -17,6 +17,7 @@ describe Mavenlink::Story, stub_requests: true do
     it { should respond_to :sub_stories }
     it { should respond_to :descendants }
     it { should respond_to :custom_field_values }
+    it { should respond_to :external_references }
   end
 
   let(:response) {

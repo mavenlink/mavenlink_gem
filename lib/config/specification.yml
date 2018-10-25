@@ -1019,6 +1019,9 @@ stories: # tasks
     custom_field_values:
       foreign_key: custom_field_value_ids
       collection: custom_field_values
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
   attributes:
     - id # the internal story id
@@ -1055,6 +1058,7 @@ stories: # tasks
     - percentage_complete
     - checklist # an array of checklist items (optional)
     - weight # integer representing the weight of the story. Can only be set on a parent-level milestone by a consultant with at least budget permissions (optional)
+    - external_reference_ids
   create_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
@@ -1076,6 +1080,7 @@ stories: # tasks
     - checklist # an array of checklist items (optional)
     - weight # integer representing the weight of the story. Can only be set on a parent-level milestone by a consultant with at least budget permissions (optional)
     - priority # the integer value of the priority for a task
+    - external_reference
   update_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
@@ -1094,6 +1099,7 @@ stories: # tasks
     - fixed_fee # whether or not the story is fixed fee
     - weight # integer representing the weight of the story. Can only be set on a parent-level milestone by a consultant with at least budget permissions (optional)
     - priority # the integer value of the priority for a task
+    - external_reference
 
 story_allocation_days:
   attributes:
