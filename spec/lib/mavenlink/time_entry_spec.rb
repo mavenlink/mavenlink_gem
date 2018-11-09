@@ -20,7 +20,7 @@ describe Mavenlink::TimeEntry, stub_requests: true do
                       :time_in_minutes, :billable, :notes, :rate_in_cents,
                       :currency, :currency_symbol, :currency_base_unit,
                       :user_can_edit, :workspace_id, :user_id, :approved,
-                      :role_id, :external_reference)
+                      :role_id, :external_reference, :location)
   end
 
   describe '.create_attributes' do
@@ -28,7 +28,7 @@ describe Mavenlink::TimeEntry, stub_requests: true do
 
     it 'includes expected attributes' do
       should match_array(%w(workspace_id date_performed time_in_minutes billable cost_rate_in_cents
-                            notes rate_in_cents story_id user_id external_reference))
+                            notes rate_in_cents story_id user_id external_reference location))
     end
   end
 
