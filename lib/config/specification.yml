@@ -1163,6 +1163,7 @@ story_dependencies:
 
 survey_answers:
   attributes:
+    - id
     - text
     - created_at
     - updated_at
@@ -1195,6 +1196,7 @@ survey_answers:
 
 survey_questions:
   attributes:
+    - id
     - text
     - question_type
     - created_at
@@ -1212,12 +1214,14 @@ survey_questions:
 
 survey_question_choices:
   attributes:
+    - id
     - label
     - created_at
     - updated_at
 
 survey_responses:
   attributes:
+    - id
     - title
     - description
     - status
@@ -1264,6 +1268,7 @@ survey_responses:
 
 survey_templates:
   attributes:
+    - id
     - title
     - created_at
     - updated_at
