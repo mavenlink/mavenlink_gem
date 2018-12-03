@@ -1161,6 +1161,23 @@ story_dependencies:
       foreign_key: target_id
       collection: stories
 
+survey_questions:
+  attributes:
+    - text
+    - question_type
+    - created_at
+    - updated_at
+  create_attributes:
+    - text
+    - question_type
+    - choices
+  update_attributes:
+    - text
+  associations:
+    choices:
+      foreign_key: choice_ids
+      collection: survey_question_choices
+
 survey_responses:
   attributes:
     - title
