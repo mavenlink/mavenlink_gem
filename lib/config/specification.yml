@@ -1193,6 +1193,9 @@ survey_answers:
     choices:
       foreign_key: choice_ids
       collection: survey_question_choices
+  validations:
+    [survey_response_id, survey_question_id]:
+      presence: true
 
 survey_questions:
   attributes:
@@ -1211,6 +1214,9 @@ survey_questions:
     choices:
       foreign_key: choice_ids
       collection: survey_question_choices
+  validations:
+    [text, question_type]:
+      presence: true
 
 survey_question_choices:
   attributes:
@@ -1265,6 +1271,9 @@ survey_responses:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
+  validations:
+    survey_template_id:
+      presence: true
 
 survey_templates:
   attributes:
@@ -1309,6 +1318,9 @@ survey_templates:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
+  validations:
+    survey_question_ids:
+      presence: true
 
 story_tasks:
   associations:
