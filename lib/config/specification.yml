@@ -1161,6 +1161,52 @@ story_dependencies:
       foreign_key: target_id
       collection: stories
 
+survey_responses:
+  attributes:
+    - title
+    - description
+    - status
+    - open_date
+    - close_date
+    - due_date
+    - created_at
+    - updated_at
+  create_attributes:
+    - survey_template_id
+    - title
+    - description
+    - status
+    - subject_type
+    - subject_id
+    - owner_id
+    - respondent_id
+    - workspace_id
+    - open_date
+    - close_date
+    - due_date
+  update_attributes:
+    - title
+    - description
+    - status
+  associations:
+    survey_template:
+      foreign_key: survey_template_id
+      collection: survey_templates
+    survey_answers:
+      foreign_key: survey_answer_ids
+      collection: survey_answers
+    subject:
+      foreign_key: subject_id
+    owner:
+      foreign_key: owner_id
+      collection: users
+    respondent:
+      foreign_key: respondent_id
+      collection: users
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+
 survey_templates:
   attributes:
     - title
