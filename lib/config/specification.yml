@@ -1210,6 +1210,12 @@ survey_questions:
       foreign_key: choice_ids
       collection: survey_question_choices
 
+survey_question_choices:
+  attributes:
+    - label
+    - created_at
+    - updated_at
+
 survey_responses:
   attributes:
     - title
