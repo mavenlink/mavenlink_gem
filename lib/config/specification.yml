@@ -101,6 +101,7 @@ assignments:
   update_attributes:
     - current
     - estimated_minutes
+    - resource_id
   associations:
     # story - when included, the story_id will reference the story for which the assignment belongs
     # assignee - when included, the assignee_id will reference the user for which the assignment belongs
