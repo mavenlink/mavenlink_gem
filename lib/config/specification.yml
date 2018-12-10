@@ -1262,6 +1262,9 @@ time_entries:
     role:
       foreign_key: role_id
       collection: roles
+    active_submission:
+      foreign_key: active_submission_id
+      collection: time_sheet_submission
   validations:
     [workspace_id, date_performed, time_in_minutes]:
       presence: true
