@@ -91,14 +91,17 @@ assignments:
     - story_id # the id of the Story (Task) that owns the assignment
     - assignee_id # the id of the user who owns the assignment
     - story_allocation_day_ids # the ids of Story Allocation Days belonging to the assignment
+    - resource_id
   create_attributes:
     - story_id # (required) the ID of the Story for which the assignment will be created
     - assignee_id # (required) the ID of the User for which the assignment will be created
     - current # (optional) whether the assignment is active or not
     - estimated_minutes # (optional) the number of minutes that the user is expected to work on this story
+    - resource_id
   update_attributes:
     - current
     - estimated_minutes
+    - resource_id
   associations:
     # story - when included, the story_id will reference the story for which the assignment belongs
     # assignee - when included, the assignee_id will reference the user for which the assignment belongs
@@ -322,7 +325,7 @@ expenses:
       collection: external_references
     active_submission:
       foreign_key: active_submission_id
-      collection: active_submissions
+      collection: expense_report_submissions
     role:
       foreign_key: role_id
       collection: roles
@@ -1022,6 +1025,9 @@ stories: # tasks
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
+    current_assignments:
+      foreign_key: current_assignment_ids
+      collection: assignments
 
   attributes:
     - id # the internal story id
@@ -1059,6 +1065,7 @@ stories: # tasks
     - checklist # an array of checklist items (optional)
     - weight # integer representing the weight of the story. Can only be set on a parent-level milestone by a consultant with at least budget permissions (optional)
     - external_reference_ids
+    - current_assignments
   create_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
@@ -1416,6 +1423,9 @@ time_entries:
     role:
       foreign_key: role_id
       collection: roles
+    active_submission:
+      foreign_key: active_submission_id
+      collection: timesheet_submissions
   validations:
     [workspace_id, date_performed, time_in_minutes]:
       presence: true
