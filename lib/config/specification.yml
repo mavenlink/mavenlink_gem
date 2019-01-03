@@ -1168,6 +1168,167 @@ story_dependencies:
       foreign_key: target_id
       collection: stories
 
+survey_answers:
+  attributes:
+    - id
+    - text
+    - created_at
+    - updated_at
+  create_attributes:
+    - survey_response_id
+    - survey_question_id
+    - date_value
+    - string_value
+    - integer_value
+    - decimal_value
+    - choice_values
+    - choice_ids
+  update_attributes:
+    - date_value
+    - string_value
+    - integer_value
+    - decimal_value
+    - choice_values
+    - choice_ids
+  associations:
+    survey_question:
+      foreign_key: survey_question_id
+      collection: survey_questions
+    survey_response:
+      foreign_key: survey_response_id
+      collection: survey_responses
+    choices:
+      foreign_key: choice_ids
+      collection: survey_question_choices
+  validations:
+    [survey_response_id, survey_question_id]:
+      presence: true
+
+survey_questions:
+  attributes:
+    - id
+    - text
+    - question_type
+    - created_at
+    - updated_at
+  create_attributes:
+    - text
+    - question_type
+    - choices
+  update_attributes:
+    - text
+  associations:
+    choices:
+      foreign_key: choice_ids
+      collection: survey_question_choices
+  validations:
+    [text, question_type]:
+      presence: true
+
+survey_question_choices:
+  attributes:
+    - id
+    - label
+    - created_at
+    - updated_at
+
+survey_responses:
+  attributes:
+    - id
+    - title
+    - description
+    - status
+    - open_date
+    - close_date
+    - due_date
+    - created_at
+    - updated_at
+  create_attributes:
+    - survey_template_id
+    - title
+    - description
+    - status
+    - subject_type
+    - subject_id
+    - owner_id
+    - respondent_id
+    - workspace_id
+    - open_date
+    - close_date
+    - due_date
+  update_attributes:
+    - title
+    - description
+    - status
+  associations:
+    survey_template:
+      foreign_key: survey_template_id
+      collection: survey_templates
+    survey_answers:
+      foreign_key: survey_answer_ids
+      collection: survey_answers
+    subject:
+      foreign_key: subject_id
+    owner:
+      foreign_key: owner_id
+      collection: users
+    respondent:
+      foreign_key: respondent_id
+      collection: users
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+  validations:
+    survey_template_id:
+      presence: true
+
+survey_templates:
+  attributes:
+    - id
+    - title
+    - created_at
+    - updated_at
+    - description
+    - open_date
+    - close_date
+    - due_date
+  create_attributes:
+    - survey_question_ids
+    - title
+    - description
+    - subject_type
+    - subject_id
+    - owner_id
+    - respondent_id
+    - workspace_id
+    - open_date
+    - close_date
+    - due_date
+  update_attributes:
+    - title
+    - description
+  associations:
+    survey_questions:
+      foreign_key: survey_question_ids
+      collection: survey_questions
+    survey_responses:
+      foreign_key: survey_response_ids
+      collection: survey_responses
+    subject:
+      foreign_key: subject_id
+    owner:
+      foreign_key: owner_id
+      collection: users
+    respondent:
+      foreign_key: respondent_id
+      collection: users
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+  validations:
+    survey_question_ids:
+      presence: true
+
 story_tasks:
   associations:
     story:
