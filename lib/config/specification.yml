@@ -1358,6 +1358,7 @@ timesheet_submissions:
       - workspace_id
       - user_id
       - line_item_ids
+      - external_reference
     associations:
       user:
         foreign_key: user_id
@@ -1371,6 +1372,9 @@ timesheet_submissions:
       resolutions:
         foreign_key: resolution_ids
         collection: resolutions
+      external_reference:
+        foreign_key: external_reference_id
+        collection: external_references
 
 users:
   attributes:
