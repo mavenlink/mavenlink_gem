@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Mavenlink::TimesheetSubmission, stub_requests: true do
   it_should_behave_like 'model', 'timesheet_submissions'
