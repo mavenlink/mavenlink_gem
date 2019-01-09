@@ -1001,6 +1001,9 @@ stories: # tasks
     parent:
       foreign_key: parent_id
       collection: stories
+    root:
+      foreign_key: root_id
+      collection: stories
     assignees:
       foreign_key: assignee_ids
       collection: users

@@ -13,6 +13,7 @@ describe Mavenlink::Story, stub_requests: true do
   describe 'associations' do
     it { should respond_to :workspace }
     it { should respond_to :parent }
+    it { should respond_to :root }
     it { should respond_to :assignees }
     it { should respond_to :sub_stories }
     it { should respond_to :descendants }
