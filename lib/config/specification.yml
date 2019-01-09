@@ -1543,11 +1543,12 @@ timesheet_submissions:
 users:
   attributes:
     - id
-    - user_id       # the internal ID of the user
     - full_name     # the full name of the user
     - photo_path    # the full url to the user's thumbnail
     - email_address # the user's primary email address
     - headline      # the short description of the user as found in the user's profile
+    - disabled
+    - account_id
   update_attributes:
     - full_name
     - headline
