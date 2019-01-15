@@ -435,6 +435,8 @@ external_references:
     - external_message
     - external_status
     - locked
+    - created_at
+    - last_synced_at
   create_or_update_attributes:
    - service_name
    - service_model
