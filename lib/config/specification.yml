@@ -1652,6 +1652,7 @@ workspaces:
     - status_key
     - workspace_group_ids
     - target_margin
+    - primary_maven_id
   create_attributes:
     - title
     - creator_role
