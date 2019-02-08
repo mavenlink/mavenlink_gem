@@ -1455,6 +1455,7 @@ time_entries:
     - role_id # The internal ID of the Role that is associated with this time entry
     - external_reference # Object representing the status of integration synchronization
     - location
+    - taxable
   create_attributes:
     - workspace_id # (required) the internal ID of the project workspace this time entry is associated with
     - date_performed # (required) the date the activity for which the time is being entered was performed, format: YYYY-MM-DD
