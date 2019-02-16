@@ -73,12 +73,33 @@ account_memberships:
     default_role:
       foreign_key: default_role_id
       collection: roles
-    cost_rates:
-      foreign_key: cost_rate_ids
-      collection: cost_rates
+    effective_workweek:
+      foreign_key: effective_workweek_id
+      collection: workweeks
+    possible_managers:
+      foreign_key: possible_manager_ids
+      collection: users
+    manager:
+      foreign_key: manager_id
+      collection: users
+    possible_managees:
+      foreign_key: possible_managee_ids
+      collection: users
+    managees:
+      foreign_key: managee_ids
+      collection: users
+    skill_memberships:
+      foreign_key: skill_membership_ids
+      collection: skill_memberships
     backup_approver_associations:
       foreign_key: backup_approver_association_ids
       collection: backup_approver_associations
+    cost_rates:
+      foreign_key: cost_rate_ids
+      collection: cost_rates
+    future_billable_utilizations:
+      foreign_key: future_billable_utilization_ids
+      collection: billable_utilizations
 
 assignments:
   attributes:
