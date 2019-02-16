@@ -58,6 +58,7 @@ account_memberships:
     - manager_id
     - billability_target
     - should_show_alert_on_timesheet_submission
+    - user_id
   update_attributes:
     - bill_rate_in_cents # bill_rate_in_cents is optional"
     - cost_rate_in_cents # cost_rate_in_cents is optional"
