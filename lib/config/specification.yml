@@ -928,6 +928,19 @@ roles:
     name:
       presence: true
 
+saml_identities:
+  attributes:
+    - id
+    - identifier
+    - user_id
+    - created_at
+    - updated_at
+  create_attributes:
+    - identifier
+    - user_id
+  update_attributes:
+    - identifier
+
 skills:
   associations:
     skill_category:
