@@ -1602,6 +1602,9 @@ users:
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
+    saml_identities:
+      foreign_key: saml_identity_ids
+      collection: saml_identities
 
 vendors:
   attributes:
