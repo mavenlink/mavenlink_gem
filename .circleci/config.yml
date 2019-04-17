@@ -14,13 +14,20 @@ commands:
       - store_test_results:
           path: /tmp/circle/test_reports
 
+defaults: &defaults
+  working_directory: &working_directory /home/app/current
+  parallelism: 1
+  shell: /bin/bash --login
+  environment:
+    CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
+    CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+    RACK_ENV: "test"
+    RAILS_ENV: "test"
+  docker:
+  - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
+    command: /sbin/init
+
 executors:
-  base:
-    working_directory: &working_directory /home/app/current
-    environment:
-      CI: 'true'
-    docker:
-      - image: &base_image 673102273038.dkr.ecr.us-west-2.amazonaws.com/trusty-rails-dev:fb8d4208488ad966f51d077e4ae8e4891fedd106
   test:
     docker:
     - image: *base_image
@@ -37,57 +44,37 @@ workflows:
 
 jobs:
   build:
-    executor: base
+    <<: *defaults
     steps:
-      - restore_cache:
-          name: Restoring source code from cache
-          keys:
-            - mavenlink_gem-source-1.0-{{ .Branch }}-{{ .Revision }}
-            - mavenlink_gem-source-1.0-{{ .Branch }}
-            - mavenlink_gem-source-1.0-
-      - checkout
-      - save_cache:
-          name: Saving source code in cache
-          key: mavenlink_gem-source-1.0-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - /home/app/current
-      - restore_cache:
-          name: Restoring gem dependencies from cache
-          keys:
-            - mavenlink_gem-gems-1.0-{{ arch }}-{{ checksum "Gemfile.lock" }}
-            - mavenlink_gem-gems-1.0-{{ arch }}
-      - run:
-          name: Install gem dependencies
-          command: bundle check --path=/home/app/bundle || bundle install --path=/home/app/bundle --jobs=8 --retry=3
-      - save_cache:
-          name: Saving gem dependencies in cache
-          key: mavenlink_gem-gems-1.0-{{ arch }}-{{ checksum "Gemfile.lock" }}
-          paths:
-            - /home/app/bundle
-      - persist_to_workspace:
-          root: /home/app
-          paths:
-            - current
-            - current/.bundle
-            - bundle
+    - checkout
+    - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
+    - restore_cache:
+        keys:
+        - v1-dep-{{ .Branch }}-
+        - v1-dep-master-
+        - v1-dep-
+    - run: gem install bundler -v "=1.13.6"
+    - run: mkdir -p tmp/cache
+    - run:
+        name: bundle
+        command: |
+          bundle check --path=~/mavenlink/mavenlink_gem/bundle || bundle install --path=~/mavenlink/mavenlink_gem/bundle --jobs=8 --retry=3
+    - save_cache:
+        key: v1-dep-{{ .Branch }}-{{ epoch }}
+        paths:
+        - ~/mavenlink/mavenlink_gem/bundle
+    - persist_to_workspace:
+        root: /home/app
+        paths:
+          - current/.bundle
+          - bundle
   rspec:
-    executor: test
-    parallelism: 4
+    <<: *defaults
     steps:
     - setup_codebase
     - run:
         name: Run RSpec tests
         command: |
-          TESTFILES=$(circleci tests glob "{spec}/**/*_spec.rb" | grep -Ev "selenium|validators" | circleci tests split --split-by=timings)
-          bundle exec rspec --color --format progress --format RspecJunitFormatter --out /tmp/circle/test_reports/rspec_results.xml -- $TESTFILES
-    - run:
-        name: Stash Coverage Results
-        command: |
-          mkdir coverage_results
-          cp -R coverage/.resultset.json coverage_results/.resultset-${CIRCLE_NODE_INDEX}.json
-    - persist_to_workspace:
-        root: /home/app
-        paths:
-          - current/coverage_results
+          bundle exec rspec --color --format progress --format RspecJunitFormatter --out $CIRCLE_TEST_REPORTS/rspec/test-results.xml
     - store_output
 
