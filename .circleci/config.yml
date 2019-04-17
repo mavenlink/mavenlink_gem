@@ -1,20 +1,5 @@
 version: 2.1
 
-commands:
-  setup_codebase:
-    description: "Loads the workspace with our persisted code and build artifacts"
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ~/mavenlink/mavenlink_gem
-  store_output:
-    description: "Standardizes where test artifacts are stored"
-    steps:
-      - store_artifacts:
-          path: /tmp/circle/test_reports
-      - store_test_results:
-          path: /tmp/circle/test_reports
-
 defaults: &defaults
   working_directory: &working_directory ~/mavenlink/mavenlink_gem/current
   parallelism: 1
@@ -66,11 +51,16 @@ jobs:
   rspec:
     <<: *defaults
     steps:
-    - setup_codebase
-    - run: gem install bundler -v "=1.13.6"
-    - run:
-        name: Run RSpec tests
-        command: |
-          bundle exec rspec --color --format progress --format RspecJunitFormatter --out $CIRCLE_TEST_REPORTS/rspec/test-results.xml
-    - store_output
+      - checkout
+      - attach_workspace:
+          at: ~/mavenlink/marketing
+      - run: gem install bundler -v "=1.13.6"
+      - run:
+          name: Run RSpec tests
+          command: |
+            bundle exec rspec --color --format progress --format RspecJunitFormatter --out $CIRCLE_TEST_REPORTS/rspec/test-results.xml
+      - store_artifacts:
+          path: /tmp/circle/test_reports
+      - store_test_results:
+          path: /tmp/circle/test_reports
 
