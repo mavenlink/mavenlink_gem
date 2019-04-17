@@ -55,6 +55,7 @@ jobs:
       - attach_workspace:
           at: ~/mavenlink/marketing
       - run: gem install bundler -v "=1.13.6"
+      - run: bundle install
       - run:
           name: Run RSpec tests
           command: |
