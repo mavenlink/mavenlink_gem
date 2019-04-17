@@ -24,7 +24,7 @@ defaults: &defaults
     RACK_ENV: "test"
     RAILS_ENV: "test"
   docker:
-  - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
+  - image: circleci/ruby:2.2-jessie-node
     command: /sbin/init
 
 workflows:
@@ -52,7 +52,7 @@ jobs:
     - run:
         name: bundle
         command: |
-          bundle check --path=~/mavenlink/mavenlink_gem/bundle || bundle install --path=~/mavenlink/mavenlink_gem/bundle --jobs=8 --retry=3
+          bundle check --path=~/mavenlink/mavenlink_gem/bundle || bundle install --path=~/mavenlink/mavenlink_gem/bundle --jobs=4 --retry=3
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
         paths:
