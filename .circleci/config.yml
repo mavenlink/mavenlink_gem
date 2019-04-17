@@ -47,7 +47,7 @@ jobs:
         - v1-dep-{{ .Branch }}-
         - v1-dep-master-
         - v1-dep-
-    - run: gem install bundler
+    - run: gem install bundler -v "=1.13.6"
     - run: mkdir -p tmp/cache
     - run:
         name: bundle
