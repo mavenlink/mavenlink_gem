@@ -1,7 +1,7 @@
 version: 2.1
 
 defaults: &defaults
-  working_directory: &working_directory ~/mavenlink/mavenlink_gem/current
+  working_directory: &working_directory ~/mavenlink/mavenlink_gem
   parallelism: 1
   shell: /bin/bash --login
   environment:
@@ -46,7 +46,7 @@ jobs:
     - persist_to_workspace:
         root: ~/mavenlink/mavenlink_gem
         paths:
-          - current/.bundle
+          - .bundle
           - bundle
   rspec:
     <<: *defaults
