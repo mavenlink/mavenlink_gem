@@ -33,6 +33,7 @@ workflows:
       - rspec:
           requires:
             - build
+
 jobs:
   build:
     executor: base
@@ -40,26 +41,26 @@ jobs:
       - restore_cache:
           name: Restoring source code from cache
           keys:
-            - mavenlink-gem-source-1.0-{{ .Branch }}-{{ .Revision }}
-            - mavenlink-gem-source-1.0-{{ .Branch }}
-            - mavenlink-gem-source-1.0-
+            - mavenlink_gem-source-1.0-{{ .Branch }}-{{ .Revision }}
+            - mavenlink_gem-source-1.0-{{ .Branch }}
+            - mavenlink_gem-source-1.0-
       - checkout
       - save_cache:
           name: Saving source code in cache
-          key: mavenlink-gem-source-1.0-{{ .Branch }}-{{ .Revision }}
+          key: mavenlink_gem-source-1.0-{{ .Branch }}-{{ .Revision }}
           paths:
             - /home/app/current
       - restore_cache:
           name: Restoring gem dependencies from cache
           keys:
-            - mavenlink-gem-gems-1.0-{{ arch }}-{{ checksum "Gemfile.lock" }}
-            - mavenlink-gem-gems-1.0-{{ arch }}
+            - mavenlink_gem-gems-1.0-{{ arch }}-{{ checksum "Gemfile.lock" }}
+            - mavenlink_gem-gems-1.0-{{ arch }}
       - run:
           name: Install gem dependencies
           command: bundle check --path=/home/app/bundle || bundle install --path=/home/app/bundle --jobs=8 --retry=3
       - save_cache:
           name: Saving gem dependencies in cache
-          key: mavenlink-gem-gems-1.0-{{ arch }}-{{ checksum "Gemfile.lock" }}
+          key: mavenlink_gem-gems-1.0-{{ arch }}-{{ checksum "Gemfile.lock" }}
           paths:
             - /home/app/bundle
       - persist_to_workspace:
