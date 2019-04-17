@@ -66,6 +66,7 @@ jobs:
     <<: *defaults
     steps:
     - setup_codebase
+    - run: gem install bundler -v "=1.13.6"
     - run:
         name: Run RSpec tests
         command: |
