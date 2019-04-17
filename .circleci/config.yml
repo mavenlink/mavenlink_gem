@@ -4,6 +4,7 @@ commands:
   setup_codebase:
     description: "Loads the workspace with our persisted code and build artifacts"
     steps:
+      - checkout
       - attach_workspace:
           at: ~/mavenlink/mavenlink_gem
   store_output:
