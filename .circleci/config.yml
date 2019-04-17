@@ -69,6 +69,8 @@ jobs:
     - setup_codebase
     - run: gem install bundler -v "=1.13.6"
     - run:
+        working_directory: ~/mavenlink/marketing/current
+    - run:
         name: Run RSpec tests
         command: |
           bundle exec rspec --color --format progress --format RspecJunitFormatter --out $CIRCLE_TEST_REPORTS/rspec/test-results.xml
