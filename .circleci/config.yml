@@ -1,0 +1,90 @@
+version: 2.1
+
+commands:
+  setup_codebase:
+    description: "Loads the workspace with our persisted code and build artifacts"
+    steps:
+      - attach_workspace:
+          at: /home/app
+  store_output:
+    description: "Standardizes where test artifacts are stored"
+    steps:
+      - store_artifacts:
+          path: /tmp/circle/test_reports
+      - store_test_results:
+          path: /tmp/circle/test_reports
+
+executors:
+  base:
+    working_directory: &working_directory /home/app/current
+    environment:
+      CI: 'true'
+    docker:
+      - image: &base_image 673102273038.dkr.ecr.us-west-2.amazonaws.com/trusty-rails-dev:fb8d4208488ad966f51d077e4ae8e4891fedd106
+  test:
+    docker:
+    - image: *base_image
+    working_directory: *working_directory
+
+workflows:
+  test:
+    jobs:
+      - build
+      - rspec:
+          requires:
+            - build
+jobs:
+  build:
+    executor: base
+    steps:
+      - restore_cache:
+          name: Restoring source code from cache
+          keys:
+            - mavenlink-gem-source-1.0-{{ .Branch }}-{{ .Revision }}
+            - mavenlink-gem-source-1.0-{{ .Branch }}
+            - mavenlink-gem-source-1.0-
+      - checkout
+      - save_cache:
+          name: Saving source code in cache
+          key: mavenlink-gem-source-1.0-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - /home/app/current
+      - restore_cache:
+          name: Restoring gem dependencies from cache
+          keys:
+            - mavenlink-gem-gems-1.0-{{ arch }}-{{ checksum "Gemfile.lock" }}
+            - mavenlink-gem-gems-1.0-{{ arch }}
+      - run:
+          name: Install gem dependencies
+          command: bundle check --path=/home/app/bundle || bundle install --path=/home/app/bundle --jobs=8 --retry=3
+      - save_cache:
+          name: Saving gem dependencies in cache
+          key: mavenlink-gem-gems-1.0-{{ arch }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - /home/app/bundle
+      - persist_to_workspace:
+          root: /home/app
+          paths:
+            - current
+            - current/.bundle
+            - bundle
+  rspec:
+    executor: test
+    parallelism: 4
+    steps:
+    - setup_codebase
+    - run:
+        name: Run RSpec tests
+        command: |
+          TESTFILES=$(circleci tests glob "{spec}/**/*_spec.rb" | grep -Ev "selenium|validators" | circleci tests split --split-by=timings)
+          bundle exec rspec --color --format progress --format RspecJunitFormatter --out /tmp/circle/test_reports/rspec_results.xml -- $TESTFILES
+    - run:
+        name: Stash Coverage Results
+        command: |
+          mkdir coverage_results
+          cp -R coverage/.resultset.json coverage_results/.resultset-${CIRCLE_NODE_INDEX}.json
+    - persist_to_workspace:
+        root: /home/app
+        paths:
+          - current/coverage_results
+    - store_output
