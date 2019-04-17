@@ -5,7 +5,7 @@ commands:
     description: "Loads the workspace with our persisted code and build artifacts"
     steps:
       - attach_workspace:
-          at: /home/app
+          at: ~/mavenlink/mavenlink_gem
   store_output:
     description: "Standardizes where test artifacts are stored"
     steps:
@@ -15,7 +15,7 @@ commands:
           path: /tmp/circle/test_reports
 
 defaults: &defaults
-  working_directory: &working_directory /home/app/current
+  working_directory: &working_directory ~/mavenlink/mavenlink_gem/current
   parallelism: 1
   shell: /bin/bash --login
   environment:
@@ -58,7 +58,7 @@ jobs:
         paths:
         - ~/mavenlink/mavenlink_gem/bundle
     - persist_to_workspace:
-        root: /home/app
+        root: ~/mavenlink/mavenlink_gem
         paths:
           - current/.bundle
           - bundle
