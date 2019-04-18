@@ -1,0 +1,67 @@
+version: 2.1
+
+defaults: &defaults
+  working_directory: &working_directory ~/mavenlink/mavenlink_gem
+  parallelism: 1
+  shell: /bin/bash --login
+  environment:
+    CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
+    CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+    RACK_ENV: "test"
+    RAILS_ENV: "test"
+  docker:
+  - image: circleci/ruby:2.2-jessie-node
+    command: /sbin/init
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - build
+      - rspec:
+          requires:
+            - build
+
+jobs:
+  build:
+    <<: *defaults
+    steps:
+    - checkout
+    - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
+    - restore_cache:
+        keys:
+        - v1-dep-{{ .Branch }}-
+        - v1-dep-master-
+        - v1-dep-
+    - run: gem install bundler -v "=1.13.6"
+    - run: mkdir -p tmp/cache
+    - run:
+        name: bundle
+        command: |
+          bundle check --path=~/mavenlink/mavenlink_gem/bundle || bundle install --path=~/mavenlink/mavenlink_gem/bundle --jobs=4 --retry=3
+    - save_cache:
+        key: v1-dep-{{ .Branch }}-{{ epoch }}
+        paths:
+        - ~/mavenlink/mavenlink_gem/bundle
+    - persist_to_workspace:
+        root: ~/mavenlink/mavenlink_gem
+        paths:
+          - .bundle
+          - bundle
+  rspec:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/mavenlink/mavenlink_gem
+      - run: gem install bundler -v "=1.13.6"
+      - run: bundle install
+      - run:
+          name: Run RSpec tests
+          command: |
+            bundle exec rspec --color --format progress --out $CIRCLE_TEST_REPORTS/rspec/test-results.xml
+      - store_artifacts:
+          path: /tmp/circle/test_reports
+      - store_test_results:
+          path: /tmp/circle/test_reports
+
