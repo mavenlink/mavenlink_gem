@@ -928,6 +928,19 @@ roles:
     name:
       presence: true
 
+saml_identities:
+  attributes:
+    - id
+    - identifier
+    - user_id
+    - created_at
+    - updated_at
+  create_attributes:
+    - identifier
+    - user_id
+  update_attributes:
+    - identifier
+
 skills:
   associations:
     skill_category:
@@ -1589,6 +1602,9 @@ users:
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
+    saml_identities:
+      foreign_key: saml_identity_ids
+      collection: saml_identities
 
 vendors:
   attributes:

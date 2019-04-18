@@ -26,6 +26,7 @@ describe Mavenlink::User, stub_requests: true do
 
   describe "associations" do
     it { should respond_to :external_references }
+    it { should respond_to :saml_identities }
   end
 
   describe 'class methods' do
