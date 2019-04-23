@@ -1752,6 +1752,42 @@ workspaces:
     - external_reference
     - workspace_group_ids
 
+workspace_allocations:
+  attributes:
+    - id
+    - start_date
+    - end_date
+    - hard
+    - minutes
+    - percentage
+    - notes
+    - created_at
+    - updated_at
+    - workspace_resource_id
+  create_attributes:
+    - resource_id
+    - start_date
+    - end_date
+    - minutes
+    - hard
+    - notes
+  update_attributes:
+    - start_date
+    - end_date
+    - minutes
+    - hard
+    - notes
+  associations:
+    workspace_resource:
+      foreign_key: workspace_resource_id
+      collection: workspace_resources
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+  validations:
+    [resource_id, start_date, end_date, minutes]:
+      presence: true
+
 workspace_groups:
   attributes:
     - id # the internal workspace group ID
