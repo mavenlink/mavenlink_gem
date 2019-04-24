@@ -7,8 +7,26 @@ describe Mavenlink::Workspace, stub_requests: true do
   it { should be_a Mavenlink::Concerns::Indestructible }
 
   describe "associations" do
-    it { should respond_to :external_references }
+    it { should respond_to :next_uncompleted_milestone }
+    it { should respond_to :creator }
+    it { should respond_to :primary_counterpart }
+    it { should respond_to :primary_maven }
     it { should respond_to :approver }
+    it { should respond_to :approvers }
+    it { should respond_to :participants }
+    it { should respond_to :current_user_participation }
+    it { should respond_to :participations }
+    it { should respond_to :timesheet_submissions }
+    it { should respond_to :workspace_groups }
+    it { should respond_to :financial_viewers }
+    it { should respond_to :custom_field_values }
+    it { should respond_to :possible_approvers }
+    it { should respond_to :workspace_resources }
+    it { should respond_to :workspace_resources_with_unnamed }
+    it { should respond_to :status_reports }
+    it { should respond_to :current_status_report }
+    it { should respond_to :external_references }
+    it { should respond_to :account_color }
   end
 
   let(:response) {
