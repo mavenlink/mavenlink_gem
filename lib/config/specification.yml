@@ -1785,31 +1785,41 @@ workspaces:
     - external_reference
     - workspace_group_ids
 
-workspace_invoice_preferences:
+workspace_allocations:
   attributes:
     - id
-    - workspace_id
-    - purchase_order
-    - project_code
-    - client_invoice_name
-    - client_invoice_address
-    - consultant_invoice_name
-    - consultant_invoice_address
+    - start_date
+    - end_date
+    - hard
+    - minutes
+    - percentage
+    - notes
+    - created_at
+    - updated_at
+    - workspace_resource_id
   create_attributes:
-    - workspace_id # required
-    - project_code # optional
-    - purchase_order # optional
-    - client_invoice_name # optional
-    - client_invoice_address # optional
-    - consultant_invoice_name # optional
-    - consultant_invoice_address # optional
+    - resource_id
+    - start_date
+    - end_date
+    - minutes
+    - hard
+    - notes
   update_attributes:
-    - project_code  # optional
-    - purchase_order  # optional
-    - client_invoice_name  # optional
-    - client_invoice_address  # optional
-    - consultant_invoice_name  # optional
-    - consultant_invoice_address  # optional
+    - start_date
+    - end_date
+    - minutes
+    - hard
+    - notes
+  associations:
+    workspace_resource:
+      foreign_key: workspace_resource_id
+      collection: workspace_resources
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+  validations:
+    [resource_id, start_date, end_date, minutes]:
+      presence: true
 
 workspace_groups:
   attributes:
@@ -1860,6 +1870,71 @@ workspace_groups:
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
+
+workspace_invoice_preferences:
+  attributes:
+    - id
+    - workspace_id
+    - purchase_order
+    - project_code
+    - client_invoice_name
+    - client_invoice_address
+    - consultant_invoice_name
+    - consultant_invoice_address
+  create_attributes:
+    - workspace_id # required
+    - project_code # optional
+    - purchase_order # optional
+    - client_invoice_name # optional
+    - client_invoice_address # optional
+    - consultant_invoice_name # optional
+    - consultant_invoice_address # optional
+  update_attributes:
+    - project_code  # optional
+    - purchase_order  # optional
+    - client_invoice_name  # optional
+    - client_invoice_address  # optional
+    - consultant_invoice_name  # optional
+    - consultant_invoice_address  # optional
+
+workspace_resources:
+  attributes:
+    - id
+    - role_name
+    - full_name
+    - workspace_id
+    - photo_path
+    - role_initials
+    - display_label
+    - created_at
+    - updated_at
+  create_attributes:
+    - workspace_id
+    - user_id
+    - role_id
+  update_attributes:
+    - label
+    - user_id
+    - role_id
+  associations:
+    participation:
+      foreign_key: participation_id
+      collection: participations
+    user:
+      foreign_key: user_id
+      collection: users
+    role:
+      foreign_key: role_id
+      collection: roles
+    skills:
+      foreign_key: skill_ids
+      collection: skills
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+  validations:
+    workspace_id:
+      presence: true
 
 workweeks:
   attributes:

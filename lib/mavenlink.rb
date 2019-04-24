@@ -133,8 +133,10 @@ require 'mavenlink/role' # NOTE(SZ): remove
 require 'mavenlink/user'
 require 'mavenlink/vendor'
 require 'mavenlink/workspace'
-require 'mavenlink/workspace_invoice_preference'
+require 'mavenlink/workspace_allocation'
 require 'mavenlink/workspace_group'
+require 'mavenlink/workspace_invoice_preference'
+require 'mavenlink/workspace_resource'
 require 'mavenlink/workweek'
 require 'mavenlink/workweek_membership'
 require 'mavenlink/railtie' if defined?(Rails)
