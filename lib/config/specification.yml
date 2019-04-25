@@ -1629,33 +1629,66 @@ workspaces:
         in: [maven, buyer]
         allow_blank: false
   associations:
+    next_uncompleted_milestone:
+      foreign_key: next_uncompleted_milestone_id
+      collection: stories
+    creator:
+      foreign_key: creator_id
+      collection: users
     primary_counterpart:
       foreign_key: primary_counterpart_id
+      collection: users
+    primary_maven:
+      foreign_key: primary_maven_id
+      collection: users
+    approver:
+      foreign_key: approver_id
+      collection: users
+    approvers:
+      foreign_key: approver_ids
       collection: users
     participants:
       foreign_key: participant_ids
       collection: users
+    current_user_participation:
+      foreign_key: current_user_participation_id
+      collection: participations
     participations:
       foreign_key: participation_ids
       collection: participations
-    creator:
-      foreign_key: creator_id
-      collection: users
+    timesheet_submissions:
+      foreign_key: timesheet_submission_ids
+      collection: timesheet_submissions
     workspace_groups:
       foreign_key: workspace_group_ids
       collection: workspace_groups
-    primary_maven:
-      foreign_key: primary_maven_id
+    financial_viewers:
+      foreign_key: financial_viewer_ids
       collection: users
-    external_references:
-      foreign_key: external_reference_ids
-      collection: external_references
+    custom_field_values:
+      foreign_key: custom_field_value_ids
+      collection: custom_field_values
+    possible_approvers:
+      foreign_key: possible_approver_ids
+      collection: users
+    workspace_resources:
+      foreign_key: workspace_resource_ids
+      collection: workspace_resources
+    workspace_resources_with_unnamed:
+      foreign_key: workspace_resources_with_unnamed_ids
+      collection: workspace_resources
     status_reports:
       foreign_key: status_report_ids
       collection: status_reports
-    approver:
-      foreign_key: approver_id
-      collection: users
+    current_status_report:
+      foreign_key: current_status_report_id
+      collection: status_reports
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+    account_color:
+      foreign_key: account_color_id
+      collection: account_colors
   attributes:
     - id # the internal expense ID
     - title # the title of the project
