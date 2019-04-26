@@ -19,7 +19,6 @@ describe Mavenlink::Workspace, stub_requests: true do
     it { should respond_to :timesheet_submissions }
     it { should respond_to :workspace_groups }
     it { should respond_to :financial_viewers }
-    it { should respond_to :custom_field_values }
     it { should respond_to :possible_approvers }
     it { should respond_to :workspace_resources }
     it { should respond_to :workspace_resources_with_unnamed }

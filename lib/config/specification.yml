@@ -1665,9 +1665,6 @@ workspaces:
     financial_viewers:
       foreign_key: financial_viewer_ids
       collection: users
-    custom_field_values:
-      foreign_key: custom_field_value_ids
-      collection: custom_field_values
     possible_approvers:
       foreign_key: possible_approver_ids
       collection: users
