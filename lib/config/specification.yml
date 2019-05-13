@@ -1347,6 +1347,10 @@ survey_templates:
   update_attributes:
     - title
     - description
+    - open_date
+    - close_date
+    - due_date
+    - owner_id
   associations:
     survey_questions:
       foreign_key: survey_question_ids
