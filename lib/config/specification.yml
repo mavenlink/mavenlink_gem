@@ -668,6 +668,7 @@ participations:
     - user_id
     - workspace_id
     - workspace_role_id
+    - workspace_resource_ids
   create_attributes:
     - workspace_id # (required)
     - role # (required) either `maven` or `buyer`
@@ -684,6 +685,9 @@ participations:
     role:
       foreign_key: workspace_role_id
       collection: roles
+    workspace_resources:
+      foreign_key: workspace_resource_ids
+      collection: workspace_resources
 
 posts:
   attributes:
