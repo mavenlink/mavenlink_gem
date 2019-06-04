@@ -546,6 +546,49 @@ holiday_calendar_memberships:
       foreign_key: user_id
       collection: users
 
+insights_access_groups:
+  attributes:
+    - id
+    - name
+    - group_member_count
+    - is_admin_default
+    - is_reports_viewer_default
+    - dashboard_names
+  create_attributes:
+    - account_insights_mapping_permissions_attributes
+    - insights_access_group_memberships_attributes
+    - name
+    - is_admin_default
+    - is_reports_viewer_default
+  update_attributes:
+    - name
+    - is_admin_default
+    - is_reports_viewer_default
+
+insights_access_group_memberships:
+  attributes:
+    - id
+    - created_at
+    - updated_at
+    - user_id
+    - insights_access_group_id
+    - insights_access_group_name
+    - user_name
+    - can_edit
+    - account_permission
+  create_attributes:
+    - user_id
+    - insights_access_group_id
+  update_attributes:
+    - insights_access_group_membership
+  associations:
+    user:
+      foreign_key: user_id
+      collection: users
+    insights_access_group:
+      foreign_key: insights_access_group_id
+      collection: insights_access_groups
+
 invoices:
   attributes:
     - id # the internal invoice id
