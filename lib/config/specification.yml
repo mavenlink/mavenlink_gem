@@ -1625,7 +1625,7 @@ timesheet_submissions:
       resolutions:
         foreign_key: resolution_ids
         collection: resolutions
-      external_reference:
+      external_references:
         foreign_key: external_reference_id
         collection: external_references
 
