@@ -8,7 +8,7 @@ describe Mavenlink::TimesheetSubmission, stub_requests: true do
     it { should respond_to :workspace }
     it { should respond_to :time_entries }
     it { should respond_to :resolutions }
-    it { should respond_to :external_reference }
+    it { should respond_to :external_references }
   end
 
   it 'should respond to expected attributes' do
