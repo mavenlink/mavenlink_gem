@@ -2041,3 +2041,10 @@ workweek_memberships:
     - thursday_minutes
     - friday_minutes
     - saturday_minutes
+  associations:
+    user:
+      foreign_key: user_id
+      collection: users
+    workweek:
+      foreign_key: workweek_id
+      collection: workweeks
