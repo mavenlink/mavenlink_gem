@@ -43,6 +43,7 @@ additional_items:
     - amount_in_cents
     - taxable
     - currency
+    - workspace_id
 
 account_memberships:
   attributes:
