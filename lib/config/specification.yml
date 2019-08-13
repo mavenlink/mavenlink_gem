@@ -997,6 +997,9 @@ skills:
     roles:
       foreign_key: role_ids
       collection: roles
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
   attributes:
     - name
     - max_level
@@ -1008,12 +1011,14 @@ skills:
     - max_level
     - description
     - role_ids
+    - external_reference
   update_attributes:
     - skill_category_id
     - name
     - max_level
     - description
     - role_ids
+    - external_reference
 
 skill_categories:
   associations:
