@@ -11,7 +11,6 @@ defaults: &defaults
     RAILS_ENV: "test"
   docker:
   - image: circleci/ruby:2.2-jessie-node
-    command: /sbin/init
 
 workflows:
   version: 2
@@ -64,4 +63,3 @@ jobs:
           path: /tmp/circle/test_reports
       - store_test_results:
           path: /tmp/circle/test_reports
-
