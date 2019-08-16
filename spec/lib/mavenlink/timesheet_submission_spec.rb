@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe Mavenlink::TimesheetSubmission, stub_requests: true do
+  subject { described_class.new(id: 5) }
+
   it_should_behave_like 'model', 'timesheet_submissions'
 
   describe 'associations' do
@@ -25,6 +27,28 @@ describe Mavenlink::TimesheetSubmission, stub_requests: true do
 
     it 'includes expected attributes' do
       should match_array(%w(title comment workspace_id user_id line_item_ids external_reference))
+    end
+  end
+
+  describe "#approve_submission" do
+    before do
+      allow(subject.client).to receive(:put)
+      subject.approve_submission
+    end
+
+    it "uses a put method with the correct api endpoint and id" do
+      expect(subject.client).to have_received(:put).with("timesheet_submissions/5/approve")
+    end
+  end
+
+  describe "#reject_submission" do
+    before do
+      allow(subject.client).to receive(:put)
+      subject.reject_submission
+    end
+
+    it "uses a put method with the correct api endpoint and id" do
+      expect(subject.client).to have_received(:put).with("timesheet_submissions/5/reject")
     end
   end
 end
