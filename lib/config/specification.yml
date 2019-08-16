@@ -1644,6 +1644,7 @@ users:
     - headline      # the short description of the user as found in the user's profile
     - disabled
     - account_id
+    - role_id
   update_attributes:
     - full_name
     - headline
