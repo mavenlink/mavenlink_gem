@@ -13,6 +13,7 @@ describe Mavenlink::TimeEntry, stub_requests: true do
     it { should respond_to :workspace }
     it { should respond_to :user }
     it { should respond_to :story }
+    it { should respond_to :external_references }
   end
 
   it 'should respond to expected attributes' do
