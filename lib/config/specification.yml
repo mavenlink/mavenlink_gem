@@ -1523,6 +1523,9 @@ time_entries:
     active_submission:
       foreign_key: active_submission_id
       collection: timesheet_submissions
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
   validations:
     [workspace_id, date_performed, time_in_minutes]:
       presence: true
