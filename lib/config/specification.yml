@@ -1,4 +1,46 @@
 ---
+access_groups:
+  attributes:
+    - id
+    - name
+    - created_at
+    - resource_planning_permissions
+  create_attributes:
+    - name
+    - description
+    - set_resource_planning_permissions
+  update_attributes:
+    - name
+    - description
+    - set_resource_planning_permissions
+  associations:
+    last_updated_user:
+      foreign_key: last_updated_user_id
+      collection: users
+    users:
+      foreign_key: user_ids
+      collection: users
+
+access_group_memberships:
+  attributes:
+    - id
+    - access_group_id
+    - user_id
+    - user_name
+    - access_group_name
+    - created_at
+    - creator_id
+  create_attributes:
+    - access_group_id
+    - user_id
+  associations:
+    access_group:
+      foreign_key: access_group_id
+      collection: access_groups
+    user:
+      foreign_key: user_id
+      collection: users
+
 account_invitations:
   attributes:
     - id
