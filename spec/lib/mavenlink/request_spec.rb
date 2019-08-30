@@ -377,5 +377,25 @@ describe Mavenlink::Request, stub_requests: true do
         expect(records[2]).to be_a Mavenlink::Model
       end
     end
+
+    # This would hang indefinitely
+    context "when the response says one result but none are returned", stub_requests: false do
+      let(:response) {
+        {
+          'count' => 1,
+          'results' => [],
+          'workspaces' => {}
+        }
+      }
+
+      before do
+        stubbed_requests.instance_variable_get(:@stack)[:get].clear
+        stub_request :get, /api\/v1\/workspaces(\?page=[0-9]+)?/, response
+      end
+
+      it "returns nothing" do
+        expect(subject.each_page.to_a.flatten).to be_empty
+      end
+    end
   end
 end
