@@ -196,6 +196,7 @@ module Mavenlink
           response = request.page(i+=1).perform
           total_count = response.total_count
           result << page_records = response.results
+          break if response.results.empty?
         end
       end.each(&block)
     end
