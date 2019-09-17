@@ -1163,6 +1163,9 @@ stories: # tasks
     current_assignments:
       foreign_key: current_assignment_ids
       collection: assignments
+    workspace_resources_with_unnamed:
+      foreign_key: workspace_resources_with_unnamed_ids
+      collection: workspace_resources
 
   attributes:
     - id # the internal story id
