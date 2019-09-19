@@ -21,6 +21,7 @@ describe Mavenlink::Story, stub_requests: true do
     it { should respond_to :external_references }
     it { should respond_to :current_assignments }
     it { should respond_to :workspace_resources_with_unnamed }
+    it { should respond_to :story_state_changes }
   end
 
   let(:response) {

@@ -1166,6 +1166,9 @@ stories: # tasks
     workspace_resources_with_unnamed:
       foreign_key: workspace_resources_with_unnamed_ids
       collection: workspace_resources
+    story_state_changes:
+      foreign_key: story_state_change_ids
+      collection: story_state_changes
 
   attributes:
     - id # the internal story id
@@ -1341,6 +1344,20 @@ survey_answers:
   validations:
     [survey_response_id, survey_question_id]:
       presence: true
+
+story_state_changes:
+  associations:
+    user:
+      foreign_key: user_id
+      collection: users
+    story:
+      foreign_key: story_id
+      collection: stories
+  attributes:
+    - state
+    - formatted_state
+    - created_at
+    - updated_at
 
 survey_questions:
   attributes:
