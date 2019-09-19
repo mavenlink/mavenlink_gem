@@ -1357,6 +1357,8 @@ story_state_changes:
     - id
     - state
     - formatted_state
+    - user_id
+    - story_id
     - created_at
     - updated_at
 
