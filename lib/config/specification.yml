@@ -1354,6 +1354,7 @@ story_state_changes:
       foreign_key: story_id
       collection: stories
   attributes:
+    - id
     - state
     - formatted_state
     - created_at
