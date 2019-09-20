@@ -1207,6 +1207,7 @@ stories: # tasks
     - weight # integer representing the weight of the story. Can only be set on a parent-level milestone by a consultant with at least budget permissions (optional)
     - external_reference_ids
     - current_assignments
+    - story_state_change_ids
   create_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
