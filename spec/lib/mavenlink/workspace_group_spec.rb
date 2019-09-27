@@ -5,10 +5,6 @@ describe Mavenlink::WorkspaceGroup, stub_requests: true, type: :model do
 
   describe 'validations' do
     it { is_expected.to validate_presence_of :name }
-    it { is_expected.to validate_inclusion_of(:company).in_array([true, false]) }
-    it { is_expected.not_to allow_value('true').for(:company) }
-    it { is_expected.not_to allow_value('false').for(:company) }
-    it { is_expected.not_to allow_value(nil).for(:company) }
   end
 
   describe 'associations' do
