@@ -21,7 +21,7 @@ describe Mavenlink::RateCardSetVersion, stub_requests: true do
     context "when the publish fails" do
       before do
         allow(subject).to receive(:client) { client }
-        allow(client).to receive(:put).and_raise(Faraday::Error)
+        allow(client).to receive(:put).and_raise(Faraday::Error, "Some message")
       end
 
       it "returns false" do
