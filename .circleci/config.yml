@@ -10,7 +10,7 @@ defaults: &defaults
     RACK_ENV: "test"
     RAILS_ENV: "test"
   docker:
-  - image: circleci/ruby:2.2-jessie-node
+  - image: circleci/ruby:2.3.3
 
 workflows:
   version: 2
