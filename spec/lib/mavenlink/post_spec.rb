@@ -1,14 +1,14 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Mavenlink::Post, stub_requests: true, type: :model do
-  it_should_behave_like 'model', 'posts'
+  it_should_behave_like "model", "posts"
 
-  describe 'validations' do
+  describe "validations" do
     it { is_expected.to validate_presence_of :message }
     it { is_expected.to validate_presence_of :workspace_id }
   end
 
-  describe 'associations' do
+  describe "associations" do
     it { is_expected.to respond_to :subject }
     it { is_expected.to respond_to :user }
     it { is_expected.to respond_to :workspace }

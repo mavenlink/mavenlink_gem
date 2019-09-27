@@ -13,7 +13,7 @@ module Mavenlink
 
       # @overload
       def save
-        raise RecordLockedError, 'The model is locked and cannot be changed'
+        raise RecordLockedError, "The model is locked and cannot be changed"
       end
 
       # @overload

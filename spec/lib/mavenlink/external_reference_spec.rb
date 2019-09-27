@@ -4,7 +4,7 @@ describe Mavenlink::ExternalReference, stub_requests: true, type: :model do
   let(:model) { described_class }
   let(:external_reference) { model.new(attributes) }
   let(:uri) { "external_references/create_or_update" }
-  let(:attributes) {
+  let(:attributes) do
     {
       "subject_type" => "TimeEntry",
       "subject_id" => 1,
@@ -12,12 +12,12 @@ describe Mavenlink::ExternalReference, stub_requests: true, type: :model do
       "service_model_ref" => "1",
       "service_model" => "TimeBill"
     }.merge(attribute_options)
-  }
+  end
   let(:attribute_options) { {} }
   let(:response) do
     {
       "count" => 1,
-      "results" => [{"key" => "external_references", "id" => "7"}],
+      "results" => [{ "key" => "external_references", "id" => "7" }],
       "external_references" => {
         "7" => {
           "id" => "7",
@@ -55,7 +55,7 @@ describe Mavenlink::ExternalReference, stub_requests: true, type: :model do
 
       it "makes the request with the correct params" do
         external_reference.save
-        expect(external_reference.client).to have_received(:post).with(uri, { external_reference: attributes })
+        expect(external_reference.client).to have_received(:post).with(uri, external_reference: attributes)
       end
 
       it "returns true" do
@@ -69,29 +69,29 @@ describe Mavenlink::ExternalReference, stub_requests: true, type: :model do
     end
 
     context "when an invalid attribute is set on the model" do
-        let(:attribute_options) { { foo: 666 } }
+      let(:attribute_options) { { foo: 666 } }
 
-        it "the record is valid" do
-          external_reference.save
-          expect(external_reference).to be_a model
-          expect(external_reference).to be_valid
-          expect(external_reference).to be_persisted
-        end
-
-        it "ignores invalid attributes when making the request" do
-          external_reference.save
-          expect(external_reference.client).to have_received(:post).with(uri, { external_reference: attributes.except(:foo)})
-        end
-
-        it "returns true" do
-          expect(external_reference.save).to be_truthy
-        end
-
-        it "loads the response attributes into the integrated resource model" do
-          external_reference.save
-          expect(external_reference).to include(response["external_references"]["7"])
-        end
+      it "the record is valid" do
+        external_reference.save
+        expect(external_reference).to be_a model
+        expect(external_reference).to be_valid
+        expect(external_reference).to be_persisted
       end
+
+      it "ignores invalid attributes when making the request" do
+        external_reference.save
+        expect(external_reference.client).to have_received(:post).with(uri, external_reference: attributes.except(:foo))
+      end
+
+      it "returns true" do
+        expect(external_reference.save).to be_truthy
+      end
+
+      it "loads the response attributes into the integrated resource model" do
+        external_reference.save
+        expect(external_reference).to include(response["external_references"]["7"])
+      end
+    end
 
     context "when required attributes are missing" do
       let(:attribute_options) { { subject_type: nil } }

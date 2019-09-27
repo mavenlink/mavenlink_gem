@@ -1,15 +1,15 @@
-require 'active_support/core_ext/hash/indifferent_access'
-require 'active_support/core_ext/hash/slice'
-require 'active_support/core_ext/object/try'
-require 'active_support/core_ext/string/inflections'
-require 'active_model'
-require 'yaml'
-require 'json'
-require 'brainstem-adaptor'
-require 'faraday'
+require "active_support/core_ext/hash/indifferent_access"
+require "active_support/core_ext/hash/slice"
+require "active_support/core_ext/object/try"
+require "active_support/core_ext/string/inflections"
+require "active_model"
+require "yaml"
+require "json"
+require "brainstem-adaptor"
+require "faraday"
 
 module Mavenlink
-  VERSION = '0.0.1'
+  VERSION = "0.0.1".freeze
 
   # Returns HTTP framework
   def self.adapter
@@ -54,7 +54,7 @@ module Mavenlink
   # @param [String] version
   # @return [Api]
   def self.specification
-    @specification ||= BrainstemAdaptor::Specification.new(YAML.load_file(File.join(File.dirname(__FILE__), 'config', 'specification.yml')))
+    @specification ||= BrainstemAdaptor::Specification.new(YAML.load_file(File.join(File.dirname(__FILE__), "config", "specification.yml")))
   end
 
   def self.stub_requests(&block)
@@ -63,85 +63,85 @@ module Mavenlink
   end
 end
 
-require 'mavenlink/settings'
-require 'mavenlink/errors'
-require 'mavenlink/request'
-require 'mavenlink/response'
-require 'mavenlink/client'
-require 'mavenlink/logger'
-require 'mavenlink/concerns/custom_fieldable'
-require 'mavenlink/concerns/indestructible'
-require 'mavenlink/concerns/locked_record'
-require 'mavenlink/specificators/base'
-require 'mavenlink/specificators/attribute'
-require 'mavenlink/specificators/association'
-require 'mavenlink/specificators/validation'
-require 'mavenlink/model'
-require 'mavenlink/access_group'
-require 'mavenlink/access_group_membership'
-require 'mavenlink/account_invitation'
-require 'mavenlink/account_membership'
-require 'mavenlink/additional_item'
-require 'mavenlink/assignment'
-require 'mavenlink/attachment'
-require 'mavenlink/backup_approver_association'
-require 'mavenlink/cost_rate'
-require 'mavenlink/custom_field'
-require 'mavenlink/custom_field_value'
-require 'mavenlink/custom_field_choice'
-require 'mavenlink/expense'
-require 'mavenlink/expense_category'
-require 'mavenlink/expense_report_submission'
-require 'mavenlink/external_payment'
-require 'mavenlink/fixed_fee_item'
-require 'mavenlink/external_reference'
-require 'mavenlink/holiday'
-require 'mavenlink/holiday_calendar'
-require 'mavenlink/holiday_calendar_association'
-require 'mavenlink/holiday_calendar_membership'
-require 'mavenlink/insights_access_group'
-require 'mavenlink/insights_access_group_membership'
-require 'mavenlink/invoice'
-require 'mavenlink/organization'
-require 'mavenlink/organization_membership'
-require 'mavenlink/participation'
-require 'mavenlink/post'
-require 'mavenlink/project_template'
-require 'mavenlink/project_template_assignment'
-require 'mavenlink/saml_identity'
-require 'mavenlink/skill'
-require 'mavenlink/skill_category'
-require 'mavenlink/skill_membership'
-require 'mavenlink/status_report'
-require 'mavenlink/story'
-require 'mavenlink/story_allocation_day'
-require 'mavenlink/story_dependency'
-require 'mavenlink/story_state_change'
-require 'mavenlink/story_task'
-require 'mavenlink/survey_answer'
-require 'mavenlink/survey_question'
-require 'mavenlink/survey_question_choice'
-require 'mavenlink/survey_response'
-require 'mavenlink/survey_template'
-require 'mavenlink/tag'
-require 'mavenlink/time_adjustment'
-require 'mavenlink/time_entry'
-require 'mavenlink/time_off_entry'
-require 'mavenlink/timesheet_submission'
-require 'mavenlink/rate_card'
-require 'mavenlink/rate_card_role'
-require 'mavenlink/rate_card_set'
-require 'mavenlink/rate_card_set_version'
-require 'mavenlink/rate_card_version'
-require 'mavenlink/resolution'
-require 'mavenlink/role' # NOTE(SZ): remove
-require 'mavenlink/user'
-require 'mavenlink/vendor'
-require 'mavenlink/workspace'
-require 'mavenlink/workspace_allocation'
-require 'mavenlink/workspace_group'
-require 'mavenlink/workspace_invoice_preference'
-require 'mavenlink/workspace_resource'
-require 'mavenlink/workweek'
-require 'mavenlink/workweek_membership'
-require 'mavenlink/railtie' if defined?(Rails)
+require "mavenlink/settings"
+require "mavenlink/errors"
+require "mavenlink/request"
+require "mavenlink/response"
+require "mavenlink/client"
+require "mavenlink/logger"
+require "mavenlink/concerns/custom_fieldable"
+require "mavenlink/concerns/indestructible"
+require "mavenlink/concerns/locked_record"
+require "mavenlink/specificators/base"
+require "mavenlink/specificators/attribute"
+require "mavenlink/specificators/association"
+require "mavenlink/specificators/validation"
+require "mavenlink/model"
+require "mavenlink/access_group"
+require "mavenlink/access_group_membership"
+require "mavenlink/account_invitation"
+require "mavenlink/account_membership"
+require "mavenlink/additional_item"
+require "mavenlink/assignment"
+require "mavenlink/attachment"
+require "mavenlink/backup_approver_association"
+require "mavenlink/cost_rate"
+require "mavenlink/custom_field"
+require "mavenlink/custom_field_value"
+require "mavenlink/custom_field_choice"
+require "mavenlink/expense"
+require "mavenlink/expense_category"
+require "mavenlink/expense_report_submission"
+require "mavenlink/external_payment"
+require "mavenlink/fixed_fee_item"
+require "mavenlink/external_reference"
+require "mavenlink/holiday"
+require "mavenlink/holiday_calendar"
+require "mavenlink/holiday_calendar_association"
+require "mavenlink/holiday_calendar_membership"
+require "mavenlink/insights_access_group"
+require "mavenlink/insights_access_group_membership"
+require "mavenlink/invoice"
+require "mavenlink/organization"
+require "mavenlink/organization_membership"
+require "mavenlink/participation"
+require "mavenlink/post"
+require "mavenlink/project_template"
+require "mavenlink/project_template_assignment"
+require "mavenlink/saml_identity"
+require "mavenlink/skill"
+require "mavenlink/skill_category"
+require "mavenlink/skill_membership"
+require "mavenlink/status_report"
+require "mavenlink/story"
+require "mavenlink/story_allocation_day"
+require "mavenlink/story_dependency"
+require "mavenlink/story_state_change"
+require "mavenlink/story_task"
+require "mavenlink/survey_answer"
+require "mavenlink/survey_question"
+require "mavenlink/survey_question_choice"
+require "mavenlink/survey_response"
+require "mavenlink/survey_template"
+require "mavenlink/tag"
+require "mavenlink/time_adjustment"
+require "mavenlink/time_entry"
+require "mavenlink/time_off_entry"
+require "mavenlink/timesheet_submission"
+require "mavenlink/rate_card"
+require "mavenlink/rate_card_role"
+require "mavenlink/rate_card_set"
+require "mavenlink/rate_card_set_version"
+require "mavenlink/rate_card_version"
+require "mavenlink/resolution"
+require "mavenlink/role" # NOTE(SZ): remove
+require "mavenlink/user"
+require "mavenlink/vendor"
+require "mavenlink/workspace"
+require "mavenlink/workspace_allocation"
+require "mavenlink/workspace_group"
+require "mavenlink/workspace_invoice_preference"
+require "mavenlink/workspace_resource"
+require "mavenlink/workweek"
+require "mavenlink/workweek_membership"
+require "mavenlink/railtie" if defined?(Rails)

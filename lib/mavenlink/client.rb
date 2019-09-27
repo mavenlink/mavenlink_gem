@@ -1,16 +1,14 @@
 module Mavenlink
   class Client
-    ENDPOINT = 'https://api.mavenlink.com/api/v1/'.freeze
+    ENDPOINT = "https://api.mavenlink.com/api/v1/".freeze
 
     # @param settings [ActiveSuppport::HashWithIndifferentAccess]
     def initialize(settings = Mavenlink.default_settings)
       @settings = settings
-      @oauth_token = settings[:oauth_token] or raise ArgumentError, 'OAuth token is not set'
+      (@oauth_token = settings[:oauth_token]) || raise(ArgumentError, "OAuth token is not set")
       @endpoint = settings[:endpoint] || ENDPOINT
       @use_json = settings[:use_json]
-      if settings.key?(:user_agent_override)
-        @user_agent_override = settings[:user_agent_override]
-      end
+      @user_agent_override = settings[:user_agent_override] if settings.key?(:user_agent_override)
 
       # TODO: implement with method_missing?
       # Declare API calls client.-->>workspaces<<---.create({})
@@ -27,7 +25,7 @@ module Mavenlink
     def connection
       Faraday.new(connection_options) do |builder|
         if @use_json
-          builder.headers['Content-Type'] = 'application/json'
+          builder.headers["Content-Type"] = "application/json"
         else
           builder.use Faraday::Request::UrlEncoded
         end
@@ -73,44 +71,42 @@ module Mavenlink
 
     # @return [Hash]
     def connection_options
-      if @user_agent_override && @user_agent_override.length > 1
-        user_agent = "#{@user_agent_override}"
-      else
-        user_agent = "Mavenlink Ruby Gem"
-      end
+      user_agent = if @user_agent_override && @user_agent_override.length > 1
+                     @user_agent_override.to_s
+                   else
+                     "Mavenlink Ruby Gem"
+                   end
       {
-        headers: { 'Accept'        => "application/json",
-                   'User-Agent'    => "#{user_agent}",
-                   'Authorization' => "Bearer #{oauth_token}" },
+        headers: { "Accept" => "application/json",
+                   "User-Agent" => user_agent.to_s,
+                   "Authorization" => "Bearer #{oauth_token}" },
         ssl: { verify: false },
         url: endpoint
       }.freeze
     end
 
     def parse_request(response)
-      if response.present?
-        parsed_response = JSON.parse(response)
-      else
-        return
-      end
+      return unless response.present?
+
+      parsed_response = JSON.parse(response)
 
       parsed_response.tap do
-        Mavenlink.logger.whisper 'Received response:'
+        Mavenlink.logger.whisper "Received response:"
         Mavenlink.logger.inspection response
 
         case parsed_response
         when Array
-          Mavenlink.logger.whisper 'Returned as a plain collection'
+          Mavenlink.logger.whisper "Returned as a plain collection"
         when Hash
-          if parsed_response['errors']
-            Mavenlink.logger.disappointment 'REQUEST FAILED:'
-            Mavenlink.logger.inspection parsed_response['errors']
-            raise InvalidRequestError.new(parsed_response)
+          if parsed_response["errors"]
+            Mavenlink.logger.disappointment "REQUEST FAILED:"
+            Mavenlink.logger.inspection parsed_response["errors"]
+            raise InvalidRequestError, parsed_response
           end
         end
       end
     rescue JSON::ParserError => e
-      raise Mavenlink::InvalidResponseError.new(e.message)
+      raise Mavenlink::InvalidResponseError, e.message
     end
   end
 end

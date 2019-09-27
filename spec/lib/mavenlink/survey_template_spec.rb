@@ -3,7 +3,7 @@ require "spec_helper"
 describe Mavenlink::SurveyTemplate, stub_requests: true, type: :model do
   it_should_behave_like "model", "survey_templates"
 
-  describe 'validations' do
+  describe "validations" do
     it { is_expected.to validate_presence_of :survey_question_ids }
   end
 

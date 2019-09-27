@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Mavenlink::Workspace, stub_requests: true, type: :model do
   let(:model) { described_class }
@@ -28,54 +28,54 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
     it { is_expected.to respond_to :account_color }
   end
 
-  let(:response) {
+  let(:response) do
     {
-      'count' => 1,
-      'results' => [{'key' => 'workspaces', 'id' => '7'}],
-      'workspaces' => {
-        '7' => {'title' => 'My new project', 'id' => '7'}
+      "count" => 1,
+      "results" => [{ "key" => "workspaces", "id" => "7" }],
+      "workspaces" => {
+        "7" => { "title" => "My new project", "id" => "7" }
       }
     }
-  }
-
-  let(:updated_response) {
-    {
-      'count' => 1,
-      'results' => [{'key' => 'workspaces', 'id' => '7'}],
-      'workspaces' => {
-        '7' => {'title' => 'Updated project', 'id' => '7'}
-      }
-    }
-  }
-
-  before do
-    stub_request :get,    '/api/v1/workspaces?only=7', response
-    stub_request :get,    '/api/v1/workspaces?only=8', {'count' => 0, 'results' => []}
-    stub_request :post,   '/api/v1/workspaces', response
-    stub_request :put,    '/api/v1/workspaces/7', updated_response
-    stub_request :delete, '/api/v1/workspaces/4', {'count' => 0, 'results' => []} # TODO: replace with real one
   end
 
-  describe 'association calls' do
+  let(:updated_response) do
+    {
+      "count" => 1,
+      "results" => [{ "key" => "workspaces", "id" => "7" }],
+      "workspaces" => {
+        "7" => { "title" => "Updated project", "id" => "7" }
+      }
+    }
+  end
+
+  before do
+    stub_request :get,    "/api/v1/workspaces?only=7", response
+    stub_request :get,    "/api/v1/workspaces?only=8", "count" => 0, "results" => []
+    stub_request :post,   "/api/v1/workspaces", response
+    stub_request :put,    "/api/v1/workspaces/7", updated_response
+    stub_request :delete, "/api/v1/workspaces/4", "count" => 0, "results" => [] # TODO: replace with real one
+  end
+
+  describe "association calls" do
     let(:record) { described_class.find(7) }
-    let(:response) {
+    let(:response) do
       {
-        'count' => 1,
-        'results' => [{'key' => 'workspaces', 'id' => '7'}, {'key' => 'users', 'id' => '2'}],
-        'users' => {
-          '2' => {
-            'id' => 2,
-            'full_name' => 'John Doe'
+        "count" => 1,
+        "results" => [{ "key" => "workspaces", "id" => "7" }, { "key" => "users", "id" => "2" }],
+        "users" => {
+          "2" => {
+            "id" => 2,
+            "full_name" => "John Doe"
           }
         },
-        'workspaces' => {
-          '7' => {
-            'title' => 'My new project', 'id' => '7',
-            'participant_ids' => ['2'],
+        "workspaces" => {
+          "7" => {
+            "title" => "My new project", "id" => "7",
+            "participant_ids" => ["2"]
           }
         }
       }
-    }
+    end
 
     specify do
       expect(record.participants.count).to eq(1)
@@ -85,12 +85,12 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
       expect(record.participants.first).to be_a(Mavenlink::User)
     end
 
-    it 'saves the client scope' do
+    it "saves the client scope" do
       expect(record.participants.first.client).to eq(record.client)
     end
   end
 
-  describe 'validations' do
+  describe "validations" do
     it { is_expected.to validate_presence_of :title }
     # This currently does not work because we're loading the validation from
     # which causes it to be `on: "create"` instead of create `on: :create`.
@@ -98,40 +98,40 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
     # it { is_expected.to validate_inclusion_of(:creator_role).in_array(%w[maven buyer]).on(:create) }
   end
 
-  describe 'instance methods' do
-    subject { model.new(title: 'Some title', creator_role: 'maven') }
+  describe "instance methods" do
+    subject { model.new(title: "Some title", creator_role: "maven") }
 
     specify do
       expect(subject.scoped_im).to be_a Mavenlink::Request
     end
   end
 
-  describe 'class methods' do
+  describe "class methods" do
     subject { model }
 
-    describe '#collection_name' do
+    describe "#collection_name" do
       subject { super().collection_name }
-      it { is_expected.to eq('workspaces') }
+      it { is_expected.to eq("workspaces") }
     end
 
-    describe '.scoped' do
+    describe ".scoped" do
       subject { model.scoped }
 
       it { is_expected.to be_a Mavenlink::Request }
 
-      describe '#collection_name' do
+      describe "#collection_name" do
         subject { super().collection_name }
-        it { is_expected.to eq('workspaces') }
+        it { is_expected.to eq("workspaces") }
       end
     end
 
-    describe '.find' do
+    describe ".find" do
       specify do
         expect(model.find(7)).to be_a model
       end
 
       specify do
-        expect(model.find(7).id).to eq('7')
+        expect(model.find(7).id).to eq("7")
       end
 
       specify do
@@ -139,61 +139,61 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
       end
     end
 
-    describe '.create' do
-      context 'valid record' do
+    describe ".create" do
+      context "valid record" do
         specify do
-          expect(model.create(title: 'Some title', creator_role: 'maven')).to be_a model
+          expect(model.create(title: "Some title", creator_role: "maven")).to be_a model
         end
 
         specify do
-          expect(model.create(title: 'Some title', creator_role: 'maven')).to be_valid
+          expect(model.create(title: "Some title", creator_role: "maven")).to be_valid
         end
 
         specify do
-          expect(model.create(title: 'Some title', creator_role: 'maven')).to be_persisted
-        end
-      end
-
-      context 'invalid record' do
-        specify do
-          expect(model.create(title: '', creator_role: '')).to be_a model
-        end
-
-        specify do
-          expect(model.create(title: '', creator_role: '')).not_to be_valid
-        end
-
-        specify do
-          expect(model.create(title: '', creator_role: '')).to be_a_new_record
-        end
-      end
-    end
-
-    describe '.create!' do
-      context 'valid record' do
-        specify do
-          expect { model.create!(title: 'Some title', creator_role: 'maven') }.not_to raise_error
+          expect(model.create(title: "Some title", creator_role: "maven")).to be_persisted
         end
       end
 
-      context 'invalid record' do
+      context "invalid record" do
         specify do
-          expect { model.create!(title: '', creator_role: '') }.to raise_error Mavenlink::RecordInvalidError, /Title.*blank/
+          expect(model.create(title: "", creator_role: "")).to be_a model
+        end
+
+        specify do
+          expect(model.create(title: "", creator_role: "")).not_to be_valid
+        end
+
+        specify do
+          expect(model.create(title: "", creator_role: "")).to be_a_new_record
         end
       end
     end
 
-    describe '.models' do
+    describe ".create!" do
+      context "valid record" do
+        specify do
+          expect { model.create!(title: "Some title", creator_role: "maven") }.not_to raise_error
+        end
+      end
+
+      context "invalid record" do
+        specify do
+          expect { model.create!(title: "", creator_role: "") }.to raise_error Mavenlink::RecordInvalidError, /Title.*blank/
+        end
+      end
+    end
+
+    describe ".models" do
       specify do
         expect(model.models).to be_empty
       end
 
       specify do
-        expect(Mavenlink::Model.models).to include({'workspaces' => Mavenlink::Workspace})
+        expect(Mavenlink::Model.models).to include("workspaces" => Mavenlink::Workspace)
       end
     end
 
-    describe '.specification' do
+    describe ".specification" do
       specify do
         expect(model.specification).to be_a Hash
       end
@@ -203,7 +203,7 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
       end
     end
 
-    describe '.attributes' do
+    describe ".attributes" do
       specify do
         expect(model.attributes).to be_an Array
       end
@@ -213,7 +213,7 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
       end
     end
 
-    describe '.available_attributes' do
+    describe ".available_attributes" do
       specify do
         expect(model.available_attributes).to be_an Array
       end
@@ -223,7 +223,7 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
       end
     end
 
-    describe '.create_attributes' do
+    describe ".create_attributes" do
       specify do
         expect(model.create_attributes).to be_an Array
       end
@@ -233,7 +233,7 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
       end
     end
 
-    describe '.update_attributes' do
+    describe ".update_attributes" do
       specify do
         expect(model.update_attributes).to be_an Array
       end
@@ -243,14 +243,14 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
       end
     end
 
-    describe '.wrap' do
+    describe ".wrap" do
       specify do
         expect(model.wrap(nil)).to be_a_new_record
       end
 
-      context 'existing record' do
+      context "existing record" do
         let(:brainstem_record) do
-          BrainstemAdaptor::Record.new('workspaces', '7', Mavenlink::Response.new(response))
+          BrainstemAdaptor::Record.new("workspaces", "7", Mavenlink::Response.new(response))
         end
 
         specify do
@@ -264,14 +264,13 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
     end
   end
 
-  describe '#initialize' do
-    it 'accepts attributes' do
-      expect(model.new(any_custom_key: 'value set')).to include(any_custom_key: 'value set')
+  describe "#initialize" do
+    it "accepts attributes" do
+      expect(model.new(any_custom_key: "value set")).to include(any_custom_key: "value set")
     end
-
   end
 
-  describe '#persisted?' do
+  describe "#persisted?" do
     specify do
       expect(model.new).not_to be_persisted
     end
@@ -281,7 +280,7 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
     end
   end
 
-  describe '#new_record?' do
+  describe "#new_record?" do
     specify do
       expect(model.new).to be_new_record
     end
@@ -291,10 +290,10 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
     end
   end
 
-  describe '#save' do
-    context 'valid record' do
-      context 'new record' do
-        subject { model.new(title: 'Some title', creator_role: 'maven') }
+  describe "#save" do
+    context "valid record" do
+      context "new record" do
+        subject { model.new(title: "Some title", creator_role: "maven") }
 
         specify do
           expect(subject.save).to eq(true)
@@ -304,13 +303,13 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
           expect { subject.save }.to change(subject, :persisted?).from(false).to(true)
         end
 
-        it 'reloads record fields taking it from response' do
-          expect { subject.save }.to change { subject.title }.from('Some title').to('My new project')
+        it "reloads record fields taking it from response" do
+          expect { subject.save }.to change { subject.title }.from("Some title").to("My new project")
         end
       end
 
-      context 'persisted record' do
-        subject { model.create(title: 'Some title', creator_role: 'maven') }
+      context "persisted record" do
+        subject { model.create(title: "Some title", creator_role: "maven") }
 
         it { is_expected.to be_persisted }
 
@@ -322,15 +321,15 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
           expect { subject.save }.not_to change(subject, :persisted?)
         end
 
-        it 'reloads record fields taking it from response' do
-          expect { subject.save }.to change { subject.title }.from('My new project').to('Updated project')
+        it "reloads record fields taking it from response" do
+          expect { subject.save }.to change { subject.title }.from("My new project").to("Updated project")
         end
       end
     end
 
-    context 'invalid record' do
-      context 'new record' do
-        subject { model.new(title: '', creator_role: '') }
+    context "invalid record" do
+      context "new record" do
+        subject { model.new(title: "", creator_role: "") }
 
         specify do
           expect(subject.save).to eq(false)
@@ -340,14 +339,14 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
           expect { subject.save }.not_to change(subject, :persisted?)
         end
 
-        it 'does not perform any requests' do
+        it "does not perform any requests" do
           expect { subject.save }.not_to change { subject.title }
         end
       end
 
-      context 'persisted record' do
-        subject { model.create(title: 'Some title', creator_role: 'maven') }
-        before { subject.title = '' }
+      context "persisted record" do
+        subject { model.create(title: "Some title", creator_role: "maven") }
+        before { subject.title = "" }
 
         it { is_expected.to be_persisted }
 
@@ -359,17 +358,17 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
           expect { subject.save }.not_to change(subject, :persisted?)
         end
 
-        it 'does not change anything' do
+        it "does not change anything" do
           expect { subject.save }.not_to change { subject.title }
         end
       end
     end
   end
 
-  describe '#save!' do
-    context 'valid record' do
-      context 'new record' do
-        subject { model.new(title: 'Some title', creator_role: 'maven') }
+  describe "#save!" do
+    context "valid record" do
+      context "new record" do
+        subject { model.new(title: "Some title", creator_role: "maven") }
 
         specify do
           expect(subject.save!).to eq(true)
@@ -379,13 +378,13 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
           expect { subject.save! }.to change(subject, :persisted?).from(false).to(true)
         end
 
-        it 'reloads record fields taking it from response' do
-          expect { subject.save! }.to change { subject.title }.from('Some title').to('My new project')
+        it "reloads record fields taking it from response" do
+          expect { subject.save! }.to change { subject.title }.from("Some title").to("My new project")
         end
       end
 
-      context 'persisted record' do
-        subject { model.create(title: 'Some title', creator_role: 'maven') }
+      context "persisted record" do
+        subject { model.create(title: "Some title", creator_role: "maven") }
 
         it { is_expected.to be_persisted }
 
@@ -397,32 +396,44 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
           expect { subject.save! }.not_to change(subject, :persisted?)
         end
 
-        it 'reloads record fields taking it from response' do
-          expect { subject.save! }.to change { subject.title }.from('My new project').to('Updated project')
+        it "reloads record fields taking it from response" do
+          expect { subject.save! }.to change { subject.title }.from("My new project").to("Updated project")
         end
       end
     end
 
-    context 'invalid record' do
-      context 'new record' do
-        subject { model.new(title: '', creator_role: '') }
+    context "invalid record" do
+      context "new record" do
+        subject { model.new(title: "", creator_role: "") }
 
         specify do
           expect { subject.save! }.to raise_error Mavenlink::RecordInvalidError, /Title.*blank/
         end
 
         specify do
-          expect { subject.save! rescue nil }.not_to change(subject, :persisted?)
+          expect do
+            begin
+                     subject.save!
+            rescue StandardError
+              nil
+                   end
+          end .not_to change(subject, :persisted?)
         end
 
-        it 'does not perform any requests' do
-          expect { subject.save! rescue nil }.not_to change { subject.title }
+        it "does not perform any requests" do
+          expect do
+            begin
+                     subject.save!
+            rescue StandardError
+              nil
+                   end
+          end .not_to change { subject.title }
         end
       end
 
-      context 'persisted record' do
-        subject { model.create(title: 'Some title', creator_role: 'maven') }
-        before { subject.title = '' }
+      context "persisted record" do
+        subject { model.create(title: "Some title", creator_role: "maven") }
+        before { subject.title = "" }
 
         it { is_expected.to be_persisted }
 
@@ -431,19 +442,31 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
         end
 
         specify do
-          expect { subject.save! rescue nil }.not_to change(subject, :persisted?)
+          expect do
+            begin
+                     subject.save!
+            rescue StandardError
+              nil
+                   end
+          end .not_to change(subject, :persisted?)
         end
 
-        it 'does not change anything' do
-          expect { subject.save! rescue nil }.not_to change { subject.title }
+        it "does not change anything" do
+          expect do
+            begin
+                     subject.save!
+            rescue StandardError
+              nil
+                   end
+          end .not_to change { subject.title }
         end
       end
     end
   end
 
-  describe '#destroy' do
+  describe "#destroy" do
     specify do
-      expect { model.new(id: '4').destroy }.to raise_error Mavenlink::RecordLockedError, /locked.*deleted/
+      expect { model.new(id: "4").destroy }.to raise_error Mavenlink::RecordLockedError, /locked.*deleted/
     end
   end
 end

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Mavenlink::ExpenseReportSubmission, stub_requests: true, type: :model do
   let(:report) { described_class.new(id: 4) }

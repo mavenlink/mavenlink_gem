@@ -1,104 +1,104 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Mavenlink::Request, stub_requests: true do
-  let(:collection_name) { 'workspaces' }
+  let(:collection_name) { "workspaces" }
   let(:client) { Mavenlink.client }
 
   subject(:request) { described_class.new(collection_name, client) }
 
-  let(:response) {
+  let(:response) do
     {
-      'count' => 2,
-      'results' => [{'key' => 'workspaces', 'id' => '7'}, {'key' => 'workspaces', 'id' => '9'}],
-      'workspaces' => {
-        '7' => {'title' => 'My new project'},
-        '9' => {'title' => 'My second project'},
+      "count" => 2,
+      "results" => [{ "key" => "workspaces", "id" => "7" }, { "key" => "workspaces", "id" => "9" }],
+      "workspaces" => {
+        "7" => { "title" => "My new project" },
+        "9" => { "title" => "My second project" }
       }
     }
-  }
-
-  let(:one_record_response) {
-    {
-      'count' => 1,
-      'results' => [{'key' => 'workspaces', 'id' => '7'}],
-      'workspaces' => {
-        '7' => {'title' => 'My new project'}
-      }
-    }
-  }
-
-  let(:first_page) {
-    {
-      'count' => 3,
-      'results' => [{'key' => 'workspaces', 'id' => '7'}, {'key' => 'workspaces', 'id' => '9'}],
-      'workspaces' => {
-        '7' => {'title' => 'My new project!'},
-        '9' => {'title' => 'My second project!'},
-      }
-    }
-  }
-
-  let(:second_page) {
-    {
-      'count' => 3,
-      'results' => [{'key' => 'workspaces', 'id' => '10'}],
-      'workspaces' => {
-        '10' => {'title' => 'My last project!'}
-      }
-    }
-  }
-
-  let(:third_invalid_page) {
-    {
-      'count' => 3,
-      'results' => [{'key' => 'workspaces', 'id' => '11'}],
-      'workspaces' => {
-        '11' => {'title' => 'Not existed project'}
-      }
-    }
-  }
-
-  before do
-    stub_request :get,    '/api/v1/workspaces?page=1', first_page
-    stub_request :get,    '/api/v1/workspaces?page=2', second_page
-    stub_request :get,    '/api/v1/workspaces?page=3', third_invalid_page
-    stub_request :get,    '/api/v1/workspaces?only=7', one_record_response
-    stub_request :get,    '/api/v1/workspaces?only=8', { 'count' => 0, 'results' => [] }
-    stub_request :put,    '/api/v1/workspaces/7',      one_record_response
-    stub_request :delete, '/api/v1/workspaces/7',      {}
-    stub_request :get,    '/api/v1/workspaces',        response
-    stub_request :post,   '/api/v1/workspaces',        one_record_response
   end
 
-  describe '#initialize' do
-    let(:client) { double('client') }
+  let(:one_record_response) do
+    {
+      "count" => 1,
+      "results" => [{ "key" => "workspaces", "id" => "7" }],
+      "workspaces" => {
+        "7" => { "title" => "My new project" }
+      }
+    }
+  end
 
-    describe '#collection_name' do
+  let(:first_page) do
+    {
+      "count" => 3,
+      "results" => [{ "key" => "workspaces", "id" => "7" }, { "key" => "workspaces", "id" => "9" }],
+      "workspaces" => {
+        "7" => { "title" => "My new project!" },
+        "9" => { "title" => "My second project!" }
+      }
+    }
+  end
+
+  let(:second_page) do
+    {
+      "count" => 3,
+      "results" => [{ "key" => "workspaces", "id" => "10" }],
+      "workspaces" => {
+        "10" => { "title" => "My last project!" }
+      }
+    }
+  end
+
+  let(:third_invalid_page) do
+    {
+      "count" => 3,
+      "results" => [{ "key" => "workspaces", "id" => "11" }],
+      "workspaces" => {
+        "11" => { "title" => "Not existed project" }
+      }
+    }
+  end
+
+  before do
+    stub_request :get,    "/api/v1/workspaces?page=1", first_page
+    stub_request :get,    "/api/v1/workspaces?page=2", second_page
+    stub_request :get,    "/api/v1/workspaces?page=3", third_invalid_page
+    stub_request :get,    "/api/v1/workspaces?only=7", one_record_response
+    stub_request :get,    "/api/v1/workspaces?only=8", "count" => 0, "results" => []
+    stub_request :put,    "/api/v1/workspaces/7",      one_record_response
+    stub_request :delete, "/api/v1/workspaces/7",      {}
+    stub_request :get,    "/api/v1/workspaces",        response
+    stub_request :post,   "/api/v1/workspaces",        one_record_response
+  end
+
+  describe "#initialize" do
+    let(:client) { double("client") }
+
+    describe "#collection_name" do
       subject { super().collection_name }
-      it { is_expected.to eq('workspaces') }
+      it { is_expected.to eq("workspaces") }
     end
 
-    describe '#client' do
+    describe "#client" do
       subject { super().client }
       it { is_expected.to eq(client) }
     end
 
-    describe '#scope' do
+    describe "#scope" do
       subject { super().scope }
       it { is_expected.to eq({}) }
     end
 
-    context 'no client specified' do
+    context "no client specified" do
       subject { described_class.new(collection_name) }
 
-      describe '#client' do
+      describe "#client" do
         subject { super().client }
         it { is_expected.to eq(Mavenlink.client) }
       end
     end
   end
 
-  describe '#current_page' do
+  describe "#current_page" do
     specify do
       expect(request.current_page).to eq(1)
     end
@@ -108,7 +108,7 @@ describe Mavenlink::Request, stub_requests: true do
     end
   end
 
-  describe '#chain' do
+  describe "#chain" do
     specify do
       expect(request.chain({})).to be_a described_class
     end
@@ -117,147 +117,147 @@ describe Mavenlink::Request, stub_requests: true do
       expect(request.chain({})).not_to eq(request)
     end
 
-    it 'does not change source scope' do
-      expect { request.chain({changed: true}) }.not_to change { request.scope }
+    it "does not change source scope" do
+      expect { request.chain(changed: true) }.not_to change { request.scope }
     end
 
-    it 'merges passed scope' do
+    it "merges passed scope" do
       expect(request.chain(changed: true).scope).to have_key(:changed)
-      expect(request.chain(changed: true).scope).to have_key('changed')
+      expect(request.chain(changed: true).scope).to have_key("changed")
     end
 
-    it 'assigns the same collection name' do
+    it "assigns the same collection name" do
       expect(request.chain({}).collection_name).to eq(request.collection_name)
     end
 
-    it 'assigns the same client' do
+    it "assigns the same client" do
       expect(request.chain({}).client).to eq(request.client)
     end
   end
 
-  describe '#only' do
-    context 'empty input' do
-      it 'resets the scope' do
+  describe "#only" do
+    context "empty input" do
+      it "resets the scope" do
         expect(request.only(1).only([]).scope).not_to have_key(:only)
       end
     end
   end
 
-  describe '#without' do
-    it 'removes condition from the scope' do
+  describe "#without" do
+    it "removes condition from the scope" do
       expect(subject.only(1).without(:only).scope).not_to have_key(:only)
     end
   end
 
-  describe '#find' do
-    context 'existed record' do
-      it 'returns record wrapped in a model' do
+  describe "#find" do
+    context "existed record" do
+      it "returns record wrapped in a model" do
         expect(request.find(7)).to be_a Mavenlink::Workspace
       end
     end
 
-    context 'record does not exist' do
+    context "record does not exist" do
       specify do
         expect(request.find(8)).to be_nil
       end
     end
   end
 
-  describe '#search' do
+  describe "#search" do
     specify do
-      expect(request.search('text').scope).to include(search: 'text')
+      expect(request.search("text").scope).to include(search: "text")
     end
   end
 
-  describe '#filter' do
+  describe "#filter" do
     specify do
       expect(request.filter(recent: true).scope).to include(recent: true)
     end
   end
 
-  describe '#include' do
+  describe "#include" do
     specify do
-      expect(request.include(:users).scope).to include(include: 'users')
+      expect(request.include(:users).scope).to include(include: "users")
     end
 
     specify do
-      expect(request.include('users').scope).to include(include: 'users')
+      expect(request.include("users").scope).to include(include: "users")
     end
 
     specify do
-      expect(request.include(%w(users clients)).scope).to include(include: 'users,clients')
+      expect(request.include(%w[users clients]).scope).to include(include: "users,clients")
     end
 
     specify do
-      expect(request.include('users', 'clients').scope).to include(include: 'users,clients')
+      expect(request.include("users", "clients").scope).to include(include: "users,clients")
     end
   end
 
-  describe '#page' do
+  describe "#page" do
     specify do
       expect(request.page(5).scope).to include(page: 5)
     end
   end
 
-  describe '#per_page' do
+  describe "#per_page" do
     specify do
       expect(request.per_page(5).scope).to include(per_page: 5)
     end
   end
 
-  describe '#limit' do
+  describe "#limit" do
     specify do
       expect(request.limit(5).scope).to include(limit: 5)
     end
   end
 
-  describe '#offset' do
+  describe "#offset" do
     specify do
       expect(request.offset(5).scope).to include(offset: 5)
     end
   end
 
-  describe '#order' do
+  describe "#order" do
     specify do
-      expect(request.order(:id, :desc).scope).to include(order: 'id:desc')
+      expect(request.order(:id, :desc).scope).to include(order: "id:desc")
     end
 
     specify do
-      expect(request.order(:id, 'desc').scope).to include(order: 'id:desc')
+      expect(request.order(:id, "desc").scope).to include(order: "id:desc")
     end
 
     specify do
-      expect(request.order(:id, 'DESC').scope).to include(order: 'id:desc')
+      expect(request.order(:id, "DESC").scope).to include(order: "id:desc")
     end
 
     specify do
-      expect(request.order(:id, true).scope).to include(order: 'id:desc')
+      expect(request.order(:id, true).scope).to include(order: "id:desc")
     end
 
     specify do
-      expect(request.order(:id, false).scope).to include(order: 'id')
+      expect(request.order(:id, false).scope).to include(order: "id:asc")
     end
 
     specify do
-      expect(request.order(:id, 'asc').scope).to include(order: 'id')
+      expect(request.order(:id, "asc").scope).to include(order: "id:asc")
     end
 
     specify do
-      expect(request.order(:id, 'ASC').scope).to include(order: 'id')
+      expect(request.order(:id, "ASC").scope).to include(order: "id:asc")
     end
 
     specify do
-      expect(request.order(:id, :asc).scope).to include(order: 'id')
+      expect(request.order(:id, :asc).scope).to include(order: "id:asc")
     end
   end
 
-  describe '#build' do
-    it 'returns a model object of the same type as the collection name' do
-      expect(request.build(title: 'New Workspace')).to be_a Mavenlink::Workspace
+  describe "#build" do
+    it "returns a model object of the same type as the collection name" do
+      expect(request.build(title: "New Workspace")).to be_a Mavenlink::Workspace
     end
   end
 
-  describe '#create' do
+  describe "#create" do
     specify do
       expect(request.create({})).to be_a Mavenlink::Response
     end
@@ -267,29 +267,29 @@ describe Mavenlink::Request, stub_requests: true do
     end
   end
 
-  describe '#update' do
+  describe "#update" do
     specify do
-      expect(request.only(7).update(title: 'New title')).to be_a Mavenlink::Response
+      expect(request.only(7).update(title: "New title")).to be_a Mavenlink::Response
     end
 
     specify do
-      expect(request.only(7).update(title: 'New title')).to eq(one_record_response)
+      expect(request.only(7).update(title: "New title")).to eq(one_record_response)
     end
 
-    context 'no id specified' do
+    context "no id specified" do
       specify do
         # NOTE(SZ): should we raise InvalidRequestError instead?
-        expect { request.update(title: 'New one') }.to raise_error ArgumentError, /route.*ID/
+        expect { request.update(title: "New one") }.to raise_error ArgumentError, /route.*ID/
       end
     end
   end
 
-  describe '#delete' do
+  describe "#delete" do
     specify do
       expect(request.only(7).delete).to be_blank
     end
 
-    context 'no id specified' do
+    context "no id specified" do
       specify do
         # NOTE(SZ): should we raise InvalidRequestError instead?
         expect { request.delete }.to raise_error ArgumentError, /route.*ID/
@@ -297,7 +297,7 @@ describe Mavenlink::Request, stub_requests: true do
     end
   end
 
-  describe '#response' do
+  describe "#response" do
     subject { request.response }
 
     specify do
@@ -309,7 +309,7 @@ describe Mavenlink::Request, stub_requests: true do
     end
   end
 
-  describe '#perform' do
+  describe "#perform" do
     specify do
       expect(request.perform).to be_a Mavenlink::Response
     end
@@ -327,7 +327,7 @@ describe Mavenlink::Request, stub_requests: true do
     end
   end
 
-  describe '#results' do
+  describe "#results" do
     specify do
       expect(request.results.size).to eq(2)
     end
@@ -335,7 +335,7 @@ describe Mavenlink::Request, stub_requests: true do
     # NOTE(SZ): missing specs
   end
 
-  describe '#reload' do
+  describe "#reload" do
     specify do
       expect(request.reload.size).to eq(2)
     end
@@ -343,7 +343,7 @@ describe Mavenlink::Request, stub_requests: true do
     # NOTE(SZ): missing specs
   end
 
-  describe '#total_pages' do
+  describe "#total_pages" do
     specify do
       expect(request.total_pages).to eq(1)
     end
@@ -351,7 +351,7 @@ describe Mavenlink::Request, stub_requests: true do
     # NOTE(SZ): missing specs
   end
 
-  describe '#limit_value' do
+  describe "#limit_value" do
     specify do
       expect(request.limit_value).to eq(2)
     end
@@ -361,28 +361,28 @@ describe Mavenlink::Request, stub_requests: true do
     end
   end
 
-  describe '#scoped' do
+  describe "#scoped" do
     specify do
       expect(request.scoped).to eq(request)
     end
   end
 
-  describe '#to_hash' do
+  describe "#to_hash" do
     specify do
       expect(request.to_hash).to eq(request.scope)
     end
   end
 
-  describe '#inspect' do
+  describe "#inspect" do
     specify do
-      expect(request.inspect).to eq('#<Mavenlink::Request [<Mavenlink::Workspace:>, <Mavenlink::Workspace:>]>')
+      expect(request.inspect).to eq("#<Mavenlink::Request [<Mavenlink::Workspace:>, <Mavenlink::Workspace:>]>")
     end
   end
 
-  describe '#each_page' do
+  describe "#each_page" do
     specify do
-      expect(subject.each_page.to_a).to eq [[{"title"=>"My new project!"}, {"title"=>"My second project!"}],
-                                            [{"title"=>"My last project!"}]]
+      expect(subject.each_page.to_a).to eq [[{ "title" => "My new project!" }, { "title" => "My second project!" }],
+                                            [{ "title" => "My last project!" }]]
     end
 
     specify do
@@ -395,17 +395,17 @@ describe Mavenlink::Request, stub_requests: true do
 
     # This would hang indefinitely
     context "when the response says one result but none are returned", stub_requests: false do
-      let(:response) {
+      let(:response) do
         {
-          'count' => 1,
-          'results' => [],
-          'workspaces' => {}
+          "count" => 1,
+          "results" => [],
+          "workspaces" => {}
         }
-      }
+      end
 
       before do
         stubbed_requests.instance_variable_get(:@stack)[:get].clear
-        stub_request :get, /api\/v1\/workspaces(\?page=[0-9]+)?/, response
+        stub_request :get, %r{api/v1/workspaces(\?page=[0-9]+)?}, response
       end
 
       it "returns nothing" do

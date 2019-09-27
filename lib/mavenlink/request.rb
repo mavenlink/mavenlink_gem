@@ -55,7 +55,7 @@ module Mavenlink
     def includes(*associations)
       chain(include: param_to_request_array(associations))
     end
-    alias_method :include, :includes
+    alias include includes
 
     # @param [Integer, String]
     # @return [Mavenlink::Request]
@@ -120,9 +120,10 @@ module Mavenlink
     # @return [Mavenlink::Request]
     def order(field, direction_or_desc = nil)
       case direction_or_desc
-      when :desc, 'DESC', 'desc', true
+      when :desc, "DESC", "desc", true
         field = "#{field}:desc"
-      when :asc, nil, 'ASC', 'asc', false
+      when :asc, nil, "ASC", "asc", false
+        field = "#{field}:asc"
       else
         raise ArgumentError, "Invalid request ordering set '#{direction_or_desc}'"
       end
@@ -139,13 +140,13 @@ module Mavenlink
     # @param attributes [Hash]
     # @return [Mavenlink::Response]
     def create(attributes)
-      perform { client.post(collection_name, {collection_name.singularize => attributes}) }
+      perform { client.post(collection_name, collection_name.singularize => attributes) }
     end
 
     # @param attributes [Hash]
     # @return [Mavenlink::Response]
     def update(attributes)
-      perform { client.put(resource_path, {collection_name.singularize => attributes}) }
+      perform { client.put(resource_path, collection_name.singularize => attributes) }
     end
 
     # @note Weird non-json response?
@@ -169,7 +170,7 @@ module Mavenlink
     def results
       @results ||= response.results
     end
-    alias_method :all, :results
+    alias all results
 
     def reload
       @results = nil
@@ -193,7 +194,7 @@ module Mavenlink
         total_count = Float::INFINITY
 
         while (records_passed += page_records.count) < total_count
-          response = request.page(i+=1).perform
+          response = request.page(i += 1).perform
           total_count = response.total_count
           result << page_records = response.results
           break if response.results.empty?
@@ -220,7 +221,7 @@ module Mavenlink
     # @raise [ArgumentError] when ID is not included in criteria
     # @return [String]
     def resource_path
-      id = @scope[:only] or raise ArgumentError, 'No route matches source path without an ID'
+      (id = @scope[:only]) || raise(ArgumentError, "No route matches source path without an ID")
       "#{collection_name}/#{id}"
     end
 
@@ -231,9 +232,9 @@ module Mavenlink
     def param_to_request_array(param)
       case param
       when Array
-        param.join(',').gsub(/\s+/, '')
+        param.join(",").gsub(/\s+/, "")
       when String, Symbol
-        param.to_s.gsub(/\s+/, '')
+        param.to_s.gsub(/\s+/, "")
       else
         raise ArgumentError, "Expected Array, got #{param.class.name}"
       end

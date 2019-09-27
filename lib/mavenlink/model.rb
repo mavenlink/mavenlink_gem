@@ -10,13 +10,13 @@ module Mavenlink
 
     # @return [String]
     def self.collection_name
-      (self.name || 'undefined').split(/\W+/).last.tableize.pluralize
+      (name || "undefined").split(/\W+/).last.tableize.pluralize
     end
 
     # @param attributes [Hash]
     # @return [Mavenlink::Model]
     def self.create(attributes = {})
-      self.new(attributes).tap(&:save)
+      new(attributes).tap(&:save)
     end
 
     # @raise [Mavenlink::RecordInvalidError]
@@ -24,7 +24,7 @@ module Mavenlink
     # @return [Mavenlink::Model]
     def self.create!(attributes = {})
       create(attributes).tap do |record|
-        record.valid? or raise RecordInvalidError.new(record)
+        record.valid? || raise(RecordInvalidError, record)
       end
     end
 
@@ -78,7 +78,7 @@ module Mavenlink
         if reload
           reload_association(association)
           associations_cache[association_name] = fetch_association_records(association)
-        elsif associations_cache.has_key?(association_name)
+        elsif associations_cache.key?(association_name)
           associations_cache[association_name]
         else
           associations_cache[association_name] = fetch_association_records(association)
@@ -97,7 +97,7 @@ module Mavenlink
     # Returns list of available attributes
     # @return [Array<String>]
     def self.attributes
-      specification['attributes'] ||= []
+      specification["attributes"] ||= []
     end
 
     # Returns list of all available attributes
@@ -109,26 +109,26 @@ module Mavenlink
     # Returns the list of attributes available for new record
     # @return [Array<String>]
     def self.create_attributes
-      specification['create_attributes'] ||= []
+      specification["create_attributes"] ||= []
     end
 
     # Returns the list of attributes available for update
     # @return [Array<String>]
     def self.update_attributes
-      specification['update_attributes'] ||= []
+      specification["update_attributes"] ||= []
     end
 
     # @param source_record [Brainstem::Record, nil]
     # @param client [Mavenlink::Client]
     def self.wrap(source_record = nil, client = Mavenlink.client)
-      self.new({}, source_record, client)
+      new({}, source_record, client)
     end
 
     # @param attributes [Hash]
     # @param source_record [BrainstemAdaptor::Record]
     # @param client [Mavenlink::Client]
     def initialize(attributes = {}, source_record = nil, client = Mavenlink.client)
-      super(self.class.collection_name, (attributes[:id] || attributes['id'] || source_record.try(:id)), source_record.try(:response))
+      super(self.class.collection_name, (attributes[:id] || attributes["id"] || source_record.try(:id)), source_record.try(:response))
       @client = client
       merge!(attributes)
     end
@@ -159,7 +159,7 @@ module Mavenlink
     # @raise [Mavenlink::RecordInvalidError]
     # @return [true]
     def save!
-      save or raise Mavenlink::RecordInvalidError.new(self)
+      save || raise(Mavenlink::RecordInvalidError, self)
     end
 
     # @param attributes [Hash]
@@ -182,13 +182,13 @@ module Mavenlink
     def destroy
       request.delete
     end
-    alias_method :delete, :destroy
+    alias delete destroy
 
     # Reloads record from server
     # @return [self]
     def reload(response = nil)
-      response ||= request.find(id).try(:response) or raise RecordNotFoundError.new(request)
-      @id ||= response.results.first.try(:[], 'id')
+      (response ||= request.find(id).try(:response)) || raise(RecordNotFoundError, request)
+      @id ||= response.results.first.try(:[], "id")
       load_fields_with(response)
       self
     end
@@ -219,12 +219,12 @@ module Mavenlink
 
     # @return [Hash]
     def attributes_for_create
-      specification_attributes('create_attributes')
+      specification_attributes("create_attributes")
     end
 
     # @return [Hash]
     def attributes_for_update
-      specification_attributes('update_attributes')
+      specification_attributes("update_attributes")
     end
 
     # @return [Mavenlink::Request]
@@ -249,16 +249,15 @@ module Mavenlink
     # @return [Array<Mavenlink::Model>, nil]
     def fetch_association_records(association)
       records = association.reflect
+      return unless records
 
-      if records
-        wrapper = proc { |record| Mavenlink::Model.models[association.collection_name].wrap(record, client) }
-        records.kind_of?(BrainstemAdaptor::Association) ? records.map(&wrapper) : wrapper.call(records, client)
-      end
+      wrapper = proc { |record| Mavenlink::Model.models[association.collection_name].wrap(record, client) }
+      records.is_a?(BrainstemAdaptor::Association) ? records.map(&wrapper) : wrapper.call(records, client)
     end
 
     # @param association [BrainstemAdaptor::Association]
     def reload_association(association)
-      response = request.include(association.name).find(id).try(:response) or raise RecordNotFoundError.new(request)
+      (response = request.include(association.name).find(id).try(:response)) || raise(RecordNotFoundError, request)
       load_fields_with(response, [association.foreign_key])
     end
 
@@ -270,7 +269,7 @@ module Mavenlink
     # @return [Hash]
     def specification_attributes(key)
       {}.tap do |result|
-        self.to_hash.slice(*self.class.specification[key]).each do |attr_name, value|
+        to_hash.slice(*self.class.specification[key]).each do |attr_name, value|
           result[attr_name] = value
         end
       end

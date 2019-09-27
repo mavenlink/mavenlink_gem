@@ -15,7 +15,7 @@ module Mavenlink
     # @option invitation [String] :subject (optional) the subject message of the invitation email
     # @option invitation [String] :message (optional) the text content of the invitation email; if you don't provide this, your default will be used
     def invite(invitation)
-      client.post("workspaces/#@id/invite", invitation: invitation) if persisted?
+      client.post("workspaces/#{@id}/invite", invitation: invitation) if persisted?
     end
   end
 end

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# frozen_string_literal: true
 
 Gem::Specification.new do |s|
   s.name = "mavenlink"
@@ -17,11 +17,12 @@ Gem::Specification.new do |s|
   s.description = "Simple Ruby API for the Mavenlink API"
   s.summary = "Mavenlink API Ruby Wrapper"
 
-  s.add_runtime_dependency "activesupport", "~> 4.2"
   s.add_runtime_dependency "activemodel", "~> 4.2"
+  s.add_runtime_dependency "activesupport", "~> 4.2"
   s.add_runtime_dependency "brainstem-adaptor", ">= 0.0.3"
   s.add_runtime_dependency "faraday", ">= 0.9.0"
-  s.add_development_dependency "rspec", "~> 3.0"
-  s.add_development_dependency 'shoulda-matchers', '~> 4.0'
   s.add_development_dependency "awesome_print", "~> 1.8"
+  s.add_development_dependency "rspec", "~> 3.0"
+  s.add_development_dependency "rubocop", "~> 0.74"
+  s.add_development_dependency "shoulda-matchers", "~> 4.0"
 end

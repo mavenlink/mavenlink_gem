@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Mavenlink::RecordInvalidError, type: :model do
   let(:client) { Object.new }
@@ -7,12 +7,12 @@ describe Mavenlink::RecordInvalidError, type: :model do
 
   subject { described_class.new(record) }
 
-  describe '#record' do
+  describe "#record" do
     subject { super().record }
     it { is_expected.to eq(record) }
   end
 
-  describe '#message' do
+  describe "#message" do
     subject { super().message }
     it { is_expected.to eq("Title can't be blank") }
   end

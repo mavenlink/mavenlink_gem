@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Mavenlink::Client, stub_requests: true do
   it { is_expected.to respond_to :assignments }
@@ -8,45 +8,45 @@ describe Mavenlink::Client, stub_requests: true do
   it { is_expected.to respond_to :users }
   it { is_expected.to respond_to :workspaces }
 
-  context 'oauth token is not set' do
+  context "oauth token is not set" do
     specify do
       expect { described_class.new({}) }.to raise_error ArgumentError, /token/
     end
   end
 
-  context 'overriding the enpoint URL' do
+  context "overriding the enpoint URL" do
     specify do
       endpoint = "http://api.mavenlink.test/api/v1"
-      client = described_class.new(oauth_token: '12345', endpoint: endpoint)
+      client = described_class.new(oauth_token: "12345", endpoint: endpoint)
 
       expect(client.send(:endpoint)).to eq endpoint
     end
   end
 
-  describe 'association calls' do
-    subject(:client) { described_class.new(oauth_token: '12345') }
+  describe "association calls" do
+    subject(:client) { described_class.new(oauth_token: "12345") }
     let(:record) { client.workspaces.find(7) }
-    let(:response) {
+    let(:response) do
       {
-        'count' => 1,
-        'results' => [{'key' => 'workspaces', 'id' => '7'}, {'key' => 'users', 'id' => '2'}],
-        'users' => {
-          '2' => {
-            'id' => 2,
-            'full_name' => 'John Doe'
+        "count" => 1,
+        "results" => [{ "key" => "workspaces", "id" => "7" }, { "key" => "users", "id" => "2" }],
+        "users" => {
+          "2" => {
+            "id" => 2,
+            "full_name" => "John Doe"
           }
         },
-        'workspaces' => {
-          '7' => {
-            'title' => 'My new project', 'id' => '7',
-            'participant_ids' => ['2'],
+        "workspaces" => {
+          "7" => {
+            "title" => "My new project", "id" => "7",
+            "participant_ids" => ["2"]
           }
         }
       }
-    }
+    end
 
     before do
-      stub_request :get, '/api/v1/workspaces?only=7', response
+      stub_request :get, "/api/v1/workspaces?only=7", response
     end
 
     specify do
@@ -57,16 +57,16 @@ describe Mavenlink::Client, stub_requests: true do
       expect(record.participants.first).to be_a(Mavenlink::User)
     end
 
-    it 'saves the client scope' do
+    it "saves the client scope" do
       expect(record.participants.first.client).to eq(client)
     end
   end
 
-  describe '#assignments' do
-    let(:response) { { 'count' => 0, 'results' => [], 'assignments' => {} } }
+  describe "#assignments" do
+    let(:response) { { "count" => 0, "results" => [], "assignments" => {} } }
 
     before do
-      stub_request :get, '/api/v1/assignments', response
+      stub_request :get, "/api/v1/assignments", response
     end
 
     specify do
@@ -74,15 +74,15 @@ describe Mavenlink::Client, stub_requests: true do
     end
 
     specify do
-      expect(subject.assignments.collection_name).to eq('assignments')
+      expect(subject.assignments.collection_name).to eq("assignments")
     end
   end
 
-  describe '#stories' do
-    let(:response) { { 'count' => 0, 'results' => [], 'stories' => {} } }
+  describe "#stories" do
+    let(:response) { { "count" => 0, "results" => [], "stories" => {} } }
 
     before do
-      stub_request :get, '/api/v1/stories', response
+      stub_request :get, "/api/v1/stories", response
     end
 
     specify do
@@ -90,15 +90,15 @@ describe Mavenlink::Client, stub_requests: true do
     end
 
     specify do
-      expect(subject.stories.collection_name).to eq('stories')
+      expect(subject.stories.collection_name).to eq("stories")
     end
   end
 
-  describe '#story_allocation_days' do
-    let(:response) { { 'count' => 0, 'results' => [], 'story_allocation_days' => {} } }
+  describe "#story_allocation_days" do
+    let(:response) { { "count" => 0, "results" => [], "story_allocation_days" => {} } }
 
     before do
-      stub_request :get, '/api/v1/story_allocation_days', response
+      stub_request :get, "/api/v1/story_allocation_days", response
     end
 
     specify do
@@ -106,15 +106,15 @@ describe Mavenlink::Client, stub_requests: true do
     end
 
     specify do
-      expect(subject.story_allocation_days.collection_name).to eq('story_allocation_days')
+      expect(subject.story_allocation_days.collection_name).to eq("story_allocation_days")
     end
   end
 
-  describe '#users' do
-    let(:response) { { 'count' => 0, 'results' => [], 'users' => {} } }
+  describe "#users" do
+    let(:response) { { "count" => 0, "results" => [], "users" => {} } }
 
     before do
-      stub_request :get, '/api/v1/users', response
+      stub_request :get, "/api/v1/users", response
     end
 
     specify do
@@ -122,15 +122,15 @@ describe Mavenlink::Client, stub_requests: true do
     end
 
     specify do
-      expect(subject.users.collection_name).to eq('users')
+      expect(subject.users.collection_name).to eq("users")
     end
   end
 
-  describe '#workspaces' do
-    let(:response) { { 'count' => 0, 'results' => [], 'workspaces' => {} } }
+  describe "#workspaces" do
+    let(:response) { { "count" => 0, "results" => [], "workspaces" => {} } }
 
     before do
-      stub_request :get, '/api/v1/workspaces', response
+      stub_request :get, "/api/v1/workspaces", response
     end
 
     specify do
@@ -138,20 +138,20 @@ describe Mavenlink::Client, stub_requests: true do
     end
 
     specify do
-      expect(subject.workspaces.collection_name).to eq('workspaces')
+      expect(subject.workspaces.collection_name).to eq("workspaces")
     end
   end
 
-  describe 'plain requests' do
-    let(:get_path)    { '/get_something' }
-    let(:post_path)   { '/post_something' }
-    let(:put_path)    { '/put_something' }
-    let(:delete_path) { '/delete_something' }
+  describe "plain requests" do
+    let(:get_path)    { "/get_something" }
+    let(:post_path)   { "/post_something" }
+    let(:put_path)    { "/put_something" }
+    let(:delete_path) { "/delete_something" }
 
-    let(:get_response)    { {'get'    => true} }
-    let(:post_response)   { {'post'   => true} }
-    let(:put_response)    { {'put'    => true} }
-    let(:delete_response) { {'delete' => true} }
+    let(:get_response)    { { "get"    => true } }
+    let(:post_response)   { { "post"   => true } }
+    let(:put_response)    { { "put"    => true } }
+    let(:delete_response) { { "delete" => true } }
 
     before do
       stub_request :get,    get_path,    get_response
@@ -160,25 +160,25 @@ describe Mavenlink::Client, stub_requests: true do
       stub_request :delete, delete_path, delete_response
     end
 
-    describe '#get' do
+    describe "#get" do
       specify do
         expect(subject.get(get_path)).to eq(get_response)
       end
     end
 
-    describe '#post' do
+    describe "#post" do
       specify do
         expect(subject.post(post_path)).to eq(post_response)
       end
     end
 
-    describe '#put' do
+    describe "#put" do
       specify do
         expect(subject.put(put_path)).to eq(put_response)
       end
     end
 
-    describe '#delete' do
+    describe "#delete" do
       specify do
         expect(subject.delete(delete_path)).to eq(delete_response)
       end
