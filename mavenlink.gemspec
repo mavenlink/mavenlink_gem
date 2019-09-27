@@ -23,5 +23,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "faraday", ">= 0.9.0"
   s.add_development_dependency "rspec", "~> 3.0"
   s.add_development_dependency 'shoulda-matchers', '~> 4.0'
-  s.add_development_dependency "awesome_print"
+  s.add_development_dependency "awesome_print", "~> 1.8"
 end
