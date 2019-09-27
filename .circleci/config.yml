@@ -20,6 +20,10 @@ workflows:
       - rspec:
           requires:
             - build
+      - rubocop:
+          requires:
+            - build
+
 
 jobs:
   build:
@@ -59,6 +63,22 @@ jobs:
           name: Run RSpec tests
           command: |
             bundle exec rspec --color --format progress --out $CIRCLE_TEST_REPORTS/rspec/test-results.xml
+      - store_artifacts:
+          path: /tmp/circle/test_reports
+      - store_test_results:
+          path: /tmp/circle/test_reports
+  rubocop:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/mavenlink/mavenlink_gem
+      - run: gem install bundler -v "=1.13.6"
+      - run: bundle install
+      - run:
+          name: Run RuboCop
+          command: |
+            bundle exec rubocop --out $CIRCLE_TEST_REPORTS/rubocop/test-results.xml
       - store_artifacts:
           path: /tmp/circle/test_reports
       - store_test_results:
