@@ -2,8 +2,8 @@ require "spec_helper"
 
 describe Mavenlink::SkillMembership do
   describe "associations" do
-    it { should respond_to :skill }
-    it { should respond_to :user }
-    it { should respond_to :creator }
+    it { is_expected.to respond_to :skill }
+    it { is_expected.to respond_to :user }
+    it { is_expected.to respond_to :creator }
   end
 end

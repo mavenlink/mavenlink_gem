@@ -73,13 +73,28 @@ describe Mavenlink::Request, stub_requests: true do
   describe '#initialize' do
     let(:client) { double('client') }
 
-    its(:collection_name) { should == 'workspaces' }
-    its(:client) { should == client }
-    its(:scope) { should == {} }
+    describe '#collection_name' do
+      subject { super().collection_name }
+      it { is_expected.to eq('workspaces') }
+    end
+
+    describe '#client' do
+      subject { super().client }
+      it { is_expected.to eq(client) }
+    end
+
+    describe '#scope' do
+      subject { super().scope }
+      it { is_expected.to eq({}) }
+    end
 
     context 'no client specified' do
       subject { described_class.new(collection_name) }
-      its(:client) { should == Mavenlink.client }
+
+      describe '#client' do
+        subject { super().client }
+        it { is_expected.to eq(Mavenlink.client) }
+      end
     end
   end
 
@@ -314,7 +329,7 @@ describe Mavenlink::Request, stub_requests: true do
 
   describe '#results' do
     specify do
-      expect(request.results).to have(2).workspaces
+      expect(request.results.size).to eq(2)
     end
 
     # NOTE(SZ): missing specs
@@ -322,7 +337,7 @@ describe Mavenlink::Request, stub_requests: true do
 
   describe '#reload' do
     specify do
-      expect(request.reload).to have(2).workspaces
+      expect(request.reload.size).to eq(2)
     end
 
     # NOTE(SZ): missing specs

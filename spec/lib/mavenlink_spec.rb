@@ -3,11 +3,30 @@ require 'spec_helper'
 describe Mavenlink do
   subject { described_class }
 
-  its(:adapter) { should_not be_nil }
-  its(:client) { should_not be_nil }
-  its(:default_settings) { should be_a Hash }
-  its(:logger) { should be_a Logger }
-  its(:specification) { should be_a BrainstemAdaptor::Specification }
+  describe '#adapter' do
+    subject { super().adapter }
+    it { is_expected.not_to be_nil }
+  end
+
+  describe '#client' do
+    subject { super().client }
+    it { is_expected.not_to be_nil }
+  end
+
+  describe '#default_settings' do
+    subject { super().default_settings }
+    it { is_expected.to be_a Hash }
+  end
+
+  describe '#logger' do
+    subject { super().logger }
+    it { is_expected.to be_a Logger }
+  end
+
+  describe '#specification' do
+    subject { super().specification }
+    it { is_expected.to be_a BrainstemAdaptor::Specification }
+  end
 
   describe '.adapter=' do
     let(:adapter) { double('adapter') }

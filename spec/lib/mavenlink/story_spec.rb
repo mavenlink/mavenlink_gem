@@ -4,24 +4,24 @@ describe Mavenlink::Story, stub_requests: true do
   it_should_behave_like 'model', 'stories'
 
   describe 'validations' do
-    it { should validate_presence_of :title }
-    it { should validate_presence_of :story_type }
-    it { should validate_presence_of :workspace_id }
-    it { should ensure_inclusion_of(:story_type).in_array(%w(task deliverable milestone)) }
+    it { is_expected.to validate_presence_of :title }
+    it { is_expected.to validate_presence_of :story_type }
+    it { is_expected.to validate_presence_of :workspace_id }
+    it { is_expected.to ensure_inclusion_of(:story_type).in_array(%w(task deliverable milestone)) }
   end
 
   describe 'associations' do
-    it { should respond_to :workspace }
-    it { should respond_to :parent }
-    it { should respond_to :root }
-    it { should respond_to :assignees }
-    it { should respond_to :sub_stories }
-    it { should respond_to :descendants }
-    it { should respond_to :custom_field_values }
-    it { should respond_to :external_references }
-    it { should respond_to :current_assignments }
-    it { should respond_to :workspace_resources_with_unnamed }
-    it { should respond_to :story_state_changes }
+    it { is_expected.to respond_to :workspace }
+    it { is_expected.to respond_to :parent }
+    it { is_expected.to respond_to :root }
+    it { is_expected.to respond_to :assignees }
+    it { is_expected.to respond_to :sub_stories }
+    it { is_expected.to respond_to :descendants }
+    it { is_expected.to respond_to :custom_field_values }
+    it { is_expected.to respond_to :external_references }
+    it { is_expected.to respond_to :current_assignments }
+    it { is_expected.to respond_to :workspace_resources_with_unnamed }
+    it { is_expected.to respond_to :story_state_changes }
   end
 
   let(:response) {
@@ -47,7 +47,7 @@ describe Mavenlink::Story, stub_requests: true do
 
       context 'invalid record' do
         specify do
-          expect(subject.save).to be_false
+          expect(subject.save).to be_falsey
         end
       end
 
@@ -55,7 +55,7 @@ describe Mavenlink::Story, stub_requests: true do
         subject { described_class.new(title: 'the record', story_type: 'task', workspace_id: '1') }
 
         specify do
-          expect(subject.save).to be_true
+          expect(subject.save).to be_truthy
         end
 
         it 'reloads record fields taking it from response' do

@@ -3,29 +3,29 @@ require 'spec_helper'
 describe Mavenlink::Workspace, stub_requests: true do
   let(:model) { described_class }
 
-  it { should be_a Mavenlink::Model }
-  it { should be_a Mavenlink::Concerns::Indestructible }
+  it { is_expected.to be_a Mavenlink::Model }
+  it { is_expected.to be_a Mavenlink::Concerns::Indestructible }
 
   describe "associations" do
-    it { should respond_to :next_uncompleted_milestone }
-    it { should respond_to :creator }
-    it { should respond_to :primary_counterpart }
-    it { should respond_to :primary_maven }
-    it { should respond_to :approver }
-    it { should respond_to :approvers }
-    it { should respond_to :participants }
-    it { should respond_to :current_user_participation }
-    it { should respond_to :participations }
-    it { should respond_to :timesheet_submissions }
-    it { should respond_to :workspace_groups }
-    it { should respond_to :financial_viewers }
-    it { should respond_to :possible_approvers }
-    it { should respond_to :workspace_resources }
-    it { should respond_to :workspace_resources_with_unnamed }
-    it { should respond_to :status_reports }
-    it { should respond_to :current_status_report }
-    it { should respond_to :external_references }
-    it { should respond_to :account_color }
+    it { is_expected.to respond_to :next_uncompleted_milestone }
+    it { is_expected.to respond_to :creator }
+    it { is_expected.to respond_to :primary_counterpart }
+    it { is_expected.to respond_to :primary_maven }
+    it { is_expected.to respond_to :approver }
+    it { is_expected.to respond_to :approvers }
+    it { is_expected.to respond_to :participants }
+    it { is_expected.to respond_to :current_user_participation }
+    it { is_expected.to respond_to :participations }
+    it { is_expected.to respond_to :timesheet_submissions }
+    it { is_expected.to respond_to :workspace_groups }
+    it { is_expected.to respond_to :financial_viewers }
+    it { is_expected.to respond_to :possible_approvers }
+    it { is_expected.to respond_to :workspace_resources }
+    it { is_expected.to respond_to :workspace_resources_with_unnamed }
+    it { is_expected.to respond_to :status_reports }
+    it { is_expected.to respond_to :current_status_report }
+    it { is_expected.to respond_to :external_references }
+    it { is_expected.to respond_to :account_color }
   end
 
   let(:response) {
@@ -92,16 +92,16 @@ describe Mavenlink::Workspace, stub_requests: true do
 
   describe 'validations' do
     context 'new record' do
-      it { should be_a_new_record }
-      it { should validate_presence_of :title }
+      it { is_expected.to be_a_new_record }
+      it { is_expected.to validate_presence_of :title }
     end
 
     context 'persisted record' do
       subject { described_class.new(id: 12) }
-      it { should be_persisted }
-      it { should validate_presence_of :title }
-      it { should_not ensure_inclusion_of(:creator_role).in_array(%w[maven buyer]) }
-      it { should allow_value(nil).for(:creator_role) }
+      it { is_expected.to be_persisted }
+      it { is_expected.to validate_presence_of :title }
+      it { is_expected.not_to ensure_inclusion_of(:creator_role).in_array(%w[maven buyer]) }
+      it { is_expected.to allow_value(nil).for(:creator_role) }
     end
   end
 
@@ -115,13 +115,21 @@ describe Mavenlink::Workspace, stub_requests: true do
 
   describe 'class methods' do
     subject { model }
-    its(:collection_name) { should == 'workspaces' }
+
+    describe '#collection_name' do
+      subject { super().collection_name }
+      it { is_expected.to eq('workspaces') }
+    end
 
     describe '.scoped' do
       subject { model.scoped }
 
-      it { should be_a Mavenlink::Request }
-      its(:collection_name) { should == 'workspaces' }
+      it { is_expected.to be_a Mavenlink::Request }
+
+      describe '#collection_name' do
+        subject { super().collection_name }
+        it { is_expected.to eq('workspaces') }
+      end
     end
 
     describe '.find' do
@@ -311,7 +319,7 @@ describe Mavenlink::Workspace, stub_requests: true do
       context 'persisted record' do
         subject { model.create(title: 'Some title', creator_role: 'maven') }
 
-        it { should be_persisted }
+        it { is_expected.to be_persisted }
 
         specify do
           expect(subject.save).to eq(true)
@@ -348,7 +356,7 @@ describe Mavenlink::Workspace, stub_requests: true do
         subject { model.create(title: 'Some title', creator_role: 'maven') }
         before { subject.title = '' }
 
-        it { should be_persisted }
+        it { is_expected.to be_persisted }
 
         specify do
           expect(subject.save).to eq(false)
@@ -386,7 +394,7 @@ describe Mavenlink::Workspace, stub_requests: true do
       context 'persisted record' do
         subject { model.create(title: 'Some title', creator_role: 'maven') }
 
-        it { should be_persisted }
+        it { is_expected.to be_persisted }
 
         specify do
           expect(subject.save!).to eq(true)
@@ -423,7 +431,7 @@ describe Mavenlink::Workspace, stub_requests: true do
         subject { model.create(title: 'Some title', creator_role: 'maven') }
         before { subject.title = '' }
 
-        it { should be_persisted }
+        it { is_expected.to be_persisted }
 
         specify do
           expect { subject.save! }.to raise_error Mavenlink::RecordInvalidError, /Title.*blank/

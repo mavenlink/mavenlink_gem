@@ -20,13 +20,21 @@ shared_context 'model' do |collection_name|
 
   describe 'class methods' do
     subject { model }
-    its(:collection_name) { should == collection_name }
+
+    describe '#collection_name' do
+      subject { super().collection_name }
+      it { is_expected.to eq(collection_name) }
+    end
 
     describe '.scoped' do
       subject { model.scoped }
 
-      it { should be_a Mavenlink::Request }
-      its(:collection_name) { should == collection_name }
+      it { is_expected.to be_a Mavenlink::Request }
+
+      describe '#collection_name' do
+        subject { super().collection_name }
+        it { is_expected.to eq(collection_name) }
+      end
     end
 
     describe '.find' do

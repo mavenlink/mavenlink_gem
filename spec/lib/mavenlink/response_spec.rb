@@ -20,7 +20,7 @@ describe Mavenlink::Response, stub_requests: true do
 
   describe '#results' do
     specify do
-      expect(response.results).to have(2).records
+      expect(response.results.size).to eq(2)
     end
 
     it 'checks for client' do
@@ -44,7 +44,10 @@ describe Mavenlink::Response, stub_requests: true do
       let(:client) { Mavenlink::Client.new(oauth_token: 'new one') }
       subject(:response) { described_class.new(response_data, client) }
 
-      its(:client) { should eq(client) }
+      describe '#client' do
+        subject { super().client }
+        it { is_expected.to eq(client) }
+      end
     end
   end
 end

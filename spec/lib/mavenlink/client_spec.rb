@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe Mavenlink::Client, stub_requests: true do
-  it { should respond_to :assignments }
-  it { should respond_to :expense_categories }
-  it { should respond_to :stories }
-  it { should respond_to :story_allocation_days }
-  it { should respond_to :users }
-  it { should respond_to :workspaces }
+  it { is_expected.to respond_to :assignments }
+  it { is_expected.to respond_to :expense_categories }
+  it { is_expected.to respond_to :stories }
+  it { is_expected.to respond_to :story_allocation_days }
+  it { is_expected.to respond_to :users }
+  it { is_expected.to respond_to :workspaces }
 
   context 'oauth token is not set' do
     specify do

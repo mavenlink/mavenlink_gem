@@ -4,13 +4,13 @@ describe Mavenlink::Invoice, stub_requests: true do
   subject { described_class.send(:new) }
 
   describe 'associations' do
-    it { should respond_to :workspaces }
-    it { should respond_to :user }
-    it { should respond_to :recipient }
-    it { should respond_to :time_entries }
-    it { should respond_to :expenses }
-    it { should respond_to :fixed_fee_items }
-    it { should respond_to :additional_items }
+    it { is_expected.to respond_to :workspaces }
+    it { is_expected.to respond_to :user }
+    it { is_expected.to respond_to :recipient }
+    it { is_expected.to respond_to :time_entries }
+    it { is_expected.to respond_to :expenses }
+    it { is_expected.to respond_to :fixed_fee_items }
+    it { is_expected.to respond_to :additional_items }
   end
 
   let(:collection_name) { 'invoices' }
@@ -36,13 +36,21 @@ describe Mavenlink::Invoice, stub_requests: true do
 
   describe 'class methods' do
     subject { model }
-    its(:collection_name) { should == collection_name }
+
+    describe '#collection_name' do
+      subject { super().collection_name }
+      it { is_expected.to eq(collection_name) }
+    end
 
     describe '.scoped' do
       subject { model.scoped }
 
-      it { should be_a Mavenlink::Request }
-      its(:collection_name) { should == collection_name }
+      it { is_expected.to be_a Mavenlink::Request }
+
+      describe '#collection_name' do
+        subject { super().collection_name }
+        it { is_expected.to eq(collection_name) }
+      end
     end
 
     describe '.find' do

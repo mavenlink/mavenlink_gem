@@ -4,7 +4,7 @@ describe Mavenlink::Model, stub_requests: true do
   # see workspace_model_spec.rb
 
   before do
-    Mavenlink.stub(:specification).and_return({ 'monkeys' => {'validations' => {'name' => {'presence' => true}},
+    allow(Mavenlink).to receive(:specification).and_return({ 'monkeys' => {'validations' => {'name' => {'presence' => true}},
                                                               'attributes'        => ['name'],
                                                               'create_attributes' => ['name'],
                                                               'update_attributes' => ['name', 'age']} })
@@ -19,7 +19,10 @@ describe Mavenlink::Model, stub_requests: true do
     Monkey
   end
 
-  its(:collection_name) { should == 'monkeys'}
+  describe '#collection_name' do
+    subject { super().collection_name }
+    it { is_expected.to eq('monkeys')}
+  end
 
   let(:response) {
     {
@@ -191,7 +194,10 @@ describe Mavenlink::Model, stub_requests: true do
       let(:client) { Mavenlink::Client.new(oauth_token: 'new one') }
       subject { described_class.new({test: 'set'}, nil, client) }
 
-      its(:client) { should eq(client) }
+      describe '#client' do
+        subject { super().client }
+        it { is_expected.to eq(client) }
+      end
     end
   end
 
@@ -264,7 +270,7 @@ describe Mavenlink::Model, stub_requests: true do
       context 'persisted record' do
         subject { model.create(name: 'Maria') }
 
-        it { should be_persisted }
+        it { is_expected.to be_persisted }
 
         specify do
           expect(subject.save).to eq(true)
@@ -301,7 +307,7 @@ describe Mavenlink::Model, stub_requests: true do
         subject { model.create(name: 'Maria') }
         before { subject.name = '' }
 
-        it { should be_persisted }
+        it { is_expected.to be_persisted }
 
         specify do
           expect(subject.save).to eq(false)
@@ -339,7 +345,7 @@ describe Mavenlink::Model, stub_requests: true do
       context 'persisted record' do
         subject { model.create(name: 'Maria') }
 
-        it { should be_persisted }
+        it { is_expected.to be_persisted }
 
         specify do
           expect(subject.save!).to eq(true)
@@ -376,7 +382,7 @@ describe Mavenlink::Model, stub_requests: true do
         subject { model.create(name: 'Maria') }
         before { subject.name = '' }
 
-        it { should be_persisted }
+        it { is_expected.to be_persisted }
 
         specify do
           expect { subject.save! }.to raise_error Mavenlink::RecordInvalidError, /Name.*blank/
@@ -410,7 +416,7 @@ describe Mavenlink::Model, stub_requests: true do
       context 'persisted record' do
         subject { model.create(name: 'Maria') }
 
-        it { should be_persisted }
+        it { is_expected.to be_persisted }
 
         specify do
           expect(subject.update_attributes(name: 'mashka')).to eq(true)

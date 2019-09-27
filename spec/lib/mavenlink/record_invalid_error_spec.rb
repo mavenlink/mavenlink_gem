@@ -7,8 +7,15 @@ describe Mavenlink::RecordInvalidError do
 
   subject { described_class.new(record) }
 
-  its(:record) { should == record }
-  its(:message) { should == "Title can't be blank" }
+  describe '#record' do
+    subject { super().record }
+    it { is_expected.to eq(record) }
+  end
+
+  describe '#message' do
+    subject { super().message }
+    it { is_expected.to eq("Title can't be blank") }
+  end
 
   specify do
     expect { raise subject }.to raise_error described_class, /Title.*blank/

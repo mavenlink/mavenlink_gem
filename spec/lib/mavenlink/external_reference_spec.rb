@@ -32,11 +32,11 @@ describe Mavenlink::ExternalReference, stub_requests: true do
   end
 
   describe "validations" do
-    it { should validate_presence_of :service_model_ref }
-    it { should validate_presence_of :service_name }
-    it { should validate_presence_of :service_model }
-    it { should validate_presence_of :subject_id }
-    it { should validate_presence_of :subject_type }
+    it { is_expected.to validate_presence_of :service_model_ref }
+    it { is_expected.to validate_presence_of :service_name }
+    it { is_expected.to validate_presence_of :service_model }
+    it { is_expected.to validate_presence_of :subject_id }
+    it { is_expected.to validate_presence_of :subject_type }
   end
 
   describe "#save" do
@@ -59,7 +59,7 @@ describe Mavenlink::ExternalReference, stub_requests: true do
       end
 
       it "returns true" do
-        expect(external_reference.save).to be_true
+        expect(external_reference.save).to be_truthy
       end
 
       it "loads the response attributes into the integrated resource model" do
@@ -84,7 +84,7 @@ describe Mavenlink::ExternalReference, stub_requests: true do
         end
 
         it "returns true" do
-          expect(external_reference.save).to be_true
+          expect(external_reference.save).to be_truthy
         end
 
         it "loads the response attributes into the integrated resource model" do
@@ -109,7 +109,7 @@ describe Mavenlink::ExternalReference, stub_requests: true do
       end
 
       it "returns false" do
-        expect(external_reference.save).to be_false
+        expect(external_reference.save).to be_falsey
       end
 
       it "logs an error on the modal" do

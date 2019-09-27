@@ -19,7 +19,7 @@ describe Mavenlink::Specificators::Validation do
     end
   end
 
-  it { should validate_presence_of :name }
+  it { is_expected.to validate_presence_of :name }
 
   describe 'real model' do
     let(:client) { Object.new }
@@ -27,13 +27,13 @@ describe Mavenlink::Specificators::Validation do
     context 'new record' do
       subject { Mavenlink::Workspace.new({}, nil, client) }
 
-      it { should validate_presence_of :title }
+      it { is_expected.to validate_presence_of :title }
     end
 
     context 'persisted record' do
       subject { Mavenlink::Workspace.new({ id: 12 }, nil, client) }
 
-      it { should validate_presence_of :title }
+      it { is_expected.to validate_presence_of :title }
     end
   end
 end

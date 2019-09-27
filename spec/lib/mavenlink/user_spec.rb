@@ -25,19 +25,27 @@ describe Mavenlink::User, stub_requests: true do
   end
 
   describe "associations" do
-    it { should respond_to :external_references }
-    it { should respond_to :saml_identities }
+    it { is_expected.to respond_to :external_references }
+    it { is_expected.to respond_to :saml_identities }
   end
 
   describe 'class methods' do
     subject { model }
-    its(:collection_name) { should == collection_name }
+
+    describe '#collection_name' do
+      subject { super().collection_name }
+      it { is_expected.to eq(collection_name) }
+    end
 
     describe '.scoped' do
       subject { model.scoped }
 
-      it { should be_a Mavenlink::Request }
-      its(:collection_name) { should == collection_name }
+      it { is_expected.to be_a Mavenlink::Request }
+
+      describe '#collection_name' do
+        subject { super().collection_name }
+        it { is_expected.to eq(collection_name) }
+      end
     end
 
     describe '.find' do

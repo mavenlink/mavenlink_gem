@@ -4,15 +4,15 @@ describe Mavenlink::StoryAllocationDay, stub_requests: true do
   it_should_behave_like 'model', 'story_allocation_days'
 
   describe 'validations' do
-    it { should validate_presence_of :assignment_id }
-    it { should validate_presence_of :date }
-    it { should validate_presence_of :minutes }
+    it { is_expected.to validate_presence_of :assignment_id }
+    it { is_expected.to validate_presence_of :date }
+    it { is_expected.to validate_presence_of :minutes }
   end
 
   describe 'associations' do
-    it { should respond_to :assignment }
-    it { should respond_to :story }
-    it { should respond_to :workspace }
+    it { is_expected.to respond_to :assignment }
+    it { is_expected.to respond_to :story }
+    it { is_expected.to respond_to :workspace }
   end
 
   let(:response) {
@@ -38,7 +38,7 @@ describe Mavenlink::StoryAllocationDay, stub_requests: true do
 
       context 'invalid record' do
         specify do
-          expect(subject.save).to be_false
+          expect(subject.save).to be_falsey
         end
       end
 
@@ -46,7 +46,7 @@ describe Mavenlink::StoryAllocationDay, stub_requests: true do
         subject { described_class.new(assignment_id: '1', date: 'today', minutes: '0', current: false) }
 
         specify do
-          expect(subject.save).to be_true
+          expect(subject.save).to be_truthy
         end
 
         it 'reloads record fields taking it from response' do

@@ -13,13 +13,13 @@ describe Mavenlink::Specificators::Attribute do
     end
   end
 
-  it { should respond_to :one }
-  it { should respond_to :two }
+  it { is_expected.to respond_to :one }
+  it { is_expected.to respond_to :two }
 
   describe 'real model' do
     subject { Mavenlink::Workspace.new }
 
-    it { should respond_to :title }
-    it { should respond_to :description }
+    it { is_expected.to respond_to :title }
+    it { is_expected.to respond_to :description }
   end
 end
