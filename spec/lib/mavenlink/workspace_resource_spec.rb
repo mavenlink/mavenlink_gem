@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Mavenlink::WorkspaceResource, stub_requests: true do
+describe Mavenlink::WorkspaceResource, stub_requests: true, type: :model do
   it_should_behave_like "model", "workspace_resources"
 
   describe "validations" do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Mavenlink::StoryAllocationDay, stub_requests: true do
+describe Mavenlink::StoryAllocationDay, stub_requests: true, type: :model do
   it_should_behave_like 'model', 'story_allocation_days'
 
   describe 'validations' do

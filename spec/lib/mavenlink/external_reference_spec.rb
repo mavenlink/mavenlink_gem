@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Mavenlink::ExternalReference, stub_requests: true do
+describe Mavenlink::ExternalReference, stub_requests: true, type: :model do
   let(:model) { described_class }
   let(:external_reference) { model.new(attributes) }
   let(:uri) { "external_references/create_or_update" }

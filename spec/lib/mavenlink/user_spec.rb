@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Mavenlink::User, stub_requests: true do
+describe Mavenlink::User, stub_requests: true, type: :model do
   subject { described_class.send(:new) }
 
   let(:collection_name) { 'users' }

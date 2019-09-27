@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Mavenlink::SurveyQuestion, stub_requests: true do
+describe Mavenlink::SurveyQuestion, stub_requests: true, type: :model do
   it_should_behave_like "model", "survey_questions"
 
   describe "validations" do

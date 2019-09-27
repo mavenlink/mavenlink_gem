@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Mavenlink::TimeEntry, stub_requests: true do
+describe Mavenlink::TimeEntry, stub_requests: true, type: :model do
   it_should_behave_like 'model', 'time_entries'
 
   describe 'validations' do

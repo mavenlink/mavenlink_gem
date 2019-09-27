@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Mavenlink::Attachment, stub_requests: true do
+describe Mavenlink::Attachment, stub_requests: true, type: :model do
   it_should_behave_like 'model', 'attachments'
 
   describe 'validations' do
     it { is_expected.to validate_presence_of :data }
     it { is_expected.to validate_presence_of :type }
-    it { is_expected.to ensure_inclusion_of(:type).in_array(%w[receipt post_attachment]) }
+    it { is_expected.to validate_inclusion_of(:type).in_array(%w[receipt post_attachment]) }
     it { is_expected.not_to allow_value(nil).for(:type) }
   end
 

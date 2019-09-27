@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Mavenlink::Model, stub_requests: true do
+describe Mavenlink::Model, stub_requests: true, type: :model do
   # see workspace_model_spec.rb
 
   before do

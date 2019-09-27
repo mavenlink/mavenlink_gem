@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe Mavenlink::Story, stub_requests: true do
+describe Mavenlink::Story, stub_requests: true, type: :model do
   it_should_behave_like 'model', 'stories'
 
   describe 'validations' do
     it { is_expected.to validate_presence_of :title }
     it { is_expected.to validate_presence_of :story_type }
     it { is_expected.to validate_presence_of :workspace_id }
-    it { is_expected.to ensure_inclusion_of(:story_type).in_array(%w(task deliverable milestone)) }
+    it { is_expected.to validate_inclusion_of(:story_type).in_array(%w(task deliverable milestone)) }
   end
 
   describe 'associations' do

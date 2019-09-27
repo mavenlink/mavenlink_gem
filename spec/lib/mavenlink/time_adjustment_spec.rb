@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Mavenlink::TimeAdjustment, stub_requests: true do
+describe Mavenlink::TimeAdjustment, stub_requests: true, type: :model do
   it_should_behave_like "model", "time_adjustments"
 
   describe "associations" do

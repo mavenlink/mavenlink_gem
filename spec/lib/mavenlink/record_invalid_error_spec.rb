@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Mavenlink::RecordInvalidError do
+describe Mavenlink::RecordInvalidError, type: :model do
   let(:client) { Object.new }
   let(:record) { Mavenlink::Workspace.new({ title: nil }, nil, client) }
   before { record.valid? }

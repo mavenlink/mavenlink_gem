@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Mavenlink::TimesheetSubmission, stub_requests: true do
+describe Mavenlink::TimesheetSubmission, stub_requests: true, type: :model do
   subject { described_class.new(id: 5) }
 
   it_should_behave_like 'model', 'timesheet_submissions'

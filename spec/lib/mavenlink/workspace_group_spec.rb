@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Mavenlink::WorkspaceGroup, stub_requests: true do
+describe Mavenlink::WorkspaceGroup, stub_requests: true, type: :model do
   it_should_behave_like 'model', 'workspace_groups'
 
   describe 'validations' do
     it { is_expected.to validate_presence_of :name }
-    it { is_expected.to ensure_inclusion_of(:company).in_array([true, false]) }
+    it { is_expected.to validate_inclusion_of(:company).in_array([true, false]) }
     it { is_expected.not_to allow_value('true').for(:company) }
     it { is_expected.not_to allow_value('false').for(:company) }
     it { is_expected.not_to allow_value(nil).for(:company) }

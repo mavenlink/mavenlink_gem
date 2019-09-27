@@ -1,9 +1,12 @@
 require 'spec_helper'
 
-describe Mavenlink::Specificators::Validation do
+describe Mavenlink::Specificators::Validation, type: :model do
   subject { model.new }
 
-  before { described_class.apply(model) }
+  before do
+    Mavenlink.oauth_token = "token"
+    described_class.apply(model)
+  end
 
   let(:model) do
     Class.new Mavenlink::Model do

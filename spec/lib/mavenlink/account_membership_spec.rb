@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Mavenlink::AccountMembership, stub_requests: true do
+describe Mavenlink::AccountMembership, stub_requests: true, type: :model do
   describe "associations" do
     it { is_expected.to respond_to "user" }
     it { is_expected.to respond_to "default_role" }

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Mavenlink::RateCardSetVersion, stub_requests: true do
+describe Mavenlink::RateCardSetVersion, stub_requests: true, type: :model do
   subject { described_class.new(id: "7", rate_card_set_id: "1") }
   let(:client) { double(Mavenlink::Client) }
 

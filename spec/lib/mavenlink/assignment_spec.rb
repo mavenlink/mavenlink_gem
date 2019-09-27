@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Mavenlink::Assignment, stub_requests: true do
+describe Mavenlink::Assignment, stub_requests: true, type: :model do
   it_should_behave_like 'model', 'assignments'
 
   it { is_expected.to be_a Mavenlink::Concerns::Indestructible }

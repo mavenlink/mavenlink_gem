@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Mavenlink::Invoice, stub_requests: true do
+describe Mavenlink::Invoice, stub_requests: true, type: :model do
   subject { described_class.send(:new) }
 
   describe 'associations' do

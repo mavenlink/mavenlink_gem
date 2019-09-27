@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Mavenlink::AccessGroup, stub_requests: true do
+describe Mavenlink::AccessGroup, stub_requests: true, type: :model do
   describe "associations" do
     it { is_expected.to respond_to "last_updated_user" }
     it { is_expected.to respond_to "users" }
