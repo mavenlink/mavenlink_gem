@@ -1,3 +1,7 @@
+AllCops:
+  DisplayCopNames: true
+  TargetRubyVersion: "2.3"
+
 Lint/AmbiguousBlockAssociation:
   Enabled: false
 
