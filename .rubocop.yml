@@ -1,6 +1,9 @@
 AllCops:
   DisplayCopNames: true
-  TargetRubyVersion: "2.3"
+  Exclude:
+    - 'doc/**/*'
+    - 'vendor/**/*'
+    - 'bundle/**/*'
 
 Lint/AmbiguousBlockAssociation:
   Enabled: false
