@@ -78,7 +78,7 @@ jobs:
       - run:
           name: Run RuboCop
           command: |
-            bundle exec rubocop --out $CIRCLE_TEST_REPORTS/rubocop/test-results.xml
+            bundle exec rubocop --format progress --format json --out $CIRCLE_TEST_REPORTS/rubocop/test-results.json
       - store_artifacts:
           path: /tmp/circle/test_reports
       - store_test_results:
