@@ -191,6 +191,24 @@ describe Mavenlink::Request, stub_requests: true do
     specify do
       expect(subject.include("users", "clients").scope).to include(include: %w(users clients))
     end
+
+    context "when a includes already exist" do
+      it "appends to the list" do
+        expect(subject.include("users").include("custom_field_values").scope).to include(include: %w(users custom_field_values))
+      end
+    end
+
+    context "when the value is a comma separated string" do
+      it "splits the values" do
+        expect(subject.include("users,custom_field_values").scope).to include(include: %w(users custom_field_values))
+      end
+    end
+
+    context "when an association is included more than once" do
+      it "only includes the unique values" do
+        expect(subject.include(:user).include(:user).scope).to include(include: %w(user))
+      end
+    end
   end
 
   describe "#page" do
