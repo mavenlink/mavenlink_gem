@@ -296,6 +296,13 @@ describe Mavenlink::Request, stub_requests: true do
     specify do
       expect(subject.create({})).to eq(one_record_response)
     end
+
+    describe "attributes" do
+      it "stringifies array attribute" do
+        expect(client).to receive(:post).with(any_args, collection_name.singularize => hash_including(array: "first,second")).and_call_original
+        subject.create(array: %w(first second))
+      end
+    end
   end
 
   describe "#update" do
@@ -307,6 +314,12 @@ describe Mavenlink::Request, stub_requests: true do
       expect(subject.only(7).update(title: "New title")).to eq(one_record_response)
     end
 
+    describe "attributes" do
+      it "stringifies array attribute" do
+        expect(client).to receive(:put).with(any_args, collection_name.singularize => hash_including(array: "first,second")).and_call_original
+        subject.only(7).update(array: %w(first second))
+      end
+    end
     context "no id specified" do
       specify do
         # NOTE(SZ): should we raise InvalidRequestError instead?
@@ -353,6 +366,13 @@ describe Mavenlink::Request, stub_requests: true do
 
     specify do
       expect(subject.perform { one_record_response }).to eq(one_record_response)
+    end
+
+    describe "params" do
+      it "stringifies array attribute" do
+        expect(client).to receive(:get).with(any_args, hash_including("array" => "first,second")).and_call_original
+        subject.filter(array: %w(first second)).perform
+      end
     end
   end
 
