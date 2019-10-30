@@ -39,6 +39,10 @@ describe Mavenlink do
   describe ".logger=" do
     let(:logger) { double("logger") }
 
+    before { @original_logger = Mavenlink.logger }
+
+    after { Mavenlink.logger = @original_logger }
+
     specify do
       expect { Mavenlink.logger = logger }.to change(Mavenlink, :logger).to(logger)
     end
