@@ -3,6 +3,8 @@ module Mavenlink
     include Mavenlink::Concerns::CustomFieldable
     include Mavenlink::Concerns::Indestructible
 
+    validates :creator_role, inclusion: { in: %w[maven buyer] }, on: :create
+
     # validates :due_date, format: 'YYYY-MM-DD'
     # ...
 

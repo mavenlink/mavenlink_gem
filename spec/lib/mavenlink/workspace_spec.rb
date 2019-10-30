@@ -92,10 +92,7 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
 
   describe "validations" do
     it { is_expected.to validate_presence_of :title }
-    # # This currently does not work because we're loading the validation from
-    # # the YAML spec which causes it to be `on: "create"` instead of create `on:
-    # # :create`.  TODO: Fix the YAML loading so it comes in as a symbol
-    # it { is_expected.to validate_inclusion_of(:creator_role).in_array(%w[maven buyer]).on(:create) }
+    it { is_expected.to validate_inclusion_of(:creator_role).in_array(%w[maven buyer]).on(:create) }
   end
 
   describe "instance methods" do

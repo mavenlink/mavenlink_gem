@@ -14,7 +14,7 @@ describe Mavenlink::RecordInvalidError, type: :model do
 
   describe "#message" do
     subject { super().message }
-    it { is_expected.to eq("Title can't be blank") }
+    it { is_expected.to eq("Title can't be blank, Creator role is not included in the list") }
   end
 
   specify do
