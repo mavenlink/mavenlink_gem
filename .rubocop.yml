@@ -35,5 +35,8 @@ Style/DoubleNegation:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+Style/RescueModifier:
+  Enabled: false
+
 Style/StringLiterals:
   EnforcedStyle: double_quotes
