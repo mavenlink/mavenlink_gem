@@ -177,12 +177,12 @@ describe Mavenlink::Request, stub_requests: true do
     context "when include is in the hash" do
       it "lets `#includes` handle the value" do
         expect_any_instance_of(Mavenlink::Request).to receive(:includes).and_call_original
-        expect(subject.filter(recent:true, include: "user,custom_field_values").scope).to include(include: %w(user custom_field_values))
+        expect(subject.filter(recent: true, include: "user,custom_field_values").scope).to include(include: %w(user custom_field_values))
       end
 
       context "when the key is a string" do
         it "handles it" do
-          expect(subject.filter({ recent:true, include: "user,custom_field_values" }.stringify_keys).scope).to include(include: %w(user custom_field_values))
+          expect(subject.filter({ recent: true, include: "user,custom_field_values" }.stringify_keys).scope).to include(include: %w(user custom_field_values))
         end
       end
     end
