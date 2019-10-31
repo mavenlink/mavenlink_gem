@@ -18,5 +18,11 @@ module Mavenlink
     def invite(invitation)
       client.post("workspaces/#{@id}/invite", invitation: invitation) if persisted?
     end
+
+    def association_load_filters
+      {
+        include_archived: true
+      }
+    end
   end
 end
