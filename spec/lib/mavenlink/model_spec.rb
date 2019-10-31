@@ -457,11 +457,13 @@ describe Mavenlink::Model, stub_requests: true, type: :model do
 
   describe "#reload_association" do
     subject { model.new(id: "7", name: "Maria") }
-    let(:filters) { {
-      only: "7",
-      include: "relatives",
-      some: "filter"
-    }.stringify_keys }
+    let(:filters) do
+      {
+        only: "7",
+        include: "relatives",
+        some: "filter"
+      }.stringify_keys
+    end
     let(:faraday_response) { instance_double(Faraday::Response, body: response_with_relatives.to_json) }
     let(:response_with_relatives) do
       original = response
@@ -472,7 +474,6 @@ describe Mavenlink::Model, stub_requests: true, type: :model do
       }
       original
     end
-
 
     before do
       allow(subject).to receive(:specification) { Mavenlink.specification["monkeys"] }
