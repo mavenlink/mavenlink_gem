@@ -13,6 +13,9 @@ describe Mavenlink::TimeEntry, stub_requests: true do
     it { should respond_to :workspace }
     it { should respond_to :user }
     it { should respond_to :story }
+    it { should respond_to :role }
+    it { should respond_to :active_submission }
+    it { should respond_to :invoice }
     it { should respond_to :external_references }
   end
 
@@ -21,7 +24,7 @@ describe Mavenlink::TimeEntry, stub_requests: true do
                       :time_in_minutes, :billable, :notes, :rate_in_cents,
                       :currency, :currency_symbol, :currency_base_unit,
                       :user_can_edit, :workspace_id, :user_id, :approved,
-                      :role_id, :external_reference, :location)
+                      :role_id, :location)
   end
 
   describe '.create_attributes' do
@@ -29,7 +32,7 @@ describe Mavenlink::TimeEntry, stub_requests: true do
 
     it 'includes expected attributes' do
       should match_array(%w(workspace_id date_performed time_in_minutes billable cost_rate_in_cents
-                            notes rate_in_cents story_id user_id external_reference location))
+                            notes rate_in_cents story_id user_id external_reference location role_id))
     end
   end
 
@@ -38,7 +41,7 @@ describe Mavenlink::TimeEntry, stub_requests: true do
 
     it 'includes expected attributes' do
       should match_array(%w(date_performed time_in_minutes billable notes cost_rate_in_cents
-                            rate_in_cents story_id user_id external_reference))
+                            rate_in_cents story_id user_id external_reference role_id workspace_id))
     end
   end
 end
