@@ -13,7 +13,7 @@ module Mavenlink
 
     def create_or_update(attributes)
       request.perform do
-        client.post("external_references/create_or_update", { external_reference: attributes})
+        client.post("external_references/create_or_update", external_reference: attributes)
       end
     end
 

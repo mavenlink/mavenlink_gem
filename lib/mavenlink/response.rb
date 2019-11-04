@@ -1,6 +1,5 @@
 module Mavenlink
   class Response < BrainstemAdaptor::Response
-
     attr_reader :client
 
     # @param response_data [String, Hash]

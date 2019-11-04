@@ -1984,9 +1984,6 @@ workspace_groups:
   validations:
     name:
       presence: true
-    company:
-      inclusion:
-        in: [true, false]
   associations:
     workspaces:
       foreign_key: workspace_ids

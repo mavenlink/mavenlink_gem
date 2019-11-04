@@ -1,6 +1,5 @@
 module Mavenlink
   module Specificators
-
     # Specificator is used to inject anything described in specification file into your model.
     class Base
       attr_reader :model_class
@@ -17,7 +16,7 @@ module Mavenlink
 
       # @param model_class [Class]
       def self.apply(model_class)
-        self.new(model_class).apply
+        new(model_class).apply
       end
     end
   end

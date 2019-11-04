@@ -1,8 +1,8 @@
 require "spec_helper"
 
-describe Mavenlink::HolidayCalendarAssociation do
+describe Mavenlink::HolidayCalendarAssociation, type: :model do
   describe "associations" do
-    it { should respond_to :holiday }
-    it { should respond_to :holiday_calendar }
+    it { is_expected.to respond_to :holiday }
+    it { is_expected.to respond_to :holiday_calendar }
   end
 end

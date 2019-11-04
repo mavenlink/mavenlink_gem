@@ -1,14 +1,21 @@
-require 'spec_helper'
+require "spec_helper"
 
-describe Mavenlink::RecordInvalidError do
+describe Mavenlink::RecordInvalidError, type: :model do
   let(:client) { Object.new }
   let(:record) { Mavenlink::Workspace.new({ title: nil }, nil, client) }
   before { record.valid? }
 
   subject { described_class.new(record) }
 
-  its(:record) { should == record }
-  its(:message) { should == "Title can't be blank" }
+  describe "#record" do
+    subject { super().record }
+    it { is_expected.to eq(record) }
+  end
+
+  describe "#message" do
+    subject { super().message }
+    it { is_expected.to eq("Title can't be blank, Creator role is not included in the list") }
+  end
 
   specify do
     expect { raise subject }.to raise_error described_class, /Title.*blank/

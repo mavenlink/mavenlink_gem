@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Mavenlink::RateCardSetVersion, stub_requests: true do
+describe Mavenlink::RateCardSetVersion, stub_requests: true, type: :model do
   subject { described_class.new(id: "7", rate_card_set_id: "1") }
   let(:client) { double(Mavenlink::Client) }
 
@@ -21,7 +21,7 @@ describe Mavenlink::RateCardSetVersion, stub_requests: true do
     context "when the publish fails" do
       before do
         allow(subject).to receive(:client) { client }
-        allow(client).to receive(:put).and_raise(Faraday::Error)
+        allow(client).to receive(:put).and_raise(Faraday::Error, "Some message")
       end
 
       it "returns false" do
@@ -42,22 +42,24 @@ describe Mavenlink::RateCardSetVersion, stub_requests: true do
 
   describe "#clone" do
     context "when `clone` is successful" do
-      let(:clone_response) { {
-        "count" => 1,
-        "results" => [
-          {
-            "key" => "rate_card_set_versions",
-            "id" => "8"
-          }
-        ],
-        "rate_card_set_versions" => {
-          "8" => {
-            "id" => "8",
-            "effective_date" => "2018-09-04",
-            "rate_card_set_id" => "1"
+      let(:clone_response) do
+        {
+          "count" => 1,
+          "results" => [
+            {
+              "key" => "rate_card_set_versions",
+              "id" => "8"
+            }
+          ],
+          "rate_card_set_versions" => {
+            "8" => {
+              "id" => "8",
+              "effective_date" => "2018-09-04",
+              "rate_card_set_id" => "1"
+            }
           }
         }
-      } }
+      end
 
       before do
         stub_request :post, "/api/v1/rate_card_set_versions", clone_response
@@ -87,14 +89,16 @@ describe Mavenlink::RateCardSetVersion, stub_requests: true do
 
     context "when `clone` is not successful" do
       context "when the response is an error" do
-        let(:clone_response) { {
-          "errors" => [
-            {
-              "type" => "system",
-              "message" => "not found"
-            }
-          ],
-        } }
+        let(:clone_response) do
+          {
+            "errors" => [
+              {
+                "type" => "system",
+                "message" => "not found"
+              }
+            ]
+          }
+        end
 
         before do
           stub_request :post, "/api/v1/rate_card_set_versions", clone_response

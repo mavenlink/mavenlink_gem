@@ -1,25 +1,21 @@
-require 'spec_helper'
+require "spec_helper"
 
-describe Mavenlink::WorkspaceGroup, stub_requests: true do
-  it_should_behave_like 'model', 'workspace_groups'
+describe Mavenlink::WorkspaceGroup, stub_requests: true, type: :model do
+  it_should_behave_like "model", "workspace_groups"
 
-  describe 'validations' do
-    it { should validate_presence_of :name }
-    it { should ensure_inclusion_of(:company).in_array([true, false]) }
-    it { should_not allow_value('true').for(:company) }
-    it { should_not allow_value('false').for(:company) }
-    it { should_not allow_value(nil).for(:company) }
+  describe "validations" do
+    it { is_expected.to validate_presence_of :name }
   end
 
-  describe 'associations' do
-    it { should respond_to :workspaces }
-    it { should respond_to :external_references }
+  describe "associations" do
+    it { is_expected.to respond_to :workspaces }
+    it { is_expected.to respond_to :external_references }
   end
 
-  describe 'attributes' do
-    it { should respond_to :name }
-    it { should respond_to :company }
-    it { should respond_to :add_workspace_ids }
-    it { should respond_to :remove_workspace_ids }
+  describe "attributes" do
+    it { is_expected.to respond_to :name }
+    it { is_expected.to respond_to :company }
+    it { is_expected.to respond_to :add_workspace_ids }
+    it { is_expected.to respond_to :remove_workspace_ids }
   end
 end
