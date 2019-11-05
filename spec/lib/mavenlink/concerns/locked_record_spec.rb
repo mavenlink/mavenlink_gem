@@ -1,10 +1,9 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Mavenlink::Concerns::LockedRecord do
   subject do
     Class.new do
-      def self.create
-      end
+      def self.create; end
 
       include Mavenlink::Concerns::LockedRecord
     end

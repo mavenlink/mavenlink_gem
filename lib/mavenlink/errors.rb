@@ -1,5 +1,4 @@
 module Mavenlink
-
   # The most generic MavenlinkAPI error
   # Eg. service unavailable etc...
   class Error < StandardError

@@ -1,52 +1,60 @@
-require 'spec_helper'
+require "spec_helper"
 
-describe Mavenlink::User, stub_requests: true do
+describe Mavenlink::User, stub_requests: true, type: :model do
   subject { described_class.send(:new) }
 
-  let(:collection_name) { 'users' }
+  let(:collection_name) { "users" }
 
   let(:model) { described_class }
 
-  let(:response) {
+  let(:response) do
     {
-      'count' => 1,
-      'results' => [{'key' => collection_name, 'id' => '7'}],
+      "count" => 1,
+      "results" => [{ "key" => collection_name, "id" => "7" }],
       collection_name => {
-        '7' => {'title' => 'My new record', 'id' => '7'}
+        "7" => { "title" => "My new record", "id" => "7" }
       }
     }
-  }
+  end
 
   before do
     stub_request :get,    "/api/v1/#{collection_name}?only=7", response
-    stub_request :get,    "/api/v1/#{collection_name}?only=8", {'count' => 0, 'results' => []}
+    stub_request :get,    "/api/v1/#{collection_name}?only=8", "count" => 0, "results" => []
     stub_request :post,   "/api/v1/#{collection_name}", response
     stub_request :delete, "/api/v1/#{collection_name}/4", {}
   end
 
   describe "associations" do
-    it { should respond_to :external_references }
-    it { should respond_to :saml_identities }
+    it { is_expected.to respond_to :external_references }
+    it { is_expected.to respond_to :saml_identities }
   end
 
-  describe 'class methods' do
+  describe "class methods" do
     subject { model }
-    its(:collection_name) { should == collection_name }
 
-    describe '.scoped' do
-      subject { model.scoped }
-
-      it { should be_a Mavenlink::Request }
-      its(:collection_name) { should == collection_name }
+    describe "#collection_name" do
+      subject { super().collection_name }
+      it { is_expected.to eq(collection_name) }
     end
 
-    describe '.find' do
+    describe ".scoped" do
+      subject { model.scoped }
+
+      it { is_expected.to be_a Mavenlink::Request }
+
+      describe "#collection_name" do
+        subject { super().collection_name }
+        it { is_expected.to eq(collection_name) }
+      end
+    end
+
+    describe ".find" do
       specify do
         expect(model.find(7)).to be_a model
       end
 
       specify do
-        expect(model.find(7).id).to eq('7')
+        expect(model.find(7).id).to eq("7")
       end
 
       specify do
@@ -54,17 +62,17 @@ describe Mavenlink::User, stub_requests: true do
       end
     end
 
-    describe '.models' do
+    describe ".models" do
       specify do
         expect(model.models).to be_empty
       end
 
       specify do
-        expect(Mavenlink::Model.models).to include({collection_name => model})
+        expect(Mavenlink::Model.models).to include(collection_name => model)
       end
     end
 
-    describe '.specification' do
+    describe ".specification" do
       specify do
         expect(model.specification).to be_a Hash
       end
@@ -74,7 +82,7 @@ describe Mavenlink::User, stub_requests: true do
       end
     end
 
-    describe '.attributes' do
+    describe ".attributes" do
       specify do
         expect(model.attributes).to be_an Array
       end
@@ -84,7 +92,7 @@ describe Mavenlink::User, stub_requests: true do
       end
     end
 
-    describe '.available_attributes' do
+    describe ".available_attributes" do
       specify do
         expect(model.available_attributes).to be_an Array
       end
@@ -94,10 +102,10 @@ describe Mavenlink::User, stub_requests: true do
       end
     end
 
-    describe '.wrap' do
-      context 'existing record' do
+    describe ".wrap" do
+      context "existing record" do
         let(:brainstem_record) do
-          BrainstemAdaptor::Record.new(collection_name, '7', Mavenlink::Response.new(response))
+          BrainstemAdaptor::Record.new(collection_name, "7", Mavenlink::Response.new(response))
         end
 
         specify do
@@ -111,13 +119,13 @@ describe Mavenlink::User, stub_requests: true do
     end
   end
 
-  describe '#initialize' do
-    it 'accepts attributes' do
-      expect(model.send(:new, any_custom_key: 'value set')).to include(any_custom_key: 'value set')
+  describe "#initialize" do
+    it "accepts attributes" do
+      expect(model.send(:new, any_custom_key: "value set")).to include(any_custom_key: "value set")
     end
   end
 
-  describe '#persisted?' do
+  describe "#persisted?" do
     specify do
       expect(model.send(:new)).not_to be_persisted
     end
@@ -127,7 +135,7 @@ describe Mavenlink::User, stub_requests: true do
     end
   end
 
-  describe '#new_record?' do
+  describe "#new_record?" do
     specify do
       expect(model.send(:new)).to be_new_record
     end

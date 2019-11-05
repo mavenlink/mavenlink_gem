@@ -1,29 +1,28 @@
-# -*- encoding: utf-8 -*-
+# frozen_string_literal: true
 
 Gem::Specification.new do |s|
-  s.name = %q{mavenlink}
+  s.name = "mavenlink"
   s.version = "0.0.1"
 
-  s.date = %q{2014-04-01}
   s.authors = ["Mavenlink"]
-  s.email = %q{opensource@mavenlink.com}
-  s.homepage = %q{http://github.com/mavenlink/mavenlink_gem}
+  s.email = "opensource@mavenlink.com"
+  s.homepage = "http://github.com/mavenlink/mavenlink_gem"
 
-  s.licenses = ["MIT"]
+  s.license = "MIT"
 
-  s.files = `git ls-files`.split("\n")
-  s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.require_paths = ["lib"]
+  s.files = Dir["lib/**/*", "README.md"]
+  s.executables = ["mavenlink-console"]
   s.extra_rdoc_files = ["README.md"]
 
-  s.description = %q{Simple Ruby API for the Mavenlink API}
-  s.summary = %q{Mavenlink API Ruby Wrapper}
+  s.description = "Simple Ruby API for the Mavenlink API"
+  s.summary = "Mavenlink API Ruby Wrapper"
 
-  s.add_runtime_dependency 'activesupport', ">= 4.0.4"
-  s.add_runtime_dependency 'activemodel', ">= 4.0.4"
-  s.add_runtime_dependency 'brainstem-adaptor', ">= 0.0.3"
-  s.add_runtime_dependency 'faraday', ">= 0.9.0"
-  s.add_development_dependency 'rspec', "2.14.1"
-  s.add_development_dependency 'shoulda-matchers', "2.5.0"
-  s.add_development_dependency 'awesome_print'
+  s.add_runtime_dependency "activemodel", "~> 4.2"
+  s.add_runtime_dependency "activesupport", "~> 4.2"
+  s.add_runtime_dependency "brainstem-adaptor", ">= 0.0.3"
+  s.add_runtime_dependency "faraday", ">= 0.9.0"
+  s.add_development_dependency "awesome_print", "~> 1.8"
+  s.add_development_dependency "rspec", "~> 3.0"
+  s.add_development_dependency "rubocop", "~> 0.74"
+  s.add_development_dependency "shoulda-matchers", "~> 4.0.0"
 end

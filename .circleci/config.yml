@@ -5,12 +5,10 @@ defaults: &defaults
   parallelism: 1
   shell: /bin/bash --login
   environment:
-    CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
-    CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
     RACK_ENV: "test"
     RAILS_ENV: "test"
   docker:
-  - image: circleci/ruby:2.2-jessie-node
+  - image: circleci/ruby:2.3.3
 
 workflows:
   version: 2
@@ -20,13 +18,24 @@ workflows:
       - rspec:
           requires:
             - build
+      - rubocop:
+          requires:
+            - build
+
+commands:
+  store_output:
+    description: "Standardizes where test artifacts are stored"
+    steps:
+      - store_artifacts:
+          path: /tmp/circle/test_reports
+      - store_test_results:
+          path: /tmp/circle/test_reports
 
 jobs:
   build:
     <<: *defaults
     steps:
     - checkout
-    - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
     - restore_cache:
         keys:
         - v1-dep-{{ .Branch }}-
@@ -58,8 +67,18 @@ jobs:
       - run:
           name: Run RSpec tests
           command: |
-            bundle exec rspec --color --format progress --out $CIRCLE_TEST_REPORTS/rspec/test-results.xml
-      - store_artifacts:
-          path: /tmp/circle/test_reports
-      - store_test_results:
-          path: /tmp/circle/test_reports
+            bundle exec rspec --color --format progress --format json --out /tmp/circle/test_reports/rspec-results.json
+      - store_output
+  rubocop:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/mavenlink/mavenlink_gem
+      - run: gem install bundler -v "=1.13.6"
+      - run: bundle install
+      - run:
+          name: Run RuboCop
+          command: |
+            bundle exec rubocop --format progress --format json --out /tmp/circle/test_reports/rubocop-results.json
+      - store_output

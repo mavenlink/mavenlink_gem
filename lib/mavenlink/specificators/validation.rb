@@ -1,10 +1,9 @@
 module Mavenlink
   module Specificators
     class Validation < Base
-
       # Defines attributes in model described in specification
       def apply
-        (model_class.specification['validations'] || {}).each do |fields, options|
+        (model_class.specification["validations"] || {}).each do |fields, options|
           model_class.validates(*fields, to_validation_options(options))
         end
       end

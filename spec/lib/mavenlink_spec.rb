@@ -1,37 +1,60 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Mavenlink do
   subject { described_class }
 
-  its(:adapter) { should_not be_nil }
-  its(:client) { should_not be_nil }
-  its(:default_settings) { should be_a Hash }
-  its(:logger) { should be_a Logger }
-  its(:specification) { should be_a BrainstemAdaptor::Specification }
+  describe "#adapter" do
+    subject { super().adapter }
+    it { is_expected.not_to be_nil }
+  end
 
-  describe '.adapter=' do
-    let(:adapter) { double('adapter') }
+  describe "#client" do
+    subject { super().client }
+    it { is_expected.not_to be_nil }
+  end
+
+  describe "#default_settings" do
+    subject { super().default_settings }
+    it { is_expected.to be_a Hash }
+  end
+
+  describe "#logger" do
+    subject { super().logger }
+    it { is_expected.to be_a Logger }
+  end
+
+  describe "#specification" do
+    subject { super().specification }
+    it { is_expected.to be_a BrainstemAdaptor::Specification }
+  end
+
+  describe ".adapter=" do
+    let(:adapter) { double("adapter") }
 
     specify do
       expect { Mavenlink.adapter = adapter }.to change(Mavenlink, :adapter).to(adapter)
     end
   end
 
-  describe '.logger=' do
-    let(:logger) { double('logger') }
+  describe ".logger=" do
+    let(:logger) { double("logger") }
+
+    before { @original_logger = Mavenlink.logger }
+
+    after { Mavenlink.logger = @original_logger }
 
     specify do
       expect { Mavenlink.logger = logger }.to change(Mavenlink, :logger).to(logger)
     end
   end
 
-  describe '.oauth_token=' do
+  describe ".oauth_token=" do
     specify do
-      expect { Mavenlink.oauth_token = 'new token' }.to change { Mavenlink::Settings[:default][:oauth_token] }.from('token').to('new token')
+      expect { Mavenlink.oauth_token = "new token" }.to change { Mavenlink::Settings[:default][:oauth_token] }.from("token").to("new token")
     end
   end
 
-  describe '.perform_validations=' do
+  describe ".perform_validations=" do
     before do
       Mavenlink.perform_validations = false
     end
