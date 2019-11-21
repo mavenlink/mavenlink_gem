@@ -1006,6 +1006,22 @@ resolutions:
     - target_id
     - user_id
 
+resource_requests:
+  attributes:
+    - status
+    - created_at
+  create_attributes:
+    - resource_id
+    - approver_ids
+  update_attributes:
+    - request_resolution_status
+    - user_id
+    - allocations_state
+  associations:
+    - resource
+    - creator
+    - approvers
+
 roles:
   attributes:
     - id
