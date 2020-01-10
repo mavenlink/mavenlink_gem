@@ -356,9 +356,9 @@ describe Mavenlink::Request, stub_requests: true do
     end
 
     it "converts the include array to a string" do
-      other_filters = { "another" => ["multi-value", "filter"] }
+      other_filters = { "another" => %w[multi-value filter] }
       expect(client).to receive(:get).with("workspaces", other_filters.merge("include" => "first,second")) { first_page }
-      subject.include(["first", "second"]).filter(other_filters).perform
+      subject.include(%w[first second]).filter(other_filters).perform
     end
   end
 
