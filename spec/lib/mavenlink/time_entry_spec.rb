@@ -13,6 +13,9 @@ describe Mavenlink::TimeEntry, stub_requests: true, type: :model do
     it { is_expected.to respond_to :workspace }
     it { is_expected.to respond_to :user }
     it { is_expected.to respond_to :story }
+    it { is_expected.to respond_to :role }
+    it { is_expected.to respond_to :active_submission }
+    it { is_expected.to respond_to :invoice }
     it { is_expected.to respond_to :external_references }
   end
 
@@ -21,7 +24,7 @@ describe Mavenlink::TimeEntry, stub_requests: true, type: :model do
                               :time_in_minutes, :billable, :notes, :rate_in_cents,
                               :currency, :currency_symbol, :currency_base_unit,
                               :user_can_edit, :workspace_id, :user_id, :approved,
-                              :role_id, :external_reference, :location)
+                              :role_id, :location)
   end
 
   describe ".create_attributes" do
@@ -29,7 +32,7 @@ describe Mavenlink::TimeEntry, stub_requests: true, type: :model do
 
     it "includes expected attributes" do
       is_expected.to match_array(%w[workspace_id date_performed time_in_minutes billable cost_rate_in_cents
-                                    notes rate_in_cents story_id user_id external_reference location])
+                                    notes rate_in_cents story_id user_id external_reference location role_id])
     end
   end
 
@@ -38,7 +41,7 @@ describe Mavenlink::TimeEntry, stub_requests: true, type: :model do
 
     it "includes expected attributes" do
       is_expected.to match_array(%w[date_performed time_in_minutes billable notes cost_rate_in_cents
-                                    rate_in_cents story_id user_id external_reference])
+                                    rate_in_cents story_id user_id external_reference role_id workspace_id])
     end
   end
 end

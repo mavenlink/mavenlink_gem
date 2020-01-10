@@ -47,9 +47,9 @@ module Mavenlink
 
     # @param options [Hash]
     def filter(options)
-      includes = options.delete(:include) || options.delete("include")
-      if includes.present?
-        includes(includes).chain(options)
+      associations = options.delete(:include) || options.delete("include")
+      if associations.present?
+        includes(associations).chain(options)
       else
         chain(options)
       end
@@ -58,11 +58,10 @@ module Mavenlink
     # @param associations [String, Array]
     # @return [Mavenlink::Request]
     def includes(*associations)
-      new_includes = scope[:include]
-      new_includes ||= []
+      current_associations = scope[:include] || []
       associations = associations.flatten
       associations = associations.first.split(",") if associations.length == 1 && associations.first.is_a?(String)
-      chain(include: (new_includes << associations.map(&:to_s)).flatten.uniq)
+      chain(include: (current_associations << associations.map(&:to_s)).flatten.uniq)
     end
     alias include includes
 
@@ -149,13 +148,13 @@ module Mavenlink
     # @param attributes [Hash]
     # @return [Mavenlink::Response]
     def create(attributes)
-      perform { client.post(collection_name, collection_name.singularize => scope_with_stringified_arrays(attributes)) }
+      perform { client.post(collection_name, collection_name.singularize => attributes) }
     end
 
     # @param attributes [Hash]
     # @return [Mavenlink::Response]
     def update(attributes)
-      perform { client.put(resource_path, collection_name.singularize => scope_with_stringified_arrays(attributes)) }
+      perform { client.put(resource_path, collection_name.singularize => attributes) }
     end
 
     # @note Weird non-json response?
@@ -166,7 +165,7 @@ module Mavenlink
 
     # @return [Mavenlink::Response]
     def perform
-      response = block_given? ? yield : client.get(collection_name, scope_with_stringified_arrays)
+      response = block_given? ? yield : client.get(collection_name, scope)
       Mavenlink::Response.new(response, client)
     end
 
@@ -235,13 +234,6 @@ module Mavenlink
     end
 
     private
-
-    def scope_with_stringified_arrays(attributes = scope)
-      attributes.each_with_object({}) do |pair, obj|
-        value = pair[1].is_a?(Array) ? pair[1].join(",") : pair[1]
-        obj[pair[0]] = value
-      end
-    end
 
     # Builds comma-separated query param
     # @param param [Array, String]
