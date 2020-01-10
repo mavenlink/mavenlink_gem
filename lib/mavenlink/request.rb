@@ -165,7 +165,7 @@ module Mavenlink
 
     # @return [Mavenlink::Response]
     def perform
-      response = block_given? ? yield : client.get(collection_name, scope)
+      response = block_given? ? yield : client.get(collection_name, stringify_include_value(scope))
       Mavenlink::Response.new(response, client)
     end
 
@@ -234,6 +234,13 @@ module Mavenlink
     end
 
     private
+
+    def stringify_include_value(scope)
+      scope.each_with_object({}) do |pair, obj|
+        value = pair[0].eql?("include") ? pair[1].join(",") : pair[1]
+        obj[pair[0]] = value
+      end
+    end
 
     # Builds comma-separated query param
     # @param param [Array, String]

@@ -354,6 +354,12 @@ describe Mavenlink::Request, stub_requests: true do
     specify do
       expect(subject.perform { one_record_response }).to eq(one_record_response)
     end
+
+    it "converts the include array to a string" do
+      other_filters = { "another" => ["multi-value", "filter"] }
+      expect(client).to receive(:get).with("workspaces", other_filters.merge("include" => "first,second")) { first_page }
+      subject.include(["first", "second"]).filter(other_filters).perform
+    end
   end
 
   describe "#results" do
