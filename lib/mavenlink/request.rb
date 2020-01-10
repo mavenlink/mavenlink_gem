@@ -58,8 +58,7 @@ module Mavenlink
     # @param associations [String, Array]
     # @return [Mavenlink::Request]
     def includes(*associations)
-      new_includes = scope[:include]
-      new_includes ||= []
+      new_includes = scope[:include] || []
       associations = associations.flatten
       associations = associations.first.split(",") if associations.length == 1 && associations.first.is_a?(String)
       chain(include: (new_includes << associations.map(&:to_s)).flatten.uniq)
