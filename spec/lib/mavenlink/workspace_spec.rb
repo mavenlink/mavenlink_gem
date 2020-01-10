@@ -469,7 +469,7 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
   end
 
   describe "#association_load_filters" do
-    it "return filters to ensure we get hidden stories" do
+    it "return filters to ensure we get hidden workspaces" do
       expect(subject.association_load_filters).to eq(include_archived: true)
     end
   end
