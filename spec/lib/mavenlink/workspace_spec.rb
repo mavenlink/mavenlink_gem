@@ -467,4 +467,10 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
       expect { model.new(id: "4").destroy }.to raise_error Mavenlink::RecordLockedError, /locked.*deleted/
     end
   end
+
+  describe "#association_load_filters" do
+    it "return filters to ensure we get hidden workspaces" do
+      expect(subject.association_load_filters).to eq(include_archived: true)
+    end
+  end
 end

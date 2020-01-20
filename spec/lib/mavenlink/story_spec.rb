@@ -70,4 +70,14 @@ describe Mavenlink::Story, stub_requests: true, type: :model do
       expect(described_class.new(id: "4").destroy).to be_blank
     end
   end
+
+  describe "#association_load_filters" do
+    it "return filters to ensure we get hidden stories" do
+      expect(subject.association_load_filters).to eq(
+        show_archived: true,
+        show_deleted: true,
+        show_from_archived_workspaces: true
+      )
+    end
+  end
 end

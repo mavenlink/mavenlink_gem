@@ -205,6 +205,10 @@ module Mavenlink
       id.try(:to_s)
     end
 
+    def association_load_filters
+      {}
+    end
+
     protected
 
     # @return [Mavenlink::Response]
@@ -257,7 +261,7 @@ module Mavenlink
 
     # @param association [BrainstemAdaptor::Association]
     def reload_association(association)
-      (response = request.include(association.name).find(id).try(:response)) || raise(RecordNotFoundError, request)
+      (response = request.filter(association_load_filters).include(association.name).find(id).try(:response)) || raise(RecordNotFoundError, request)
       load_fields_with(response, [association.foreign_key])
     end
 
