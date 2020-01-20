@@ -20,4 +20,10 @@ describe Mavenlink::Expense, stub_requests: true, type: :model do
     it { is_expected.to respond_to :role }
     it { is_expected.to respond_to :vendor }
   end
+
+  describe "#association_load_filters" do
+    it "return filters to ensure we get hidden workspaces" do
+      expect(subject.association_load_filters).to eq(from_archived_workspaces: true)
+    end
+  end
 end

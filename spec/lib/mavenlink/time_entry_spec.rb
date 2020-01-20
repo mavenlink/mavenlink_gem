@@ -44,4 +44,10 @@ describe Mavenlink::TimeEntry, stub_requests: true, type: :model do
                                     rate_in_cents story_id user_id external_reference role_id workspace_id])
     end
   end
+
+  describe "#association_load_filters" do
+    it "return filters to ensure we get hidden workspaces" do
+      expect(subject.association_load_filters).to eq(from_archived_workspaces: true)
+    end
+  end
 end
