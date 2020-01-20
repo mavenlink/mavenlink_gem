@@ -4,7 +4,7 @@ describe Mavenlink::Request, stub_requests: true do
   let(:collection_name) { "workspaces" }
   let(:client) { Mavenlink.client }
 
-  subject(:request) { described_class.new(collection_name, client) }
+  subject { described_class.new(collection_name, client) }
 
   let(:response) do
     {
@@ -100,45 +100,45 @@ describe Mavenlink::Request, stub_requests: true do
 
   describe "#current_page" do
     specify do
-      expect(request.current_page).to eq(1)
+      expect(subject.current_page).to eq(1)
     end
 
     specify do
-      expect(request.page(2).current_page).to eq(2)
+      expect(subject.page(2).current_page).to eq(2)
     end
   end
 
   describe "#chain" do
     specify do
-      expect(request.chain({})).to be_a described_class
+      expect(subject.chain({})).to be_a described_class
     end
 
     specify do
-      expect(request.chain({})).not_to eq(request)
+      expect(subject.chain({})).not_to eq(subject)
     end
 
     it "does not change source scope" do
-      expect { request.chain(changed: true) }.not_to change { request.scope }
+      expect { subject.chain(changed: true) }.not_to change { subject.scope }
     end
 
     it "merges passed scope" do
-      expect(request.chain(changed: true).scope).to have_key(:changed)
-      expect(request.chain(changed: true).scope).to have_key("changed")
+      expect(subject.chain(changed: true).scope).to have_key(:changed)
+      expect(subject.chain(changed: true).scope).to have_key("changed")
     end
 
     it "assigns the same collection name" do
-      expect(request.chain({}).collection_name).to eq(request.collection_name)
+      expect(subject.chain({}).collection_name).to eq(subject.collection_name)
     end
 
     it "assigns the same client" do
-      expect(request.chain({}).client).to eq(request.client)
+      expect(subject.chain({}).client).to eq(subject.client)
     end
   end
 
   describe "#only" do
     context "empty input" do
       it "resets the scope" do
-        expect(request.only(1).only([]).scope).not_to have_key(:only)
+        expect(subject.only(1).only([]).scope).not_to have_key(:only)
       end
     end
   end
@@ -152,184 +152,219 @@ describe Mavenlink::Request, stub_requests: true do
   describe "#find" do
     context "existed record" do
       it "returns record wrapped in a model" do
-        expect(request.find(7)).to be_a Mavenlink::Workspace
+        expect(subject.find(7)).to be_a Mavenlink::Workspace
       end
     end
 
     context "record does not exist" do
       specify do
-        expect(request.find(8)).to be_nil
+        expect(subject.find(8)).to be_nil
       end
     end
   end
 
   describe "#search" do
     specify do
-      expect(request.search("text").scope).to include(search: "text")
+      expect(subject.search("text").scope).to include(search: "text")
     end
   end
 
   describe "#filter" do
     specify do
-      expect(request.filter(recent: true).scope).to include(recent: true)
+      expect(subject.filter(recent: true).scope).to include(recent: true)
+    end
+
+    context "when include is in the hash" do
+      it "lets `#includes` handle the value" do
+        expect_any_instance_of(Mavenlink::Request).to receive(:includes).and_call_original
+        expect(subject.filter(recent: true, include: "user,custom_field_values").scope).to include(include: %w(user custom_field_values))
+      end
+
+      context "when the key is a string" do
+        it "handles it" do
+          expect(subject.filter({ recent: true, include: "user,custom_field_values" }.stringify_keys).scope).to include(include: %w(user custom_field_values))
+        end
+      end
     end
   end
 
   describe "#include" do
     specify do
-      expect(request.include(:users).scope).to include(include: "users")
+      expect(subject.include(:users).scope).to include(include: %w(users))
     end
 
     specify do
-      expect(request.include("users").scope).to include(include: "users")
+      expect(subject.include("users").scope).to include(include: %w(users))
     end
 
     specify do
-      expect(request.include(%w[users clients]).scope).to include(include: "users,clients")
+      expect(subject.include(%w(users clients)).scope).to include(include: %w(users clients))
     end
 
     specify do
-      expect(request.include("users", "clients").scope).to include(include: "users,clients")
+      expect(subject.include("users", "clients").scope).to include(include: %w(users clients))
+    end
+
+    context "when a includes already exist" do
+      it "appends to the list" do
+        expect(subject.include("users").include("custom_field_values").scope).to include(include: %w(users custom_field_values))
+      end
+    end
+
+    context "when the value is a comma separated string" do
+      it "splits the values" do
+        expect(subject.include("users,custom_field_values").scope).to include(include: %w(users custom_field_values))
+      end
+    end
+
+    context "when an association is included more than once" do
+      it "only includes the unique values" do
+        expect(subject.include(:user).include(:user).scope).to include(include: %w(user))
+      end
     end
   end
 
   describe "#page" do
     specify do
-      expect(request.page(5).scope).to include(page: 5)
+      expect(subject.page(5).scope).to include(page: 5)
     end
   end
 
   describe "#per_page" do
     specify do
-      expect(request.per_page(5).scope).to include(per_page: 5)
+      expect(subject.per_page(5).scope).to include(per_page: 5)
     end
   end
 
   describe "#limit" do
     specify do
-      expect(request.limit(5).scope).to include(limit: 5)
+      expect(subject.limit(5).scope).to include(limit: 5)
     end
   end
 
   describe "#offset" do
     specify do
-      expect(request.offset(5).scope).to include(offset: 5)
+      expect(subject.offset(5).scope).to include(offset: 5)
     end
   end
 
   describe "#order" do
     specify do
-      expect(request.order(:id, :desc).scope).to include(order: "id:desc")
+      expect(subject.order(:id, :desc).scope).to include(order: "id:desc")
     end
 
     specify do
-      expect(request.order(:id, "desc").scope).to include(order: "id:desc")
+      expect(subject.order(:id, "desc").scope).to include(order: "id:desc")
     end
 
     specify do
-      expect(request.order(:id, "DESC").scope).to include(order: "id:desc")
+      expect(subject.order(:id, "DESC").scope).to include(order: "id:desc")
     end
 
     specify do
-      expect(request.order(:id, true).scope).to include(order: "id:desc")
+      expect(subject.order(:id, true).scope).to include(order: "id:desc")
     end
 
     specify do
-      expect(request.order(:id, false).scope).to include(order: "id:asc")
+      expect(subject.order(:id, false).scope).to include(order: "id:asc")
     end
 
     specify do
-      expect(request.order(:id, "asc").scope).to include(order: "id:asc")
+      expect(subject.order(:id, "asc").scope).to include(order: "id:asc")
     end
 
     specify do
-      expect(request.order(:id, "ASC").scope).to include(order: "id:asc")
+      expect(subject.order(:id, "ASC").scope).to include(order: "id:asc")
     end
 
     specify do
-      expect(request.order(:id, :asc).scope).to include(order: "id:asc")
+      expect(subject.order(:id, :asc).scope).to include(order: "id:asc")
     end
   end
 
   describe "#build" do
     it "returns a model object of the same type as the collection name" do
-      expect(request.build(title: "New Workspace")).to be_a Mavenlink::Workspace
+      expect(subject.build(title: "New Workspace")).to be_a Mavenlink::Workspace
     end
   end
 
   describe "#create" do
     specify do
-      expect(request.create({})).to be_a Mavenlink::Response
+      expect(subject.create({})).to be_a Mavenlink::Response
     end
 
     specify do
-      expect(request.create({})).to eq(one_record_response)
+      expect(subject.create({})).to eq(one_record_response)
     end
   end
 
   describe "#update" do
     specify do
-      expect(request.only(7).update(title: "New title")).to be_a Mavenlink::Response
+      expect(subject.only(7).update(title: "New title")).to be_a Mavenlink::Response
     end
 
     specify do
-      expect(request.only(7).update(title: "New title")).to eq(one_record_response)
+      expect(subject.only(7).update(title: "New title")).to eq(one_record_response)
     end
 
     context "no id specified" do
       specify do
         # NOTE(SZ): should we raise InvalidRequestError instead?
-        expect { request.update(title: "New one") }.to raise_error ArgumentError, /route.*ID/
+        expect { subject.update(title: "New one") }.to raise_error ArgumentError, /route.*ID/
       end
     end
   end
 
   describe "#delete" do
     specify do
-      expect(request.only(7).delete).to be_blank
+      expect(subject.only(7).delete).to be_blank
     end
 
     context "no id specified" do
       specify do
         # NOTE(SZ): should we raise InvalidRequestError instead?
-        expect { request.delete }.to raise_error ArgumentError, /route.*ID/
+        expect { subject.delete }.to raise_error ArgumentError, /route.*ID/
       end
     end
   end
 
   describe "#response" do
-    subject { request.response }
-
     specify do
-      expect(subject).to be_a Mavenlink::Response
+      expect(subject.response).to be_a Mavenlink::Response
     end
 
     specify do
-      expect(subject).to eq(response)
+      expect(subject.response).to eq(response)
     end
   end
 
   describe "#perform" do
     specify do
-      expect(request.perform).to be_a Mavenlink::Response
+      expect(subject.perform).to be_a Mavenlink::Response
     end
 
     specify do
-      expect(request.perform).to eq(response)
+      expect(subject.perform).to eq(response)
     end
 
     specify do
-      expect(request.perform { one_record_response }).to be_a Mavenlink::Response
+      expect(subject.perform { one_record_response }).to be_a Mavenlink::Response
     end
 
     specify do
-      expect(request.perform { one_record_response }).to eq(one_record_response)
+      expect(subject.perform { one_record_response }).to eq(one_record_response)
+    end
+
+    it "converts the include array to a string" do
+      other_filters = { "another" => %w[multi-value filter] }
+      expect(client).to receive(:get).with("workspaces", other_filters.merge("include" => "first,second")) { first_page }
+      subject.include(%w[first second]).filter(other_filters).perform
     end
   end
 
   describe "#results" do
     specify do
-      expect(request.results.size).to eq(2)
+      expect(subject.results.size).to eq(2)
     end
 
     # NOTE(SZ): missing specs
@@ -337,7 +372,7 @@ describe Mavenlink::Request, stub_requests: true do
 
   describe "#reload" do
     specify do
-      expect(request.reload.size).to eq(2)
+      expect(subject.reload.size).to eq(2)
     end
 
     # NOTE(SZ): missing specs
@@ -345,7 +380,7 @@ describe Mavenlink::Request, stub_requests: true do
 
   describe "#total_pages" do
     specify do
-      expect(request.total_pages).to eq(1)
+      expect(subject.total_pages).to eq(1)
     end
 
     # NOTE(SZ): missing specs
@@ -353,29 +388,29 @@ describe Mavenlink::Request, stub_requests: true do
 
   describe "#limit_value" do
     specify do
-      expect(request.limit_value).to eq(2)
+      expect(subject.limit_value).to eq(2)
     end
 
     specify do
-      expect(request.limit(5).limit_value).to eq(5)
+      expect(subject.limit(5).limit_value).to eq(5)
     end
   end
 
   describe "#scoped" do
     specify do
-      expect(request.scoped).to eq(request)
+      expect(subject.scoped).to eq(subject)
     end
   end
 
   describe "#to_hash" do
     specify do
-      expect(request.to_hash).to eq(request.scope)
+      expect(subject.to_hash).to eq(subject.scope)
     end
   end
 
   describe "#inspect" do
     specify do
-      expect(request.inspect).to eq("#<Mavenlink::Request [<Mavenlink::Workspace:>, <Mavenlink::Workspace:>]>")
+      expect(subject.inspect).to eq("#<Mavenlink::Request [<Mavenlink::Workspace:>, <Mavenlink::Workspace:>]>")
     end
   end
 
