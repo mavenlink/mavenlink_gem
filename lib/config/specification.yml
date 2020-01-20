@@ -345,7 +345,7 @@ estimate_scenarios:
   associations:
     rate_card:
       foreign_key: rate_card_id
-      collection: rate_card
+      collection: rate_cards
     estimate_scenario_resources:
       foreign_key: estimate_scenario_resource_ids
       collection: estimate_scenario_resources
