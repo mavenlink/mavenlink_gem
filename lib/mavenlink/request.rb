@@ -47,6 +47,7 @@ module Mavenlink
 
     # @param options [Hash]
     def filter(options)
+      options = options.dup
       associations = options.delete(:include) || options.delete("include")
       if associations.present?
         includes(associations).chain(options)
