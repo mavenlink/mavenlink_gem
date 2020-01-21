@@ -27,6 +27,7 @@ describe Mavenlink::User, stub_requests: true, type: :model do
   describe "associations" do
     it { is_expected.to respond_to :external_references }
     it { is_expected.to respond_to :saml_identities }
+    it { is_expected.to respond_to :custom_field_values }
   end
 
   describe "class methods" do

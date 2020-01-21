@@ -1,6 +1,5 @@
 module Mavenlink
   class Workspace < Model
-    include Mavenlink::Concerns::CustomFieldable
     include Mavenlink::Concerns::Indestructible
 
     validates :creator_role, inclusion: { in: %w[maven buyer] }, on: :create
@@ -18,6 +17,12 @@ module Mavenlink
     # @option invitation [String] :message (optional) the text content of the invitation email; if you don't provide this, your default will be used
     def invite(invitation)
       client.post("workspaces/#{@id}/invite", invitation: invitation) if persisted?
+    end
+
+    def association_load_filters
+      {
+        include_archived: true
+      }
     end
   end
 end

@@ -1241,6 +1241,7 @@ stories: # tasks
     - external_reference_ids
     - current_assignments
     - story_state_change_ids
+    - custom_field_value_ids
   create_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
@@ -1755,6 +1756,7 @@ users:
     - disabled
     - account_id
     - role_id
+    - custom_field_value_ids
   update_attributes:
     - full_name
     - headline
@@ -1773,6 +1775,9 @@ users:
     saml_identities:
       foreign_key: saml_identity_ids
       collection: saml_identities
+    custom_field_values:
+      foreign_key: custom_field_value_ids
+      collection: custom_field_values
 
 vendors:
   attributes:
@@ -1854,6 +1859,9 @@ workspaces:
     account_color:
       foreign_key: account_color_id
       collection: account_colors
+    custom_field_values:
+      foreign_key: custom_field_value_ids
+      collection: custom_field_values
   attributes:
     - id # the internal expense ID
     - title # the title of the project
@@ -1890,6 +1898,7 @@ workspaces:
     - workspace_group_ids
     - target_margin
     - primary_maven_id
+    - custom_field_value_ids
   create_attributes:
     - title
     - creator_role
@@ -1997,6 +2006,7 @@ workspace_groups:
     - address
     - website
     - notes
+    - custom_field_value_ids
   create_attributes:
     - name
     - company
@@ -2032,6 +2042,9 @@ workspace_groups:
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
+    custom_field_values:
+      foreign_key: custom_field_value_ids
+      collection: custom_field_values
 
 workspace_invoice_preferences:
   attributes:

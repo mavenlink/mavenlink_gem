@@ -26,6 +26,7 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
     it { is_expected.to respond_to :current_status_report }
     it { is_expected.to respond_to :external_references }
     it { is_expected.to respond_to :account_color }
+    it { is_expected.to respond_to :custom_field_values }
   end
 
   let(:response) do
@@ -464,6 +465,12 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
   describe "#destroy" do
     specify do
       expect { model.new(id: "4").destroy }.to raise_error Mavenlink::RecordLockedError, /locked.*deleted/
+    end
+  end
+
+  describe "#association_load_filters" do
+    it "return filters to ensure we get hidden workspaces" do
+      expect(subject.association_load_filters).to eq(include_archived: true)
     end
   end
 end

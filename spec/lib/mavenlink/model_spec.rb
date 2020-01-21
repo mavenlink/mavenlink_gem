@@ -7,13 +7,25 @@ describe Mavenlink::Model, stub_requests: true, type: :model do
     allow(Mavenlink).to receive(:specification).and_return("monkeys" => { "validations" => { "name" => { "presence" => true } },
                                                                           "attributes" => ["name"],
                                                                           "create_attributes" => ["name"],
-                                                                          "update_attributes" => %w[name age] })
+                                                                          "update_attributes" => %w[name age],
+                                                                          "associations" => {
+                                                                            "relatives" => {
+                                                                              "foreign_key" => "relative_ids",
+                                                                              "collection" => "monkeys"
+                                                                            }
+                                                                          } })
   end
 
   subject :model do
     class Monkey < Mavenlink::Model
       def self.name
         "Mavenlink::Monkey"
+      end
+
+      def association_load_filters
+        {
+          some: "filter"
+        }
       end
     end
     Monkey
@@ -440,6 +452,37 @@ describe Mavenlink::Model, stub_requests: true, type: :model do
 
     specify do
       expect { subject.destroy }.not_to raise_error
+    end
+  end
+
+  describe "#reload_association" do
+    subject { model.new(id: "7", name: "Maria") }
+    let(:filters) do
+      {
+        only: "7",
+        include: "relatives",
+        some: "filter"
+      }.stringify_keys
+    end
+    let(:faraday_response) { instance_double(Faraday::Response, body: response_with_relatives.to_json) }
+    let(:response_with_relatives) do
+      original = response
+      original["monkeys"]["7"]["relative_ids"] = ["10"]
+      original["monkeys"]["10"] = {
+        "name" => "John",
+        "id" => "10"
+      }
+      original
+    end
+
+    before do
+      allow(subject).to receive(:specification) { Mavenlink.specification["monkeys"] }
+    end
+
+    it "uses the specified filters" do
+      expect_any_instance_of(Faraday::Connection).to receive(:get).with("monkeys", hash_including(filters)) { faraday_response }
+      expect(subject.relatives.count).to eq(1)
+      expect(subject.relatives.first["id"]).to eq("10")
     end
   end
 end
