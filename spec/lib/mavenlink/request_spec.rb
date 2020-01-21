@@ -180,6 +180,12 @@ describe Mavenlink::Request, stub_requests: true do
         expect(subject.filter(recent: true, include: "user,custom_field_values").scope).to include(include: %w(user custom_field_values))
       end
 
+      it "does not modify the original param" do
+        filters = { some: "filter", include: "association" }
+        subject.filter(filters)
+        expect(filters).to eq(some: "filter", include: "association")
+      end
+
       context "when the key is a string" do
         it "handles it" do
           expect(subject.filter({ recent: true, include: "user,custom_field_values" }.stringify_keys).scope).to include(include: %w(user custom_field_values))
