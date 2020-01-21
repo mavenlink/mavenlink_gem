@@ -317,6 +317,39 @@ custom_field_choices:
       - foreign_key: custom_field_id
       - collection: custom_fields
 
+estimate_scenarios:
+  validations:
+    [name, start_date]:
+      presence: true
+  attributes:
+    - id
+    - name
+    - start_date
+    - budget_in_cents
+    - target_margin_percent
+    - estimate_id
+    - rate_card_id
+    - created_at
+    - updated_at
+  create_attributes:
+    - budget_in_cents
+    - name
+    - rate_card_id
+    - start_date
+    - estimate_id
+  update_attributes:
+    - budget_in_cents
+    - name
+    - rate_card_id
+    - start_date
+  associations:
+    rate_card:
+      foreign_key: rate_card_id
+      collection: rate_cards
+    estimate_scenario_resources:
+      foreign_key: estimate_scenario_resource_ids
+      collection: estimate_scenario_resources
+
 expenses:
   validations:
     [workspace_id, date, category, amount_in_cents]:
