@@ -1,7 +1,7 @@
 module Mavenlink
   class RateCardSet < Model
     def clone!(set_version_id, title: nil, include: nil)
-      raise Mavenlink::Error.new("Record not defined") unless persisted?
+      raise Mavenlink::Error, "Record not defined" unless persisted?
 
       request.perform do
         client.post(
