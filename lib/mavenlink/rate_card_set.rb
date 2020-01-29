@@ -9,7 +9,7 @@ module Mavenlink
           clone_version_id: set_version_id,
           include: include,
           rate_card_set: {
-            title: title,
+            title: title
           }
         )
       end.results.first

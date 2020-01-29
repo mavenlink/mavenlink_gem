@@ -39,7 +39,8 @@ describe Mavenlink::RateCardSet, stub_requests: true, type: :model do
           include: nil,
           rate_card_set: {
             title: nil
-          }).and_call_original
+          }
+        ).and_call_original
 
         expect(subject.clone!(rate_card_set_version_id)).to eq(described_class.new(id: rate_card_set_id, title: "Copy of #{rate_card_set_title}"))
       end
@@ -53,7 +54,8 @@ describe Mavenlink::RateCardSet, stub_requests: true, type: :model do
           include: include,
           rate_card_set: {
             title: title
-          }).and_call_original
+          }
+        ).and_call_original
 
         subject.clone!(rate_card_set_version_id, title: title, include: include)
       end
