@@ -61,7 +61,7 @@ describe Mavenlink::RateCardSet, stub_requests: true, type: :model do
       end
     end
 
-    context "when `clone` is not successful" do
+    context "when `clone!` is not successful" do
       context "when the response is an error" do
         let(:clone_response) do
           {
