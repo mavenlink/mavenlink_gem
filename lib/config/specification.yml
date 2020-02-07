@@ -1681,6 +1681,7 @@ time_entries:
     - story_id
     - user_id
     - external_reference
+    - location
 
 time_off_entries:
   attributes:
