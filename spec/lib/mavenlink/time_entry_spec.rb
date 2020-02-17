@@ -41,7 +41,7 @@ describe Mavenlink::TimeEntry, stub_requests: true, type: :model do
 
     it "includes expected attributes" do
       is_expected.to match_array(%w[date_performed time_in_minutes billable notes cost_rate_in_cents
-                                    rate_in_cents story_id user_id external_reference role_id workspace_id])
+                                    rate_in_cents story_id user_id external_reference role_id workspace_id location])
     end
   end
 
