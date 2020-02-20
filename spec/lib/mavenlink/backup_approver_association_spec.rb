@@ -5,5 +5,7 @@ describe Mavenlink::BackupApproverAssociation, stub_requests: true, type: :model
 
   describe "association" do
     it { is_expected.to respond_to :account_membership }
+    it { is_expected.to respond_to :approver }
+    it { is_expected.to respond_to :backup_approver }
   end
 end
