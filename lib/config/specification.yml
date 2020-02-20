@@ -230,9 +230,6 @@ backup_approver_associations:
     - start_date
     - end_date
   associations:
-    account_membership:
-      foreign_key: account_membership_id
-      collection: account_membership
     backup_approver:
       foreign_key: backup_approver_id
       colletion: user
