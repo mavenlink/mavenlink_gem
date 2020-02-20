@@ -232,10 +232,10 @@ backup_approver_associations:
   associations:
     backup_approver:
       foreign_key: backup_approver_id
-      colletion: user
+      collection: users
     approver:
       foreign_key: approver_id
-      colletion: user
+      collection: users
 
 custom_fields:
   attributes:
