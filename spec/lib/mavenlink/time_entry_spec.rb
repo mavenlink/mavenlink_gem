@@ -15,6 +15,7 @@ describe Mavenlink::TimeEntry, stub_requests: true, type: :model do
     it { is_expected.to respond_to :story }
     it { is_expected.to respond_to :role }
     it { is_expected.to respond_to :active_submission }
+    it { is_expected.to respond_to :recent_submission }
     it { is_expected.to respond_to :invoice }
     it { is_expected.to respond_to :external_references }
   end
@@ -24,7 +25,7 @@ describe Mavenlink::TimeEntry, stub_requests: true, type: :model do
                               :time_in_minutes, :billable, :notes, :rate_in_cents,
                               :currency, :currency_symbol, :currency_base_unit,
                               :user_can_edit, :workspace_id, :user_id, :approved,
-                              :role_id, :location)
+                              :role_id, :location, :active_submission_id, :recent_submission_id)
   end
 
   describe ".create_attributes" do

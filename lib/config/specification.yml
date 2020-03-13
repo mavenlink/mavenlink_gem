@@ -379,6 +379,7 @@ expenses:
     - receipt_id # the id of an attached Receipt Attachment
     - expense_category_id # the id of its category
     - active_submission_id
+    - recent_submission_id
   create_attributes:
     - workspace_id # (required) the ID of the Workspace in which the expense will be created
     - date # (required) the date of the expense in ISO8601 format
@@ -426,6 +427,9 @@ expenses:
       collection: external_references
     active_submission:
       foreign_key: active_submission_id
+      collection: expense_report_submissions
+    recent_submission:
+      foreign_key: recent_submission_id
       collection: expense_report_submissions
     role:
       foreign_key: role_id
@@ -1626,6 +1630,9 @@ time_entries:
     active_submission:
       foreign_key: active_submission_id
       collection: timesheet_submissions
+    recent_submission:
+      foreign_key: recent_submission_id
+      collection: timesheet_submissions
     invoice:
       foreign_key: invoice_id
       collection: invoices
@@ -1658,6 +1665,7 @@ time_entries:
     - taxable
     - is_invoiced
     - active_submission_id
+    - recent_submission_id
     - invoice_id
   create_attributes:
     - workspace_id
