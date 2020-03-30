@@ -195,6 +195,10 @@ describe Mavenlink::Model, stub_requests: true, type: :model do
       expect(model.new).to respond_to :client
       expect(model.new.client).to be_a Mavenlink::Client
     end
+
+    it "sets the associations_specification" do
+      expect(model.new.instance_variable_get(:@associations_specification)).to be_present
+    end
   end
 
   describe "#client" do
