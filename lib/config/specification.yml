@@ -1157,15 +1157,12 @@ status_reports:
 
 stories: # tasks
   associations:
-    # workspace - the workspace (project) that owns this story, returned in the workspaces top-level key
-    # parent - when you include this association, stories that are sub-stories will have a parent_id key referencing their parent story in the stories top-level key
-    # assignees - an array of User IDs called assignee_ids that contains the users assigned to this story, returned in the users top-level key
-    # followers - an array of User IDs called folllower_ids that contains the users following this story, returned in the users top-level key
-    # sub_stories - sub-stories of this story, returned in the stories top-level key; stories will contain a sub_story_ids array
-    # tags - an array of Tag IDs returned in the tags top-level key; stories will contain a tag_ids array
     workspace:
       foreign_key: workspace_id
       collection: workspaces
+    creator:
+      foreign_key: creator_id
+      collection: users
     parent:
       foreign_key: parent_id
       collection: stories
@@ -1190,6 +1187,9 @@ stories: # tasks
     descendants:
       foreign_key: descendant_ids
       collection: stories
+    ancestors:
+      foreign_key: ancestor_ids
+      collection: stories
     custom_field_values:
       foreign_key: custom_field_value_ids
       collection: custom_field_values
@@ -1199,12 +1199,36 @@ stories: # tasks
     current_assignments:
       foreign_key: current_assignment_ids
       collection: assignments
+    workspace_resources:
+      foreign_key: workspace_resource_ids
+      collection: workspace_resources
     workspace_resources_with_unnamed:
       foreign_key: workspace_resources_with_unnamed_ids
       collection: workspace_resources
+    potential_workspace_resources:
+      foreign_key: potential_workspace_resource_ids
+      collection: workspace_resources
+    potential_workspace_resources_with_unnamed:
+      foreign_key: potential_workspace_resources_with_unnamed_ids
+      collection: workspace_resources
+    replies:
+      foreign_key: reply_ids
+      collection: posts
     story_state_changes:
       foreign_key: story_state_change_ids
       collection: story_state_changes
+    attachments:
+      foreign_key: attachment_ids
+      collection: attachments
+    source_dependencies:
+      foreign_key: source_dependency_ids
+      collection: source_dependencies
+    target_dependencies:
+      foreign_key: target_dependency_ids
+      collection: target_dependencies
+    assigned_role:
+      foreign_key: assigned_role_id
+      collection: roles
 
   attributes:
     - id # the internal story id
