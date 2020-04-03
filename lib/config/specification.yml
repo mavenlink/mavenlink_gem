@@ -1229,7 +1229,6 @@ stories: # tasks
     assigned_role:
       foreign_key: assigned_role_id
       collection: roles
-
   attributes:
     - id # the internal story id
     - workspace_id # the internal id for the workspace of the story
@@ -1271,14 +1270,19 @@ stories: # tasks
     - creator_id
     - ancestor_ids
     - workspace_resource_ids
-    - workspace_resource_with_unnamed_ids
+    - workspace_resources_with_unnamed_ids
     - potential_workspace_resource_ids
-    - potential_workspace_resource_with_unnamed_ids
+    - potential_workspace_resources_with_unnamed_ids
     - reply_ids
     - attachment_ids
     - source_dependency_ids
     - target_dependency_ids
     - assigned_role_id
+    - follower_ids
+    - sub_story_ids
+    - tag_ids
+    - story_task_ids
+    - current_assignment_ids
   create_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
