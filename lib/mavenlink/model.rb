@@ -130,6 +130,7 @@ module Mavenlink
     def initialize(attributes = {}, source_record = nil, client = Mavenlink.client)
       super(self.class.collection_name, (attributes[:id] || attributes["id"] || source_record.try(:id)), source_record.try(:response))
       @client = client
+      @associations_specification = self.class.specification["associations"]
       merge!(attributes)
     end
 
