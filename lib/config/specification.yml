@@ -1268,7 +1268,17 @@ stories: # tasks
     - external_reference_ids
     - current_assignments
     - story_state_change_ids
-    - custom_field_value_ids
+    - creator_id
+    - ancestor_ids
+    - workspace_resource_ids
+    - workspace_resource_with_unnamed_ids
+    - potential_workspace_resource_ids
+    - potential_workspace_resource_with_unnamed_ids
+    - reply_ids
+    - attachment_ids
+    - source_dependency_ids
+    - target_dependency_ids
+    - assigned_role_id
   create_attributes:
     - title # (required) the title of the story # max 200 characters
     - story_type # (required) the type of the story: task, deliverable, or milestone
