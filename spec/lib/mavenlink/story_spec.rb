@@ -12,16 +12,26 @@ describe Mavenlink::Story, stub_requests: true, type: :model do
 
   describe "associations" do
     it { is_expected.to respond_to :workspace }
+    it { is_expected.to respond_to :creator }
     it { is_expected.to respond_to :parent }
     it { is_expected.to respond_to :root }
     it { is_expected.to respond_to :assignees }
     it { is_expected.to respond_to :sub_stories }
     it { is_expected.to respond_to :descendants }
+    it { is_expected.to respond_to :ancestors }
     it { is_expected.to respond_to :custom_field_values }
     it { is_expected.to respond_to :external_references }
     it { is_expected.to respond_to :current_assignments }
+    it { is_expected.to respond_to :workspace_resources }
     it { is_expected.to respond_to :workspace_resources_with_unnamed }
+    it { is_expected.to respond_to :potential_workspace_resources }
+    it { is_expected.to respond_to :potential_workspace_resources_with_unnamed }
+    it { is_expected.to respond_to :replies }
     it { is_expected.to respond_to :story_state_changes }
+    it { is_expected.to respond_to :attachments }
+    it { is_expected.to respond_to :source_dependencies }
+    it { is_expected.to respond_to :target_dependencies }
+    it { is_expected.to respond_to :assigned_role }
   end
 
   let(:response) do
