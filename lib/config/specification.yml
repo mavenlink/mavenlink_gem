@@ -988,7 +988,10 @@ rate_card_set_versions:
     - active
     - effective_date
     - used_currencies
+    - rate_card_set_id
+    - rate_card_version_ids
   create_attributes:
+    - clone_id
     - rate_card_set_id
     - effective_date
   update_attributes:
