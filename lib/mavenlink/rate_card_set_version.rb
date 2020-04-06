@@ -8,7 +8,7 @@ module Mavenlink
 
     def clone_version(effective_date = nil)
       clone_version!(effective_date)
-    rescue Mavenlink::RecordInvalidError, Mavenlink::Error
+    rescue Mavenlink::Error
       false
     end
 
