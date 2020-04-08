@@ -7,7 +7,13 @@ module Mavenlink
     end
 
     def clone_version(effective_date = nil)
-      return false unless persisted?
+      clone_version!(effective_date)
+    rescue Mavenlink::Error
+      false
+    end
+
+    def clone_version!(effective_date = nil)
+      raise Mavenlink::RecordInvalidError, self unless persisted?
 
       request.perform do
         client.post(
@@ -19,8 +25,6 @@ module Mavenlink
           }
         )
       end.results.first
-    rescue Mavenlink::Error
-      false
     end
   end
 end

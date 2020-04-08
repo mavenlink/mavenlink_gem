@@ -24,56 +24,58 @@ describe Mavenlink::RateCardSetVersion, stub_requests: true, type: :model do
     end
   end
 
-  describe "#clone" do
-    context "when `clone` is successful" do
-      let(:clone_response) do
-        {
-          "count" => 1,
-          "results" => [
-            {
-              "key" => "rate_card_set_versions",
-              "id" => "8"
-            }
-          ],
-          "rate_card_set_versions" => {
-            "8" => {
-              "id" => "8",
-              "effective_date" => "2018-09-04",
-              "rate_card_set_id" => "1"
-            }
+  shared_examples_for "successful clone" do
+    let(:clone_response) do
+      {
+        "count" => 1,
+        "results" => [
+          {
+            "key" => "rate_card_set_versions",
+            "id" => "8"
+          }
+        ],
+        "rate_card_set_versions" => {
+          "8" => {
+            "id" => "8",
+            "effective_date" => "2018-09-04",
+            "rate_card_set_id" => "1"
           }
         }
-      end
-
-      before do
-        stub_request :post, "/api/v1/rate_card_set_versions", clone_response
-      end
-
-      it "returns the new rate card set version" do
-        expect_any_instance_of(Mavenlink::Client).to receive(:post).with(
-          "rate_card_set_versions",
-          clone_id: subject.id,
-          rate_card_set_version: {
-            rate_card_set_id: subject.rate_card_set_id,
-            effective_date: nil
-          }
-        ).and_call_original
-        expect(subject.clone_version).to eq(described_class.new(id: "8", effective_date: "2018-09-04", rate_card_set_id: "1"))
-      end
-
-      it "sends the effective_date parameter" do
-        date = Date.new(2018, 9, 5)
-        expect_any_instance_of(Mavenlink::Client).to receive(:post).with(
-          "rate_card_set_versions",
-          clone_id: subject.id,
-          rate_card_set_version: {
-            rate_card_set_id: subject.rate_card_set_id,
-            effective_date: date
-          }
-        ).and_call_original
-        subject.clone_version(date)
-      end
+      }
     end
+
+    before do
+      stub_request :post, "/api/v1/rate_card_set_versions", clone_response
+    end
+
+    it "returns the new rate card set version" do
+      expect_any_instance_of(Mavenlink::Client).to receive(:post).with(
+        "rate_card_set_versions",
+        clone_id: subject.id,
+        rate_card_set_version: {
+          rate_card_set_id: subject.rate_card_set_id,
+          effective_date: nil
+        }
+      ).and_call_original
+      expect(subject.clone_version).to eq(described_class.new(id: "8", effective_date: "2018-09-04", rate_card_set_id: "1"))
+    end
+
+    it "sends the effective_date parameter" do
+      date = Date.new(2018, 9, 5)
+      expect_any_instance_of(Mavenlink::Client).to receive(:post).with(
+        "rate_card_set_versions",
+        clone_id: subject.id,
+        rate_card_set_version: {
+          rate_card_set_id: subject.rate_card_set_id,
+          effective_date: date
+        }
+      ).and_call_original
+      subject.clone_version(date)
+    end
+  end
+
+  describe "#clone_version" do
+    it_behaves_like "successful clone"
 
     context "when `clone` is not successful" do
       context "when the response is an error" do
@@ -104,6 +106,43 @@ describe Mavenlink::RateCardSetVersion, stub_requests: true, type: :model do
 
         it "returns false" do
           expect(subject.clone_version).to eq(false)
+        end
+      end
+    end
+  end
+
+  describe "#clone_version!" do
+    it_behaves_like "successful clone"
+
+    context "when not successful" do
+      context "when the response is an error" do
+        let(:clone_response) do
+          {
+            "errors" => [
+              {
+                "type" => "system",
+                "message" => "not found"
+              }
+            ]
+          }
+        end
+
+        before do
+          stub_request :post, "/api/v1/rate_card_set_versions", clone_response
+        end
+
+        it "raises a Mavenlink::Error" do
+          expect { subject.clone_version! }.to raise_error(Mavenlink::Error)
+        end
+      end
+
+      context "when the record is not persisted" do
+        before do
+          allow(subject).to receive(:persisted?) { false }
+        end
+
+        it "raises a Mavenlink::RecordInvalidError" do
+          expect { subject.clone_version! }.to raise_error(Mavenlink::RecordInvalidError)
         end
       end
     end
