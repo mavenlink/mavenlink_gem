@@ -142,6 +142,7 @@ require "mavenlink/workspace_allocation"
 require "mavenlink/workspace_group"
 require "mavenlink/workspace_invoice_preference"
 require "mavenlink/workspace_resource"
+require "mavenlink/workspace_resource_skill"
 require "mavenlink/workweek"
 require "mavenlink/workweek_membership"
 require "mavenlink/railtie" if defined?(Rails)
