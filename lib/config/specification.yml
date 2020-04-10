@@ -2158,6 +2158,34 @@ workspace_resources:
     workspace_id:
       presence: true
 
+workspace_resource_skills:
+  attributes:
+    - id
+    - level
+    - max_level
+    - cached_skill_name
+    - skill_id
+    - workspace_resource_id
+    - creator_id
+    - created_at
+    - updated_at
+  create_attributes:
+    - skill_id
+    - workspace_resource_id
+    - level
+  update_attributes:
+    - level
+  associations:
+    skill:
+      foreign_key: skill_id
+      collection: skills
+    creator:
+      foreign_key: user_id
+      collection: users
+    workspace_resource:
+      foreign_key: workspace_resource_id
+      collection: workspace_resources
+
 workweeks:
   attributes:
     - default
