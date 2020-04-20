@@ -10,7 +10,7 @@ module Mavenlink
 
     # @return [String]
     def self.collection_name
-      (name || "undefined").split(/\W+/).last.tableize.pluralize
+      (name || "undefined").split(/\W+/, 2).last.tableize.pluralize
     end
 
     # @param attributes [Hash]

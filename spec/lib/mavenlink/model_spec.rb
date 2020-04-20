@@ -34,6 +34,14 @@ describe Mavenlink::Model, stub_requests: true, type: :model do
   describe "#collection_name" do
     subject { super().collection_name }
     it { is_expected.to eq("monkeys") }
+
+    context "when the collection is nested" do
+      subject { Mavenlink::ScheduledJobs::InsightsReportExport }
+
+      it "includes the module path in collection_name" do
+        expect(subject.collection_name).to eq "scheduled_jobs/insights_report_exports"
+      end
+    end
   end
 
   let(:response) do
