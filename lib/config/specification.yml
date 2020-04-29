@@ -766,11 +766,18 @@ organization_memberships:
     - id
     - member_id
     - member_type
+    - primary
+    - geography_id
+    - department_id
   create_attributes:
     - geography_id
     - department_id
     - member_id
     - member_type
+  update_attributes:
+    - geography_id
+    - department_id
+    - primary
   associations:
     geography:
       foreign_key: geography_id
