@@ -1287,7 +1287,6 @@ stories: # tasks
     - sub_story_ids
     - tag_ids
     - story_task_ids
-    - assignments
     - current_assignment_ids
   create_attributes:
     - title # (required) the title of the story # max 200 characters
