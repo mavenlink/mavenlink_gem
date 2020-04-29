@@ -1309,6 +1309,7 @@ stories: # tasks
     - checklist # an array of checklist items (optional)
     - weight # integer representing the weight of the story. Can only be set on a parent-level milestone by a consultant with at least budget permissions (optional)
     - priority # the integer value of the priority for a task
+    - assignments
     - external_reference
   update_attributes:
     - title # (required) the title of the story # max 200 characters
@@ -1328,6 +1329,7 @@ stories: # tasks
     - fixed_fee # whether or not the story is fixed fee
     - weight # integer representing the weight of the story. Can only be set on a parent-level milestone by a consultant with at least budget permissions (optional)
     - priority # the integer value of the priority for a task
+    - assignments
     - external_reference
 
 story_allocation_days:
