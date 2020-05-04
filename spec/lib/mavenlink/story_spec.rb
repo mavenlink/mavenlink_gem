@@ -84,6 +84,7 @@ describe Mavenlink::Story, stub_requests: true, type: :model do
   describe "#association_load_filters" do
     it "return filters to ensure we get hidden stories" do
       expect(subject.association_load_filters).to eq(
+        all_on_account: true,
         show_archived: true,
         show_deleted: true,
         show_from_archived_workspaces: true
