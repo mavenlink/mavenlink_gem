@@ -188,7 +188,7 @@ module Mavenlink
     # Reloads record from server
     # @return [self]
     def reload(response = nil)
-      (response ||= request.find(id).try(:response)) || raise(RecordNotFoundError, request)
+      (response ||= request.show(id).try(:response)) || raise(RecordNotFoundError, request)
       @id ||= response.results.first.try(:[], "id")
       load_fields_with(response)
       self
@@ -262,7 +262,7 @@ module Mavenlink
 
     # @param association [BrainstemAdaptor::Association]
     def reload_association(association)
-      (response = request.filter(association_load_filters).include(association.name).find(id).try(:response)) || raise(RecordNotFoundError, request)
+      (response = request.filter(association_load_filters).include(association.name).show(id).try(:response)) || raise(RecordNotFoundError, request)
       load_fields_with(response, [association.foreign_key])
     end
 

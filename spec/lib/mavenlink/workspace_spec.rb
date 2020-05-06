@@ -51,6 +51,7 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
 
   before do
     stub_request :get,    "/api/v1/workspaces?only=7", response
+    stub_request :get,    "/api/v1/workspaces/7", response
     stub_request :get,    "/api/v1/workspaces?only=8", "count" => 0, "results" => []
     stub_request :post,   "/api/v1/workspaces", response
     stub_request :put,    "/api/v1/workspaces/7", updated_response
