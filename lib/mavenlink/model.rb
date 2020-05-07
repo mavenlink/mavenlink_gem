@@ -133,7 +133,7 @@ module Mavenlink
       super(self.class.collection_name, (attributes[:id] || attributes["id"] || source_record.try(:id)), source_record.try(:response))
       @client = client
       @associations_specification = self.class.specification["associations"]
-      @scope = scope.except("page", "per_page", "only")
+      @scope = scope.deep_dup.except("page", "per_page", "only")
       merge!(attributes)
     end
 
