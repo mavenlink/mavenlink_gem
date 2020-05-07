@@ -120,13 +120,15 @@ module Mavenlink
 
     # @param source_record [Brainstem::Record, nil]
     # @param client [Mavenlink::Client]
+    # @param scope [Hash] filters used when requesting the model
     def self.wrap(source_record = nil, client = Mavenlink.client, scope = {})
       new({}, source_record, client, scope)
     end
 
     # @param attributes [Hash]
-    # @param source_record [BrainstemAdaptor::Record
+    # @param source_record [BrainstemAdaptor::Record]
     # @param client [Mavenlink::Client]
+    # @param scope [Hash] filters used when requesting the model
     def initialize(attributes = {}, source_record = nil, client = Mavenlink.client, scope = {})
       super(self.class.collection_name, (attributes[:id] || attributes["id"] || source_record.try(:id)), source_record.try(:response))
       @client = client
