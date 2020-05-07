@@ -2,7 +2,7 @@ module Mavenlink
   class Model < BrainstemAdaptor::Record
     include ActiveModel::Validations
 
-    attr_reader :client
+    attr_reader :client, :scope
 
     class << self
       delegate :only, :find, :search, :filter, :page, :total_count, :per_page, :limit, :offset, :order, :all, to: :scoped
@@ -73,7 +73,7 @@ module Mavenlink
         return nil if new_record?
 
         association = association_by_name(association_name)
-        reload = true unless association.loaded?
+        reload = true unless associations_cache.key?(association_name)
 
         if reload
           reload_association(association)
@@ -120,17 +120,20 @@ module Mavenlink
 
     # @param source_record [Brainstem::Record, nil]
     # @param client [Mavenlink::Client]
-    def self.wrap(source_record = nil, client = Mavenlink.client)
-      new({}, source_record, client)
+    # @param scope [Hash] filters used when requesting the model
+    def self.wrap(source_record = nil, client = Mavenlink.client, scope = {})
+      new({}, source_record, client, scope)
     end
 
     # @param attributes [Hash]
     # @param source_record [BrainstemAdaptor::Record]
     # @param client [Mavenlink::Client]
-    def initialize(attributes = {}, source_record = nil, client = Mavenlink.client)
+    # @param scope [Hash] filters used when requesting the model
+    def initialize(attributes = {}, source_record = nil, client = Mavenlink.client, scope = {})
       super(self.class.collection_name, (attributes[:id] || attributes["id"] || source_record.try(:id)), source_record.try(:response))
       @client = client
       @associations_specification = self.class.specification["associations"]
+      @scope = scope.except("page", "per_page", "only")
       merge!(attributes)
     end
 
@@ -188,7 +191,7 @@ module Mavenlink
     # Reloads record from server
     # @return [self]
     def reload(response = nil)
-      (response ||= request.find(id).try(:response)) || raise(RecordNotFoundError, request)
+      (response ||= request.show(id).try(:response)) || raise(RecordNotFoundError, request)
       @id ||= response.results.first.try(:[], "id")
       load_fields_with(response)
       self
@@ -247,7 +250,7 @@ module Mavenlink
 
     # @return [Mavenlink::Request]
     def collection_scope
-      @collection_scope ||= self.class.scoped(client)
+      @collection_scope ||= self.class.scoped(client).chain(scope)
     end
 
     # @param association [BrainstemAdaptor::Association]
@@ -262,7 +265,7 @@ module Mavenlink
 
     # @param association [BrainstemAdaptor::Association]
     def reload_association(association)
-      (response = request.filter(association_load_filters).include(association.name).find(id).try(:response)) || raise(RecordNotFoundError, request)
+      (response = request.filter(association_load_filters).include(association.name).show(id).try(:response)) || raise(RecordNotFoundError, request)
       load_fields_with(response, [association.foreign_key])
     end
 

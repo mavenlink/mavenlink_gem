@@ -17,6 +17,8 @@ module Mavenlink
     # @param new_scope [Hash]
     # @return [Mavenlink::Request]
     def chain(new_scope = {})
+      new_scope = {} if new_scope.nil?
+
       self.class.new(collection_name, client).tap do |new_request|
         new_request.scope.merge!(scope)
         new_request.scope.merge!(new_scope)
@@ -37,6 +39,13 @@ module Mavenlink
     # @return [BrainstemAdaptor::Record, nil]
     def find(id)
       only(id).perform.results.first
+    end
+
+    def show(id)
+      raise ArgumentError if id.to_s.strip.empty?
+
+      response = client.get("#{collection_name}/#{id}", stringify_include_value(scope))
+      Mavenlink::Response.new(response, client, scope: scope).results.first
     end
 
     # @param text [String]
@@ -167,7 +176,7 @@ module Mavenlink
     # @return [Mavenlink::Response]
     def perform
       response = block_given? ? yield : client.get(collection_name, stringify_include_value(scope))
-      Mavenlink::Response.new(response, client)
+      Mavenlink::Response.new(response, client, scope: scope)
     end
 
     # Returns cached response

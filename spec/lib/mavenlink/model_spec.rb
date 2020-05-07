@@ -58,6 +58,7 @@ describe Mavenlink::Model, stub_requests: true, type: :model do
 
   before do
     stub_request :get,    "/api/v1/monkeys?only=7", response
+    stub_request :get,    "/api/v1/monkeys?only=7", response
     stub_request :get,    "/api/v1/monkeys?only=8", "count" => 0, "results" => []
     stub_request :post,   "/api/v1/monkeys", response
     stub_request :put,    "/api/v1/monkeys/7", updated_response
@@ -463,7 +464,6 @@ describe Mavenlink::Model, stub_requests: true, type: :model do
     subject { model.new(id: "7", name: "Maria") }
     let(:filters) do
       {
-        only: "7",
         include: "relatives",
         some: "filter"
       }.stringify_keys
@@ -484,7 +484,7 @@ describe Mavenlink::Model, stub_requests: true, type: :model do
     end
 
     it "uses the specified filters" do
-      expect_any_instance_of(Faraday::Connection).to receive(:get).with("monkeys", hash_including(filters)) { faraday_response }
+      expect_any_instance_of(Faraday::Connection).to receive(:get).with("monkeys/#{subject.id}", hash_including(filters)) { faraday_response }
       expect(subject.relatives.count).to eq(1)
       expect(subject.relatives.first["id"]).to eq("10")
     end
