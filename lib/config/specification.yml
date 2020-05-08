@@ -1749,12 +1749,17 @@ time_off_entries:
     - user_id
     - hours
     - requested_date
+    - external_reference
   update_attributes:
     - hours
+    - external_reference
   associations:
     user:
       foreign_key: user_id
       collection: users
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
 timesheet_submissions:
     attributes:
