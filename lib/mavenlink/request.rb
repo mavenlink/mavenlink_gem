@@ -41,13 +41,6 @@ module Mavenlink
       only(id).perform.results.first
     end
 
-    def show(id)
-      raise ArgumentError if id.to_s.strip.empty?
-
-      response = client.get("#{collection_name}/#{id}", stringify_include_value(scope))
-      Mavenlink::Response.new(response, client, scope: scope).results.first
-    end
-
     # @param text [String]
     # @return [Mavenlink::Request]
     def search(text)

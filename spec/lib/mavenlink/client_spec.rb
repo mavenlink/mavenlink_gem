@@ -47,7 +47,6 @@ describe Mavenlink::Client, stub_requests: true do
 
     before do
       stub_request :get, "/api/v1/workspaces?only=7", response
-      stub_request :get, "/api/v1/workspaces/7", response
     end
 
     specify do
