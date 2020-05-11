@@ -2034,6 +2034,7 @@ workspace_allocations:
     - created_at
     - updated_at
     - workspace_resource_id
+    - external_reference_ids
   create_attributes:
     - resource_id
     - start_date
@@ -2041,12 +2042,14 @@ workspace_allocations:
     - minutes
     - hard
     - notes
+    - external_reference
   update_attributes:
     - start_date
     - end_date
     - minutes
     - hard
     - notes
+    - external_reference
   associations:
     workspace_resource:
       foreign_key: workspace_resource_id
@@ -2054,6 +2057,9 @@ workspace_allocations:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
   validations:
     [resource_id, start_date, end_date, minutes]:
       presence: true
