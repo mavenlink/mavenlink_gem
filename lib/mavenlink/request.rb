@@ -17,6 +17,8 @@ module Mavenlink
     # @param new_scope [Hash]
     # @return [Mavenlink::Request]
     def chain(new_scope = {})
+      new_scope = {} if new_scope.nil?
+
       self.class.new(collection_name, client).tap do |new_request|
         new_request.scope.merge!(scope)
         new_request.scope.merge!(new_scope)
@@ -167,7 +169,7 @@ module Mavenlink
     # @return [Mavenlink::Response]
     def perform
       response = block_given? ? yield : client.get(collection_name, stringify_include_value(scope))
-      Mavenlink::Response.new(response, client, collection_name: collection_name)
+      Mavenlink::Response.new(response, client, scope: scope, collection_name: collection_name)
     end
 
     # Returns cached response
