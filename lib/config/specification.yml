@@ -1678,6 +1678,9 @@ time_entries:
     active_submission:
       foreign_key: active_submission_id
       collection: timesheet_submissions
+    recent_submission:
+      foreign_key: recent_submission_id
+      collection: timesheet_submissions
     invoice:
       foreign_key: invoice_id
       collection: invoices
@@ -1710,6 +1713,7 @@ time_entries:
     - taxable
     - is_invoiced
     - active_submission_id
+    - recent_submission_id
     - invoice_id
   create_attributes:
     - workspace_id
