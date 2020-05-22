@@ -15,6 +15,7 @@ describe Mavenlink::TimeEntry, stub_requests: true, type: :model do
     it { is_expected.to respond_to :story }
     it { is_expected.to respond_to :role }
     it { is_expected.to respond_to :active_submission }
+    it { is_expected.to respond_to :recent_submission }
     it { is_expected.to respond_to :invoice }
     it { is_expected.to respond_to :external_references }
   end

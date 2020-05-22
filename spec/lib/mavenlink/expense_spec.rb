@@ -17,6 +17,7 @@ describe Mavenlink::Expense, stub_requests: true, type: :model do
     it { is_expected.to respond_to :receipt }
     it { is_expected.to respond_to :external_references }
     it { is_expected.to respond_to :active_submission }
+    it { is_expected.to respond_to :recent_submission }
     it { is_expected.to respond_to :role }
     it { is_expected.to respond_to :vendor }
   end
