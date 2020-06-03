@@ -294,6 +294,53 @@ describe Mavenlink::Request, stub_requests: true do
     end
   end
 
+  describe "#bulk_create" do
+    let(:models) do
+      [
+        {
+          title: "Workspace One",
+          description: "Project uno"
+        },
+        {
+          title: "Another Workspace",
+          description: "Another project"
+        }
+      ]
+    end
+
+    let(:two_record_response) do
+      {
+        "count" => 2,
+        "results" => [
+          {
+            "key" => "workspaces",
+            "id" => "8"
+          },
+          {
+            "key" => "workspaces",
+            "id" => "9"
+          }
+        ],
+        "workspaces" => {
+          "8" => {
+            "title" => "Workspace One"
+          },
+          "9" => {
+            "title" => "Another Workspace"
+          }
+        }
+      }
+    end
+
+    it "posts to the collection with the given models" do
+      expect(client).to receive(:post).with(collection_name, collection_name.pluralize => models) { two_record_response }
+
+      response = subject.bulk_create(models)
+      expect(response).to be_a Mavenlink::Response
+      expect(response).to eq two_record_response
+    end
+  end
+
   describe "#create" do
     specify do
       expect(subject.create({})).to be_a Mavenlink::Response
