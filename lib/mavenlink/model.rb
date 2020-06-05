@@ -16,7 +16,7 @@ module Mavenlink
     # @param models [Array<Hash>]
     # @return [Array<Mavenlink::Model>]
     def self.bulk_create(models)
-      scoped.bulk_create(models)&.results
+      scoped.bulk_create(models).results
     end
 
     # @param attributes [Hash]
