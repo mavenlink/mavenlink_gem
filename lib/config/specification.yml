@@ -490,6 +490,10 @@ expense_report_submissions:
     resolutions:
       foreign_key: resolution_ids
       collection: resolutions
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+
 
 external_payments:
   attributes:
