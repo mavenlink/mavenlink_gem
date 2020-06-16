@@ -1,7 +1,8 @@
 require "mavenlink"
 require "shoulda-matchers"
 require "awesome_print"
-require "support/shared_examples"
+require "support/shared_examples/model"
+require "support/shared_examples/submission"
 
 Mavenlink.perform_validations = true
 
