@@ -5,10 +5,10 @@ module Mavenlink
     # @param response_data [String, Hash]
     # @param specification [BrainstemAdaptor::Specification]
     # @param client [Mavenlink::Client]
-    def initialize(response_data, client = Mavenlink.client, specification = Mavenlink.specification, scope: {})
+    def initialize(response_data, client = Mavenlink.client, specification = Mavenlink.specification, scope: {}, **options)
       @client = client
       @scope = scope
-      super(response_data, specification)
+      super(response_data, specification, options)
     end
 
     # Returns collection records

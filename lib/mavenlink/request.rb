@@ -175,7 +175,7 @@ module Mavenlink
     # @return [Mavenlink::Response]
     def perform
       response = block_given? ? yield : client.get(collection_name, stringify_include_value(scope))
-      Mavenlink::Response.new(response, client, scope: scope)
+      Mavenlink::Response.new(response, client, scope: scope, collection_name: collection_name)
     end
 
     # Returns cached response
