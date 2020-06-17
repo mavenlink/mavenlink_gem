@@ -86,6 +86,49 @@ describe Mavenlink::Model, stub_requests: true, type: :model do
     end
   end
 
+  describe ".bulk_create" do
+    let(:models) do
+      [
+        {
+          name: "Masha"
+        },
+        {
+          name: "Masha 2"
+        }
+      ]
+    end
+
+    let(:response) do
+      {
+        "count" => 2,
+        "results" => [
+          {
+            "key" => "monkeys",
+            "id" => "8"
+          },
+          {
+            "key" => "monkeys",
+            "id" => "9"
+          }
+        ],
+        "monkeys" => {
+          "8" => {
+            "name" => "Masha",
+            "id" => "8"
+          },
+          "9" => {
+            "name" => "Masha 2",
+            "id" => "9"
+          }
+        }
+      }
+    end
+
+    it "sends a bulk_create request and returns the newly created mavenlink models" do
+      expect(model.bulk_create(models)).to match_array([Monkey, Monkey])
+    end
+  end
+
   describe ".create" do
     context "valid record" do
       specify do

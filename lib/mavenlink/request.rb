@@ -148,6 +148,12 @@ module Mavenlink
       "Mavenlink::#{collection_name.classify}".constantize.new(attributes, nil, client)
     end
 
+    # @param models [Array<Hash>]
+    # @return [Mavenlink::Response]
+    def bulk_create(models)
+      perform { client.post(collection_name, collection_name.pluralize => models) }
+    end
+
     # @param attributes [Hash]
     # @return [Mavenlink::Response]
     def create(attributes)

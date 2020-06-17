@@ -13,6 +13,12 @@ module Mavenlink
       (name || "undefined").split(/\W+/, 2).last.tableize.pluralize
     end
 
+    # @param models [Array<Hash>]
+    # @return [Array<Mavenlink::Model>]
+    def self.bulk_create(models)
+      scoped.bulk_create(models).results
+    end
+
     # @param attributes [Hash]
     # @return [Mavenlink::Model]
     def self.create(attributes = {})
