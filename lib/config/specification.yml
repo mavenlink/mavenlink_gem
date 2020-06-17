@@ -2283,3 +2283,13 @@ workweek_memberships:
     workweek:
       foreign_key: workweek_id
       collection: workweeks
+
+scheduled_jobs/insights_report_exports:
+  attributes:
+    - id
+    - title
+    - description
+    - external_report_object_identifier
+    - recurrence
+    - created_at
+    - latest_success
