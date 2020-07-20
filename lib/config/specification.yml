@@ -471,6 +471,7 @@ expense_report_submissions:
     - current_resolution_created_at_date
     - expense_ids
     - resolution_ids
+    - permissions
   create_attributes:
     - title
     - comment
@@ -1795,6 +1796,7 @@ timesheet_submissions:
       - current_resolution_created_at_date
       - time_entry_ids
       - resolution_ids
+      - permissions
     create_attributes:
       - title
       - comment
