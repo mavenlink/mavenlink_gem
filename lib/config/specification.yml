@@ -946,7 +946,7 @@ project_accounting_records:
     - workspace_id
     - story_id
   validations:
-    [workspace_id, currency, start_date, end_date, type, amount]:
+    [workspace_id, currency, start_date, end_date, type]:
       presence: true
   associations:
     story:

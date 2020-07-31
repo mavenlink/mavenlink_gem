@@ -5,7 +5,6 @@ describe Mavenlink::ProjectAccountingRecord, stub_requests: true, type: :model d
 
   describe "validations" do
     it { is_expected.to validate_presence_of :workspace_id }
-    it { is_expected.to validate_presence_of :amount }
     it { is_expected.to validate_presence_of :currency }
     it { is_expected.to validate_presence_of :start_date }
     it { is_expected.to validate_presence_of :end_date }
