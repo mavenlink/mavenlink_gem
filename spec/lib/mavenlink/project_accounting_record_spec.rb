@@ -15,5 +15,6 @@ describe Mavenlink::ProjectAccountingRecord, stub_requests: true, type: :model d
   describe "associations" do
     it { is_expected.to respond_to :story }
     it { is_expected.to respond_to :workspace }
+    it { is_expected.to respond_to :external_references }
   end
 end

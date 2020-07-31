@@ -955,6 +955,9 @@ project_accounting_records:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
 project_templates:
   attributes:
