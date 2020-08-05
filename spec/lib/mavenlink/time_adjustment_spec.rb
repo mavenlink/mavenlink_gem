@@ -9,5 +9,6 @@ describe Mavenlink::TimeAdjustment, stub_requests: true, type: :model do
     it { is_expected.to respond_to :user }
     it { is_expected.to respond_to :creator }
     it { is_expected.to respond_to :active_invoice }
+    it { is_expected.to respond_to :external_references }
   end
 end
