@@ -245,13 +245,18 @@ custom_fields:
     - creator_id # the internal id of the User who created the custom field
     - default_text # the placeholder text
     - unique_constraint # an optional boolean constraint which forces the Custom Field Values' value to be unique across a subject_type. The default is false
-    - choices # the choices only valid for a 'single' and 'multi' type custom fields
     - custom_field_set_id # the custom field set the field belongs in. All custom fields are contained in a custom field set which contain many sets.
     - write_access # the permission level required to create, update, and destroy values for this custom field
     - read_access # the permission level required to read values for this custom field
     - created_at # the date the CF was created
     - updated_at # the date the CF was last updated
     - values_count
+    - has_values
+    - hidden_in_user_interface
+    - currency
+    - available_on_estimates
+    - available_to_resources
+    - choice_ids
   create_attributes:
     - name # (required) the given field name
     - value_type # (optional) the types the Custom Field Values use. The current types include: 'string', 'date', 'number', and 'currency'
@@ -261,6 +266,8 @@ custom_fields:
     - custom_field_set_id # (optional) the custom field set the custom field will belong to. If the custom_field_set_id is omitted this field will belong to a Workspace set named 'Default Project Set'. Note omitting the set id will restrict this field to only be applied to workspaces.
     - write_access
     - read_access
+    - hidden_in_user_interface
+    - external_reference
   update_attributes:
     - name # (required) the given field name
     - value_type
@@ -270,6 +277,10 @@ custom_fields:
     - custom_field_set_id
     - write_access # (optional) the permission level required for a user to create, update, or delete a custom field value for an object.
     - read_access # (optional) the permission level required to read a custom field value for an object.
+    - available_on_estimates
+    - available_to_resources
+    - hidden_in_user_interface
+    - external_reference
   associations:
     creator:
       foreign_key: creator_id
@@ -277,6 +288,12 @@ custom_fields:
     choices:
       foreign_key: choice_ids
       collection: custom_field_choices
+    custom_field_set:
+      foreign_key: custom_field_set_id
+      collection: custom_field_sets
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
 custom_field_values:
   attributes:
