@@ -257,6 +257,7 @@ custom_fields:
     - available_on_estimates
     - available_to_resources
     - choice_ids
+    - external_reference_ids
   create_attributes:
     - name # (required) the given field name
     - value_type # (optional) the types the Custom Field Values use. The current types include: 'string', 'date', 'number', and 'currency'
