@@ -320,11 +320,11 @@ custom_field_values:
     - value # (required)
   associations:
     setter:
-      - foreign_key: setter_id
-      - collection: users
+      foreign_key: setter_id
+      collection: users
     custom_field:
-      - foreign_key: custom_field_id
-      - collection: custom_fields
+      foreign_key: custom_field_id
+      collection: custom_fields
 
 custom_field_choices:
   attributes:
@@ -335,8 +335,8 @@ custom_field_choices:
     - custom_field_id
   associations:
     custom_field:
-      - foreign_key: custom_field_id
-      - collection: custom_fields
+      foreign_key: custom_field_id
+      collection: custom_fields
 
 estimate_scenarios:
   validations:
@@ -512,7 +512,6 @@ expense_report_submissions:
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
-
 
 external_payments:
   attributes:
