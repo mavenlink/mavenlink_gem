@@ -922,6 +922,7 @@ project_accounting_records:
     - type
     - workspace_id
     - story_id
+    - role_id
   create_attributes:
     - amount
     - budget
@@ -945,6 +946,7 @@ project_accounting_records:
     - type
     - workspace_id
     - story_id
+    - role_id
   validations:
     [workspace_id, currency, start_date, end_date, type, amount]:
       presence: true
@@ -955,6 +957,9 @@ project_accounting_records:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
+    role:
+      foreign_key: role_id
+      collection: roles
 
 project_templates:
   attributes:
