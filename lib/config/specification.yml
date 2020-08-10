@@ -948,7 +948,7 @@ project_accounting_records:
     - story_id
     - role_id
   validations:
-    [workspace_id, currency, start_date, end_date, type, amount]:
+    [workspace_id, currency, start_date, end_date, type]:
       presence: true
   associations:
     story:
@@ -960,6 +960,9 @@ project_accounting_records:
     role:
       foreign_key: role_id
       collection: roles
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
 project_templates:
   attributes:
@@ -1692,6 +1695,9 @@ time_adjustments:
     active_invoice:
       foreign_key: active_invoice_id
       collection: invoices
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
   attributes:
     - id
     - original_date
@@ -1708,6 +1714,7 @@ time_adjustments:
     - time
     - created_at
     - updated_at
+    - external_reference_ids
   create_attributes:
     - workspace_id
     - user_id
