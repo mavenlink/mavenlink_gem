@@ -17,4 +17,17 @@ describe Mavenlink::ProjectAccountingRecord, stub_requests: true, type: :model d
     it { is_expected.to respond_to :role }
     it { is_expected.to respond_to :external_references }
   end
+
+  describe "#destroy" do
+    subject { described_class.new(id: "5555") }
+
+    it "puts to the delete route with the record id" do
+      expect(subject.client).to receive(:put).with("project_accounting_records/delete", ids: subject.id)
+      subject.destroy
+    end
+
+    it "aliases #delete to #destroy" do
+      expect(subject.method(:delete)).to eq(subject.method(:destroy))
+    end
+  end
 end
