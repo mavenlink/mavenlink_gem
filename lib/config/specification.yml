@@ -915,6 +915,73 @@ posts:
       foreign_key: attachment_ids
       collection: attachments
 
+project_accounting_records:
+  attributes:
+    - amount
+    - budget
+    - contract_date
+    - cost
+    - cost_eac
+    - created_at
+    - currency
+    - description
+    - end_date
+    - hours
+    - hours_eac
+    - hours_etc
+    - labor_type
+    - service_type
+    - notes
+    - percent_complete
+    - start_date
+    - status
+    - total_estimated_hours
+    - total_hours_to_date
+    - type
+    - workspace_id
+    - story_id
+    - role_id
+  create_attributes:
+    - amount
+    - budget
+    - contract_date
+    - cost
+    - cost_eac
+    - currency
+    - description
+    - end_date
+    - hours
+    - hours_eac
+    - hours_etc
+    - labor_type
+    - service_type
+    - notes
+    - percent_complete
+    - start_date
+    - status
+    - total_estimated_hours
+    - total_hours_to_date
+    - type
+    - workspace_id
+    - story_id
+    - role_id
+  validations:
+    [workspace_id, currency, start_date, end_date, type]:
+      presence: true
+  associations:
+    story:
+      foreign_key: story_id
+      collection: stories
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    role:
+      foreign_key: role_id
+      collection: roles
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+
 project_templates:
   attributes:
     - id # the internal project template ID
