@@ -922,6 +922,7 @@ project_accounting_records:
     - contract_date
     - cost
     - cost_eac
+    - created_at
     - currency
     - description
     - end_date
