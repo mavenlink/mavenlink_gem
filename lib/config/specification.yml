@@ -2262,6 +2262,7 @@ workspace_resources:
     - label
     - user_id
     - role_id
+    - auto_update_label
   associations:
     participation:
       foreign_key: participation_id
