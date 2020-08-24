@@ -2136,6 +2136,9 @@ workspace_allocations:
     - created_at
     - updated_at
     - workspace_resource_id
+    - workspace_id
+    - creator_id
+    - updater_id
     - external_reference_ids
   create_attributes:
     - resource_id
@@ -2159,6 +2162,12 @@ workspace_allocations:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
+    creator:
+      foreign_key: creator_id
+      collection: users
+    updater:
+      foreign_key: updater_id
+      collection: users
     external_references:
       foreign_key: external_reference_ids
       collection: external_references

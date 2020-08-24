@@ -13,6 +13,8 @@ describe Mavenlink::WorkspaceAllocation, stub_requests: true, type: :model do
   describe "associations" do
     it { is_expected.to respond_to "workspace_resource" }
     it { is_expected.to respond_to "workspace" }
+    it { is_expected.to respond_to "creator" }
+    it { is_expected.to respond_to "updater" }
     it { is_expected.to respond_to "external_references" }
   end
 end
