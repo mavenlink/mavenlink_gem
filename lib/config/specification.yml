@@ -918,6 +918,7 @@ posts:
 project_accounting_records:
   attributes:
     - amount
+    - amount_to_date
     - budget
     - contract_date
     - cost
@@ -926,6 +927,7 @@ project_accounting_records:
     - currency
     - description
     - end_date
+    - fees
     - hours
     - hours_eac
     - hours_etc
@@ -943,6 +945,7 @@ project_accounting_records:
     - role_id
   create_attributes:
     - amount
+    - amount_to_date
     - budget
     - contract_date
     - cost
@@ -950,6 +953,7 @@ project_accounting_records:
     - currency
     - description
     - end_date
+    - fees
     - hours
     - hours_eac
     - hours_etc
