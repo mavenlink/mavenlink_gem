@@ -1954,13 +1954,20 @@ vendors:
     - id
     - name
     - in_use
+    - archived
+    - externally_managed
   create_attributes:
     - name
   update_attributes:
     - name
+    - archived
   validations:
     name:
       presence: true
+  associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
 workspaces:
   validations:
