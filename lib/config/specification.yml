@@ -823,16 +823,36 @@ participations:
     - active_role
     - estimated_workspace_minutes
     - allocated_workspace_minutes
+    - rate_in_cents
+    - default_rate_in_cents
+    - cost_in_cents
+    - show_as_read_only
+    - can_invite
+    - can_edit
+    - can_post
+    - can_edit_expense
+    - can_edit_time
+    - is_foreign_participant
     - user_id
     - workspace_id
     - workspace_role_id
+    - primary_role_id
     - workspace_resource_ids
+    - active_role_ids
   create_attributes:
-    - workspace_id # (required)
-    - role # (required) either `maven` or `buyer`
-    - user_id # (required)
+    - workspace_id
+    - role
+    - user_id
+    - can_invite
+    - permissions
   update_attributes:
-    - team_lead # (required) boolean to set the team lead on the workspace
+    - team_lead
+    - cost_in_cents
+    - rate_in_cents
+    - workspace_role_id
+    - can_invite
+    - permissions
+    - access_level
   associations:
     user:
       foreign_key: user_id
@@ -840,12 +860,18 @@ participations:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
-    role:
+    workspace_role:
       foreign_key: workspace_role_id
+      collection: roles
+    primary_role:
+      foreign_key: primary_role_id
       collection: roles
     workspace_resources:
       foreign_key: workspace_resource_ids
       collection: workspace_resources
+    active_roles:
+      foreign_key: active_role_ids
+      collection: roles
 
 posts:
   attributes:
