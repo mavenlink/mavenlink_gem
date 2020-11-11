@@ -1208,6 +1208,35 @@ skills:
     - role_ids
     - external_reference
 
+skill_adjacencies:
+  associations:
+    requested_skill:
+      foreign_key: requested_skill_id
+      collection: skills
+    adjacent_skill:
+      foreign_key: adjacent_skill_id
+      collection: skills
+    creator:
+      foreign_key: creator_id
+      collection: users
+    updater:
+      foreign_key: updater_id
+      collection: users
+  attributes:
+    - score
+    - created_at
+    - updated_at
+    - requested_skill_id
+    - adjacent_skill_id
+    - creator_id
+    - updater_id
+  create_attributes:
+    - score
+    - requested_skill_id
+    - adjacent_skill_id
+  update_attributes:
+    - score
+
 skill_categories:
   associations:
     skills:
