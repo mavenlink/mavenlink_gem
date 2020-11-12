@@ -1987,9 +1987,11 @@ vendors:
     - externally_managed
   create_attributes:
     - name
+    - external_reference
   update_attributes:
     - name
     - archived
+    - external_reference
   validations:
     name:
       presence: true
