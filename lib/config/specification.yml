@@ -157,22 +157,28 @@ assignments:
     - assignee_id # the id of the user who owns the assignment
     - story_allocation_day_ids # the ids of Story Allocation Days belonging to the assignment
     - resource_id
+    - external_reference_ids
   create_attributes:
     - story_id # (required) the ID of the Story for which the assignment will be created
     - assignee_id # (required) the ID of the User for which the assignment will be created
     - current # (optional) whether the assignment is active or not
     - estimated_minutes # (optional) the number of minutes that the user is expected to work on this story
     - resource_id
+    - external_reference
   update_attributes:
     - current
     - estimated_minutes
     - resource_id
+    - external_reference
   associations:
     # story - when included, the story_id will reference the story for which the assignment belongs
     # assignee - when included, the assignee_id will reference the user for which the assignment belongs
     # story_allocation_days - when included, the story_allocation_day_ids array will reference all of the
     # Story Allocation Days that belong to the assignment.
     # Including story allocation days requires the request to be filtered with the plannable filter
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
     story:
       foreign_key: story_id
       collection: stories

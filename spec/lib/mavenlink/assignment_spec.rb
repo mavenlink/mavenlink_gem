@@ -9,6 +9,7 @@ describe Mavenlink::Assignment, stub_requests: true, type: :model do
     it { is_expected.to respond_to :story }
     it { is_expected.to respond_to :assignee }
     it { is_expected.to respond_to :story_allocation_days }
+    it { is_expected.to respond_to :external_references }
   end
 
   describe "#destroy" do
