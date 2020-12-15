@@ -2135,6 +2135,7 @@ workspaces:
     - percentage_complete
     - access_level
     - status_key
+    - account_color_id
     - workspace_group_ids
     - target_margin
     - primary_maven_id
@@ -2171,6 +2172,7 @@ workspaces:
     - approver_id
     - target_margin
     - tasks_default_non_billable
+    - account_color_id
   update_attributes:
     - title
     - budgeted
@@ -2200,6 +2202,7 @@ workspaces:
     - status_key
     - external_reference
     - workspace_group_ids
+    - account_color_id
 
 workspace_allocations:
   attributes:
