@@ -81,7 +81,8 @@ module Mavenlink
                    "User-Agent" => user_agent.to_s,
                    "Authorization" => "Bearer #{oauth_token}" },
         ssl: { verify: false },
-        url: endpoint
+        url: endpoint,
+        request: { timeout: 180 }
       }.freeze
     end
 
