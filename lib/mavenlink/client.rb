@@ -1,6 +1,7 @@
 module Mavenlink
   class Client
     ENDPOINT = "https://api.mavenlink.com/api/v1/".freeze
+    TIMEOUT = 180
 
     # @param settings [ActiveSuppport::HashWithIndifferentAccess]
     def initialize(settings = Mavenlink.default_settings)
@@ -82,7 +83,7 @@ module Mavenlink
                    "Authorization" => "Bearer #{oauth_token}" },
         ssl: { verify: false },
         url: endpoint,
-        request: { timeout: 180 }
+        request: { timeout: TIMEOUT }
       }.freeze
     end
 
