@@ -400,6 +400,7 @@ expenses:
     - is_billable # is this a billable expense?
     - taxable
     - reimbursable
+    - foreign_exchange_amount
     - workspace_id # the id of the project Workspace this expense is associated with
     - user_id # the id of the user who created this expense
     - story_id
@@ -420,6 +421,7 @@ expenses:
     - expense_category_id # the id of its category
     - reimbursable
     - vendor_id
+    - foreign_exchange_amount
     - external_reference
   update_attributes:
     # NOTE(AC): check
@@ -432,6 +434,7 @@ expenses:
     - billable
     - story_id
     - expense_category_id # the id of its category
+    - foreign_exchange_amount
     - external_reference
   associations:
     workspace:
