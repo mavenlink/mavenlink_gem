@@ -2355,6 +2355,8 @@ workspace_resources:
     - user_id
     - role_id
     - auto_update_label
+    - cost_rate
+    - bill_rate
   associations:
     participation:
       foreign_key: participation_id
