@@ -1304,6 +1304,64 @@ skill_memberships:
   update_attributes:
     - level
 
+staffing_demands:
+  attributes:
+    - description
+    - title
+    - start_date
+    - end_date
+    - quantity
+    - updated_at
+    - created_at
+    - status
+    - creator_id
+    - ownder_id
+    - workspace_id
+    - role_id
+  create_attributes:
+    - description
+    - title
+    - start_date
+    - end_date
+    - quantity
+    - workspace_id
+    - role_id
+    - status
+    - skills
+    - external_reference
+  update_attributes:
+    - description
+    - title
+    - start_date
+    - end_date
+    - quantity
+    - workspace_id
+    - role_id
+    - status
+    - external_reference
+  associations:
+    creator:
+      foreign_key: creator_id
+      collection: users
+    owner:
+      foreign_key: owner_id
+      collection: users
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    role:
+      foreign_key: role_id
+      collection: roles
+    skills:
+      foreign_key: skill_ids
+      collection: skills
+    staffing_demand_skills:
+      foreign_key: staffing_demand_skill_ids
+      collection: staffing_demand_skills
+    custom_field_values:
+      foreign_key: custom_field_value_ids
+      collection: custom_field_values
+
 status_reports:
   associations:
     workspace:
