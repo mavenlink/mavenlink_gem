@@ -243,6 +243,37 @@ backup_approver_associations:
       foreign_key: approver_id
       collection: users
 
+candidates:
+  attributes:
+    - staffing_demand_id
+    - user_id
+    - status
+    - notes
+  create_attributes:
+    - staffing_demand_id
+    - user_id
+    - status
+    - notes
+    - external_reference
+  update_attributes:
+    - user_id
+    - status
+    - notes
+    - external_reference
+  associations:
+    staffing_demand:
+      foreign_key: staffing_demand_id
+      collection: staffing_demands
+    user:
+      foreign_key: user_id
+      collection: users
+    custom_field_values:
+      foreign_key: custom_field_value_ids
+      collection: custom_field_values
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+
 custom_fields:
   attributes:
     - id # the internal id of the custom field
