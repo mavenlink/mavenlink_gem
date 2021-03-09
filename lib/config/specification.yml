@@ -243,6 +243,37 @@ backup_approver_associations:
       foreign_key: approver_id
       collection: users
 
+candidates:
+  attributes:
+    - staffing_demand_id
+    - user_id
+    - status
+    - notes
+  create_attributes:
+    - staffing_demand_id
+    - user_id
+    - status
+    - notes
+    - external_reference
+  update_attributes:
+    - user_id
+    - status
+    - notes
+    - external_reference
+  associations:
+    staffing_demand:
+      foreign_key: staffing_demand_id
+      collection: staffing_demands
+    user:
+      foreign_key: user_id
+      collection: users
+    custom_field_values:
+      foreign_key: custom_field_value_ids
+      collection: custom_field_values
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+
 custom_fields:
   attributes:
     - id # the internal id of the custom field
@@ -1303,6 +1334,64 @@ skill_memberships:
     - level
   update_attributes:
     - level
+
+staffing_demands:
+  attributes:
+    - description
+    - title
+    - start_date
+    - end_date
+    - quantity
+    - updated_at
+    - created_at
+    - status
+    - creator_id
+    - ownder_id
+    - workspace_id
+    - role_id
+  create_attributes:
+    - description
+    - title
+    - start_date
+    - end_date
+    - quantity
+    - workspace_id
+    - role_id
+    - status
+    - skills
+    - external_reference
+  update_attributes:
+    - description
+    - title
+    - start_date
+    - end_date
+    - quantity
+    - workspace_id
+    - role_id
+    - status
+    - external_reference
+  associations:
+    creator:
+      foreign_key: creator_id
+      collection: users
+    owner:
+      foreign_key: owner_id
+      collection: users
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    role:
+      foreign_key: role_id
+      collection: roles
+    skills:
+      foreign_key: skill_ids
+      collection: skills
+    staffing_demand_skills:
+      foreign_key: staffing_demand_skill_ids
+      collection: staffing_demand_skills
+    custom_field_values:
+      foreign_key: custom_field_value_ids
+      collection: custom_field_values
 
 status_reports:
   associations:
