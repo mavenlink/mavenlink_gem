@@ -333,6 +333,27 @@ custom_fields:
       foreign_key: external_reference_ids
       collection: external_references
 
+custom_field_sets:
+  attributes:
+    - id
+    - name
+    - subject_type
+    - custom_field_ids
+    - updated_at
+    - created_at
+  create_attributes:
+    - name
+    - subject_type
+    - external_reference
+  update_attributes:
+    - name
+    - subject_type
+    - external_reference
+  associations:
+    custom_fields:
+      foreign_key: custom_field_ids
+      collection: custom_fields
+
 custom_field_values:
   attributes:
     - id # the internal custom field value id
