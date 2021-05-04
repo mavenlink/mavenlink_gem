@@ -536,6 +536,26 @@ estimate_scenario_resources:
       foreign_key: estimate_scenario_resource_skill_ids
       collection: estimate_scenario_resource_skills
 
+estimate_scenario_resource_allocations:
+  attributes:
+    - id
+    - relative_start_day
+    - duration_days
+    - percent_allocated
+    - created_at
+    - updated_at
+    - resource_id
+  update_attributes:
+    - duration_days
+    - percent_allocated
+    - relative_start_day
+    - start_date
+    - end_date
+  associations:
+    resource:
+      foreign_key: resource_id
+      collection: estimate_scenario_resources
+
 expenses:
   validations:
     [workspace_id, date, category, amount_in_cents]:
