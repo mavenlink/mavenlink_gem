@@ -97,13 +97,17 @@ shared_context "model" do |collection_name|
       end
 
       specify do
-        expect(model.create_attributes).not_to be_empty
+        expect(model.create_attributes).not_to be_empty if model.specification["create_attributes"].present?
       end
     end
 
     describe ".update_attributes" do
       specify do
         expect(model.update_attributes).to be_an Array
+      end
+
+      specify do
+        expect(model.update_attributes).not_to be_empty if model.specification["update_attributes"].present?
       end
     end
 
