@@ -481,6 +481,61 @@ estimate_scenarios:
       foreign_key: estimate_scenario_resource_ids
       collection: estimate_scenario_resources
 
+estimate_scenario_resources:
+  attributes:
+    - id
+    - label
+    - created_at
+    - updated_at
+    - cost_rate
+    - can_edit_bill_rate
+    - bill_rate
+    - role_name
+    - display_label
+    - estimate_scenario_id
+    - user_id
+    - role_id
+    - ogranization_membership_id
+    - allocation_id
+    - geography_id
+    - skill_ids
+    - estimate_scenario_resource_skill_ids
+  create_attributes:
+    - estimate_scenario_id
+    - label
+    - role_id
+    - allocation_attributes
+    - external_reference
+  update_attributes:
+    - role_id
+    - bill_rate
+    - cost_rate
+    - geography_id
+    - label
+    - external_reference
+  associations:
+    user:
+      foreign_key: user_id
+      collection: users
+    role:
+      foreign_key: role_id
+      collection: roles
+    organization_membership:
+      foreign_key: organization_membership_id
+      collection: organization_memberships
+    allocation:
+      foreign_key: allocation_id
+      collection: estimate_scenario_resource_allocations
+    geography:
+      foreign_key: geography_id
+      collection: geographies
+    skills:
+      foreign_key: skill_ids
+      collection: skills
+    estimate_scenario_resource_skills:
+      foreign_key: estimate_scenario_resource_skill_ids
+      collection: estimate_scenario_resource_skills
+
 expenses:
   validations:
     [workspace_id, date, category, amount_in_cents]:
