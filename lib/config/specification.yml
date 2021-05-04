@@ -399,6 +399,55 @@ custom_field_choices:
       foreign_key: external_reference_ids
       collection: external_references
 
+estimates:
+  attributes:
+    - id
+    - name
+    - currency
+    - is_locked
+    - description
+    - confidence
+    - created_at
+    - updated_at
+    - creator_id
+    - workspace_group_id
+    - estimate_scenario_ids
+    - workspace_id
+    - custom_field_value_ids
+    - favorite_scenario_id
+  create_attributes:
+    - name
+    - currency
+    - workspace_group_id
+    - estimate_scenario
+    - external_reference
+  update_attributes:
+    - name
+    - workspace_group_id
+    - description
+    - favorite_scenario_id
+    - confidence
+    - external_reference
+  associations:
+    creator:
+      foreign_key: creator_id
+      collection: users
+    workspace_group:
+      foreign_key: workspace_group_id
+      collection: workspace_groups
+    estimate_scenarios:
+      foreign_key: estimate_scenario_ids
+      collection: estimate_scenarios
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    custom_field_values:
+      foreign_key: custom_field_value_ids
+      collection: custom_field_values
+    favorite_scenario:
+      foreign_key: favorite_scenario_id
+      collection: estimate_scenarios
+
 estimate_scenarios:
   validations:
     [name, start_date]:
