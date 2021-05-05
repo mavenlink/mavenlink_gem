@@ -556,6 +556,34 @@ estimate_scenario_resource_allocations:
       foreign_key: resource_id
       collection: estimate_scenario_resources
 
+estimate_scenario_resource_skills:
+  attributes:
+    - id
+    - level
+    - max_level
+    - created_at
+    - updated_at
+    - cached_skill_name
+    - skill_id
+    - creator_id
+    - estimate_scenario_resource_id
+  create_attributes:
+    - skill_id
+    - estimate_scenario_resource_id
+    - level
+  update_attributes:
+    - level
+  associations:
+    skill:
+      foreign_key: skill_id
+      collection: skills
+    creator:
+      foreign_key: creator_id
+      collection: users
+    estimate_scenario_resource:
+      foreign_key: estimate_scenario_resource_id
+      collection: estimate_scenario_resources
+
 expenses:
   validations:
     [workspace_id, date, category, amount_in_cents]:
