@@ -11,5 +11,6 @@ describe Mavenlink::EstimateScenarioResource, stub_requests: true, type: :model 
     it { is_expected.to respond_to :geography }
     it { is_expected.to respond_to :skills }
     it { is_expected.to respond_to :estimate_scenario_resource_skills }
+    it { is_expected.to respond_to :external_references }
   end
 end

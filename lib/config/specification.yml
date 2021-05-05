@@ -415,6 +415,7 @@ estimates:
     - workspace_id
     - custom_field_value_ids
     - favorite_scenario_id
+    - external_reference_ids
   create_attributes:
     - name
     - currency
@@ -447,6 +448,9 @@ estimates:
     favorite_scenario:
       foreign_key: favorite_scenario_id
       collection: estimate_scenarios
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
 estimate_scenarios:
   validations:
@@ -462,17 +466,21 @@ estimate_scenarios:
     - rate_card_id
     - created_at
     - updated_at
+    - estimate_scenario_resource_ids
+    - external_reference_ids
   create_attributes:
     - budget_in_cents
     - name
     - rate_card_id
     - start_date
     - estimate_id
+    - external_reference
   update_attributes:
     - budget_in_cents
     - name
     - rate_card_id
     - start_date
+    - external_reference
   associations:
     rate_card:
       foreign_key: rate_card_id
@@ -480,6 +488,9 @@ estimate_scenarios:
     estimate_scenario_resources:
       foreign_key: estimate_scenario_resource_ids
       collection: estimate_scenario_resources
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
 estimate_scenario_resources:
   attributes:
@@ -500,6 +511,7 @@ estimate_scenario_resources:
     - geography_id
     - skill_ids
     - estimate_scenario_resource_skill_ids
+    - external_reference_ids
   create_attributes:
     - estimate_scenario_id
     - label
@@ -535,6 +547,9 @@ estimate_scenario_resources:
     estimate_scenario_resource_skills:
       foreign_key: estimate_scenario_resource_skill_ids
       collection: estimate_scenario_resource_skills
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
 estimate_scenario_resource_allocations:
   attributes:

@@ -10,5 +10,6 @@ describe Mavenlink::Estimate, stub_requests: true, type: :model do
     it { is_expected.to respond_to :workspace }
     it { is_expected.to respond_to :custom_field_values }
     it { is_expected.to respond_to :favorite_scenario }
+    it { is_expected.to respond_to :external_references }
   end
 end
