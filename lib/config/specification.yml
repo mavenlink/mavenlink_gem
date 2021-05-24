@@ -399,6 +399,59 @@ custom_field_choices:
       foreign_key: external_reference_ids
       collection: external_references
 
+estimates:
+  attributes:
+    - id
+    - name
+    - currency
+    - is_locked
+    - description
+    - confidence
+    - created_at
+    - updated_at
+    - creator_id
+    - workspace_group_id
+    - estimate_scenario_ids
+    - workspace_id
+    - custom_field_value_ids
+    - favorite_scenario_id
+    - external_reference_ids
+  create_attributes:
+    - name
+    - currency
+    - workspace_group_id
+    - estimate_scenario
+    - external_reference
+  update_attributes:
+    - name
+    - workspace_group_id
+    - description
+    - favorite_scenario_id
+    - confidence
+    - external_reference
+  associations:
+    creator:
+      foreign_key: creator_id
+      collection: users
+    workspace_group:
+      foreign_key: workspace_group_id
+      collection: workspace_groups
+    estimate_scenarios:
+      foreign_key: estimate_scenario_ids
+      collection: estimate_scenarios
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    custom_field_values:
+      foreign_key: custom_field_value_ids
+      collection: custom_field_values
+    favorite_scenario:
+      foreign_key: favorite_scenario_id
+      collection: estimate_scenarios
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+
 estimate_scenarios:
   validations:
     [name, start_date]:
@@ -413,23 +466,137 @@ estimate_scenarios:
     - rate_card_id
     - created_at
     - updated_at
+    - estimate_scenario_resource_ids
+    - external_reference_ids
   create_attributes:
     - budget_in_cents
     - name
     - rate_card_id
     - start_date
     - estimate_id
+    - external_reference
   update_attributes:
     - budget_in_cents
     - name
     - rate_card_id
     - start_date
+    - external_reference
   associations:
     rate_card:
       foreign_key: rate_card_id
       collection: rate_cards
     estimate_scenario_resources:
       foreign_key: estimate_scenario_resource_ids
+      collection: estimate_scenario_resources
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+
+estimate_scenario_resources:
+  attributes:
+    - id
+    - label
+    - created_at
+    - updated_at
+    - cost_rate
+    - can_edit_bill_rate
+    - bill_rate
+    - role_name
+    - display_label
+    - estimate_scenario_id
+    - user_id
+    - role_id
+    - ogranization_membership_id
+    - allocation_id
+    - geography_id
+    - skill_ids
+    - estimate_scenario_resource_skill_ids
+    - external_reference_ids
+  create_attributes:
+    - estimate_scenario_id
+    - label
+    - role_id
+    - allocation_attributes
+    - external_reference
+  update_attributes:
+    - role_id
+    - bill_rate
+    - cost_rate
+    - geography_id
+    - label
+    - external_reference
+  associations:
+    user:
+      foreign_key: user_id
+      collection: users
+    role:
+      foreign_key: role_id
+      collection: roles
+    organization_membership:
+      foreign_key: organization_membership_id
+      collection: organization_memberships
+    allocation:
+      foreign_key: allocation_id
+      collection: estimate_scenario_resource_allocations
+    geography:
+      foreign_key: geography_id
+      collection: geographies
+    skills:
+      foreign_key: skill_ids
+      collection: skills
+    estimate_scenario_resource_skills:
+      foreign_key: estimate_scenario_resource_skill_ids
+      collection: estimate_scenario_resource_skills
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+
+estimate_scenario_resource_allocations:
+  attributes:
+    - id
+    - relative_start_day
+    - duration_days
+    - percent_allocated
+    - created_at
+    - updated_at
+    - resource_id
+  update_attributes:
+    - duration_days
+    - percent_allocated
+    - relative_start_day
+    - start_date
+    - end_date
+  associations:
+    resource:
+      foreign_key: resource_id
+      collection: estimate_scenario_resources
+
+estimate_scenario_resource_skills:
+  attributes:
+    - id
+    - level
+    - max_level
+    - created_at
+    - updated_at
+    - cached_skill_name
+    - skill_id
+    - creator_id
+    - estimate_scenario_resource_id
+  create_attributes:
+    - skill_id
+    - estimate_scenario_resource_id
+    - level
+  update_attributes:
+    - level
+  associations:
+    skill:
+      foreign_key: skill_id
+      collection: skills
+    creator:
+      foreign_key: creator_id
+      collection: users
+    estimate_scenario_resource:
+      foreign_key: estimate_scenario_resource_id
       collection: estimate_scenario_resources
 
 expenses:

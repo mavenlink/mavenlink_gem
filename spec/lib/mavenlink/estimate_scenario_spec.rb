@@ -11,5 +11,6 @@ describe Mavenlink::EstimateScenario, stub_requests: true, type: :model do
   describe "associations" do
     it { is_expected.to respond_to :rate_card }
     it { is_expected.to respond_to :estimate_scenario_resources }
+    it { is_expected.to respond_to :external_references }
   end
 end
