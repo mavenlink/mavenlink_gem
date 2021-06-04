@@ -718,6 +718,8 @@ expense_report_submissions:
     - current_resolution_description
     - current_resolution_creator_id
     - current_resolution_created_at_date
+    - user_id
+    - workspace_id
     - expense_ids
     - resolution_ids
     - permissions
