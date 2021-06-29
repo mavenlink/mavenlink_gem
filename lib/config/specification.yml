@@ -2627,6 +2627,7 @@ workspace_resources:
     - photo_path
     - role_initials
     - display_label
+    - allocations_count
     - created_at
     - updated_at
     - user_id
