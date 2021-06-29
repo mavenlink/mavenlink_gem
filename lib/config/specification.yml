@@ -2619,14 +2619,25 @@ workspace_invoice_preferences:
 workspace_resources:
   attributes:
     - id
+    - label
     - role_name
     - full_name
     - workspace_id
+    - workspace_title
     - photo_path
     - role_initials
     - display_label
     - created_at
     - updated_at
+    - user_id
+    - role_id
+    - participation_id
+    - skill_ids
+    - organization_membership_id
+    - external_reference_ids
+    - pending_resource_request_id
+    - workspace_resource_skill_ids
+    - custom_field_value_ids
   create_attributes:
     - workspace_id
     - user_id
@@ -2648,12 +2659,27 @@ workspace_resources:
     role:
       foreign_key: role_id
       collection: roles
+    pending_resource_request:
+      foreign_key: pending_resource_request_id
+      collection: resource_requests
     skills:
       foreign_key: skill_ids
       collection: skills
+    workspace_resource_skills:
+      foreign_key: workspace_resource_skill_ids
+      collection: workspace_resource_skills
+    custom_field_values:
+      foreign_key: custom_field_value_ids
+      collection: custom_field_values
     workspace:
       foreign_key: workspace_id
       collection: workspaces
+    organization_membership:
+      foreign_key: organization_membership_id
+      collection: organization_memberships
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
   validations:
     workspace_id:
       presence: true
