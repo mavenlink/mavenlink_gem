@@ -785,6 +785,7 @@ fixed_fee_items:
 
 external_references:
   attributes:
+    - id
     - service_name
     - service_model
     - service_model_ref
@@ -796,6 +797,7 @@ external_references:
     - external_status
     - locked
     - created_at
+    - updated_at
     - last_synced_at
   create_or_update_attributes:
    - service_name
