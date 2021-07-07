@@ -1322,7 +1322,7 @@ rate_cards:
 rate_card_sets:
   associations:
     rate_cards:
-      foriegn_key: rate_card_ids
+      foreign_key: rate_card_ids
       collection: rate_cards
     rate_card_set_versions:
       foreign_key: rate_card_set_version_ids
