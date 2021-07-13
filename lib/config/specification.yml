@@ -96,20 +96,54 @@ account_memberships:
     - is_punch_clock_user
     - can_create_workspace
     - can_view_reports
+    - default_read_only
+    - is_owner
+    - should_show_alert_on_timesheet_submission
+    - enforce_workweek_minimum_on_timesheet_submission
+    - enforce_workweek_maximum_on_timesheet_submission
+    - require_time_entry_location
+    - collaborator_only_license
+    - manager_can_approve
+    - manager_can_edit_skills
+    - is_backup_approver
+    - resource_request_approver
     - bill_rate_in_cents
     - cost_rate_in_cents
-    - manager_id
     - billability_target
-    - should_show_alert_on_timesheet_submission
+    - non_participant
+    - updated_at
+    - created_at
+
+    # Association IDs
     - user_id
-  update_attributes:
-    - bill_rate_in_cents # bill_rate_in_cents is optional"
-    - cost_rate_in_cents # cost_rate_in_cents is optional"
-    - default_role_id # default_role_id is the internal ID of the role of this user on this account"
-    - permission # permission is optional; it can be 'administrator', 'reports_viewer', 'project_lead', 'project_creator', 'punch_clock' or 'collaborator'"
+    - default_role_id
+    - effective_workweek_id
+    - possible_manager_ids
     - manager_id
+    - possible_managee_ids
+    - managee_ids
+    - skill_membership_ids
+    - backup_approver_association_ids
+    - cost_rate_ids
+    - future_billable_utilization_ids
+  update_attributes:
+    - bill_rate_in_cents
+    - cost_rate_in_cents
+    - default_role_id
+    - permission
     - billability_target
+    - default_read_only
+    - manager_id
+    - manager_can_approve
+    - manager_can_edit_skills
     - should_show_alert_on_timesheet_submission
+    - require_time_entry_location
+    - change_role_option
+    - backfill_uninvoiced_time_entries_with_new_role
+    - collaborator_only_license
+    - resource_request_approver
+    - enforce_workweek_minimum_on_timesheet_submission
+    - enforce_workweek_maximum_on_timesheet_submission
   associations:
     user:
       foreign_key: user_id
