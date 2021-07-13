@@ -1,38 +1,14 @@
 ---
-access_groups:
-  attributes:
-    - id
-    - name
-    - created_at
-    - resource_planning_permissions
-  create_attributes:
-    - name
-    - description
-    - set_resource_planning_permissions
-  update_attributes:
-    - name
-    - description
-    - set_resource_planning_permissions
-  associations:
-    last_updated_user:
-      foreign_key: last_updated_user_id
-      collection: users
-    users:
-      foreign_key: user_ids
-      collection: users
-
 access_group_memberships:
   attributes:
-    - id
-    - access_group_id
-    - user_id
-    - user_name
-    - access_group_name
-    - created_at
-    - creator_id
-  create_attributes:
-    - access_group_id
-    - user_id
+  - access_group_id
+  - access_group_name
+  - created_at
+  - creator_id
+  - user_id
+  - user_name
+  - access_group_id
+  - user_id
   associations:
     access_group:
       foreign_key: access_group_id
@@ -40,33 +16,127 @@ access_group_memberships:
     user:
       foreign_key: user_id
       collection: users
-
+  create_attributes:
+  - access_group_id
+  - user_id
+access_groups:
+  attributes:
+  - created_at
+  - name
+  - resource_planning_permissions
+  - last_updated_user_id
+  - user_ids
+  associations:
+    last_updated_user:
+      foreign_key: last_updated_user_id
+      collection: users
+    users:
+      foreign_key: user_ids
+      collection: users
+  create_attributes:
+  - description
+  - edit_allocations_for_named_resources_in_all_projects
+  - edit_allocations_for_named_resources_in_their_projects
+  - edit_allocations_for_named_resources_in_their_projects_and_joinable_projects
+  - edit_allocations_for_unnamed_resources_in_all_projects
+  - edit_allocations_for_unnamed_resources_in_their_projects
+  - edit_allocations_for_unnamed_resources_in_their_projects_and_joinable_projects
+  - edit_named_resources_in_all_projects
+  - edit_named_resources_in_their_projects_and_joinable_projects
+  - edit_unnamed_resources_in_all_projects
+  - edit_unnamed_resources_in_their_projects_and_joinable_projects
+  - name
+  - set_resource_planning_permissions
+  - submit_resource_requests_in_all_projects
+  - submit_resource_requests_in_their_projects
+  - view_all_projects_in_master_planning
+  - view_all_recommendations
+  - view_all_team_members_in_master_planning
+  - view_my_orgs_team_members_in_master_planning
+  - view_their_projects_in_master_planning
+  - view_themselves_in_master_planning
+  update_attributes:
+  - description
+  - edit_allocations_for_named_resources_in_all_projects
+  - edit_allocations_for_named_resources_in_their_projects
+  - edit_allocations_for_named_resources_in_their_projects_and_joinable_projects
+  - edit_allocations_for_unnamed_resources_in_all_projects
+  - edit_allocations_for_unnamed_resources_in_their_projects
+  - edit_allocations_for_unnamed_resources_in_their_projects_and_joinable_projects
+  - edit_named_resources_in_all_projects
+  - edit_named_resources_in_their_projects_and_joinable_projects
+  - edit_unnamed_resources_in_all_projects
+  - edit_unnamed_resources_in_their_projects_and_joinable_projects
+  - name
+  - set_resource_planning_permissions
+  - submit_resource_requests_in_all_projects
+  - submit_resource_requests_in_their_projects
+  - view_all_projects_in_master_planning
+  - view_all_recommendations
+  - view_all_team_members_in_master_planning
+  - view_my_orgs_team_members_in_master_planning
+  - view_their_projects_in_master_planning
+  - view_themselves_in_master_planning
+account_colors:
+  attributes:
+  - created_at
+  - default_color
+  - enabled
+  - hex
+  - name
+  - updated_at
+account_insights_mapping_permissions:
+  attributes:
+  - account_insights_mapping_id
+  - account_insights_mapping_name
+  - can_see_in_left_nav
+  - insights_access_group_id
+  - account_insights_mapping_id
+  - insights_access_group_id
+  associations:
+    account_insights_mapping:
+      foreign_key: account_insights_mapping_id
+      collection: account_insights_mappings
+    insights_access_group:
+      foreign_key: insights_access_group_id
+      collection: insights_access_groups
+  create_attributes:
+  - account_insights_mapping_id
+  - can_see_in_left_nav
+  - insights_access_group_id
+  update_attributes:
+  - can_see_in_left_nav
+account_insights_mappings:
+  attributes:
+  - is_active_dashboard
+  - is_custom_dashboard
+  - name
+  - insights_access_group_ids
+  associations:
+    insights_access_groups:
+      foreign_key: insights_access_group_ids
+      collection: insights_access_groups
+  create_attributes:
+  - is_active_dashboard
+  - name
+  update_attributes:
+  - is_active_dashboard
+  - name
 account_invitations:
   attributes:
-    - id
-    - full_name
-    - email_address
-    - headline
-    - pending
-    - permission
-    - bill_rate_in_cents
-    - cost_rate_in_cents
-    - inviter_id
-    - invitee_id
-  create_attributes:
-    - full_name
-    - email_address
-    - headline
-    - permission
-    - bill_rate_in_cents
-    - cost_rate_in_cents
-    - default_role_id
-    - external_reference
-  update_attributes:
-    - permission
-    - bill_rate_in_cents
-    - cost_rate_in_cents
-    - default_role_id
+  - bill_rate_in_cents
+  - billability_target
+  - collaborator_only_license
+  - cost_rate_in_cents
+  - email_address
+  - expiration_date
+  - full_name
+  - headline
+  - pending
+  - permission
+  - inviter_id
+  - invitee_id
+  - default_role_id
   associations:
     inviter:
       foreign_key: inviter_id
@@ -77,39 +147,81 @@ account_invitations:
     default_role:
       foreign_key: default_role_id
       collection: roles
-
-additional_items:
+  create_attributes:
+  - bill_rate_in_cents
+  - billability_target
+  - collaborator_only_license
+  - cost_rate_in_cents
+  - default_read_only
+  - default_role_id
+  - email_address
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - full_name
+  - headline
+  - locked
+  - permission
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  update_attributes:
+  - bill_rate_in_cents
+  - billability_target
+  - collaborator_only_license
+  - cost_rate_in_cents
+  - default_role_id
+  - permission
+account_locations:
   attributes:
-    - created_at
-    - notes
-    - amount_in_cents
-    - taxable
-    - currency
-    - workspace_id
-
+  - archived
+  - in_use
+  - name
+  create_attributes:
+  - archived
+  - name
+  update_attributes:
+  - archived
+  - name
 account_memberships:
   attributes:
-    - disabled_at
-    - permission
-    - is_administrator
-    - is_project_lead
-    - is_punch_clock_user
-    - can_create_workspace
-    - can_view_reports
-    - bill_rate_in_cents
-    - cost_rate_in_cents
-    - manager_id
-    - billability_target
-    - should_show_alert_on_timesheet_submission
-    - user_id
-  update_attributes:
-    - bill_rate_in_cents # bill_rate_in_cents is optional"
-    - cost_rate_in_cents # cost_rate_in_cents is optional"
-    - default_role_id # default_role_id is the internal ID of the role of this user on this account"
-    - permission # permission is optional; it can be 'administrator', 'reports_viewer', 'project_lead', 'project_creator', 'punch_clock' or 'collaborator'"
-    - manager_id
-    - billability_target
-    - should_show_alert_on_timesheet_submission
+  - bill_rate_in_cents
+  - billability_target
+  - can_create_workspace
+  - can_view_reports
+  - collaborator_only_license
+  - cost_rate_in_cents
+  - created_at
+  - default_read_only
+  - disabled_at
+  - enforce_workweek_maximum_on_timesheet_submission
+  - enforce_workweek_minimum_on_timesheet_submission
+  - is_administrator
+  - is_backup_approver
+  - is_owner
+  - is_project_lead
+  - is_punch_clock_user
+  - manager_can_approve
+  - manager_can_edit_skills
+  - non_participant
+  - permission
+  - require_time_entry_location
+  - resource_request_approver
+  - should_show_alert_on_timesheet_submission
+  - updated_at
+  - user_id
+  - default_role_id
+  - effective_workweek_id
+  - possible_manager_ids
+  - manager_id
+  - possible_managee_ids
+  - managee_ids
+  - skill_membership_ids
+  - backup_approver_association_ids
+  - cost_rate_ids
+  - future_billable_utilization_ids
   associations:
     user:
       foreign_key: user_id
@@ -144,38 +256,51 @@ account_memberships:
     future_billable_utilizations:
       foreign_key: future_billable_utilization_ids
       collection: billable_utilizations
-
+  update_attributes:
+  - backfill_uninvoiced_time_entries_with_new_role
+  - bill_rate_in_cents
+  - billability_target
+  - change_role_option
+  - collaborator_only_license
+  - cost_rate_in_cents
+  - default_read_only
+  - default_role_id
+  - enforce_workweek_maximum_on_timesheet_submission
+  - enforce_workweek_minimum_on_timesheet_submission
+  - manager_can_approve
+  - manager_can_edit_skills
+  - manager_id
+  - permission
+  - require_time_entry_location
+  - resource_request_approver
+  - should_show_alert_on_timesheet_submission
+acts_as_taggable_on/tags:
+  attributes:
+  - name
+  - status
+additional_items:
+  attributes:
+  - amount_in_cents
+  - created_at
+  - currency
+  - notes
+  - taxable
+  - workspace_id
 assignments:
   attributes:
-    - id # the unique identifier for this assignment object
-    - created_at # the date the assignment was recorded in Mavenlink
-    - updated_at # the date the assignment was last updated
-    - current # whether or not the assignment is active
-    - estimated_minutes # a user defined number of minutes that the user is expected to work on this story (task)
-    - allocated_minutes # the calculated sum of the assignment's Story Allocation Day minutes
-    - story_id # the id of the Story (Task) that owns the assignment
-    - assignee_id # the id of the user who owns the assignment
-    - story_allocation_day_ids # the ids of Story Allocation Days belonging to the assignment
-    - resource_id
-    - external_reference_ids
-  create_attributes:
-    - story_id # (required) the ID of the Story for which the assignment will be created
-    - assignee_id # (required) the ID of the User for which the assignment will be created
-    - current # (optional) whether the assignment is active or not
-    - estimated_minutes # (optional) the number of minutes that the user is expected to work on this story
-    - resource_id
-    - external_reference
-  update_attributes:
-    - current
-    - estimated_minutes
-    - resource_id
-    - external_reference
+  - account_id
+  - allocated_minutes
+  - created_at
+  - current
+  - estimated_minutes
+  - resource_id
+  - update_whitelist
+  - updated_at
+  - external_reference_ids
+  - story_id
+  - assignee_id
+  - story_allocation_day_ids
   associations:
-    # story - when included, the story_id will reference the story for which the assignment belongs
-    # assignee - when included, the assignee_id will reference the user for which the assignment belongs
-    # story_allocation_days - when included, the story_allocation_day_ids array will reference all of the
-    # Story Allocation Days that belong to the assignment.
-    # Including story allocation days requires the request to be filtered with the plannable filter
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
@@ -188,138 +313,394 @@ assignments:
     story_allocation_days:
       foreign_key: story_allocation_day_ids
       collection: story_allocation_days
-  validations:
-    [story_id, assignee_id]:
-      presence: true
-      'on': create
-
+  create_attributes:
+  - assignee_id
+  - current
+  - estimated_minutes
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - resource_id
+  - service_model
+  - service_model_ref
+  - service_name
+  - story_id
+  update_attributes:
+  - assignee_id
+  - current
+  - estimated_minutes
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - resource_id
+  - service_model
+  - service_model_ref
+  - service_name
 attachments:
-  validations:
-    [data, type]:
-      presence: true
-    type:
-      inclusion:
-        in: [post_attachment, receipt]
   attributes:
-    - data
-    - type
+  - created_at
+  - creator_name
+  - creator_photo_url
+  - deletable
+  - deleted_at
+  - filename
+  - filesize
+  - previewable
+  - private
+  - proof_url
+  - updated_at
+  - url
+  - view_in_new_tab
+  - viewable
   create_attributes:
-    - data
-    - type
-
-cost_rates:
-  attributes:
-    - id
-    - updated_at
-    - created_at
-    - currency
-    - amount_in_subunits
-    - in_use
-  create_attributes:
-    - currency
-    - amount_in_subunits
-    - account_membership_id
-  associations:
-    account_membership:
-      foreign_key: account_membership_id
-      collection: account_membership
-
+  - data
+  - direct
+  - filename
+  - type
+  update_attributes:
+  - filename
 backup_approver_associations:
   attributes:
-    - backup_approver_id
-    - approver_id
-    - start_date
-    - end_date
-  create_attributes:
-    - backup_approver_id
-    - approver_id
-    - start_date
-    - end_date
+  - active
+  - end_date
+  - start_date
+  - approver_id
+  - backup_approver_id
   associations:
-    backup_approver:
-      foreign_key: backup_approver_id
-      collection: users
     approver:
       foreign_key: approver_id
       collection: users
-
+    backup_approver:
+      foreign_key: backup_approver_id
+      collection: users
+  create_attributes:
+  - approver_id
+  - backup_approver_id
+  - end_date
+  - start_date
+  update_attributes:
+  - approver_id
+  - backup_approver_id
+  - end_date
+  - start_date
+baseline_payloads:
+  attributes:
+  - raw_data
+  - workspace_baseline_id
+billable_utilizations:
+  attributes:
+  - created_at
+  - effective_date
+  - target
+  - updated_at
+  - account_membership_id
+  - creator_id
+  associations:
+    account_membership:
+      foreign_key: account_membership_id
+      collection: account_memberships
+    creator:
+      foreign_key: creator_id
+      collection: users
+  create_attributes:
+  - account_membership_id
+  - effective_date
+  - target
 candidates:
   attributes:
-    - staffing_demand_id
-    - user_id
-    - status
-    - notes
-  create_attributes:
-    - staffing_demand_id
-    - user_id
-    - status
-    - notes
-    - external_reference
-  update_attributes:
-    - user_id
-    - status
-    - notes
-    - external_reference
+  - notes
+  - staffing_demand_id
+  - status
+  - user_id
+  - external_reference_ids
+  - user_id
+  - staffing_demand_id
+  - custom_field_value_ids
   associations:
-    staffing_demand:
-      foreign_key: staffing_demand_id
-      collection: staffing_demands
-    user:
-      foreign_key: user_id
-      collection: users
-    custom_field_values:
-      foreign_key: custom_field_value_ids
-      collection: custom_field_values
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
-
+    user:
+      foreign_key: user_id
+      collection: users
+    staffing_demand:
+      foreign_key: staffing_demand_id
+      collection: staffing_demands
+    custom_field_values:
+      foreign_key: custom_field_value_ids
+      collection: custom_field_values
+  create_attributes:
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - notes
+  - service_model
+  - service_model_ref
+  - service_name
+  - staffing_demand_id
+  - status
+  - status
+  - user_id
+  update_attributes:
+  - notes
+  - status
+  - user_id
+change_orders: {}
+client_invoice_defaults:
+  attributes:
+  - created_at
+  - expense_rollup_type
+  - rich_text
+  - show_creators
+  - show_dates
+  - show_hours
+  - show_notes
+  - show_project_names
+  - show_rates
+  - show_roles
+  - show_subtotals
+  - show_task_names
+  - show_tax
+  - time_rollup_type
+  - updated_at
+  create_attributes:
+  - client_account_id
+  - expense_rollup_type
+  - rich_text
+  - show_creators
+  - show_dates
+  - show_hours
+  - show_notes
+  - show_project_names
+  - show_rates
+  - show_roles
+  - show_subtotals
+  - show_task_names
+  - show_tax
+  - time_rollup_type
+  update_attributes:
+  - expense_rollup_type
+  - rich_text
+  - show_creators
+  - show_dates
+  - show_hours
+  - show_notes
+  - show_project_names
+  - show_rates
+  - show_roles
+  - show_subtotals
+  - show_task_names
+  - show_tax
+  - time_rollup_type
+column_sets:
+  attributes:
+  - feature_name
+  - name
+  - page_size
+  - sort
+  - week_size
+  - column_ids
+  associations:
+    columns:
+      foreign_key: column_ids
+      collection: columns
+  create_attributes:
+  - columns
+  - feature_name
+  - filters
+  - name
+  - name
+  - page_size
+  - sort
+  - week_size
+  update_attributes:
+  - columns
+  - filters
+  - name
+  - name
+  - page_size
+  - sort
+  - week_size
+  create_or_update_attributes:
+  - columns
+  - feature_name
+  - filters
+  - name
+  - name
+  - page_size
+  - sort
+  - week_size
+columns:
+  attributes:
+  - filters
+  - name
+contacts:
+  attributes:
+  - client_occurrences
+  - consultant_occurrences
+  - interaction_count
+  - updated_at
+  - connection_id
+  associations:
+    connection:
+      foreign_key: connection_id
+      collection: users
+cost_rates:
+  attributes:
+  - account_membership_id
+  - amount_in_subunits
+  - created_at
+  - currency
+  - in_use
+  - updated_at
+  - account_membership_id
+  associations:
+    account_membership:
+      foreign_key: account_membership_id
+      collection: account_memberships
+  create_attributes:
+  - account_membership_id
+  - amount_in_subunits
+  - currency
+custom_field_choices:
+  attributes:
+  - created_at
+  - label
+  - position
+  - updated_at
+  - external_reference_ids
+  - custom_field_id
+  associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+    custom_field:
+      foreign_key: custom_field_id
+      collection: custom_fields
+custom_field_sets:
+  attributes:
+  - created_at
+  - name
+  - subject_type
+  - updated_at
+  - external_reference_ids
+  - custom_field_ids
+  associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+    custom_fields:
+      foreign_key: custom_field_ids
+      collection: custom_fields
+  create_attributes:
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - name
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  - subject_type
+  update_attributes:
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - name
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  - subject_type
+custom_field_values:
+  attributes:
+  - account_id
+  - can_edit
+  - created_at
+  - custom_field_name
+  - display_value
+  - subject_id
+  - subject_type
+  - type
+  - updated_at
+  - value
+  - external_reference_ids
+  - custom_field_id
+  - setter_id
+  - selected_choice_ids
+  associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+    custom_field:
+      foreign_key: custom_field_id
+      collection: custom_fields
+    setter:
+      foreign_key: setter_id
+      collection: users
+    selected_choices:
+      foreign_key: selected_choice_ids
+      collection: custom_field_choices
+  create_attributes:
+  - custom_field_id
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  - subject_id
+  - subject_type
+  - value
+  update_attributes:
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  - value
 custom_fields:
   attributes:
-    - id # the internal id of the custom field
-    - name # the given field name
-    - value_type # the types the Custom Field Values use defaulting to 'string'. The current types include: 'string', 'date', 'number', 'currency', 'single', and 'multi'
-    - creator_id # the internal id of the User who created the custom field
-    - default_text # the placeholder text
-    - unique_constraint # an optional boolean constraint which forces the Custom Field Values' value to be unique across a subject_type. The default is false
-    - custom_field_set_id # the custom field set the field belongs in. All custom fields are contained in a custom field set which contain many sets.
-    - write_access # the permission level required to create, update, and destroy values for this custom field
-    - read_access # the permission level required to read values for this custom field
-    - created_at # the date the CF was created
-    - updated_at # the date the CF was last updated
-    - values_count
-    - has_values
-    - hidden_in_user_interface
-    - currency
-    - available_on_estimates
-    - available_to_resources
-    - choice_ids
-    - external_reference_ids
-  create_attributes:
-    - name # (required) the given field name
-    - value_type # (optional) the types the Custom Field Values use. The current types include: 'string', 'date', 'number', and 'currency'
-    - default_text # (optional) the placeholder text
-    - unique_constraint # (optional) a boolean constraint which forces the Custom Field Values' value to be unique across a subject_type. The default is false
-    - choices # (optional) the choices a custom field may have and only valid for a 'single' and 'multi' type custom fields. eg. [{'label' => 'first choice'}, {'label' => 'another choice'}]
-    - custom_field_set_id # (optional) the custom field set the custom field will belong to. If the custom_field_set_id is omitted this field will belong to a Workspace set named 'Default Project Set'. Note omitting the set id will restrict this field to only be applied to workspaces.
-    - write_access
-    - read_access
-    - hidden_in_user_interface
-    - external_reference
-  update_attributes:
-    - name # (required) the given field name
-    - value_type
-    - default_text # (optional) the placeholder text
-    - unique_constraint
-    - choices # choices may be updated through their CF's choices attribute. To change a choice's name, specify the id. To add new choices, do not specify and id. eg. [{'id' => '1', 'label' => 'new first choice name'}, {'label' => 'a brand new choice'}]. If a previous choice of the custom field is omitted, that choice will be soft deleted so that the values will not point to invalid choices.
-    - custom_field_set_id
-    - write_access # (optional) the permission level required for a user to create, update, or delete a custom field value for an object.
-    - read_access # (optional) the permission level required to read a custom field value for an object.
-    - available_on_estimates
-    - available_to_resources
-    - hidden_in_user_interface
-    - external_reference
+  - available_on_estimates
+  - available_to_resources
+  - available_to_staffing_demands
+  - created_at
+  - currency
+  - default_text
+  - has_values
+  - hidden_in_user_interface
+  - name
+  - read_access
+  - unique_constraint
+  - updated_at
+  - value_type
+  - values_count
+  - write_access
+  - external_reference_ids
+  - creator_id
+  - choice_ids
+  - custom_field_set_id
   associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
     creator:
       foreign_key: creator_id
       collection: users
@@ -329,203 +710,127 @@ custom_fields:
     custom_field_set:
       foreign_key: custom_field_set_id
       collection: custom_field_sets
-    external_references:
-      foreign_key: external_reference_ids
-      collection: external_references
-
-custom_field_sets:
-  attributes:
-    - id
-    - name
-    - subject_type
-    - custom_field_ids
-    - updated_at
-    - created_at
   create_attributes:
-    - name
-    - subject_type
-    - external_reference
+  - choices
+  - custom_field_set_id
+  - default_text
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - hidden_in_user_interface
+  - label
+  - locked
+  - name
+  - read_access
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  - unique_constraint
+  - value_type
+  - write_access
   update_attributes:
-    - name
-    - subject_type
-    - external_reference
-  associations:
-    custom_fields:
-      foreign_key: custom_field_ids
-      collection: custom_fields
-
-custom_field_values:
+  - available_on_estimates
+  - available_to_resources
+  - available_to_staffing_demands
+  - choices
+  - custom_field_set_id
+  - default_text
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - hidden_in_user_interface
+  - label
+  - locked
+  - name
+  - read_access
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  - write_access
+deleted_workspace_allocations:
   attributes:
-    - id # the internal custom field value id
-    - subject_type # the type of entity the custom field value is associated with. Valid types include 'Workspace', 'Story', and 'User'
-    - subject_id # the internal id of the entity type defined by the subject_type field
-    - value # the value applied to the subject
-    - display_value # the formatted version of the value
-    - can_edit # whether the custom field value can be edited by the user that is logged-in.
-    - type # the type of value. The Current valid values are: 'string', 'date', 'number', 'currency' 'single', and 'multi'
-    - setter_id # the internal id of the User who has set value
-    - account_id # the id of the account the custom field value is on
-    - custom_field_id # the internal id of the associated custom field
-    - custom_field_name # the name of the associated custom field
-    - created_at # the date the custom field value was created in Mavenlink
-    - updated_at # the date the custom field value was last updated
-  create_attributes:
-    - subject_type # (required)
-    - subject_id # (required)
-    - custom_field_id # (required)
-    - value # (required)
+  - created_at
+  - deleted_at
+  - end_date
+  - hard
+  - minutes
+  - notes
+  - start_date
+  - updated_at
+  - workspace_id
+  - workspace_resource_id
+estimate_scenario_resource_allocations:
+  attributes:
+  - created_at
+  - duration_days
+  - percent_allocated
+  - relative_start_day
+  - updated_at
+  - resource_id
+  associations:
+    resource:
+      foreign_key: resource_id
+      collection: estimate_scenario_resources
   update_attributes:
-    - value # (required)
-  associations:
-    setter:
-      foreign_key: setter_id
-      collection: users
-    custom_field:
-      foreign_key: custom_field_id
-      collection: custom_fields
-
-custom_field_choices:
+  - duration_days
+  - end_date
+  - percent_allocated
+  - relative_start_day
+  - start_date
+estimate_scenario_resource_skills:
   attributes:
-    - id
-    - updated_at
-    - created_at
-    - label
-    - custom_field_id
+  - cached_skill_name
+  - created_at
+  - level
+  - max_level
+  - updated_at
+  - skill_id
+  - creator_id
+  - estimate_scenario_resource_id
   associations:
-    custom_field:
-      foreign_key: custom_field_id
-      collection: custom_fields
-    external_references:
-      foreign_key: external_reference_ids
-      collection: external_references
-
-estimates:
-  attributes:
-    - id
-    - name
-    - currency
-    - is_locked
-    - description
-    - confidence
-    - created_at
-    - updated_at
-    - creator_id
-    - workspace_group_id
-    - estimate_scenario_ids
-    - workspace_id
-    - custom_field_value_ids
-    - favorite_scenario_id
-    - external_reference_ids
-  create_attributes:
-    - name
-    - currency
-    - workspace_group_id
-    - estimate_scenario
-    - external_reference
-  update_attributes:
-    - name
-    - workspace_group_id
-    - description
-    - favorite_scenario_id
-    - confidence
-    - external_reference
-  associations:
+    skill:
+      foreign_key: skill_id
+      collection: skills
     creator:
       foreign_key: creator_id
       collection: users
-    workspace_group:
-      foreign_key: workspace_group_id
-      collection: workspace_groups
-    estimate_scenarios:
-      foreign_key: estimate_scenario_ids
-      collection: estimate_scenarios
-    workspace:
-      foreign_key: workspace_id
-      collection: workspaces
-    custom_field_values:
-      foreign_key: custom_field_value_ids
-      collection: custom_field_values
-    favorite_scenario:
-      foreign_key: favorite_scenario_id
-      collection: estimate_scenarios
-    external_references:
-      foreign_key: external_reference_ids
-      collection: external_references
-
-estimate_scenarios:
-  validations:
-    [name, start_date]:
-      presence: true
-  attributes:
-    - id
-    - name
-    - start_date
-    - budget_in_cents
-    - target_margin_percent
-    - estimate_id
-    - rate_card_id
-    - created_at
-    - updated_at
-    - estimate_scenario_resource_ids
-    - external_reference_ids
-  create_attributes:
-    - budget_in_cents
-    - name
-    - rate_card_id
-    - start_date
-    - estimate_id
-    - external_reference
-  update_attributes:
-    - budget_in_cents
-    - name
-    - rate_card_id
-    - start_date
-    - external_reference
-  associations:
-    rate_card:
-      foreign_key: rate_card_id
-      collection: rate_cards
-    estimate_scenario_resources:
-      foreign_key: estimate_scenario_resource_ids
+    estimate_scenario_resource:
+      foreign_key: estimate_scenario_resource_id
       collection: estimate_scenario_resources
-    external_references:
-      foreign_key: external_reference_ids
-      collection: external_references
-
+  create_attributes:
+  - estimate_scenario_resource_id
+  - level
+  - skill_id
+  update_attributes:
+  - level
 estimate_scenario_resources:
   attributes:
-    - id
-    - label
-    - created_at
-    - updated_at
-    - cost_rate
-    - can_edit_bill_rate
-    - bill_rate
-    - role_name
-    - display_label
-    - estimate_scenario_id
-    - user_id
-    - role_id
-    - ogranization_membership_id
-    - allocation_id
-    - geography_id
-    - skill_ids
-    - estimate_scenario_resource_skill_ids
-    - external_reference_ids
-  create_attributes:
-    - estimate_scenario_id
-    - label
-    - role_id
-    - allocation_attributes
-    - external_reference
-  update_attributes:
-    - role_id
-    - bill_rate
-    - cost_rate
-    - geography_id
-    - label
-    - external_reference
+  - bill_rate
+  - can_edit_bill_rate
+  - cost_rate
+  - created_at
+  - display_label
+  - estimate_scenario_id
+  - label
+  - role_name
+  - update_whitelist
+  - updated_at
+  - external_reference_ids
+  - user_id
+  - role_id
+  - organization_membership_id
+  - allocation_id
+  - geography_id
+  - skill_ids
+  - estimate_scenario_resource_skill_ids
   associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
     user:
       foreign_key: user_id
       collection: users
@@ -547,189 +852,198 @@ estimate_scenario_resources:
     estimate_scenario_resource_skills:
       foreign_key: estimate_scenario_resource_skill_ids
       collection: estimate_scenario_resource_skills
+  create_attributes:
+  - allocation_attributes
+  - duration_days
+  - estimate_scenario_id
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - label
+  - locked
+  - percent_allocated
+  - relative_start_day
+  - role_id
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  update_attributes:
+  - bill_rate
+  - cost_rate
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - geography_id
+  - label
+  - locked
+  - role_id
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+estimate_scenarios:
+  attributes:
+  - budget_in_cents
+  - created_at
+  - estimate_id
+  - name
+  - start_date
+  - target_margin_percent
+  - update_whitelist
+  - updated_at
+  - external_reference_ids
+  - rate_card_id
+  - estimate_scenario_resource_ids
+  associations:
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
-
-estimate_scenario_resource_allocations:
-  attributes:
-    - id
-    - relative_start_day
-    - duration_days
-    - percent_allocated
-    - created_at
-    - updated_at
-    - resource_id
-  update_attributes:
-    - duration_days
-    - percent_allocated
-    - relative_start_day
-    - start_date
-    - end_date
-  associations:
-    resource:
-      foreign_key: resource_id
+    rate_card:
+      foreign_key: rate_card_id
+      collection: rate_cards
+    estimate_scenario_resources:
+      foreign_key: estimate_scenario_resource_ids
       collection: estimate_scenario_resources
-
-estimate_scenario_resource_skills:
-  attributes:
-    - id
-    - level
-    - max_level
-    - created_at
-    - updated_at
-    - cached_skill_name
-    - skill_id
-    - creator_id
-    - estimate_scenario_resource_id
   create_attributes:
-    - skill_id
-    - estimate_scenario_resource_id
-    - level
+  - budget_in_cents
+  - estimate_id
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - name
+  - rate_card_id
+  - service_model
+  - service_model_ref
+  - service_name
+  - start_date
+  - status
   update_attributes:
-    - level
+  - budget_in_cents
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - name
+  - rate_card_id
+  - service_model
+  - service_model_ref
+  - service_name
+  - start_date
+  - status
+estimates:
+  attributes:
+  - confidence
+  - created_at
+  - currency
+  - description
+  - is_locked
+  - name
+  - update_whitelist
+  - updated_at
+  - external_reference_ids
+  - creator_id
+  - workspace_group_id
+  - estimate_scenario_ids
+  - workspace_id
+  - custom_field_value_ids
+  - favorite_scenario_id
   associations:
-    skill:
-      foreign_key: skill_id
-      collection: skills
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
     creator:
       foreign_key: creator_id
       collection: users
-    estimate_scenario_resource:
-      foreign_key: estimate_scenario_resource_id
-      collection: estimate_scenario_resources
-
-expenses:
-  validations:
-    [workspace_id, date, category, amount_in_cents]:
-      presence: true
-  attributes:
-    - id # the unique identifier for this expense object
-    - created_at # the date the expense was recorded in Mavenlink
-    - updated_at # the date the expense was last updated
-    - date # the date the expense was incurred
-    - notes # any notes added to the expense
-    - category # the category of the expense, which can be any string. Built-in categories are: "Travel", "Mileage", "Lodging", "Food", "Entertainment", "Other"
-    - amount_in_cents # the amount of the expense, in cents
-    - currency # the currency of the expense
-    - currency_symbol # the symbol that represents the currency of the expense
-    - currency_base_unit # the number of the units in the amount_as_cents attribute that are required to make up a single unit of the currency
-    - user_can_edit # can the viewing user edit this expense?
-    - is_invoiced # has this expense been included on an invoice?
-    - is_billable # is this a billable expense?
-    - taxable
-    - reimbursable
-    - foreign_exchange_amount
-    - workspace_id # the id of the project Workspace this expense is associated with
-    - user_id # the id of the user who created this expense
-    - story_id
-    - receipt_id # the id of an attached Receipt Attachment
-    - expense_category_id # the id of its category
-    - active_submission_id
-    - recent_submission_id
-  create_attributes:
-    - workspace_id # (required) the ID of the Workspace in which the expense will be created
-    - date # (required) the date of the expense in ISO8601 format
-    - category # (required) the category of the expense as a string
-    - amount_in_cents # the amount of the expense, expressed in cents
-    - notes # freeform text related to the expense
-    - user_id # the internal ID of the user the expense is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
-    - receipt_id
-    - billable
-    - story_id
-    - expense_category_id # the id of its category
-    - reimbursable
-    - vendor_id
-    - foreign_exchange_amount
-    - external_reference
-  update_attributes:
-    # NOTE(AC): check
-    - date # (required) the date of the expense in ISO8601 format
-    - category # (required) the category of the expense as a string
-    - amount_in_cents # the amount of the expense, expressed in cents
-    - notes # freeform text related to the expense
-    - user_id # the internal ID of the user the expense is associated with. This parameter is ignored unless the authorizing user has financial access in the workspace and is on the consultants team (or if the authorizing user is an account administrator and has proxy permissions via an account member with those permissions).
-    - receipt_id
-    - billable
-    - story_id
-    - expense_category_id # the id of its category
-    - foreign_exchange_amount
-    - external_reference
-  associations:
+    workspace_group:
+      foreign_key: workspace_group_id
+      collection: workspace_groups
+    estimate_scenarios:
+      foreign_key: estimate_scenario_ids
+      collection: estimate_scenarios
     workspace:
       foreign_key: workspace_id
       collection: workspaces
-    user:
-      foreign_key: user_id
-      collection: users
-    receipt:
-      foreign_key: receipt_id
-      collection: attachments
-    story:
-      foreign_key: story_id
-      collection: stories
-    expense_category:
-      foreign_key: expense_category_id
-      collection: expense_categories
+    custom_field_values:
+      foreign_key: custom_field_value_ids
+      collection: custom_field_values
+    favorite_scenario:
+      foreign_key: favorite_scenario_id
+      collection: estimate_scenarios
+  create_attributes:
+  - budget_in_cents
+  - currency
+  - estimate_scenario
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - name
+  - name
+  - rate_card_id
+  - service_model
+  - service_model_ref
+  - service_name
+  - start_date
+  - status
+  - workspace_group_id
+  update_attributes:
+  - confidence
+  - description
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - favorite_scenario_id
+  - locked
+  - name
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  - workspace_group_id
+expense_categories:
+  attributes:
+  - deleted_at
+  - name
+  create_attributes:
+  - name
+  update_attributes:
+  - name
+expense_report_submissions:
+  attributes:
+  - comment
+  - created_at
+  - currency
+  - currency_base_unit
+  - currency_symbol
+  - current_resolution_created_at_date
+  - current_resolution_creator_id
+  - current_resolution_description
+  - line_item_total_formatted
+  - line_item_total_in_cents
+  - locked
+  - permissions
+  - resolution_description
+  - status
+  - title
+  - type
+  - updated_at
+  - external_reference_ids
+  - user_id
+  - workspace_id
+  - expense_ids
+  - resolution_ids
+  associations:
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
-    active_submission:
-      foreign_key: active_submission_id
-      collection: expense_report_submissions
-    recent_submission:
-      foreign_key: recent_submission_id
-      collection: expense_report_submissions
-    role:
-      foreign_key: role_id
-      collection: roles
-    vendor:
-      foreign_key: vendor_id
-      collection: vendors
-
-expense_categories:
-  attributes:
-    - id
-    - name
-    - deleted_at
-  create_attributes:
-    - name
-  update_attributes:
-    - name
-  validations:
-    name:
-      presence: true
-
-expense_report_submissions:
-  attributes:
-    - id
-    - created_at
-    - updated_at
-    - status
-    - title
-    - comment
-    - type
-    - resolution_description
-    - line_item_total_formatted
-    - line_item_total_in_cents
-    - currency
-    - currency_symbol
-    - currency_base_unit
-    - current_resolution_description
-    - current_resolution_creator_id
-    - current_resolution_created_at_date
-    - user_id
-    - workspace_id
-    - expense_ids
-    - resolution_ids
-    - permissions
-  create_attributes:
-    - title
-    - comment
-    - workspace_id
-    - user_id
-    - line_item_ids
-  associations:
     user:
       foreign_key: user_id
       collection: users
@@ -742,25 +1056,154 @@ expense_report_submissions:
     resolutions:
       foreign_key: resolution_ids
       collection: resolutions
+  create_attributes:
+  - comment
+  - comment
+  - external_link
+  - external_link
+  - external_message
+  - external_message
+  - external_reference
+  - external_reference
+  - external_status
+  - external_status
+  - line_item_ids
+  - line_item_ids
+  - locked
+  - locked
+  - service_model
+  - service_model
+  - service_model_ref
+  - service_model_ref
+  - service_name
+  - service_name
+  - status
+  - status
+  - title
+  - title
+  - user_id
+  - user_id
+  - workspace_id
+  - workspace_id
+expenses:
+  attributes:
+  - amount_in_cents
+  - category
+  - created_at
+  - currency
+  - currency_base_unit
+  - currency_symbol
+  - date
+  - foreign_exchange_amount
+  - is_billable
+  - is_invoiced
+  - notes
+  - reimbursable
+  - taxable
+  - updated_at
+  - user_can_edit
+  - external_reference_ids
+  - story_id
+  - workspace_id
+  - user_id
+  - receipt_id
+  - active_submission_id
+  - recent_submission_id
+  - expense_category_id
+  - role_id
+  - vendor_id
+  associations:
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
-
+    story:
+      foreign_key: story_id
+      collection: stories
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    user:
+      foreign_key: user_id
+      collection: users
+    receipt:
+      foreign_key: receipt_id
+      collection: attachments/receipt_attachments
+    active_submission:
+      foreign_key: active_submission_id
+      collection: expense_report_submissions
+    recent_submission:
+      foreign_key: recent_submission_id
+      collection: expense_report_submissions
+    expense_category:
+      foreign_key: expense_category_id
+      collection: expense_categories
+    role:
+      foreign_key: role_id
+      collection: roles
+    vendor:
+      foreign_key: vendor_id
+      collection: vendors
+  create_attributes:
+  - amount_in_cents
+  - billable
+  - category
+  - date
+  - expense_category_id
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - file_id
+  - foreign_exchange_amount
+  - locked
+  - notes
+  - receipt_id
+  - reimbursable
+  - service_model
+  - service_model_ref
+  - service_name
+  - source_currency
+  - source_value
+  - status
+  - story_id
+  - user_id
+  - vendor_id
+  - workspace_id
+  update_attributes:
+  - amount_in_cents
+  - billable
+  - category
+  - date
+  - expense_category_id
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - file_id
+  - foreign_exchange_amount
+  - locked
+  - notes
+  - receipt_id
+  - service_model
+  - service_model_ref
+  - service_name
+  - source_currency
+  - source_value
+  - status
+  - story_id
+  - user_id
 external_payments:
   attributes:
-    - id
-    - created_at
-    - updated_at
-    - user_id
-    - amount_in_cents
-    - message
-    - invoice_id
-    - workspace_id
-  create_attributes:
-    - amount_in_cents
-    - message
-    - invoice_id
-    - workspace_id
+  - amount_in_cents
+  - created_at
+  - invoice_id
+  - message
+  - updated_at
+  - user_id
+  - workspace_id
+  - user_id
+  - workspace_id
+  - invoice_id
   associations:
     user:
       foreign_key: user_id
@@ -771,91 +1214,68 @@ external_payments:
     invoice:
       foreign_key: invoice_id
       collection: invoices
-
-fixed_fee_items:
-  attributes:
-    - id
-    - created_at
-    - notes
-    - amount_in_cents
-    - taxable
-    - currency
-    - story_id
-    - workspace_id
-
+  create_attributes:
+  - amount_in_cents
+  - invoice_id
+  - message
+  - workspace_id
 external_references:
   attributes:
-    - id
-    - service_name
-    - service_model
-    - service_model_ref
-    - subject_id
-    - subject_type
-    - status
-    - external_link
-    - external_message
-    - external_status
-    - locked
-    - created_at
-    - updated_at
-    - last_synced_at
+  - created_at
+  - external_link
+  - external_message
+  - external_status
+  - last_synced_at
+  - locked
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  - subject_id
+  - subject_type
+  - updated_at
+  associations: {}
   create_or_update_attributes:
-   - service_name
-   - service_model
-   - service_model_ref
-   - subject_id
-   - subject_type
-   - status
-   - external_link
-   - external_message
-   - external_status
-   - locked
-  validations:
-    [service_model_ref, service_model, service_name, subject_id, subject_type]:
-      presence: true
-
-holidays:
+  - external_link
+  - external_message
+  - external_status
+  - locked
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  - subject_id
+  - subject_type
+fixed_fee_items:
   attributes:
-    - name
-    - start_date
-    - end_date
-    - paid
-    - total_hours
-    - calendar_names_list
-  create_attributes:
-    - name
-    - start_date
-    - end_date
-    - paid
-    - holiday_calendar_ids
-  update_attributes:
-    - name
-    - start_date
-    - end_date
-    - paid
-    - holiday_calendar_ids
-  associations:
-    holiday_calendar_associations:
-      foreign_key: holiday_calendar_association_ids
-      collection: holiday_calendar_associations
-
-holiday_calendars:
+  - amount_in_cents
+  - created_at
+  - currency
+  - notes
+  - story_id
+  - taxable
+  - workspace_id
+google_documents:
   attributes:
-    - name
-    - default
-    - active_user_count
-  create_attributes:
-    - name
-  update_attributes:
-    - name
-
+  - created_at
+  - creator_name
+  - creator_photo_url
+  - deletable
+  - deleted_at
+  - filename
+  - icon_link
+  - icon_type
+  - mime_type
+  - private
+  - type
+  - updated_at
+  - url
 holiday_calendar_associations:
   attributes:
-    - holiday_calendar_name
-    - holiday_name
-  create_attributes:
-    - holiday_id
-    - holiday_calendar_id
+  - holiday_calendar_name
+  - holiday_name
+  - holiday_id
+  - holiday_calendar_id
   associations:
     holiday:
       foreign_key: holiday_id
@@ -863,21 +1283,19 @@ holiday_calendar_associations:
     holiday_calendar:
       foreign_key: holiday_calendar_id
       collection: holiday_calendars
-
+  create_attributes:
+  - holiday_calendar_id
+  - holiday_id
 holiday_calendar_memberships:
   attributes:
-    - user_id
-    - created_at
-    - start_date
-    - end_date
-    - in_use
-  create_attributes:
-    - holiday_calendar_id
-    - user_id
-    - start_date
-  update_attributes:
-    - holiday_calendar_id
-    - start_date
+  - created_at
+  - end_date
+  - in_use
+  - start_date
+  - updated_at
+  - user_id
+  - holiday_calendar_id
+  - user_id
   associations:
     holiday_calendar:
       foreign_key: holiday_calendar_id
@@ -885,42 +1303,59 @@ holiday_calendar_memberships:
     user:
       foreign_key: user_id
       collection: users
-
-insights_access_groups:
-  attributes:
-    - id
-    - name
-    - group_member_count
-    - is_admin_default
-    - is_reports_viewer_default
-    - dashboard_names
   create_attributes:
-    - account_insights_mapping_permissions_attributes
-    - insights_access_group_memberships_attributes
-    - name
-    - is_admin_default
-    - is_reports_viewer_default
+  - holiday_calendar_id
+  - start_date
+  - user_id
   update_attributes:
-    - name
-    - is_admin_default
-    - is_reports_viewer_default
-
+  - holiday_calendar_id
+  - start_date
+holiday_calendars:
+  attributes:
+  - active_user_count
+  - default
+  - name
+  create_attributes:
+  - name
+  update_attributes:
+  - name
+holidays:
+  attributes:
+  - calendar_names_list
+  - end_date
+  - name
+  - paid
+  - start_date
+  - total_hours
+  - holiday_calendar_association_ids
+  associations:
+    holiday_calendar_associations:
+      foreign_key: holiday_calendar_association_ids
+      collection: holiday_calendar_associations
+  create_attributes:
+  - end_date
+  - holiday_calendar_ids
+  - name
+  - paid
+  - start_date
+  update_attributes:
+  - end_date
+  - holiday_calendar_ids
+  - name
+  - paid
+  - start_date
 insights_access_group_memberships:
   attributes:
-    - id
-    - created_at
-    - updated_at
-    - user_id
-    - insights_access_group_id
-    - insights_access_group_name
-    - user_name
-    - can_edit
-    - account_permission
-  create_attributes:
-    - user_id
-    - insights_access_group_id
-  update_attributes:
-    - insights_access_group_membership
+  - account_permission
+  - can_edit
+  - created_at
+  - insights_access_group_id
+  - insights_access_group_name
+  - updated_at
+  - user_id
+  - user_name
+  - user_id
+  - insights_access_group_id
   associations:
     user:
       foreign_key: user_id
@@ -928,117 +1363,208 @@ insights_access_group_memberships:
     insights_access_group:
       foreign_key: insights_access_group_id
       collection: insights_access_groups
-
+  create_attributes:
+  - insights_access_group_id
+  - user_id
+  update_attributes:
+  - can_edit
+insights_access_groups:
+  attributes:
+  - dashboard_names
+  - group_member_count
+  - is_admin_default
+  - is_reports_viewer_default
+  - name
+  create_attributes:
+  - account_insights_mapping_id
+  - account_insights_mapping_permissions_attributes
+  - can_edit
+  - can_see_in_left_nav
+  - insights_access_group_memberships_attributes
+  - is_admin_default
+  - is_reports_viewer_default
+  - name
+  - user_id
+  update_attributes:
+  - is_admin_default
+  - is_reports_viewer_default
+  - name
 invoices:
   attributes:
-    - id # the internal invoice id
-    - created_at # the date the invoice was recorded in Mavenlink, format: YY-MM-DD[T]HH:MM:SS-TIMEZONE
-    - updated_at # the date the invoice was last updated, format: YY-MM-DD[T]HH:MM:SS-TIMEZONE
-    - invoice_date # the date the invoice was incurred, format: YYYY-MM-DD
-    - due_date # the date the invoice is due, format: YYYY-MM-DD
-    - message # any notes added to the invoice
-    - title # A string of the format "(Draft )Invoice #<user-invoice-number>"
-    - draft # whether the invoice is a draft or not
-    - status # the current status of the invoice
-    - balance_in_cents # the balance of invoice in cents
-    - currency # the currency of this invoice
-    - currency_symbol # the symbol that represents the currency of the invoice
-    - currency_base_unit # the number of the units in the balance_in_cents attribute that are required to make up a single unit of the currency
-    - payment_schedule # the payment schedule (i.e. 30) in days of this invoice
-    - workspace_ids # the internal ids of the project workspaces this invoice is associated with
-    - user_id # the internal id of the user who created this invoice
-    - recipient_id # the internal id of the user who received this invoice; this will be the client lead at the time that the invoice was created, or null if no lead client existed at that time.
-    - user_invoice_title
-    - user_invoice_number
-    - tax_rate
-    - purchase_order
-    - project_code
-  create_attributes:
-    - time_entry_ids # (required) An array of time entry IDs to associate with the invoice
-    - expense_ids # (required) An array of expense IDs to associate with the invoice
-    - workspace_id # (required) The ID of the workspace this invoice is associated with
-    - payment_schedule # (required) The payment schedule (i.e. 30) in days of this invoice
-    - invoice_date # The date the invoice was incurred, format: YYYY-MM-DD#
-    - user_invoice_number #
-    - user_invoice_title #
-    - draft # Whether the invoice is a draft or not
-    - message # Any notes added to the invoice
-    - purchase_order # A string
-    - project_code # A string
-    - fixed_fee_items # Nested params for FixedFeeItem
-    - additional_items # Nested params for AdditionalItem
-    - suppress_emails
-    - tax_rate
-  update_attributes:
-    - expense_ids # (required)
-    - time_entry_ids # (required)
-    - payment_schedule
-    - user_invoice_number
-    - draft
-    - message
-    - user_invoice_title
-    - purchase_order
-    - project_code
+  - balance_in_cents
+  - created_at
+  - currency
+  - currency_base_unit
+  - currency_symbol
+  - draft
+  - due_date
+  - invoice_date
+  - message
+  - payment_schedule
+  - project_code
+  - purchase_order
+  - recipient_id
+  - status
+  - tax_rate
+  - title
+  - updated_at
+  - user_invoice_number
+  - user_invoice_title
+  - external_reference_ids
+  - user_id
+  - recipient_id
+  - workspace_ids
+  - additional_item_ids
+  - time_entry_ids
+  - expense_ids
+  - fixed_fee_item_ids
+  - time_adjustment_ids
   associations:
-    # time_entries - when included, the time_entry_ids array will reference all of the time entries included in the Invoice
-    time_entries:
-      foreign_key: time_entry_ids
-      collection: time_entries
-    # expenses - when included, the expense_ids array will reference all of the expenses included in the Invoice
-    expenses:
-      foreign_key: expense_ids
-      collection: expenses
-    additional_items:
-      foreign_key: additional_item_ids
-      collection: additional_items
-    fixed_fee_items:
-      foreign_key: fixed_fee_item_ids
-      collection: fixed_fee_items
-    # NOTE(AC): ? additional_items - when included, the additional_item_ids array will reference all of the additional items (additional invoice line items) included in the Invoice
-    # workspaces - when included, the workspace_ids array will reference the workspaces that this Invoice covers
-    workspaces:
-      foreign_key: workspace_ids
-      collection: workspaces
-    # user - user_id will reference the User who created this Invoice
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
     user:
       foreign_key: user_id
       collection: users
-    # recipient - recipient_id will reference the User who received this Invoice. This will be the client lead at the time that the invoice was created, or null if no lead client existed at that time.
     recipient:
       foreign_key: recipient_id
       collection: users
-
-organizations:
-  attributes:
-    - id
-    - name
-    - type
-    - parent_id
-    - ancestor_ids
+    workspaces:
+      foreign_key: workspace_ids
+      collection: workspaces
+    additional_items:
+      foreign_key: additional_item_ids
+      collection: additional_items
+    time_entries:
+      foreign_key: time_entry_ids
+      collection: time_entries
+    expenses:
+      foreign_key: expense_ids
+      collection: expenses
+    fixed_fee_items:
+      foreign_key: fixed_fee_item_ids
+      collection: fixed_fee_items
+    time_adjustments:
+      foreign_key: time_adjustment_ids
+      collection: time_adjustments
   create_attributes:
-    - name
-    - parent_id
+  - additional_items
+  - amount
+  - amount
+  - draft
+  - expense_ids
+  - fixed_fee_items
+  - invoice_date
+  - message
+  - notes
+  - notes
+  - payment_schedule
+  - project_code
+  - purchase_order
+  - story_id
+  - suppress_emails
+  - tax_rate
+  - taxable
+  - taxable
+  - time_adjustment_ids
+  - time_entry_ids
+  - user_invoice_number
+  - user_invoice_title
+  - workspace_id
+  - workspace_id
+  - workspace_id
+  - workspace_ids
   update_attributes:
-    - name
-    - parent_id
-
+  - draft
+  - expense_ids
+  - invoice_date
+  - message
+  - payment_schedule
+  - project_code
+  - purchase_order
+  - tax_rate
+  - time_adjustment_ids
+  - time_entry_ids
+  - user_invoice_number
+  - user_invoice_title
+ip_restrictions:
+  attributes:
+  - administrator
+  - collaborator
+  - created_at
+  - ip_address_cidr
+  - is_default
+  - name
+  - project_creator
+  - project_lead
+  - punch_clock
+  - reports_viewer
+  - reports_viewer_with_cost
+  - updated_at
+  create_attributes:
+  - administrator
+  - collaborator
+  - ip_address_cidr
+  - name
+  - project_creator
+  - project_lead
+  - punch_clock
+  - reports_viewer
+  - reports_viewer_with_cost
+  update_attributes:
+  - administrator
+  - collaborator
+  - ip_address_cidr
+  - name
+  - project_creator
+  - project_lead
+  - punch_clock
+  - reports_viewer
+  - reports_viewer_with_cost
+line_item_locks:
+  attributes:
+  - account_id
+  - locked_to
+  - creator_id
+  associations:
+    creator:
+      foreign_key: creator_id
+      collection: users
+  create_attributes:
+  - locked_to
+notifications:
+  attributes:
+  - account_id
+  - created_at
+  - message
+  - send_at
+  - source
+  - status
+  - title
+  - updated_at
+  - url
+  - user_id
+  - user_id
+  associations:
+    user:
+      foreign_key: user_id
+      collection: users
+  create_attributes:
+  - message
+  - source
+  - title
+  - url
+  update_attributes:
+  - status
 organization_memberships:
   attributes:
-    - id
-    - member_id
-    - member_type
-    - primary
-    - geography_id
-    - department_id
-  create_attributes:
-    - geography_id
-    - department_id
-    - member_id
-    - member_type
-  update_attributes:
-    - geography_id
-    - department_id
-    - primary
+  - created_at
+  - member_id
+  - member_type
+  - primary
+  - updated_at
+  - geography_id
+  - department_id
   associations:
     geography:
       foreign_key: geography_id
@@ -1046,46 +1572,62 @@ organization_memberships:
     department:
       foreign_key: department_id
       collection: organizations
-
+  create_attributes:
+  - department_id
+  - geography_id
+  - member_id
+  - member_type
+  - primary
+  update_attributes:
+  - department_id
+  - geography_id
+  - primary
+organizations:
+  attributes:
+  - ancestor_ids
+  - created_at
+  - name
+  - parent_id
+  - type
+  - updated_at
+  create_attributes:
+  - name
+  - parent_id
+  update_attributes:
+  - name
+  - parent_id
 participations:
   attributes:
-    - id
-    - role
-    - is_team_lead
-    - active_role
-    - estimated_workspace_minutes
-    - allocated_workspace_minutes
-    - rate_in_cents
-    - default_rate_in_cents
-    - cost_in_cents
-    - show_as_read_only
-    - can_invite
-    - can_edit
-    - can_post
-    - can_edit_expense
-    - can_edit_time
-    - is_foreign_participant
-    - user_id
-    - workspace_id
-    - workspace_role_id
-    - primary_role_id
-    - workspace_resource_ids
-    - active_role_ids
-  create_attributes:
-    - workspace_id
-    - role
-    - user_id
-    - can_invite
-    - permissions
-  update_attributes:
-    - team_lead
-    - cost_in_cents
-    - rate_in_cents
-    - workspace_role_id
-    - can_invite
-    - permissions
-    - access_level
+  - access_level
+  - active_role
+  - allocated_workspace_minutes
+  - can_edit
+  - can_edit_expense
+  - can_edit_time
+  - can_invite
+  - can_post
+  - cost_in_cents
+  - created_at
+  - default_rate_in_cents
+  - estimated_workspace_minutes
+  - is_foreign_participant
+  - is_team_lead
+  - rate_in_cents
+  - role
+  - show_as_read_only
+  - update_whitelist
+  - updated_at
+  - external_reference_ids
+  - user_id
+  - workspace_id
+  - workspace_role_id
+  - primary_role_id
+  - workspace_resource_ids
+  - active_role_ids
   associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
     user:
       foreign_key: user_id
       collection: users
@@ -1104,180 +1646,103 @@ participations:
     active_roles:
       foreign_key: active_role_ids
       collection: roles
-
-posts:
-  attributes:
-    - id # the internal id of the post
-    - newest_reply_at # the date of the newest reply
-    - message # the message of the post
-    - has_attachment # whether the post has any attachments
-    - created_at # the date the post was created
-    - updated_at # the date the post was last updated
-    - reply_count # the number of replies to the post
-    - private # whether this post is private
-    - user_id # the internal id of the user who made the post
-    - workspace_id # the internal id of the project workspace this post is associated with
-    - workspace_type # the class name of the workspace
-    - reply # whether this post is a reply
-    - subject_id # if this post is a reply, the internal id of the parent post or object being replied to
-    - subject_type # the class name of the object being replied to
-    - story_id # the internal id of the story that this post is linked to
-    - google_documents # NOTE: NOT AN ASSOCIATION?
   create_attributes:
-    - message # - (required) the content to be created in the new post
-    - workspace_id # - (required) the ID of the Workspace in which the post will be created
-    - subject_id # - (optional, required for replies) the ID of the item the new post is replying to if it is a reply
-    - subject_type # - (optional, required for replies) the type of the item the new post is replying to; accepted values are Post
-    - story_id # - (optional) the ID of the Story (task) that the new post should be linked to
-    - recipient_ids # - (optional) an array of User IDs for whom the post is visible. These users must be participating in the target Workspace and including this parameter will make the post private
-    - attachment_ids # - (optional) an array of PostAttachment IDs that should be associated with the post. Create PostAttachments using the attachments endpoint.
+  - can_invite
+  - permissions
+  - role
+  - user_id
+  - workspace_id
   update_attributes:
-    - message
-    - story_id
-  validations:
-    [message, workspace_id]:
-      presence: true
-  associations:
-    #  subject - when you include this association, posts that are replies will have a subject_id key referencing their parent post in the posts top-level key
-    subject:
-      foreign_key: subject_id
-      collection: posts
-    #  user - the user object of the post creator, returned in the users top-level key
-    user:
-      foreign_key: user_id
-      collection: users
-    #  workspace - the workspace (project) that owns this post, returned in the workspaces top-level key
-    workspace:
-      foreign_key: workspace_id
-      collection: workspaces
-    #  story - linked story (task), returned in the stories top-level key
-    story:
-      foreign_key: story_id
-      collection: stories
-    #  replies - replies to this post, returned in the posts top-level key; posts will contain a reply_ids array
-    replies:
-      foreign_key: reply_ids
-      collection: posts
-    #  newest_reply - newest reply to this post, available in newest_reply_id and returned in the posts top-level key
-    newest_reply:
-      foreign_key: newest_reply_id
-      collection: posts
-    #  newest_reply_user- user of the newest reply to this post, available in newest_reply_user_id and returned in the users top-level key
-    newest_reply_user:
-      foreign_key: newest_reply_user_id
-      collection: users
-    #  recipients - on private posts, the recipient_ids array contains the ids of recipients, returned in the users top-level key
-    recipients:
-      foreign_key: recipient_ids
-      collection: users
-    # NOTE(?) google_documents - the post's google document objects, available in google_document_ids and returned in the google_documents top-level key
-    #  attachments - file attachments, available in attachment_ids and returned in the attachments top-level key
-    attachments:
-      foreign_key: attachment_ids
-      collection: attachments
-
-project_accounting_records:
+  - access_level
+  - can_invite
+  - cost_in_cents
+  - permissions
+  - rate_in_cents
+  - team_lead
+  - workspace_role_id
+payments: {}
+project_accounting/models/project_accounting_records:
   attributes:
-    - amount
-    - amount_to_date
-    - budget
-    - contract_date
-    - cost
-    - cost_eac
-    - created_at
-    - currency
-    - description
-    - end_date
-    - fees
-    - hours
-    - hours_eac
-    - hours_etc
-    - labor_type
-    - service_type
-    - notes
-    - percent_complete
-    - start_date
-    - status
-    - total_estimated_hours
-    - total_hours_to_date
-    - type
-    - workspace_id
-    - story_id
-    - role_id
-  create_attributes:
-    - amount
-    - amount_to_date
-    - budget
-    - contract_date
-    - cost
-    - cost_eac
-    - currency
-    - description
-    - end_date
-    - fees
-    - hours
-    - hours_eac
-    - hours_etc
-    - labor_type
-    - service_type
-    - notes
-    - percent_complete
-    - start_date
-    - status
-    - total_estimated_hours
-    - total_hours_to_date
-    - type
-    - workspace_id
-    - story_id
-    - role_id
-  validations:
-    [workspace_id, currency, start_date, end_date, type]:
-      presence: true
+  - amount
+  - amount_to_date
+  - budget
+  - contract_date
+  - cost
+  - cost_eac
+  - created_at
+  - currency
+  - description
+  - end_date
+  - fees
+  - hours
+  - hours_eac
+  - hours_etc
+  - labor_type
+  - notes
+  - percent_complete
+  - service_type
+  - start_date
+  - status
+  - total_estimated_hours
+  - total_hours_to_date
+  - type
+  - external_reference_ids
+  - workspace_id
+  - story_id
+  - role_id
+  - user_id
   associations:
-    story:
-      foreign_key: story_id
-      collection: stories
-    workspace:
-      foreign_key: workspace_id
-      collection: workspaces
-    role:
-      foreign_key: role_id
-      collection: roles
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
-
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    story:
+      foreign_key: story_id
+      collection: stories
+    role:
+      foreign_key: role_id
+      collection: roles
+    user:
+      foreign_key: user_id
+      collection: users
+project_template_assignments:
+  attributes:
+  - name
+  - total_count
+  - total_estimated_minutes
+  - update_whitelist
+  - project_template_id
+  - role_id
+  associations:
+    project_template:
+      foreign_key: project_template_id
+      collection: project_templates
+    role:
+      foreign_key: role_id
+      collection: roles
+  create_attributes:
+  - name
+  - project_template_id
+  update_attributes:
+  - name
 project_templates:
   attributes:
-    - id # the internal project template ID
-    - title # the title of the project template
-    - shared # whether or not the project template is shared with other users on the account other than the creator
-    - is_budgeted # whether or not the project template has financial attributes including overall budget, story budgets, and story time estimates
-    - budget # the estimated overall budget of the project associated with the template
-    - item_count # the number of stories (tasks) inside the project template
-    - duration # the estimated number of days that the associated project will take
-    - currency # the currency of the project template
-    - description # the description of the project template which does not map over to the project description when applied
-    - user_id # the id of the user who created the project template
-    - raw_json # (Optional Field) a json hash that contains all the project templates tasks - See below for explanation on optional fields and go to the bottom for and explanation on the raw_json field
-  create_attributes:
-    - title # (required) the title of the new project template
-    - description # the description of the project template
-    - raw_json # (optional) a json hash that contains all the project templates tasks
-    - shared # (optional) whether or not the project template is shared with other users on the account other than the creator (default: false)
-    - is_budgeted # (optional) whether or not the project template has financial attributes including overall budget, story budgets, and story time estimates (default: false)
-    - budget # (optional) the estimated overall budget of the project associated with the template
-    - currency # (optional) the currency of the project template (default: 'USD')
-    - duration # (optional) the estimated number of days that the associated project will take
-  update_attributes:
-    - title # (required) the title of the new project template
-    - description # the description of the project template
-    - raw_json # (optional) a json hash that contains all the project templates tasks
-    - shared # (optional) whether or not the project template is shared with other users on the account other than the creator (default: false)
-    - is_budgeted # (optional) whether or not the project template has financial attributes including overall budget, story budgets, and story time estimates (default: false)
-    - budget # (optional) the estimated overall budget of the project associated with the template
-    - currency # (optional) the currency of the project template (default: 'USD')
-    - duration # (optional) the estimated number of days that the associated project will take
+  - budget
+  - created_at
+  - currency
+  - description
+  - duration
+  - is_budgeted
+  - item_count
+  - permissions
+  - raw_json
+  - shared
+  - title
+  - updated_at
+  - user_id
+  - project_template_assignment_ids
   associations:
     user:
       foreign_key: user_id
@@ -1285,17 +1750,138 @@ project_templates:
     project_template_assignments:
       foreign_key: project_template_assignment_ids
       collection: project_template_assignments
-
-project_template_assignments:
-  associations:
-    project_template:
-      foreign_key: project_template_id
-      collection: project_templates
+  create_attributes:
+  - budget
+  - currency
+  - description
+  - duration
+  - is_budgeted
+  - raw_json
+  - shared
+  - title
+  update_attributes:
+  - budget
+  - currency
+  - description
+  - duration
+  - is_budgeted
+  - raw_json
+  - shared
+  - title
+proof_review_participations:
   attributes:
-    - id
-    - name
-
-rate_cards:
+  - status
+  - user_id
+  - user_id
+  - project_review_id
+  associations:
+    user:
+      foreign_key: user_id
+      collection: users
+    proof_review:
+      foreign_key: project_review_id
+      collection: proof_reviews
+  update_attributes:
+  - status
+proof_reviews:
+  attributes:
+  - can_modify
+  - status
+  - participation_ids
+  - proof_revision_id
+  associations:
+    participations:
+      foreign_key: participation_ids
+      collection: proof_review_participations
+    proof_revision:
+      foreign_key: proof_revision_id
+      collection: proof_revisions
+  create_attributes:
+  - proof_revision_id
+  - user_ids
+  update_attributes:
+  - status
+proof_revisions:
+  attributes:
+  - creator_name
+  - current
+  - download_url
+  - filesize
+  - original_filename
+  - review_url
+  - revision_date
+  - proof_id
+  - proof_review_id
+  associations:
+    proof:
+      foreign_key: proof_id
+      collection: proofs
+    proof_review:
+      foreign_key: proof_review_id
+      collection: proof_reviews
+  create_attributes:
+  - attachment_id
+  - proof_id
+  - title
+  update_attributes:
+  - current
+  - title
+proofs:
+  attributes:
+  - created_at
+  - creator_name
+  - download_url
+  - filename
+  - filesize
+  - has_comments
+  - review_status
+  - review_url
+  - revision_count
+  - revision_date
+  - title
+  - viewable
+  - story_id
+  - current_revision_id
+  - revision_ids
+  associations:
+    story:
+      foreign_key: story_id
+      collection: stories
+    current_revision:
+      foreign_key: current_revision_id
+      collection: proof_revisions
+    revisions:
+      foreign_key: revision_ids
+      collection: proof_revisions
+  create_attributes:
+  - attachment_id
+  - story_id
+  - title
+  update_attributes:
+  - title
+rate_card_roles:
+  attributes:
+  - created_at
+  - rate
+  - updated_at
+  - role_id
+  - rate_card_version_id
+  associations:
+    role:
+      foreign_key: role_id
+      collection: roles
+    rate_card_version:
+      foreign_key: rate_card_version_id
+      collection: rate_card_versions
+rate_card_set_versions:
+  attributes:
+  - active
+  - created_at
+  - effective_date
+  - updated_at
+  - used_currencies
+  - rate_card_set_id
+  - rate_card_version_ids
   associations:
     rate_card_set:
       foreign_key: rate_card_set_id
@@ -1303,23 +1889,17 @@ rate_cards:
     rate_card_versions:
       foreign_key: rate_card_version_ids
       collection: rate_card_versions
-    effective_rate_card_version:
-      foreign_key: effective_rate_card_version_id
-      collection: rate_card_versions
-  attributes:
-    - currency
-    - uses
-    - id
-    - rate_card_set_id
-    - rate_card_version_ids
-  create_attributes:
-    - rate_card_set_id
-    - rate_card_set_version_id
-    - currency
-  update_attributes:
-    - currency
-
 rate_card_sets:
+  attributes:
+  - account_default
+  - active_currencies
+  - created_at
+  - default_currencies
+  - destroyable
+  - title
+  - updated_at
+  - rate_card_ids
+  - rate_card_set_version_ids
   associations:
     rate_cards:
       foreign_key: rate_card_ids
@@ -1327,42 +1907,14 @@ rate_card_sets:
     rate_card_set_versions:
       foreign_key: rate_card_set_version_ids
       collection: rate_card_set_versions
-  attributes:
-    - id
-    - title
-    - account_default
-    - active_currencies
-    - default_currencies
-    - destroyable
-  create_attributes:
-    - clone_version_id
-    - title
-  update_attributes:
-    - title
-
-rate_card_set_versions:
-  associations:
-    rate_card_set:
-      foreign_key: rate_card_set_id
-      collection: rate_card_sets
-    rate_card_versions:
-      foreign_key: rate_card_version_ids
-      collection: rate_card_versions
-  attributes:
-    - id
-    - active
-    - effective_date
-    - used_currencies
-    - rate_card_set_id
-    - rate_card_version_ids
-  create_attributes:
-    - clone_id
-    - rate_card_set_id
-    - effective_date
-  update_attributes:
-    - effective_date
-
 rate_card_versions:
+  attributes:
+  - created_at
+  - default_rate
+  - updated_at
+  - rate_card_id
+  - rate_card_set_version_id
+  - rate_card_role_ids
   associations:
     rate_card:
       foreign_key: rate_card_id
@@ -1373,196 +1925,309 @@ rate_card_versions:
     rate_card_roles:
       foreign_key: rate_card_role_ids
       collection: rate_card_roles
+rate_cards:
   attributes:
-    - id
-    - default_rate
-  create_attributes:
-    - default_rate
-  update_attributes:
-    - default_rate
-
-rate_card_roles:
+  - created_at
+  - currency
+  - removable
+  - updated_at
+  - uses
+  - rate_card_set_id
+  - rate_card_version_ids
+  - effective_rate_card_version_id
   associations:
+    rate_card_set:
+      foreign_key: rate_card_set_id
+      collection: rate_card_sets
+    rate_card_versions:
+      foreign_key: rate_card_version_ids
+      collection: rate_card_versions
+    effective_rate_card_version:
+      foreign_key: effective_rate_card_version_id
+      collection: rate_card_versions
+resolutions:
+  attributes:
+  - created_at
+  - description
+  - target_id
+  - target_type
+  - type
+  - updated_at
+  - user_id
+  create_attributes:
+  - description
+  - submission_ids
+resource_posts:
+  attributes:
+  - created_at
+  - formatted_message
+  - message
+  - subject_id
+  - updated_at
+  - external_reference_ids
+  - user_id
+  - resource_id
+  - event_ids
+  - recipient_ids
+  associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+    user:
+      foreign_key: user_id
+      collection: users
+    resource:
+      foreign_key: resource_id
+      collection: resources
+    events:
+      foreign_key: event_ids
+      collection: resource/resource_events
+    recipients:
+      foreign_key: recipient_ids
+      collection: users
+  create_attributes:
+  - message
+  - recipient_ids
+  - resource_id
+  - subject_id
+  update_attributes:
+  - message
+resource_requests:
+  attributes:
+  - created_at
+  - status
+  - resource_id
+  - creator_id
+  - approver_ids
+  associations:
+    resource:
+      foreign_key: resource_id
+      collection: workspace_resources
+    creator:
+      foreign_key: creator_id
+      collection: users
+    approvers:
+      foreign_key: approver_ids
+      collection: users
+  create_attributes:
+  - approver_ids
+  - custom_field_id
+  - custom_fields
+  - resource_id
+  - resource_role_id
+  - resource_workspace_id
+  - value
+  - workspace_allocation_end_date
+  - workspace_allocation_percentage
+  - workspace_allocation_start_date
+  update_attributes:
+  - allocations_state
+  - request_resolution_status
+  - user_id
+resources:
+  attributes:
+  - label
+  - external_reference_ids
+  - user_id
+  - role_id
+  - organization_membership_id
+  associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+    user:
+      foreign_key: user_id
+      collection: users
     role:
       foreign_key: role_id
       collection: roles
-    rate_card_version:
-      foreign_key: rate_card_version_id
-      collection: rate_card_versions
-  attributes:
-    - id
-    - rate
-  create_attributes:
-    - rate_card_version_id
-    - role_id
-    - rate
-  update_attributes:
-    - rate
-
-resolutions:
-  attributes:
-    - id
-    - type
-    - created_at
-    - updated_at
-    - description
-    - target_type
-    - target_id
-    - user_id
-
+    organization_membership:
+      foreign_key: organization_membership_id
+      collection: organization_memberships
 roles:
   attributes:
-    - id
-    - name
+  - created_at
+  - deleted_at
+  - in_use
+  - name
+  - updated_at
   create_attributes:
-    - name
+  - name
   update_attributes:
-    - name
-  validations:
-    name:
-      presence: true
-
+  - name
 saml_identities:
   attributes:
-    - id
-    - identifier
-    - user_id
-    - created_at
-    - updated_at
+  - created_at
+  - identifier
+  - updated_at
+  - user_id
   create_attributes:
-    - identifier
-    - user_id
+  - identifier
+  - user_id
   update_attributes:
-    - identifier
-
-skills:
+  - identifier
+scheduled_jobs/insights_report_exports:
+  attributes:
+  - id
+  - title
+  - description
+  - external_report_object_identifier
+  - recurrence
+  - created_at
+  - latest_success
+skill_adjacencies:
+  attributes:
+  - created_at
+  - score
+  - updated_at
+  - ''
+  - ''
+  - ''
+  - ''
   associations:
+    requested_skill:
+      foreign_key: ''
+      collection: skills
+    adjacent_skill:
+      foreign_key: ''
+      collection: skills
+    creator:
+      foreign_key: ''
+      collection: users
+    updater:
+      foreign_key: ''
+      collection: users
+  create_attributes:
+  - adjacent_skill_id
+  - requested_skill_id
+  - score
+  update_attributes:
+  - score
+skill_categories:
+  attributes:
+  - name
+  - skill_ids
+  associations:
+    skills:
+      foreign_key: skill_ids
+      collection: skills
+skill_memberships:
+  attributes:
+  - cached_skill_name
+  - created_at
+  - level
+  - max_level
+  - updated_at
+  - skill_id
+  - creator_id
+  - user_id
+  associations:
+    skill:
+      foreign_key: skill_id
+      collection: skills
+    creator:
+      foreign_key: creator_id
+      collection: users
+    user:
+      foreign_key: user_id
+      collection: users
+  create_attributes:
+  - level
+  - skill_id
+  - user_id
+  update_attributes:
+  - level
+skills:
+  attributes:
+  - created_at
+  - description
+  - max_level
+  - name
+  - updated_at
+  - user_count
+  - external_reference_ids
+  - skill_category_id
+  - role_ids
+  associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
     skill_category:
       foreign_key: skill_category_id
       collection: skill_categories
     roles:
       foreign_key: role_ids
       collection: roles
-    external_references:
-      foreign_key: external_reference_ids
-      collection: external_references
-  attributes:
-    - name
-    - max_level
-    - description
-    - user_count
   create_attributes:
-    - skill_category_id
-    - name
-    - max_level
-    - description
-    - role_ids
-    - external_reference
+  - description
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - max_level
+  - name
+  - role_ids
+  - service_model
+  - service_model_ref
+  - service_name
+  - skill_category_id
+  - status
   update_attributes:
-    - skill_category_id
-    - name
-    - max_level
-    - description
-    - role_ids
-    - external_reference
-
-skill_adjacencies:
-  associations:
-    requested_skill:
-      foreign_key: requested_skill_id
-      collection: skills
-    adjacent_skill:
-      foreign_key: adjacent_skill_id
-      collection: skills
-    creator:
-      foreign_key: creator_id
-      collection: users
-    updater:
-      foreign_key: updater_id
-      collection: users
+  - description
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - max_level
+  - name
+  - role_ids
+  - service_model
+  - service_model_ref
+  - service_name
+  - skill_category_id
+  - status
+staffing_demand_skills:
   attributes:
-    - score
-    - created_at
-    - updated_at
-    - requested_skill_id
-    - adjacent_skill_id
-    - creator_id
-    - updater_id
-  create_attributes:
-    - score
-    - requested_skill_id
-    - adjacent_skill_id
-  update_attributes:
-    - score
-
-skill_categories:
-  associations:
-    skills:
-      foreign_key: skill_ids
-      collection: skills
-  attributes:
-    - name
-
-skill_memberships:
+  - cached_skill_name
+  - created_at
+  - level
+  - max_level
+  - staffing_demand_id
+  - updated_at
+  - skill_id
+  - creator_id
   associations:
     skill:
       foreign_key: skill_id
       collection: skills
-    user:
-      foreign_key: user_id
-      collection: users
     creator:
       foreign_key: creator_id
       collection: users
-  attributes:
-    - level
-    - max_level
-    - created_at
-    - updated_at
-    - cached_skill_name
-  create_attributes:
-    - skill_id
-    - user_id
-    - level
-  update_attributes:
-    - level
-
 staffing_demands:
   attributes:
-    - description
-    - title
-    - start_date
-    - end_date
-    - quantity
-    - updated_at
-    - created_at
-    - status
-    - creator_id
-    - ownder_id
-    - workspace_id
-    - role_id
-  create_attributes:
-    - description
-    - title
-    - start_date
-    - end_date
-    - quantity
-    - workspace_id
-    - role_id
-    - status
-    - skills
-    - external_reference
-  update_attributes:
-    - description
-    - title
-    - start_date
-    - end_date
-    - quantity
-    - workspace_id
-    - role_id
-    - status
-    - external_reference
+  - created_at
+  - description
+  - end_date
+  - quantity
+  - start_date
+  - status
+  - title
+  - updated_at
+  - external_reference_ids
+  - creator_id
+  - owner_id
+  - workspace_id
+  - role_id
+  - skill_ids
+  - staffing_demand_skill_ids
+  - candidate_ids
+  - custom_field_value_ids
   associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
     creator:
       foreign_key: creator_id
       collection: users
@@ -1581,79 +2246,189 @@ staffing_demands:
     staffing_demand_skills:
       foreign_key: staffing_demand_skill_ids
       collection: staffing_demand_skills
+    candidates:
+      foreign_key: candidate_ids
+      collection: candidates
     custom_field_values:
       foreign_key: custom_field_value_ids
       collection: custom_field_values
-
-status_reports:
-  associations:
-    workspace:
-      foreign_key: workspace_id
-      collection: workspaces
-    creator:
-      foreign_key: creator_id
-      collection: users
-  attributes:
-    - color
-    - description
-    - details
-    - created_at
-    - updated_at
   create_attributes:
-    - workspace_id
-    - creator_id
-    - description
-    - color
-    - details
+  - description
+  - end_date
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - level
+  - locked
+  - quantity
+  - role_id
+  - service_model
+  - service_model_ref
+  - service_name
+  - skill_id
+  - skills
+  - start_date
+  - status
+  - status
+  - title
+  - workspace_id
   update_attributes:
-    - color
-    - description
-    - details
-
-stories: # tasks
+  - description
+  - end_date
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - quantity
+  - role_id
+  - service_model
+  - service_model_ref
+  - service_name
+  - start_date
+  - status
+  - status
+  - title
+  - workspace_id
+status_reports:
+  attributes:
+  - color
+  - created_at
+  - description
+  - details
+  - update_whitelist
+  - updated_at
+  - external_reference_ids
+  - workspace_id
+  - creator_id
+  - updater_id
   associations:
-    workspace:
-      foreign_key: workspace_id
-      collection: workspaces
-    creator:
-      foreign_key: creator_id
-      collection: users
-    parent:
-      foreign_key: parent_id
-      collection: stories
-    root:
-      foreign_key: root_id
-      collection: stories
-    assignees:
-      foreign_key: assignee_ids
-      collection: users
-    followers:
-      foreign_key: follower_ids
-      collection: users
-    sub_stories:
-      foreign_key: sub_story_ids
-      collection: stories
-    tags: #NOTE(SZ) moved in read-only attributes
-      foreign_key: tag_ids
-      collection: tags
-    story_tasks:
-      foreign_key: story_task_ids
-      collection: story_tasks
-    descendants:
-      foreign_key: descendant_ids
-      collection: stories
-    ancestors:
-      foreign_key: ancestor_ids
-      collection: stories
-    custom_field_values:
-      foreign_key: custom_field_value_ids
-      collection: custom_field_values
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
-    current_assignments:
-      foreign_key: current_assignment_ids
-      collection: assignments
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    creator:
+      foreign_key: creator_id
+      collection: users
+    updater:
+      foreign_key: updater_id
+      collection: users
+  create_attributes:
+  - category
+  - color
+  - color
+  - creator_id
+  - description
+  - description
+  - details
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - service_model
+  - service_model_ref
+  - service_name
+  - workspace_id
+  update_attributes:
+  - category
+  - color
+  - color
+  - description
+  - description
+  - details
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - service_model
+  - service_model_ref
+  - service_name
+stories:
+  attributes:
+  - ancestor_ids
+  - ancestry_depth
+  - archived
+  - archived_editable
+  - assignment_timestamped_at
+  - billable
+  - budget_estimate_in_cents
+  - budget_used_in_cents
+  - can_align_time
+  - can_edit
+  - can_edit_financials
+  - can_post
+  - cost_budget_in_cents
+  - cost_budget_used_in_cents
+  - created_at
+  - deleted_at
+  - description
+  - due_date
+  - fixed_fee
+  - foreign_exchange_cost_budget
+  - formatted_description
+  - has_out_of_bounds_sads
+  - has_proofing_access
+  - invoiced_balance_in_cents
+  - is_time_trackable_type
+  - logged_billable_time_in_minutes
+  - logged_nonbillable_time_in_minutes
+  - parsed_description
+  - percentage_complete
+  - position
+  - priority
+  - read_only
+  - render_description_markdown
+  - start_date
+  - state
+  - story_type
+  - sub_stories_billable_time_in_minutes
+  - sub_stories_budget_estimate_in_cents
+  - sub_stories_budget_used_in_cents
+  - sub_stories_time_estimate_in_minutes
+  - sub_story_count
+  - subtree_depth
+  - time_estimate_in_minutes
+  - time_trackable
+  - title
+  - uninvoiced_balance_in_cents
+  - updated_at
+  - weight
+  - external_reference_ids
+  - workspace_resource_ids
+  - workspace_resources_with_unnamed_ids
+  - potential_workspace_resource_ids
+  - potential_workspace_resources_with_unnamed_ids
+  - workspace_id
+  - creator_id
+  - parent_id
+  - root_id
+  - descendant_ids
+  - ancestor_ids
+  - assignee_ids
+  - current_assignment_ids
+  - follower_ids
+  - story_task_ids
+  - sub_story_ids
+  - tag_ids
+  - story_state_change_ids
+  - reply_ids
+  - attachment_ids
+  - proof_ids
+  - google_document_ids
+  - source_dependency_ids
+  - target_dependency_ids
+  - custom_field_value_ids
+  - cascading_affected_story_ids
+  - assigned_role_id
+  associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
     workspace_resources:
       foreign_key: workspace_resource_ids
       collection: workspace_resources
@@ -1666,144 +2441,181 @@ stories: # tasks
     potential_workspace_resources_with_unnamed:
       foreign_key: potential_workspace_resources_with_unnamed_ids
       collection: workspace_resources
-    replies:
-      foreign_key: reply_ids
-      collection: posts
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    creator:
+      foreign_key: creator_id
+      collection: users
+    parent:
+      foreign_key: parent_id
+      collection: stories
+    root:
+      foreign_key: root_id
+      collection: stories
+    descendants:
+      foreign_key: descendant_ids
+      collection: stories
+    ancestors:
+      foreign_key: ancestor_ids
+      collection: stories
+    assignees:
+      foreign_key: assignee_ids
+      collection: users
+    current_assignments:
+      foreign_key: current_assignment_ids
+      collection: assignments
+    followers:
+      foreign_key: follower_ids
+      collection: users
+    story_tasks:
+      foreign_key: story_task_ids
+      collection: story_tasks
+    sub_stories:
+      foreign_key: sub_story_ids
+      collection: stories
+    tags:
+      foreign_key: tag_ids
+      collection: acts_as_taggable_on/tags
     story_state_changes:
       foreign_key: story_state_change_ids
       collection: story_state_changes
+    replies:
+      foreign_key: reply_ids
+      collection: posts
     attachments:
       foreign_key: attachment_ids
-      collection: attachments
+      collection: attachments/post_attachments
+    proofs:
+      foreign_key: proof_ids
+      collection: proofs
+    google_documents:
+      foreign_key: google_document_ids
+      collection: google_documents
     source_dependencies:
       foreign_key: source_dependency_ids
-      collection: source_dependencies
+      collection: story_dependencies
     target_dependencies:
       foreign_key: target_dependency_ids
-      collection: target_dependencies
+      collection: story_dependencies
+    custom_field_values:
+      foreign_key: custom_field_value_ids
+      collection: custom_field_values
+    cascading_affected_stories:
+      foreign_key: cascading_affected_story_ids
+      collection: stories
     assigned_role:
       foreign_key: assigned_role_id
       collection: roles
-  attributes:
-    - id # the internal story id
-    - workspace_id # the internal id for the workspace of the story
-    - parent_id # the internal story id of a story's parent story (only for sub-stories)
-    - billable # whether or not the task is billable
-    - title # the title of the story
-    - assignee_ids # an array of User IDs that are assigned to the story
-    - description # a user provided description of the story
-    - story_type # the story's type (task, deliverable, or milestone)
-    - priority # the integer value of the priority for a task
-    - state # the current state of the story (started, not started, or completed)
-    - position # a number corresponding to the story's order relative to all other stories
-    - archived # the archived status of the story (true of false)
-    - deleted_at # the date the story was deleted
-    - updated_at # the date the story was last updated
-    - created_at # the date the story was created in Mavenlink
-    - due_date # the due date given to the story
-    - start_date # the start date given to the story
-    - sub_story_count # the number of sub-stories under this story
-    - budget_estimate_in_cents # the budget for the story in cents (integer). Only present if the Workspace has budgets enabled and the authenticated user can view budget information.
-    - sub_stories_budget_estimate_in_cents # the budget for the sub-stories in cents (integer). Only present if the Workspace has budgets enabled and the authenticated user can view budget information.
-    - budget_used_in_cents # the value of all time entries logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view budget information.
-    - sub_stories_budget_used_in_cents # the value of all sub-stories' time entries logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view budget information.
-    - time_estimate_in_minutes # the time estimate for the story in minutes (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
-    - sub_stories_time_estimate_in_minutes # the time estimate for the sub-stories in minutes (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
-    - logged_billable_time_in_minutes # the sum of all billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
-    - sub_stories_billable_time_in_minutes # the sum of all sub-stories' billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
-    - logged_nonbillable_time_in_minutes # the sum of all non-billable time logged against this story (integer). Only present if the Workspace has budgets enabled and the authenticated user can view time information.
-    - fixed_fee # whether or not the story is fixed fee
-    - root_id # the id of its parent. It is nil if a top level story
-    - descendant_ids # an array of Story ids for it's descendants
-    - custom_field_value_ids # an array of Custom Field Value ids which are attached to the story
-    - percentage_complete
-    - checklist # an array of checklist items (optional)
-    - weight # integer representing the weight of the story. Can only be set on a parent-level milestone by a consultant with at least budget permissions (optional)
-    - cost_budget_in_cents
-    - cost_budget_used_in_cents
-    - external_reference_ids
-    - current_assignments
-    - story_state_change_ids
-    - creator_id
-    - ancestor_ids
-    - workspace_resource_ids
-    - workspace_resources_with_unnamed_ids
-    - potential_workspace_resource_ids
-    - potential_workspace_resources_with_unnamed_ids
-    - reply_ids
-    - attachment_ids
-    - source_dependency_ids
-    - target_dependency_ids
-    - assigned_role_id
-    - follower_ids
-    - sub_story_ids
-    - tag_ids
-    - story_task_ids
-    - current_assignment_ids
   create_attributes:
-    - title # (required) the title of the story # max 200 characters
-    - story_type # (required) the type of the story: task, deliverable, or milestone
-    - workspace_id # (required) the ID of the Workspace in which the story will be created
-    - description # (optional) a description of the new story # max 1000 characters
-    - parent_id # (optional) represents the parent of this story, making this a sub-story
-    - start_date # (optional) the date the story should be started; format should look like YYYY-MM-DD
-    - archived # (optional) the archived status of the story (true or false)
-    - due_date # (optional) the date the story is due; format should look like YYYY-MM-DD
-    - assignee_ids # (optional) an array of User IDs that the new story should be assigned to
-    - budget_estimate_in_cents # (optional) the budget in cents of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
-    - time_estimate_in_minutes # (optional) the time estimate in minutes of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
-    - tag_list # (optional) a comma separated String of tags
-    - billable # whether or not the task is billable
-    - percentage_complete # (optional) a number (0-100) representing the stage of the story
-    - state # (optional) the state of the story: not started, started or completed
-    - sub_stories # (optional) sub stories to be created with the parent
-    - fixed_fee # whether or not the story is fixed fee
-    - checklist # an array of checklist items (optional)
-    - weight # integer representing the weight of the story. Can only be set on a parent-level milestone by a consultant with at least budget permissions (optional)
-    - priority # the integer value of the priority for a task
-    - assignments
-    - external_reference
+  - archived
+  - assignee_id
+  - assignee_ids
+  - assignees
+  - assignments
+  - backdated_to
+  - billable
+  - budget_estimate_in_cents
+  - checklist
+  - cost_budget_in_cents
+  - custom_field_id
+  - custom_fields
+  - date
+  - dependencies
+  - description
+  - due_date
+  - estimated_minutes
+  - exchange_rate
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - fixed_fee
+  - foreign_exchange_cost_budget
+  - lag
+  - locked
+  - parent_id
+  - percentage_complete
+  - priority
+  - role_id
+  - service_model
+  - service_model_ref
+  - service_name
+  - source_currency
+  - source_id
+  - source_value
+  - start_date
+  - state
+  - status
+  - story_type
+  - sub_stories
+  - tag_list
+  - target_id
+  - temp_id
+  - time_estimate_in_minutes
+  - time_trackable
+  - title
+  - type
+  - value
+  - weight
+  - workspace_id
   update_attributes:
-    - title # (required) the title of the story # max 200 characters
-    - story_type # (required) the type of the story: task, deliverable, or milestone
-    - description # (optional) a description of the new story # max 1000 characters
-    - parent_id # (optional) represents the parent of this story, making this a sub-story
-    - start_date # (optional) the date the story should be started; format should look like YYYY-MM-DD
-    - archived # (optional) the archived status of the story (true or false)
-    - due_date # (optional) the date the story is due; format should look like YYYY-MM-DD
-    - assignee_ids # (optional) an array of User IDs that the new story should be assigned to
-    - budget_estimate_in_cents # (optional) the budget in cents of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
-    - time_estimate_in_minutes # (optional) the time estimate in minutes of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
-    - tag_list # (optional) a comma separated String of tags
-    - billable # whether or not the task is billable
-    - percentage_complete # (optional) a number (0-100) representing the stage of the story
-    - state # (optional) the state of the story: not started, started or completed
-    - fixed_fee # whether or not the story is fixed fee
-    - weight # integer representing the weight of the story. Can only be set on a parent-level milestone by a consultant with at least budget permissions (optional)
-    - priority # the integer value of the priority for a task
-    - assignments
-    - external_reference
-
+  - archived
+  - assignee_id
+  - assignee_ids
+  - assignees
+  - assignment_timestamped_at
+  - assignments
+  - billable
+  - budget_estimate_in_cents
+  - cascade
+  - cost_budget_in_cents
+  - date
+  - description
+  - due_date
+  - estimated_minutes
+  - exchange_rate
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - fixed_fee
+  - follower_ids
+  - foreign_exchange_cost_budget
+  - locked
+  - parent_id
+  - percentage_complete
+  - priority
+  - role_id
+  - service_model
+  - service_model_ref
+  - service_name
+  - source_currency
+  - source_value
+  - start_date
+  - state
+  - status
+  - story_type
+  - tag_list
+  - time_estimate_in_minutes
+  - time_trackable
+  - title
+  - weight
 story_allocation_days:
   attributes:
-    - id # the unique identifier for this story allocation day object
-    - updated_at # the date the story allocation day was last updated
-    - date # the date of the story allocation day
-    - minutes # the minutes allocated to the story allocation day
-    - current # a calculated attribute that indicates whether or not the story allocation day's assignment is active
-    - assignment_id # the id of the assignment that owns the story allocation day
-    - story_id # the id of the story who owns the story allocation day's assignment
-    - workspace_id # the id of the workspace who owns the story allocation day's assignment
-  create_attributes:
-    - assignment_id # required
-    - date # required
-    - minutes # required
-  update_attributes:
-    - minutes
+  - created_at
+  - current
+  - date
+  - minutes
+  - updated_at
+  - external_reference_ids
+  - assignment_id
+  - story_id
+  - workspace_id
   associations:
-    # assignment - when included, the assignment_id will reference the assignment for which the story allocation day belongs
-    # story - when included, the story_id will reference the story for which the story allocation day belongs
-    # workspace - when included, the workspace_id will reference the workspace for which the story allocation day belongs
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
     assignment:
       foreign_key: assignment_id
       collection: assignments
@@ -1813,29 +2625,38 @@ story_allocation_days:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
-
-story_dependencies:
-  validations:
-    [source_id, target_id]:
-      presence: true
-    workspace_id:
-      presence: true
-      'on': create
-  attributes:
-    - id
-    - dependency_type
-    - lag
-    - source_id
-    - target_id
   create_attributes:
-    - workspace_id
-    - source_id
-    - target_id
-    - dependency_type
-    - lag
+  - assignment_id
+  - date
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - minutes
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
   update_attributes:
-    - dependency_type
-    - lag
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - minutes
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+story_dependencies:
+  attributes:
+  - created_at
+  - dependency_type
+  - lag
+  - updated_at
+  - source_id
+  - target_id
   associations:
     source:
       foreign_key: source_id
@@ -1843,30 +2664,173 @@ story_dependencies:
     target:
       foreign_key: target_id
       collection: stories
-
+  create_attributes:
+  - dependency_type
+  - lag
+  - source_id
+  - target_id
+  - workspace_id
+  update_attributes:
+  - dependency_type
+  - lag
+story_follows:
+  attributes:
+  - created_at
+  - updated_at
+  - story_id
+  - follower_id
+  associations:
+    story:
+      foreign_key: story_id
+      collection: stories
+    follower:
+      foreign_key: follower_id
+      collection: users
+story_state_changes:
+  attributes:
+  - created_at
+  - formatted_state
+  - state
+  - updated_at
+  - user_id
+  - story_id
+  associations:
+    user:
+      foreign_key: user_id
+      collection: users
+    story:
+      foreign_key: story_id
+      collection: stories
+story_tasks:
+  attributes:
+  - completed
+  - completed_at
+  - created_at
+  - name
+  - position
+  - updated_at
+  - completed_by_id
+  - story_id
+  associations:
+    completed_by:
+      foreign_key: completed_by_id
+      collection: users
+    story:
+      foreign_key: story_id
+      collection: stories
+  create_attributes:
+  - completed
+  - name
+  - position
+  - story_id
+  update_attributes:
+  - completed
+  - name
+  - position
+submissions:
+  attributes:
+  - comment
+  - created_at
+  - currency
+  - currency_base_unit
+  - currency_symbol
+  - current_resolution_created_at_date
+  - current_resolution_creator_id
+  - current_resolution_description
+  - line_item_total_formatted
+  - line_item_total_in_cents
+  - permissions
+  - resolution_description
+  - status
+  - title
+  - type
+  - updated_at
+  - external_reference_ids
+  - user_id
+  - workspace_id
+  associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+    user:
+      foreign_key: user_id
+      collection: users
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+subscribed_events/models/delivery_logs:
+  attributes:
+  - account_id
+  - confirmed_at
+  - delivered_at
+  - response_code
+  - response_info
+  - status
+  - subscribed_event_id
+  - webhook_endpoint_id
+  - webhook_endpoint_url
+  - subscribed_event_id
+  - webhook_endpoint_id
+  associations:
+    subscribed_event:
+      foreign_key: subscribed_event_id
+      collection: subscribed_events/models/subscribed_events
+    webhook_endpoint:
+      foreign_key: webhook_endpoint_id
+      collection: subscribed_events/models/webhook_endpoints
+subscribed_events/models/stream_events:
+  attributes:
+  - account_id
+  - change_details
+  - change_summary
+  - created_at
+  - current_payload
+  - event_type
+  - payload
+  - payload_changes
+  - previous_payload
+  - subject_id
+  - subject_type
+  - updated_at
+  - user_id
+subscribed_events/models/subscribed_events:
+  attributes:
+  - account_id
+  - change_details
+  - change_summary
+  - created_at
+  - current_payload
+  - event_type
+  - payload
+  - payload_changes
+  - previous_payload
+  - subject_id
+  - subject_type
+  - updated_at
+  - user_id
+subscribed_events/models/webhook_endpoints:
+  attributes:
+  - created_at
+  - description
+  - disabled_at
+  - enabled_events
+  - secret
+  - status
+  - updated_at
+  - url
 survey_answers:
   attributes:
-    - id
-    - text
-    - created_at
-    - updated_at
-  create_attributes:
-    - survey_response_id
-    - survey_question_id
-    - date_value
-    - string_value
-    - integer_value
-    - decimal_value
-    - choice_values
-    - choice_ids
-  update_attributes:
-    - date_value
-    - string_value
-    - integer_value
-    - decimal_value
-    - choice_values
-    - choice_ids
+  - created_at
+  - text
+  - updated_at
+  - external_reference_ids
+  - survey_question_id
+  - survey_response_id
+  - choice_ids
   associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
     survey_question:
       foreign_key: survey_question_id
       collection: survey_questions
@@ -1876,92 +2840,75 @@ survey_answers:
     choices:
       foreign_key: choice_ids
       collection: survey_question_choices
-  validations:
-    [survey_response_id, survey_question_id]:
-      presence: true
-
-story_state_changes:
-  associations:
-    user:
-      foreign_key: user_id
-      collection: users
-    story:
-      foreign_key: story_id
-      collection: stories
+  create_attributes:
+  - choice_ids
+  - choice_values
+  - date_value
+  - decimal_value
+  - integer_value
+  - string_value
+  - survey_question_id
+  - survey_response_id
+  update_attributes:
+  - choice_ids
+  - choice_values
+  - date_value
+  - decimal_value
+  - integer_value
+  - string_value
+survey_question_choices:
   attributes:
-    - id
-    - state
-    - formatted_state
-    - user_id
-    - story_id
-    - created_at
-    - updated_at
-
+  - created_at
+  - label
+  - updated_at
 survey_questions:
   attributes:
-    - id
-    - text
-    - question_type
-    - created_at
-    - updated_at
-  create_attributes:
-    - text
-    - question_type
-    - choices
-  update_attributes:
-    - text
+  - created_at
+  - question_type
+  - text
+  - updated_at
+  - external_reference_ids
+  - choice_ids
   associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
     choices:
       foreign_key: choice_ids
       collection: survey_question_choices
-  validations:
-    [text, question_type]:
-      presence: true
-
-survey_question_choices:
-  attributes:
-    - id
-    - label
-    - created_at
-    - updated_at
-
+  create_attributes:
+  - choices
+  - label
+  - question_type
+  - text
+  update_attributes:
+  - text
 survey_responses:
   attributes:
-    - id
-    - title
-    - description
-    - status
-    - open_date
-    - close_date
-    - due_date
-    - created_at
-    - updated_at
-  create_attributes:
-    - survey_template_id
-    - title
-    - description
-    - status
-    - subject_type
-    - subject_id
-    - owner_id
-    - respondent_id
-    - workspace_id
-    - open_date
-    - close_date
-    - due_date
-  update_attributes:
-    - title
-    - description
-    - status
+  - close_date
+  - created_at
+  - description
+  - due_date
+  - open_date
+  - status
+  - title
+  - updated_at
+  - external_reference_ids
+  - survey_template_id
+  - survey_answer_ids
+  - owner_id
+  - respondent_id
+  - workspace_id
   associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
     survey_template:
       foreign_key: survey_template_id
       collection: survey_templates
     survey_answers:
       foreign_key: survey_answer_ids
       collection: survey_answers
-    subject:
-      foreign_key: subject_id
     owner:
       foreign_key: owner_id
       collection: users
@@ -1971,48 +2918,52 @@ survey_responses:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
-  validations:
-    survey_template_id:
-      presence: true
-
+  create_attributes:
+  - close_date
+  - description
+  - due_date
+  - open_date
+  - owner_id
+  - respondent_id
+  - status
+  - subject_id
+  - subject_type
+  - survey_template_id
+  - title
+  - workspace_id
+  update_attributes:
+  - close_date
+  - description
+  - due_date
+  - open_date
+  - owner_id
+  - status
+  - title
 survey_templates:
   attributes:
-    - id
-    - title
-    - created_at
-    - updated_at
-    - description
-    - open_date
-    - close_date
-    - due_date
-  create_attributes:
-    - survey_question_ids
-    - title
-    - description
-    - subject_type
-    - subject_id
-    - owner_id
-    - respondent_id
-    - workspace_id
-    - open_date
-    - close_date
-    - due_date
-  update_attributes:
-    - title
-    - description
-    - open_date
-    - close_date
-    - due_date
-    - owner_id
+  - close_date
+  - created_at
+  - description
+  - due_date
+  - open_date
+  - title
+  - updated_at
+  - external_reference_ids
+  - survey_question_ids
+  - survey_response_ids
+  - owner_id
+  - respondent_id
+  - workspace_id
   associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
     survey_questions:
       foreign_key: survey_question_ids
       collection: survey_questions
     survey_responses:
       foreign_key: survey_response_ids
       collection: survey_responses
-    subject:
-      foreign_key: subject_id
     owner:
       foreign_key: owner_id
       collection: users
@@ -2022,34 +2973,51 @@ survey_templates:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
-  validations:
-    survey_question_ids:
-      presence: true
-
-story_tasks:
-  associations:
-    story:
-      foreign_key: story_id
-      collection: stories
-  attributes:
-    - id
-    - name
-    - completed
-    - completed_at
-    - position
-    - completed_by_id
-    - story_id
-
-tags:
-  attributes:
-    - id
-    - name
-    - status
   create_attributes:
-    - name
-
+  - close_date
+  - description
+  - due_date
+  - open_date
+  - owner_id
+  - respondent_id
+  - subject_id
+  - subject_type
+  - survey_question_ids
+  - title
+  - workspace_id
+  update_attributes:
+  - close_date
+  - description
+  - due_date
+  - open_date
+  - owner_id
+  - title
 time_adjustments:
+  attributes:
+  - bill_rate_in_cents
+  - billable
+  - cost_rate_in_cents
+  - created_at
+  - currency
+  - currency_base_unit
+  - currency_symbol
+  - is_invoiced
+  - notes
+  - original_date
+  - posted_on_date
+  - taxable
+  - time
+  - updated_at
+  - external_reference_ids
+  - story_id
+  - workspace_id
+  - user_id
+  - creator_id
+  - active_invoice_id
   associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
     story:
       foreign_key: story_id
       collection: stories
@@ -2065,67 +3033,87 @@ time_adjustments:
     active_invoice:
       foreign_key: active_invoice_id
       collection: invoices
+  create_attributes:
+  - bill_rate_in_cents
+  - billable
+  - cost_rate_in_cents
+  - currency
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - notes
+  - original_date
+  - posted_on_date
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  - story_id
+  - time
+  - user_id
+  - workspace_id
+  update_attributes:
+  - bill_rate_in_cents
+  - billable
+  - cost_rate_in_cents
+  - currency
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - notes
+  - original_date
+  - posted_on_date
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  - story_id
+  - time
+  - user_id
+  - workspace_id
+time_entries:
+  attributes:
+  - approved
+  - billable
+  - cost_rate_in_cents
+  - created_at
+  - currency
+  - currency_base_unit
+  - currency_symbol
+  - date_performed
+  - is_invoiced
+  - location
+  - notes
+  - rate_in_cents
+  - taxable
+  - time_in_minutes
+  - updated_at
+  - user_can_edit
+  - external_reference_ids
+  - story_id
+  - workspace_id
+  - user_id
+  - active_submission_id
+  - recent_submission_id
+  - invoice_id
+  - role_id
+  associations:
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
-  attributes:
-    - id
-    - original_date
-    - bill_rate_in_cents
-    - billable
-    - cost_rate_in_cents
-    - currency
-    - currency_symbol
-    - currency_base_unit
-    - is_invoiced
-    - notes
-    - posted_on_date
-    - taxable
-    - time
-    - created_at
-    - updated_at
-    - external_reference_ids
-  create_attributes:
-    - workspace_id
-    - user_id
-    - original_date
-    - bill_rate_in_cents
-    - billable
-    - cost_rate_in_cents
-    - currency
-    - posted_on_date
-    - time
-    - notes
-    - story_id
-    - external_reference
-  update_attributes:
-    - workspace_id
-    - user_id
-    - original_date
-    - bill_rate_in_cents
-    - billable
-    - cost_rate_in_cents
-    - currency
-    - posted_on_date
-    - time
-    - notes
-    - story_id
-    - external_reference
-
-time_entries:
-  associations:
+    story:
+      foreign_key: story_id
+      collection: stories
     workspace:
       foreign_key: workspace_id
       collection: workspaces
     user:
       foreign_key: user_id
       collection: users
-    story:
-      foreign_key: story_id
-      collection: stories
-    role:
-      foreign_key: role_id
-      collection: roles
     active_submission:
       foreign_key: active_submission_id
       collection: timesheet_submissions
@@ -2135,199 +3123,802 @@ time_entries:
     invoice:
       foreign_key: invoice_id
       collection: invoices
+    role:
+      foreign_key: role_id
+      collection: roles
+  create_attributes:
+  - billable
+  - cost_rate_in_cents
+  - date_performed
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - location
+  - locked
+  - notes
+  - rate_in_cents
+  - role_id
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  - story_id
+  - time_in_minutes
+  - user_id
+  - workspace_id
+  update_attributes:
+  - billable
+  - cost_rate_in_cents
+  - date_performed
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - notes
+  - rate_in_cents
+  - role_id
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  - story_id
+  - time_in_minutes
+  - user_id
+  - workspace_id
+time_off_entries:
+  attributes:
+  - hours
+  - requested_date
+  - submission_date
+  - external_reference_ids
+  - user_id
+  associations:
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
-  validations:
-    [workspace_id, date_performed, time_in_minutes]:
-      presence: true
-  attributes:
-    - id
-    - created_at
-    - updated_at
-    - date_performed
-    - story_id
-    - time_in_minutes
-    - billable
-    - notes
-    - rate_in_cents
-    - cost_rate_in_cents
-    - currency
-    - currency_symbol
-    - currency_base_unit
-    - user_can_edit
-    - workspace_id
-    - user_id
-    - approved
-    - role_id
-    - location
-    - taxable
-    - is_invoiced
-    - active_submission_id
-    - recent_submission_id
-    - invoice_id
+    user:
+      foreign_key: user_id
+      collection: users
   create_attributes:
-    - workspace_id
-    - date_performed
-    - time_in_minutes
-    - billable
-    - notes
-    - rate_in_cents
-    - cost_rate_in_cents
-    - role_id
-    - story_id
-    - user_id
-    - external_reference
-    - location
+  - hours
+  - requested_date
+  - user_id
   update_attributes:
-    - workspace_id
-    - date_performed
-    - time_in_minutes
-    - billable
-    - notes
-    - rate_in_cents
-    - cost_rate_in_cents
-    - role_id
-    - story_id
-    - user_id
-    - external_reference
-    - location
-
-time_off_entries:
+  - hours
+timesheet_submissions:
   attributes:
-    - id
-    - user_id
-    - hours
-    - requested_date
-    - submission_date
+  - comment
+  - created_at
+  - currency
+  - currency_base_unit
+  - currency_symbol
+  - current_resolution_created_at_date
+  - current_resolution_creator_id
+  - current_resolution_description
+  - end_date
+  - line_item_total_formatted
+  - line_item_total_in_cents
+  - permissions
+  - resolution_description
+  - start_date
+  - status
+  - title
+  - type
+  - updated_at
+  - external_reference_ids
+  - user_id
+  - workspace_id
+  - time_entry_ids
+  associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+    user:
+      foreign_key: user_id
+      collection: users
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    time_entries:
+      foreign_key: time_entry_ids
+      collection: time_entries
   create_attributes:
-    - user_id
-    - hours
-    - requested_date
-    - external_reference
+  - comment
+  - comment
+  - external_link
+  - external_link
+  - external_message
+  - external_message
+  - external_reference
+  - external_reference
+  - external_status
+  - external_status
+  - line_item_ids
+  - line_item_ids
+  - locked
+  - locked
+  - service_model
+  - service_model
+  - service_model_ref
+  - service_model_ref
+  - service_name
+  - service_name
+  - status
+  - status
+  - title
+  - title
+  - user_id
+  - user_id
+  - workspace_id
+  - workspace_id
+user_file_associations:
+  attributes:
+  - post_id
+  - workspace_id
+  associations:
+    post:
+      foreign_key: post_id
+      collection: posts
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+users:
+  attributes:
+  - abbreviated_timezone
+  - account_id
+  - account_permission
+  - active_holiday_calendar_name
+  - bio
+  - can_add_time_off
+  - city
+  - company_name
+  - country
+  - custom_header_logo_url
+  - disabled
+  - email_address
+  - full_name
+  - generic
+  - headline
+  - linkedin_url
+  - manager_can_edit_skills
+  - photo_path
+  - state
+  - trapped_website_url
+  - update_whitelist
+  - website
+  - external_reference_ids
+  - role_id
+  - skill_ids
+  - skill_membership_ids
+  - insights_access_group_membership_id
+  - saml_identity_ids
+  - account_membership_id
+  - work_sample_ids
+  - custom_field_value_ids
+  associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+    role:
+      foreign_key: role_id
+      collection: roles
+    skills:
+      foreign_key: skill_ids
+      collection: skills
+    skill_memberships:
+      foreign_key: skill_membership_ids
+      collection: skill_memberships
+    insights_access_group_membership:
+      foreign_key: insights_access_group_membership_id
+      collection: insights_access_group_memberships
+    saml_identities:
+      foreign_key: saml_identity_ids
+      collection: saml_identities
+    account_membership:
+      foreign_key: account_membership_id
+      collection: account_memberships
+    work_samples:
+      foreign_key: work_sample_ids
+      collection: work_samples
+    custom_field_values:
+      foreign_key: custom_field_value_ids
+      collection: custom_field_values
   update_attributes:
-    - hours
-    - external_reference
+  - full_name
+  - headline
+vendors:
+  attributes:
+  - archived
+  - externally_managed
+  - in_use
+  - name
+  - external_reference_ids
+  associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+  create_attributes:
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - name
+  - service_model
+  - service_model_ref
+  - service_name
+  update_attributes:
+  - archived
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - name
+  - service_model
+  - service_model_ref
+  - service_name
+work_samples:
+  attributes:
+  - attachment_filename
+  - attachment_id
+  - description
+  - title
+  - trapped_website_url
+  - website_url
+workspace_allocations:
+  attributes:
+  - created_at
+  - end_date
+  - hard
+  - minutes
+  - notes
+  - percentage
+  - start_date
+  - updated_at
+  - workspace_resource_id
+  - external_reference_ids
+  - workspace_resource_id
+  - workspace_id
+  - creator_id
+  - updater_id
+  associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+    workspace_resource:
+      foreign_key: workspace_resource_id
+      collection: workspace_resources
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    creator:
+      foreign_key: creator_id
+      collection: users
+    updater:
+      foreign_key: updater_id
+      collection: users
+  create_attributes:
+  - end_date
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - hard
+  - locked
+  - minutes
+  - notes
+  - resource_id
+  - service_model
+  - service_model_ref
+  - service_name
+  - start_date
+  - status
+  update_attributes:
+  - end_date
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - hard
+  - locked
+  - minutes
+  - notes
+  - service_model
+  - service_model_ref
+  - service_name
+  - start_date
+  - status
+workspace_baselines:
+  attributes:
+  - budget_used_formatted
+  - budget_used_in_cents
+  - completed_stories
+  - created_at
+  - creator_name
+  - currency_base_unit
+  - currency_symbol
+  - description
+  - due_date
+  - percentage_complete
+  - projected_due_date
+  - status_color
+  - status_text
+  - title
+  - total_budget_formatted
+  - total_budget_in_cents
+  - total_stories
+  - workspace_id
+  - creator_id
+  - payload_id
+  associations:
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    creator:
+      foreign_key: creator_id
+      collection: users
+    payload:
+      foreign_key: payload_id
+      collection: baseline_payloads
+  create_attributes:
+  - description
+  - title
+  - workspace_id
+  update_attributes:
+  - description
+  - title
+  - workspace_id
+workspace_groups:
+  attributes:
+  - address
+  - company
+  - contact_name
+  - created_at
+  - email
+  - name
+  - notes
+  - phone_number
+  - updated_at
+  - website
+  - external_reference_ids
+  - workspace_ids
+  associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+    workspaces:
+      foreign_key: workspace_ids
+      collection: workspaces
+  create_attributes:
+  - add_workspace_ids
+  - address
+  - company
+  - contact_name
+  - email
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - name
+  - notes
+  - phone_number
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  - website
+  update_attributes:
+  - add_workspace_ids
+  - address
+  - company
+  - contact_name
+  - email
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - name
+  - notes
+  - phone_number
+  - remove_workspace_ids
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  - website
+workspace_invitations:
+  attributes:
+  - email_address
+  - full_name
+  - invitee_role
+  - message
+  - subject
+workspace_invoice_preferences:
+  attributes:
+  - client_invoice_address
+  - client_invoice_name
+  - consultant_invoice_address
+  - consultant_invoice_name
+  - project_code
+  - purchase_order
+  - workspace_id
+  create_attributes:
+  - client_invoice_address
+  - client_invoice_name
+  - consultant_invoice_address
+  - consultant_invoice_name
+  - project_code
+  - purchase_order
+  - workspace_id
+  update_attributes:
+  - client_invoice_address
+  - client_invoice_name
+  - consultant_invoice_address
+  - consultant_invoice_name
+  - project_code
+  - purchase_order
+workspace_posts:
+  attributes:
+  - created_at
+  - formatted_message
+  - has_attachments
+  - message
+  - newest_reply_at
+  - parsed_message
+  - private
+  - reply
+  - reply_count
+  - subject_id
+  - subject_title
+  - subject_type
+  - updated_at
+  - external_reference_ids
+  - user_id
+  - workspace_id
+  - story_id
+  - reply_ids
+  - newest_reply_id
+  - newest_reply_user_id
+  - recipient_ids
+  - google_document_ids
+  - attachment_ids
+  associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+    user:
+      foreign_key: user_id
+      collection: users
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    story:
+      foreign_key: story_id
+      collection: stories
+    replies:
+      foreign_key: reply_ids
+      collection: posts
+    newest_reply:
+      foreign_key: newest_reply_id
+      collection: posts
+    newest_reply_user:
+      foreign_key: newest_reply_user_id
+      collection: users
+    recipients:
+      foreign_key: recipient_ids
+      collection: users
+    google_documents:
+      foreign_key: google_document_ids
+      collection: google_documents
+    attachments:
+      foreign_key: attachment_ids
+      collection: attachments/post_attachments
+  create_attributes:
+  - access
+  - attachment_ids
+  - backdated_to
+  - file_ids
+  - google_documents
+  - message
+  - recipient_ids
+  - resource_id
+  - story_id
+  - subject_id
+  - subject_type
+  - workspace_id
+  update_attributes:
+  - message
+  - story_id
+workspace_resource_skills:
+  attributes:
+  - cached_skill_name
+  - created_at
+  - level
+  - max_level
+  - updated_at
+  - skill_id
+  - creator_id
+  - workspace_resource_id
+  associations:
+    skill:
+      foreign_key: skill_id
+      collection: skills
+    creator:
+      foreign_key: creator_id
+      collection: users
+    workspace_resource:
+      foreign_key: workspace_resource_id
+      collection: workspace_resources
+  create_attributes:
+  - level
+  - skill_id
+  - workspace_resource_id
+  update_attributes:
+  - level
+workspace_resource_snapshots:
+  attributes:
+  - allocations_json
+  - approver_ids
+  - bill_rate_in_cents
+  - cost_rate_in_cents
+  - created_at
+  - request_resolver_id
+  - request_status
+  - request_submitter_id
+  - resource_action
+  - resource_action_user_id
+  - resource_custom_fields_json
+  - resource_label
+  - resource_role_id
+  - resource_role_name
+  - resource_skills_json
+  - updated_at
+  - user_custom_fields_json
+  - user_id
+  - user_role_id
+  - user_role_name
+  - user_skills_json
+  - workspace_currency
+  - workspace_id
+  - resource_id
+  - resource_request_id
+  associations:
+    resource:
+      foreign_key: resource_id
+      collection: workspace_resources
+    resource_request:
+      foreign_key: resource_request_id
+      collection: resource_requests
+workspace_resources:
+  attributes:
+  - account_cost
+  - account_rate
+  - account_role_name
+  - allocations_count
+  - assignments_count
+  - created_at
+  - deletable
+  - display_label
+  - earliest_allocation_date
+  - full_name
+  - is_foreign_user
+  - label
+  - latest_allocation_date
+  - photo_path
+  - refresh_rate_path
+  - resource_bill_rate
+  - resource_cost_rate
+  - role_available_on_rate_card
+  - role_initials
+  - role_name
+  - role_rate
+  - total_allocated_minutes
+  - update_whitelist
+  - updated_at
+  - workspace_id
+  - workspace_title
+  - external_reference_ids
+  - user_id
+  - role_id
+  - organization_membership_id
+  - participation_id
+  - pending_resource_request_id
+  - skill_ids
+  - workspace_resource_skill_ids
+  - workspace_id
+  - ''
+  associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+    user:
+      foreign_key: user_id
+      collection: users
+    role:
+      foreign_key: role_id
+      collection: roles
+    organization_membership:
+      foreign_key: organization_membership_id
+      collection: organization_memberships
+    participation:
+      foreign_key: participation_id
+      collection: participations
+    pending_resource_request:
+      foreign_key: pending_resource_request_id
+      collection: resource_requests
+    skills:
+      foreign_key: skill_ids
+      collection: skills
+    workspace_resource_skills:
+      foreign_key: workspace_resource_skill_ids
+      collection: workspace_resource_skills
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    custom_field_values:
+      foreign_key: ''
+      collection: custom_field_values
+  create_attributes:
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - locked
+  - role_id
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  - user_id
+  - workspace_id
+  update_attributes:
+  - auto_update_label
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - label
+  - locked
+  - role_id
+  - service_model
+  - service_model_ref
+  - service_name
+  - status
+  - user_id
+workspace_status_changes:
+  attributes:
+  - created_at
+  - from_color
+  - from_message
+  - from_status_key
+  - to_color
+  - to_message
+  - to_status_key
+  - updated_at
+  - user_id
+  - workspace_id
   associations:
     user:
       foreign_key: user_id
       collection: users
-    external_references:
-      foreign_key: external_reference_ids
-      collection: external_references
-
-timesheet_submissions:
-    attributes:
-      - id
-      - start_date
-      - end_date
-      - created_at
-      - updated_at
-      - status
-      - title
-      - comment
-      - type
-      - resolution_description
-      - line_item_total_formatted
-      - line_item_total_in_cents
-      - currency
-      - currency_symbol
-      - currency_base_unit
-      - current_resolution_description
-      - current_resolution_creator_id
-      - current_resolution_created_at_date
-      - time_entry_ids
-      - resolution_ids
-      - permissions
-    create_attributes:
-      - title
-      - comment
-      - workspace_id
-      - user_id
-      - line_item_ids
-      - external_reference
-    associations:
-      user:
-        foreign_key: user_id
-        collection: users
-      workspace:
-        foreign_key: workspace_id
-        collection: workspaces
-      time_entries:
-        foreign_key: time_entry_ids
-        collection: time_entries
-      resolutions:
-        foreign_key: resolution_ids
-        collection: resolutions
-      external_references:
-        foreign_key: external_reference_ids
-        collection: external_references
-
-users:
-  attributes:
-    - id
-    - full_name     # the full name of the user
-    - photo_path    # the full url to the user's thumbnail
-    - email_address # the user's primary email address
-    - headline      # the short description of the user as found in the user's profile
-    - disabled
-    - account_id
-    - role_id
-    - custom_field_value_ids
-  update_attributes:
-    - full_name
-    - headline
-    - email_address
-    - external_reference
-  associations:
-    role:
-      foreign_key: role_id
-      collection: roles
-    account_membership:
-      foreign_key: account_membership_id
-      collection: account_memberships
-    external_references:
-      foreign_key: external_reference_ids
-      collection: external_references
-    saml_identities:
-      foreign_key: saml_identity_ids
-      collection: saml_identities
-    custom_field_values:
-      foreign_key: custom_field_value_ids
-      collection: custom_field_values
-
-vendors:
-  attributes:
-    - id
-    - name
-    - in_use
-    - archived
-    - externally_managed
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
   create_attributes:
-    - name
-    - external_reference
-  update_attributes:
-    - name
-    - archived
-    - external_reference
-  validations:
-    name:
-      presence: true
+  - to_status_key
+  - workspace_id
+workspaces:
+  attributes:
+  - access_level
+  - account_features
+  - account_id
+  - amount_paid
+  - amount_paid_in_cents
+  - archived
+  - billable_minutes
+  - budget_remaining
+  - budget_used
+  - budget_used_in_cents
+  - budgeted
+  - can_create_line_items
+  - can_edit_financials
+  - can_invite
+  - can_see_locations
+  - change_orders_enabled
+  - client_lead_name
+  - client_role_name
+  - consultant_role_name
+  - created_at
+  - created_date
+  - currency
+  - currency_base_unit
+  - currency_symbol
+  - default_rate
+  - deliverables_complete
+  - deliverables_total
+  - description
+  - due_date
+  - effective_due_date
+  - estimate_to_complete
+  - estimated_minutes
+  - exclude_archived_stories_percent_complete
+  - expenses_in_burn_rate
+  - has_active_expense_report_submissions
+  - has_active_timesheet_submissions
+  - has_budget_access
+  - incoming_email_address
+  - issues_complete
+  - issues_total
+  - joinable
+  - last_task_due_date
+  - lock_date
+  - milestone_weight_complete
+  - milestones_complete
+  - milestones_total
+  - minutes_logged
+  - non_billable_minutes
+  - organization_membership_list
+  - over_budget
+  - percent_of_budget_used
+  - percentage_complete
+  - permissions
+  - posts_require_privacy_decision
+  - price
+  - price_in_cents
+  - provider_lead_name
+  - rate_card_id
+  - rendered_description
+  - require_expense_approvals
+  - require_time_approvals
+  - revenue_recognition_method
+  - show_nonbillable_time_on_invoices
+  - start_date
+  - status
+  - stories_are_fixed_fee_by_default
+  - stories_complete
+  - stories_total
+  - target_margin
+  - task_duration
+  - tasks_complete
+  - tasks_default_non_billable
+  - tasks_total
+  - title
+  - total_cost
+  - total_expenses_in_cents
+  - total_invoiced
+  - total_minutes_approved
+  - update_whitelist
+  - updated_at
+  - workspace_invoice_preference_id
+  - external_reference_ids
+  - next_uncompleted_milestone_id
+  - creator_id
+  - primary_counterpart_id
+  - primary_maven_id
+  - approver_id
+  - approver_ids
+  - participant_ids
+  - current_user_participation_id
+  - participation_ids
+  - timesheet_submission_ids
+  - workspace_group_ids
+  - financial_viewer_ids
+  - custom_field_value_ids
+  - possible_approver_ids
+  - workspace_resource_ids
+  - workspace_resources_with_unnamed_ids
+  - status_report_ids
+  - current_status_report_id
+  - account_color_id
   associations:
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
-
-workspaces:
-  validations:
-    title:
-      presence: true
-    creator_role:
-      inclusion:
-        'on': create
-        in: [maven, buyer]
-        allow_blank: false
-  associations:
     next_uncompleted_milestone:
       foreign_key: next_uncompleted_milestone_id
       collection: stories
@@ -2364,6 +3955,9 @@ workspaces:
     financial_viewers:
       foreign_key: financial_viewer_ids
       collection: users
+    custom_field_values:
+      foreign_key: custom_field_value_ids
+      collection: custom_field_values
     possible_approvers:
       foreign_key: possible_approver_ids
       collection: users
@@ -2379,398 +3973,136 @@ workspaces:
     current_status_report:
       foreign_key: current_status_report_id
       collection: status_reports
-    external_references:
-      foreign_key: external_reference_ids
-      collection: external_references
     account_color:
       foreign_key: account_color_id
       collection: account_colors
-    custom_field_values:
-      foreign_key: custom_field_value_ids
-      collection: custom_field_values
-  attributes:
-    - id # the internal expense ID
-    - title # the title of the project
-    - archived # whether the project is archived
-    - description # the description of the project
-    - due_date # the due date of the project
-    - effective_due_date # effective due date of the project
-    - budgeted # whether the project is budgeted
-    - change_orders_enabled # whether change orders are enabled in the project
-    - updated_at # the date the project was last updated
-    - created_at # the date the project was created
-    - consultant_role_name # the name of the provider role for the project
-    - client_role_name # the name of the customer role for the project
-    - can_create_line_items # whether you can create line items in this workspace
-    - default_rate # the default billing rate for this project
-    - currency_symbol # the currency symbol of the currency of this project
-    - currency_base_unit # the currency base unit of the currency of this project (i.e. USD is 100)
-    - can_invite # whether you can invite others to the workspace
-    - has_budget_access # whether you have budget access in this project
-    - price # the budget for this project, only included if the current user has financial access in the workspace
-    - price_in_cents # the project budget in cents, only included if the current user has financial access in the workspace
-    - budget_used # the amount of the project budget already burned, only included if the current user has financial access in the workspace
-    - over_budget # whether the project is over budget, only included if the current user has financial access in the workspace
-    - currency # the currency of the project, only included if the current user has financial access in the workspace
-    - start_date # the start date of the project
-    - status # a hash with information about the status of the project (color, message, key)
-    - stories_are_fixed_fee_by_default # whether stories default to Fixed Fee or T&M
-    - workspace_invoice_preference_id
-    - require_expense_approvals
-    - require_time_approvals
-    - percentage_complete
-    - access_level
-    - status_key
-    - account_color_id
-    - workspace_group_ids
-    - target_margin
-    - primary_maven_id
-    - custom_field_value_ids
   create_attributes:
-    - title
-    - creator_role
-    - budgeted
-    - description
-    - currency
-    - price
-    - start_date
-    - due_date
-    - change_orders
-    - consultant_role_name
-    - client_role_name
-    - access_level
-    - project_tracker_template_id
-    - change_orders_enabled
-    - expenses_in_burn_rate
-    - posts_require_privacy_decision
-    - stories_are_fixed_fee_by_default
-    - rate_card_id
-    - custom_fields
-    - require_expense_approvals
-    - require_time_approvals
-    - project_template_start_date
-    - project_template_assignment_mappings
-    - project_template_weekends_as_workdays
-    - project_template_create_unnamed_resources
-    - status_key
-    - external_reference
-    - workspace_group_ids
-    - approver_id
-    - target_margin
-    - tasks_default_non_billable
-    - account_color_id
+  - access
+  - access_level
+  - account_color_id
+  - approver_id
+  - approver_ids
+  - budgeted
+  - change_orders
+  - change_orders_enabled
+  - client_invoice_address
+  - client_invoice_name
+  - client_role_name
+  - consultant_invoice_address
+  - consultant_invoice_name
+  - consultant_role_name
+  - creator_role
+  - currency
+  - custom_field_id
+  - custom_fields
+  - department_id
+  - description
+  - due_date
+  - estimate_scenario_id
+  - exclude_archived_stories_percent_complete
+  - expenses_in_burn_rate
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - geography_id
+  - invoice_preference
+  - locked
+  - member_type
+  - organizations
+  - participations
+  - posts_require_privacy_decision
+  - price
+  - primary_maven_id
+  - project_code
+  - project_template_assignment_mappings
+  - project_template_create_unnamed_resources
+  - project_template_start_date
+  - project_template_weekends_as_workdays
+  - project_tracker_template_id
+  - purchase_order
+  - rate_card_id
+  - require_expense_approvals
+  - require_time_approvals
+  - resource_id
+  - revenue_recognition_method
+  - role_id
+  - service_model
+  - service_model_ref
+  - service_name
+  - show_nonbillable_time_on_invoices
+  - start_date
+  - status
+  - status_key
+  - stories_are_fixed_fee_by_default
+  - target_margin
+  - tasks_default_non_billable
+  - title
+  - user_id
+  - user_id
+  - value
+  - workspace_group_ids
   update_attributes:
-    - title
-    - budgeted
-    - description
-    - archived
-    - access_level
-    - price
-    - start_date
-    - due_date
-    - posts_require_privacy_decision
-    - tasks_default_non_billable
-    - expenses_in_burn_rate
-    - rate_card_id
-    - client_role_name
-    - consultant_role_name
-    - stories_are_fixed_fee_by_default
-    - currency
-    - target_margin
-    - approver_id
-    - change_orders_enabled
-    - project_template_start_date
-    - project_template_assignment_mappings
-    - project_template_weekends_as_workdays
-    - project_tracker_template_id
-    - project_template_before_story_id
-    - project_template_create_unnamed_resources
-    - status_key
-    - external_reference
-    - workspace_group_ids
-    - account_color_id
-
-workspace_allocations:
-  attributes:
-    - id
-    - start_date
-    - end_date
-    - hard
-    - minutes
-    - percentage
-    - notes
-    - created_at
-    - updated_at
-    - workspace_resource_id
-    - workspace_id
-    - creator_id
-    - updater_id
-    - external_reference_ids
-  create_attributes:
-    - resource_id
-    - start_date
-    - end_date
-    - minutes
-    - hard
-    - notes
-    - external_reference
-  update_attributes:
-    - start_date
-    - end_date
-    - minutes
-    - hard
-    - notes
-    - external_reference
-  associations:
-    workspace_resource:
-      foreign_key: workspace_resource_id
-      collection: workspace_resources
-    workspace:
-      foreign_key: workspace_id
-      collection: workspaces
-    creator:
-      foreign_key: creator_id
-      collection: users
-    updater:
-      foreign_key: updater_id
-      collection: users
-    external_references:
-      foreign_key: external_reference_ids
-      collection: external_references
-  validations:
-    [resource_id, start_date, end_date, minutes]:
-      presence: true
-
-workspace_groups:
-  attributes:
-    - id # the internal workspace group ID
-    - name # the name of the workspace group
-    - company # whether the workspace group represents a company
-    - contact_name
-    - email
-    - phone_number
-    - address
-    - website
-    - notes
-    - custom_field_value_ids
-  create_attributes:
-    - name
-    - company
-    - add_workspace_ids
-    - company
-    - contact_name
-    - email
-    - phone_number
-    - address
-    - website
-    - notes
-    - external_reference
-  update_attributes:
-    - name
-    - company
-    - add_workspace_ids
-    - remove_workspace_ids
-    - company
-    - contact_name
-    - email
-    - phone_number
-    - address
-    - website
-    - notes
-    - external_reference
-  validations:
-    name:
-      presence: true
-  associations:
-    workspaces:
-      foreign_key: workspace_ids
-      collection: workspaces
-    external_references:
-      foreign_key: external_reference_ids
-      collection: external_references
-    custom_field_values:
-      foreign_key: custom_field_value_ids
-      collection: custom_field_values
-
-workspace_invoice_preferences:
-  attributes:
-    - id
-    - workspace_id
-    - purchase_order
-    - project_code
-    - client_invoice_name
-    - client_invoice_address
-    - consultant_invoice_name
-    - consultant_invoice_address
-  create_attributes:
-    - workspace_id # required
-    - project_code # optional
-    - purchase_order # optional
-    - client_invoice_name # optional
-    - client_invoice_address # optional
-    - consultant_invoice_name # optional
-    - consultant_invoice_address # optional
-  update_attributes:
-    - project_code  # optional
-    - purchase_order  # optional
-    - client_invoice_name  # optional
-    - client_invoice_address  # optional
-    - consultant_invoice_name  # optional
-    - consultant_invoice_address  # optional
-
-workspace_resources:
-  attributes:
-    - id
-    - label
-    - role_name
-    - full_name
-    - workspace_id
-    - workspace_title
-    - photo_path
-    - role_initials
-    - display_label
-    - allocations_count
-    - created_at
-    - updated_at
-    - user_id
-    - role_id
-    - participation_id
-    - skill_ids
-    - organization_membership_id
-    - external_reference_ids
-    - pending_resource_request_id
-    - workspace_resource_skill_ids
-    - custom_field_value_ids
-  create_attributes:
-    - workspace_id
-    - user_id
-    - role_id
-  update_attributes:
-    - label
-    - user_id
-    - role_id
-    - auto_update_label
-    - cost_rate
-    - bill_rate
-  associations:
-    participation:
-      foreign_key: participation_id
-      collection: participations
-    user:
-      foreign_key: user_id
-      collection: users
-    role:
-      foreign_key: role_id
-      collection: roles
-    pending_resource_request:
-      foreign_key: pending_resource_request_id
-      collection: resource_requests
-    skills:
-      foreign_key: skill_ids
-      collection: skills
-    workspace_resource_skills:
-      foreign_key: workspace_resource_skill_ids
-      collection: workspace_resource_skills
-    custom_field_values:
-      foreign_key: custom_field_value_ids
-      collection: custom_field_values
-    workspace:
-      foreign_key: workspace_id
-      collection: workspaces
-    organization_membership:
-      foreign_key: organization_membership_id
-      collection: organization_memberships
-    external_references:
-      foreign_key: external_reference_ids
-      collection: external_references
-  validations:
-    workspace_id:
-      presence: true
-
-workspace_resource_skills:
-  attributes:
-    - id
-    - level
-    - max_level
-    - cached_skill_name
-    - skill_id
-    - workspace_resource_id
-    - creator_id
-    - created_at
-    - updated_at
-  create_attributes:
-    - skill_id
-    - workspace_resource_id
-    - level
-  update_attributes:
-    - level
-  associations:
-    skill:
-      foreign_key: skill_id
-      collection: skills
-    creator:
-      foreign_key: user_id
-      collection: users
-    workspace_resource:
-      foreign_key: workspace_resource_id
-      collection: workspace_resources
-
-workweeks:
-  attributes:
-    - default
-    - start_date
-    - end_date
-    - sunday_minutes
-    - monday_minutes
-    - tuesday_minutes
-    - wednesday_minutes
-    - thursday_minutes
-    - friday_minutes
-    - saturday_minutes
-    - total_minutes
-  create_attributes:
-    - start_date
-    - sunday_minutes
-    - monday_minutes
-    - tuesday_minutes
-    - wednesday_minutes
-    - thursday_minutes
-    - friday_minutes
-    - saturday_minutes
-  update_attributes:
-    - start_date
-    - sunday_minutes
-    - monday_minutes
-    - tuesday_minutes
-    - wednesday_minutes
-    - thursday_minutes
-    - friday_minutes
-    - saturday_minutes
-
+  - access_level
+  - account_color_id
+  - approver_id
+  - approver_ids
+  - archived
+  - budgeted
+  - change_orders_enabled
+  - client_invoice_address
+  - client_invoice_name
+  - client_role_name
+  - consultant_invoice_address
+  - consultant_invoice_name
+  - consultant_role_name
+  - currency
+  - description
+  - due_date
+  - exclude_archived_stories_percent_complete
+  - expenses_in_burn_rate
+  - external_link
+  - external_message
+  - external_reference
+  - external_status
+  - invoice_preference
+  - locked
+  - posts_require_privacy_decision
+  - price
+  - project_code
+  - project_template_assignment_mappings
+  - project_template_before_story_id
+  - project_template_create_unnamed_resources
+  - project_template_start_date
+  - project_template_weekends_as_workdays
+  - project_tracker_template_id
+  - purchase_order
+  - rate_card_id
+  - resource_id
+  - revenue_recognition_method
+  - role_id
+  - service_model
+  - service_model_ref
+  - service_name
+  - show_nonbillable_time_on_invoices
+  - start_date
+  - status
+  - status_key
+  - stories_are_fixed_fee_by_default
+  - target_margin
+  - tasks_default_non_billable
+  - title
+  - user_id
+  - workspace_group_ids
 workweek_memberships:
   attributes:
-    - user_id
-    - start_date
-    - end_date
-  create_attributes:
-    - user_id
-    - start_date
-    - sunday_minutes
-    - monday_minutes
-    - tuesday_minutes
-    - wednesday_minutes
-    - thursday_minutes
-    - friday_minutes
-    - saturday_minutes
-  update_attributes:
-    - start_date
-    - sunday_minutes
-    - monday_minutes
-    - tuesday_minutes
-    - wednesday_minutes
-    - thursday_minutes
-    - friday_minutes
-    - saturday_minutes
+  - created_at
+  - end_date
+  - start_date
+  - updated_at
+  - user_id
+  - user_id
+  - workweek_id
   associations:
     user:
       foreign_key: user_id
@@ -2778,13 +4110,61 @@ workweek_memberships:
     workweek:
       foreign_key: workweek_id
       collection: workweeks
-
-scheduled_jobs/insights_report_exports:
+  create_attributes:
+  - friday_minutes
+  - monday_minutes
+  - saturday_minutes
+  - start_date
+  - sunday_minutes
+  - thursday_minutes
+  - tuesday_minutes
+  - user_id
+  - wednesday_minutes
+  update_attributes:
+  - friday_minutes
+  - monday_minutes
+  - saturday_minutes
+  - start_date
+  - sunday_minutes
+  - thursday_minutes
+  - tuesday_minutes
+  - wednesday_minutes
+workweeks:
   attributes:
-    - id
-    - title
-    - description
-    - external_report_object_identifier
-    - recurrence
-    - created_at
-    - latest_success
+  - created_at
+  - default
+  - end_date
+  - friday_minutes
+  - monday_minutes
+  - saturday_minutes
+  - start_date
+  - sunday_minutes
+  - thursday_minutes
+  - total_minutes
+  - tuesday_minutes
+  - updated_at
+  - wednesday_minutes
+  - workweek_membership_ids
+  associations:
+    workweek_memberships:
+      foreign_key: workweek_membership_ids
+      collection: workweek_memberships
+  create_attributes:
+  - enable_workweeks
+  - friday_minutes
+  - monday_minutes
+  - saturday_minutes
+  - start_date
+  - sunday_minutes
+  - thursday_minutes
+  - tuesday_minutes
+  - wednesday_minutes
+  update_attributes:
+  - friday_minutes
+  - monday_minutes
+  - saturday_minutes
+  - start_date
+  - sunday_minutes
+  - thursday_minutes
+  - tuesday_minutes
+  - wednesday_minutes
