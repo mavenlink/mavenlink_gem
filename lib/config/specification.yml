@@ -35,48 +35,12 @@ access_groups:
       collection: users
   create_attributes:
   - description
-  - edit_allocations_for_named_resources_in_all_projects
-  - edit_allocations_for_named_resources_in_their_projects
-  - edit_allocations_for_named_resources_in_their_projects_and_joinable_projects
-  - edit_allocations_for_unnamed_resources_in_all_projects
-  - edit_allocations_for_unnamed_resources_in_their_projects
-  - edit_allocations_for_unnamed_resources_in_their_projects_and_joinable_projects
-  - edit_named_resources_in_all_projects
-  - edit_named_resources_in_their_projects_and_joinable_projects
-  - edit_unnamed_resources_in_all_projects
-  - edit_unnamed_resources_in_their_projects_and_joinable_projects
   - name
   - set_resource_planning_permissions
-  - submit_resource_requests_in_all_projects
-  - submit_resource_requests_in_their_projects
-  - view_all_projects_in_master_planning
-  - view_all_recommendations
-  - view_all_team_members_in_master_planning
-  - view_my_orgs_team_members_in_master_planning
-  - view_their_projects_in_master_planning
-  - view_themselves_in_master_planning
   update_attributes:
   - description
-  - edit_allocations_for_named_resources_in_all_projects
-  - edit_allocations_for_named_resources_in_their_projects
-  - edit_allocations_for_named_resources_in_their_projects_and_joinable_projects
-  - edit_allocations_for_unnamed_resources_in_all_projects
-  - edit_allocations_for_unnamed_resources_in_their_projects
-  - edit_allocations_for_unnamed_resources_in_their_projects_and_joinable_projects
-  - edit_named_resources_in_all_projects
-  - edit_named_resources_in_their_projects_and_joinable_projects
-  - edit_unnamed_resources_in_all_projects
-  - edit_unnamed_resources_in_their_projects_and_joinable_projects
   - name
   - set_resource_planning_permissions
-  - submit_resource_requests_in_all_projects
-  - submit_resource_requests_in_their_projects
-  - view_all_projects_in_master_planning
-  - view_all_recommendations
-  - view_all_team_members_in_master_planning
-  - view_my_orgs_team_members_in_master_planning
-  - view_their_projects_in_master_planning
-  - view_themselves_in_master_planning
 account_colors:
   attributes:
   - created_at
@@ -155,18 +119,10 @@ account_invitations:
   - default_read_only
   - default_role_id
   - email_address
-  - external_link
-  - external_message
   - external_reference
-  - external_status
   - full_name
   - headline
-  - locked
   - permission
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
   update_attributes:
   - bill_rate_in_cents
   - billability_target
@@ -317,29 +273,15 @@ assignments:
   - assignee_id
   - current
   - estimated_minutes
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - resource_id
-  - service_model
-  - service_model_ref
-  - service_name
   - story_id
   update_attributes:
   - assignee_id
   - current
   - estimated_minutes
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - resource_id
-  - service_model
-  - service_model_ref
-  - service_name
 attachments:
   attributes:
   - created_at
@@ -434,17 +376,9 @@ candidates:
       foreign_key: custom_field_value_ids
       collection: custom_field_values
   create_attributes:
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - notes
-  - service_model
-  - service_model_ref
-  - service_name
   - staffing_demand_id
-  - status
   - status
   - user_id
   update_attributes:
@@ -513,16 +447,12 @@ column_sets:
   create_attributes:
   - columns
   - feature_name
-  - filters
-  - name
   - name
   - page_size
   - sort
   - week_size
   update_attributes:
   - columns
-  - filters
-  - name
   - name
   - page_size
   - sort
@@ -599,28 +529,12 @@ custom_field_sets:
       foreign_key: custom_field_ids
       collection: custom_fields
   create_attributes:
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - name
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
   - subject_type
   update_attributes:
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - name
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
   - subject_type
 custom_field_values:
   attributes:
@@ -653,28 +567,12 @@ custom_field_values:
       collection: custom_field_choices
   create_attributes:
   - custom_field_id
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
   - subject_id
   - subject_type
   - value
   update_attributes:
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
   - value
 custom_fields:
   attributes:
@@ -714,19 +612,10 @@ custom_fields:
   - choices
   - custom_field_set_id
   - default_text
-  - external_link
-  - external_message
   - external_reference
-  - external_status
   - hidden_in_user_interface
-  - label
-  - locked
   - name
   - read_access
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
   - unique_constraint
   - value_type
   - write_access
@@ -737,19 +626,10 @@ custom_fields:
   - choices
   - custom_field_set_id
   - default_text
-  - external_link
-  - external_message
   - external_reference
-  - external_status
   - hidden_in_user_interface
-  - label
-  - locked
   - name
   - read_access
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
   - write_access
 deleted_workspace_allocations:
   attributes:
@@ -854,36 +734,17 @@ estimate_scenario_resources:
       collection: estimate_scenario_resource_skills
   create_attributes:
   - allocation_attributes
-  - duration_days
   - estimate_scenario_id
-  - external_link
-  - external_message
   - external_reference
-  - external_status
   - label
-  - locked
-  - percent_allocated
-  - relative_start_day
   - role_id
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
   update_attributes:
   - bill_rate
   - cost_rate
-  - external_link
-  - external_message
   - external_reference
-  - external_status
   - geography_id
   - label
-  - locked
   - role_id
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
 estimate_scenarios:
   attributes:
   - budget_in_cents
@@ -910,32 +771,16 @@ estimate_scenarios:
   create_attributes:
   - budget_in_cents
   - estimate_id
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - name
   - rate_card_id
-  - service_model
-  - service_model_ref
-  - service_name
   - start_date
-  - status
   update_attributes:
   - budget_in_cents
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - name
   - rate_card_id
-  - service_model
-  - service_model_ref
-  - service_name
   - start_date
-  - status
 estimates:
   attributes:
   - confidence
@@ -976,37 +821,17 @@ estimates:
       foreign_key: favorite_scenario_id
       collection: estimate_scenarios
   create_attributes:
-  - budget_in_cents
   - currency
   - estimate_scenario
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - name
-  - name
-  - rate_card_id
-  - service_model
-  - service_model_ref
-  - service_name
-  - start_date
-  - status
   - workspace_group_id
   update_attributes:
   - confidence
   - description
-  - external_link
-  - external_message
   - external_reference
-  - external_status
   - favorite_scenario_id
-  - locked
   - name
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
   - workspace_group_id
 expense_categories:
   attributes:
@@ -1059,26 +884,10 @@ expense_report_submissions:
   create_attributes:
   - comment
   - comment
-  - external_link
-  - external_link
-  - external_message
-  - external_message
   - external_reference
   - external_reference
-  - external_status
-  - external_status
   - line_item_ids
   - line_item_ids
-  - locked
-  - locked
-  - service_model
-  - service_model
-  - service_model_ref
-  - service_model_ref
-  - service_name
-  - service_name
-  - status
-  - status
   - title
   - title
   - user_id
@@ -1149,22 +958,12 @@ expenses:
   - category
   - date
   - expense_category_id
-  - external_link
-  - external_message
   - external_reference
-  - external_status
   - file_id
   - foreign_exchange_amount
-  - locked
   - notes
   - receipt_id
   - reimbursable
-  - service_model
-  - service_model_ref
-  - service_name
-  - source_currency
-  - source_value
-  - status
   - story_id
   - user_id
   - vendor_id
@@ -1175,21 +974,11 @@ expenses:
   - category
   - date
   - expense_category_id
-  - external_link
-  - external_message
   - external_reference
-  - external_status
   - file_id
   - foreign_exchange_amount
-  - locked
   - notes
   - receipt_id
-  - service_model
-  - service_model_ref
-  - service_name
-  - source_currency
-  - source_value
-  - status
   - story_id
   - user_id
 external_payments:
@@ -1376,15 +1165,11 @@ insights_access_groups:
   - is_reports_viewer_default
   - name
   create_attributes:
-  - account_insights_mapping_id
   - account_insights_mapping_permissions_attributes
-  - can_edit
-  - can_see_in_left_nav
   - insights_access_group_memberships_attributes
   - is_admin_default
   - is_reports_viewer_default
   - name
-  - user_id
   update_attributes:
   - is_admin_default
   - is_reports_viewer_default
@@ -1449,29 +1234,20 @@ invoices:
       collection: time_adjustments
   create_attributes:
   - additional_items
-  - amount
-  - amount
   - draft
   - expense_ids
   - fixed_fee_items
   - invoice_date
   - message
-  - notes
-  - notes
   - payment_schedule
   - project_code
   - purchase_order
-  - story_id
   - suppress_emails
   - tax_rate
-  - taxable
-  - taxable
   - time_adjustment_ids
   - time_entry_ids
   - user_invoice_number
   - user_invoice_title
-  - workspace_id
-  - workspace_id
   - workspace_id
   - workspace_ids
   update_attributes:
@@ -2011,12 +1787,10 @@ resource_requests:
       collection: users
   create_attributes:
   - approver_ids
-  - custom_field_id
   - custom_fields
   - resource_id
   - resource_role_id
   - resource_workspace_id
-  - value
   - workspace_allocation_end_date
   - workspace_allocation_percentage
   - workspace_allocation_start_date
@@ -2160,34 +1934,18 @@ skills:
       collection: roles
   create_attributes:
   - description
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - max_level
   - name
   - role_ids
-  - service_model
-  - service_model_ref
-  - service_name
   - skill_category_id
-  - status
   update_attributes:
   - description
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - max_level
   - name
   - role_ids
-  - service_model
-  - service_model_ref
-  - service_name
   - skill_category_id
-  - status
 staffing_demand_skills:
   attributes:
   - cached_skill_name
@@ -2255,39 +2013,21 @@ staffing_demands:
   create_attributes:
   - description
   - end_date
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - level
-  - locked
   - quantity
   - role_id
-  - service_model
-  - service_model_ref
-  - service_name
-  - skill_id
   - skills
   - start_date
-  - status
   - status
   - title
   - workspace_id
   update_attributes:
   - description
   - end_date
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - quantity
   - role_id
-  - service_model
-  - service_model_ref
-  - service_name
   - start_date
-  - status
   - status
   - title
   - workspace_id
@@ -2317,37 +2057,17 @@ status_reports:
       foreign_key: updater_id
       collection: users
   create_attributes:
-  - category
-  - color
   - color
   - creator_id
   - description
-  - description
   - details
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
-  - service_model
-  - service_model_ref
-  - service_name
   - workspace_id
   update_attributes:
-  - category
   - color
-  - color
-  - description
   - description
   - details
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
-  - service_model
-  - service_model_ref
-  - service_name
 stories:
   attributes:
   - ancestor_ids
@@ -2509,7 +2229,6 @@ stories:
       collection: roles
   create_attributes:
   - archived
-  - assignee_id
   - assignee_ids
   - assignees
   - assignments
@@ -2518,50 +2237,29 @@ stories:
   - budget_estimate_in_cents
   - checklist
   - cost_budget_in_cents
-  - custom_field_id
   - custom_fields
-  - date
   - dependencies
   - description
   - due_date
-  - estimated_minutes
-  - exchange_rate
-  - external_link
-  - external_message
   - external_reference
-  - external_status
   - fixed_fee
   - foreign_exchange_cost_budget
-  - lag
-  - locked
   - parent_id
   - percentage_complete
   - priority
-  - role_id
-  - service_model
-  - service_model_ref
-  - service_name
-  - source_currency
-  - source_id
-  - source_value
   - start_date
   - state
-  - status
   - story_type
   - sub_stories
   - tag_list
-  - target_id
   - temp_id
   - time_estimate_in_minutes
   - time_trackable
   - title
-  - type
-  - value
   - weight
   - workspace_id
   update_attributes:
   - archived
-  - assignee_id
   - assignee_ids
   - assignees
   - assignment_timestamped_at
@@ -2570,31 +2268,17 @@ stories:
   - budget_estimate_in_cents
   - cascade
   - cost_budget_in_cents
-  - date
   - description
   - due_date
-  - estimated_minutes
-  - exchange_rate
-  - external_link
-  - external_message
   - external_reference
-  - external_status
   - fixed_fee
   - follower_ids
   - foreign_exchange_cost_budget
-  - locked
   - parent_id
   - percentage_complete
   - priority
-  - role_id
-  - service_model
-  - service_model_ref
-  - service_name
-  - source_currency
-  - source_value
   - start_date
   - state
-  - status
   - story_type
   - tag_list
   - time_estimate_in_minutes
@@ -2628,27 +2312,11 @@ story_allocation_days:
   create_attributes:
   - assignment_id
   - date
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - minutes
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
   update_attributes:
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - minutes
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
 story_dependencies:
   attributes:
   - created_at
@@ -2878,7 +2546,6 @@ survey_questions:
       collection: survey_question_choices
   create_attributes:
   - choices
-  - label
   - question_type
   - text
   update_attributes:
@@ -3038,18 +2705,10 @@ time_adjustments:
   - billable
   - cost_rate_in_cents
   - currency
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - notes
   - original_date
   - posted_on_date
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
   - story_id
   - time
   - user_id
@@ -3059,18 +2718,10 @@ time_adjustments:
   - billable
   - cost_rate_in_cents
   - currency
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - notes
   - original_date
   - posted_on_date
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
   - story_id
   - time
   - user_id
@@ -3130,19 +2781,11 @@ time_entries:
   - billable
   - cost_rate_in_cents
   - date_performed
-  - external_link
-  - external_message
   - external_reference
-  - external_status
   - location
-  - locked
   - notes
   - rate_in_cents
   - role_id
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
   - story_id
   - time_in_minutes
   - user_id
@@ -3151,18 +2794,10 @@ time_entries:
   - billable
   - cost_rate_in_cents
   - date_performed
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - notes
   - rate_in_cents
   - role_id
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
   - story_id
   - time_in_minutes
   - user_id
@@ -3227,26 +2862,10 @@ timesheet_submissions:
   create_attributes:
   - comment
   - comment
-  - external_link
-  - external_link
-  - external_message
-  - external_message
   - external_reference
   - external_reference
-  - external_status
-  - external_status
   - line_item_ids
   - line_item_ids
-  - locked
-  - locked
-  - service_model
-  - service_model
-  - service_model_ref
-  - service_model_ref
-  - service_name
-  - service_name
-  - status
-  - status
   - title
   - title
   - user_id
@@ -3340,26 +2959,12 @@ vendors:
       foreign_key: external_reference_ids
       collection: external_references
   create_attributes:
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - name
-  - service_model
-  - service_model_ref
-  - service_name
   update_attributes:
   - archived
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - name
-  - service_model
-  - service_model_ref
-  - service_name
 work_samples:
   attributes:
   - attachment_filename
@@ -3402,35 +3007,19 @@ workspace_allocations:
       collection: users
   create_attributes:
   - end_date
-  - external_link
-  - external_message
   - external_reference
-  - external_status
   - hard
-  - locked
   - minutes
   - notes
   - resource_id
-  - service_model
-  - service_model_ref
-  - service_name
   - start_date
-  - status
   update_attributes:
   - end_date
-  - external_link
-  - external_message
   - external_reference
-  - external_status
   - hard
-  - locked
   - minutes
   - notes
-  - service_model
-  - service_model_ref
-  - service_name
   - start_date
-  - status
 workspace_baselines:
   attributes:
   - budget_used_formatted
@@ -3498,18 +3087,10 @@ workspace_groups:
   - company
   - contact_name
   - email
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - name
   - notes
   - phone_number
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
   - website
   update_attributes:
   - add_workspace_ids
@@ -3517,19 +3098,11 @@ workspace_groups:
   - company
   - contact_name
   - email
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - name
   - notes
   - phone_number
   - remove_workspace_ids
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
   - website
 workspace_invitations:
   attributes:
@@ -3619,14 +3192,12 @@ workspace_posts:
       foreign_key: attachment_ids
       collection: attachments/post_attachments
   create_attributes:
-  - access
   - attachment_ids
   - backdated_to
   - file_ids
   - google_documents
   - message
   - recipient_ids
-  - resource_id
   - story_id
   - subject_id
   - subject_type
@@ -3764,31 +3335,15 @@ workspace_resources:
       foreign_key: ''
       collection: custom_field_values
   create_attributes:
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - locked
   - role_id
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
   - user_id
   - workspace_id
   update_attributes:
   - auto_update_label
-  - external_link
-  - external_message
   - external_reference
-  - external_status
   - label
-  - locked
   - role_id
-  - service_model
-  - service_model_ref
-  - service_name
-  - status
   - user_id
 workspace_status_changes:
   attributes:
@@ -3977,7 +3532,6 @@ workspaces:
       foreign_key: account_color_id
       collection: account_colors
   create_attributes:
-  - access
   - access_level
   - account_color_id
   - approver_id
@@ -3985,62 +3539,39 @@ workspaces:
   - budgeted
   - change_orders
   - change_orders_enabled
-  - client_invoice_address
-  - client_invoice_name
   - client_role_name
-  - consultant_invoice_address
-  - consultant_invoice_name
   - consultant_role_name
   - creator_role
   - currency
-  - custom_field_id
   - custom_fields
-  - department_id
   - description
   - due_date
   - estimate_scenario_id
   - exclude_archived_stories_percent_complete
   - expenses_in_burn_rate
-  - external_link
-  - external_message
   - external_reference
-  - external_status
-  - geography_id
   - invoice_preference
-  - locked
-  - member_type
   - organizations
   - participations
   - posts_require_privacy_decision
   - price
   - primary_maven_id
-  - project_code
   - project_template_assignment_mappings
   - project_template_create_unnamed_resources
   - project_template_start_date
   - project_template_weekends_as_workdays
   - project_tracker_template_id
-  - purchase_order
   - rate_card_id
   - require_expense_approvals
   - require_time_approvals
-  - resource_id
   - revenue_recognition_method
-  - role_id
-  - service_model
-  - service_model_ref
-  - service_name
   - show_nonbillable_time_on_invoices
   - start_date
-  - status
   - status_key
   - stories_are_fixed_fee_by_default
   - target_margin
   - tasks_default_non_billable
   - title
-  - user_id
-  - user_id
-  - value
   - workspace_group_ids
   update_attributes:
   - access_level
@@ -4050,49 +3581,32 @@ workspaces:
   - archived
   - budgeted
   - change_orders_enabled
-  - client_invoice_address
-  - client_invoice_name
   - client_role_name
-  - consultant_invoice_address
-  - consultant_invoice_name
   - consultant_role_name
   - currency
   - description
   - due_date
   - exclude_archived_stories_percent_complete
   - expenses_in_burn_rate
-  - external_link
-  - external_message
   - external_reference
-  - external_status
   - invoice_preference
-  - locked
   - posts_require_privacy_decision
   - price
-  - project_code
   - project_template_assignment_mappings
   - project_template_before_story_id
   - project_template_create_unnamed_resources
   - project_template_start_date
   - project_template_weekends_as_workdays
   - project_tracker_template_id
-  - purchase_order
   - rate_card_id
-  - resource_id
   - revenue_recognition_method
-  - role_id
-  - service_model
-  - service_model_ref
-  - service_name
   - show_nonbillable_time_on_invoices
   - start_date
-  - status
   - status_key
   - stories_are_fixed_fee_by_default
   - target_margin
   - tasks_default_non_billable
   - title
-  - user_id
   - workspace_group_ids
 workweek_memberships:
   attributes:
