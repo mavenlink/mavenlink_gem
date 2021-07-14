@@ -10,7 +10,6 @@ describe Mavenlink::TimesheetSubmission, stub_requests: true, type: :model do
     it { is_expected.to respond_to :user }
     it { is_expected.to respond_to :workspace }
     it { is_expected.to respond_to :time_entries }
-    it { is_expected.to respond_to :resolutions }
     it { is_expected.to respond_to :external_references }
   end
 
@@ -20,7 +19,7 @@ describe Mavenlink::TimesheetSubmission, stub_requests: true, type: :model do
                               :line_item_total_formatted, :line_item_total_in_cents, :currency,
                               :currency_symbol, :currency_base_unit, :current_resolution_description,
                               :current_resolution_creator_id, :current_resolution_created_at_date,
-                              :time_entry_ids, :resolution_ids)
+                              :time_entry_ids)
   end
 
   describe ".create_attributes" do

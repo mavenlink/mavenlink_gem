@@ -10,7 +10,6 @@ describe Mavenlink::WorkspaceGroup, stub_requests: true, type: :model do
   describe "associations" do
     it { is_expected.to respond_to :workspaces }
     it { is_expected.to respond_to :external_references }
-    it { is_expected.to respond_to :custom_field_values }
   end
 
   describe "attributes" do

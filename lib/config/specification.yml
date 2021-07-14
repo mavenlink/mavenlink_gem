@@ -16,6 +16,11 @@ access_group_memberships:
     user:
       foreign_key: user_id
       collection: users
+  validations:
+    ? - access_group_id
+      - user_id
+    : presence:
+        'on': :create
   create_attributes:
   - access_group_id
   - user_id
@@ -33,6 +38,10 @@ access_groups:
     users:
       foreign_key: user_ids
       collection: users
+  validations:
+    ? - name
+    : presence:
+        'on': :create
   create_attributes:
   - description
   - name
@@ -64,6 +73,11 @@ account_insights_mapping_permissions:
     insights_access_group:
       foreign_key: insights_access_group_id
       collection: insights_access_groups
+  validations:
+    ? - account_insights_mapping_id
+      - insights_access_group_id
+    : presence:
+        'on': :create
   create_attributes:
   - account_insights_mapping_id
   - can_see_in_left_nav
@@ -80,6 +94,10 @@ account_insights_mappings:
     insights_access_groups:
       foreign_key: insights_access_group_ids
       collection: insights_access_groups
+  validations:
+    ? - name
+    : presence:
+        'on': :create
   create_attributes:
   - is_active_dashboard
   - name
@@ -111,6 +129,11 @@ account_invitations:
     default_role:
       foreign_key: default_role_id
       collection: roles
+  validations:
+    ? - email_address
+      - full_name
+    : presence:
+        'on': :create
   create_attributes:
   - bill_rate_in_cents
   - billability_target
@@ -269,6 +292,11 @@ assignments:
     story_allocation_days:
       foreign_key: story_allocation_day_ids
       collection: story_allocation_days
+  validations:
+    ? - story_id
+      - resource_id
+    : presence:
+        'on': :create
   create_attributes:
   - assignee_id
   - current
@@ -298,6 +326,10 @@ attachments:
   - url
   - view_in_new_tab
   - viewable
+  validations:
+    ? - type
+    : presence:
+        'on': :create
   create_attributes:
   - data
   - direct
@@ -319,6 +351,13 @@ backup_approver_associations:
     backup_approver:
       foreign_key: backup_approver_id
       collection: users
+  validations:
+    ? - backup_approver_id
+      - approver_id
+      - start_date
+      - end_date
+    : presence:
+        'on': :create
   create_attributes:
   - approver_id
   - backup_approver_id
@@ -348,6 +387,12 @@ billable_utilizations:
     creator:
       foreign_key: creator_id
       collection: users
+  validations:
+    ? - effective_date
+      - target
+      - account_membership_id
+    : presence:
+        'on': :create
   create_attributes:
   - account_membership_id
   - effective_date
@@ -375,6 +420,10 @@ candidates:
     custom_field_values:
       foreign_key: custom_field_value_ids
       collection: custom_field_values
+  validations:
+    ? - staffing_demand_id
+    : presence:
+        'on': :create
   create_attributes:
   - external_reference
   - notes
@@ -444,6 +493,11 @@ column_sets:
     columns:
       foreign_key: column_ids
       collection: columns
+  validations:
+    ? - name
+      - feature_name
+    : presence:
+        'on': :create
   create_attributes:
   - columns
   - feature_name
@@ -494,6 +548,12 @@ cost_rates:
     account_membership:
       foreign_key: account_membership_id
       collection: account_memberships
+  validations:
+    ? - account_membership_id
+      - currency
+      - amount_in_subunits
+    : presence:
+        'on': :create
   create_attributes:
   - account_membership_id
   - amount_in_subunits
@@ -528,6 +588,11 @@ custom_field_sets:
     custom_fields:
       foreign_key: custom_field_ids
       collection: custom_fields
+  validations:
+    ? - name
+      - subject_type
+    : presence:
+        'on': :create
   create_attributes:
   - external_reference
   - name
@@ -565,6 +630,14 @@ custom_field_values:
     selected_choices:
       foreign_key: selected_choice_ids
       collection: custom_field_choices
+  validations:
+    ? - value
+    : presence: true
+    ? - subject_type
+      - subject_id
+      - custom_field_id
+    : presence:
+        'on': :create
   create_attributes:
   - custom_field_id
   - external_reference
@@ -608,6 +681,12 @@ custom_fields:
     custom_field_set:
       foreign_key: custom_field_set_id
       collection: custom_field_sets
+  validations:
+    ? - name
+      - value_type
+      - custom_field_set_id
+    : presence:
+        'on': :create
   create_attributes:
   - choices
   - custom_field_set_id
@@ -681,6 +760,11 @@ estimate_scenario_resource_skills:
     estimate_scenario_resource:
       foreign_key: estimate_scenario_resource_id
       collection: estimate_scenario_resources
+  validations:
+    ? - skill_id
+      - estimate_scenario_resource_id
+    : presence:
+        'on': :create
   create_attributes:
   - estimate_scenario_resource_id
   - level
@@ -732,6 +816,12 @@ estimate_scenario_resources:
     estimate_scenario_resource_skills:
       foreign_key: estimate_scenario_resource_skill_ids
       collection: estimate_scenario_resource_skills
+  validations:
+    ? - role_id
+    : presence: true
+    ? - estimate_scenario_id
+    : presence:
+        'on': :create
   create_attributes:
   - allocation_attributes
   - estimate_scenario_id
@@ -768,6 +858,12 @@ estimate_scenarios:
     estimate_scenario_resources:
       foreign_key: estimate_scenario_resource_ids
       collection: estimate_scenario_resources
+  validations:
+    ? - name
+      - estimate_id
+      - start_date
+    : presence:
+        'on': :create
   create_attributes:
   - budget_in_cents
   - estimate_id
@@ -820,6 +916,11 @@ estimates:
     favorite_scenario:
       foreign_key: favorite_scenario_id
       collection: estimate_scenarios
+  validations:
+    ? - name
+      - currency
+    : presence:
+        'on': :create
   create_attributes:
   - currency
   - estimate_scenario
@@ -837,6 +938,10 @@ expense_categories:
   attributes:
   - deleted_at
   - name
+  validations:
+    ? - name
+    : presence:
+        'on': :create
   create_attributes:
   - name
   update_attributes:
@@ -881,18 +986,18 @@ expense_report_submissions:
     resolutions:
       foreign_key: resolution_ids
       collection: resolutions
+  validations:
+    ? - line_item_ids
+      - workspace_id
+      - title
+    : presence:
+        'on': :create
   create_attributes:
   - comment
-  - comment
-  - external_reference
   - external_reference
   - line_item_ids
-  - line_item_ids
-  - title
   - title
   - user_id
-  - user_id
-  - workspace_id
   - workspace_id
 expenses:
   attributes:
@@ -952,6 +1057,15 @@ expenses:
     vendor:
       foreign_key: vendor_id
       collection: vendors
+  validations:
+    ? - amount_in_cents
+    : presence: true
+    ? - workspace_id
+      - date
+      - expense_category_id
+      - category
+    : presence:
+        'on': :create
   create_attributes:
   - amount_in_cents
   - billable
@@ -1003,6 +1117,10 @@ external_payments:
     invoice:
       foreign_key: invoice_id
       collection: invoices
+  validations:
+    ? - workspace_id
+    : presence:
+        'on': :create
   create_attributes:
   - amount_in_cents
   - invoice_id
@@ -1072,6 +1190,11 @@ holiday_calendar_associations:
     holiday_calendar:
       foreign_key: holiday_calendar_id
       collection: holiday_calendars
+  validations:
+    ? - holiday_id
+      - holiday_calendar_id
+    : presence:
+        'on': :create
   create_attributes:
   - holiday_calendar_id
   - holiday_id
@@ -1092,6 +1215,12 @@ holiday_calendar_memberships:
     user:
       foreign_key: user_id
       collection: users
+  validations:
+    ? - start_date
+      - holiday_calendar_id
+      - user_id
+    : presence:
+        'on': :create
   create_attributes:
   - holiday_calendar_id
   - start_date
@@ -1104,6 +1233,9 @@ holiday_calendars:
   - active_user_count
   - default
   - name
+  validations:
+    ? - name
+    : presence: true
   create_attributes:
   - name
   update_attributes:
@@ -1121,6 +1253,10 @@ holidays:
     holiday_calendar_associations:
       foreign_key: holiday_calendar_association_ids
       collection: holiday_calendar_associations
+  validations:
+    ? - name
+      - start_date
+    : presence: true
   create_attributes:
   - end_date
   - holiday_calendar_ids
@@ -1152,6 +1288,11 @@ insights_access_group_memberships:
     insights_access_group:
       foreign_key: insights_access_group_id
       collection: insights_access_groups
+  validations:
+    ? - user_id
+      - insights_access_group_id
+    : presence:
+        'on': :create
   create_attributes:
   - insights_access_group_id
   - user_id
@@ -1232,6 +1373,16 @@ invoices:
     time_adjustments:
       foreign_key: time_adjustment_ids
       collection: time_adjustments
+  validations:
+    ? - time_entry_ids
+      - expense_ids
+      - payment_schedule
+    : presence: true
+    ? - fixed_fee_items
+      - additional_items
+      - workspace_id
+    : presence:
+        'on': :create
   create_attributes:
   - additional_items
   - draft
@@ -1277,6 +1428,11 @@ ip_restrictions:
   - reports_viewer
   - reports_viewer_with_cost
   - updated_at
+  validations:
+    ? - name
+      - ip_address_cidr
+    : presence:
+        'on': :create
   create_attributes:
   - administrator
   - collaborator
@@ -1306,6 +1462,10 @@ line_item_locks:
     creator:
       foreign_key: creator_id
       collection: users
+  validations:
+    ? - locked_to
+    : presence:
+        'on': :create
   create_attributes:
   - locked_to
 notifications:
@@ -1325,6 +1485,12 @@ notifications:
     user:
       foreign_key: user_id
       collection: users
+  validations:
+    ? - title
+      - message
+      - source
+    : presence:
+        'on': :create
   create_attributes:
   - message
   - source
@@ -1348,6 +1514,13 @@ organization_memberships:
     department:
       foreign_key: department_id
       collection: organizations
+  validations:
+    ? - geography_id
+      - department_id
+      - member_id
+      - member_type
+    : presence:
+        'on': :create
   create_attributes:
   - department_id
   - geography_id
@@ -1366,6 +1539,11 @@ organizations:
   - parent_id
   - type
   - updated_at
+  validations:
+    ? - name
+      - parent_id
+    : presence:
+        'on': :create
   create_attributes:
   - name
   - parent_id
@@ -1422,6 +1600,11 @@ participations:
     active_roles:
       foreign_key: active_role_ids
       collection: roles
+  validations:
+    ? - workspace_id
+      - role
+    : presence:
+        'on': :create
   create_attributes:
   - can_invite
   - permissions
@@ -1498,6 +1681,12 @@ project_template_assignments:
     role:
       foreign_key: role_id
       collection: roles
+  validations:
+    ? - name
+    : presence: true
+    ? - project_template_id
+    : presence:
+        'on': :create
   create_attributes:
   - name
   - project_template_id
@@ -1526,6 +1715,12 @@ project_templates:
     project_template_assignments:
       foreign_key: project_template_assignment_ids
       collection: project_template_assignments
+  validations:
+    ? - title
+    : presence: true
+    ? - currency
+    : presence:
+        'on': :create
   create_attributes:
   - budget
   - currency
@@ -1557,6 +1752,10 @@ proof_review_participations:
     proof_review:
       foreign_key: project_review_id
       collection: proof_reviews
+  validations:
+    ? - status
+    : presence:
+        'on': :update
   update_attributes:
   - status
 proof_reviews:
@@ -1572,6 +1771,14 @@ proof_reviews:
     proof_revision:
       foreign_key: proof_revision_id
       collection: proof_revisions
+  validations:
+    ? - proof_revision_id
+      - user_ids
+    : presence:
+        'on': :create
+    ? - status
+    : presence:
+        'on': :update
   create_attributes:
   - proof_revision_id
   - user_ids
@@ -1595,6 +1802,11 @@ proof_revisions:
     proof_review:
       foreign_key: proof_review_id
       collection: proof_reviews
+  validations:
+    ? - proof_id
+      - attachment_id
+    : presence:
+        'on': :create
   create_attributes:
   - attachment_id
   - proof_id
@@ -1629,6 +1841,13 @@ proofs:
     revisions:
       foreign_key: revision_ids
       collection: proof_revisions
+  validations:
+    ? - title
+    : presence: true
+    ? - story_id
+      - attachment_id
+    : presence:
+        'on': :create
   create_attributes:
   - attachment_id
   - story_id
@@ -1730,6 +1949,10 @@ resolutions:
   - type
   - updated_at
   - user_id
+  validations:
+    ? - submission_ids
+    : presence:
+        'on': :create
   create_attributes:
   - description
   - submission_ids
@@ -1761,6 +1984,11 @@ resource_posts:
     recipients:
       foreign_key: recipient_ids
       collection: users
+  validations:
+    ? - message
+      - resource_id
+    : presence:
+        'on': :create
   create_attributes:
   - message
   - recipient_ids
@@ -1785,6 +2013,13 @@ resource_requests:
     approvers:
       foreign_key: approver_ids
       collection: users
+  validations:
+    ? - approver_ids
+    : presence:
+        'on': :create
+    ? - request_resolution_status
+    : presence:
+        'on': :update
   create_attributes:
   - approver_ids
   - custom_fields
@@ -1825,6 +2060,10 @@ roles:
   - in_use
   - name
   - updated_at
+  validations:
+    ? - name
+    : presence:
+        'on': :create
   create_attributes:
   - name
   update_attributes:
@@ -1835,6 +2074,12 @@ saml_identities:
   - identifier
   - updated_at
   - user_id
+  validations:
+    ? - identifier
+    : presence: true
+    ? - user_id
+    : presence:
+        'on': :create
   create_attributes:
   - identifier
   - user_id
@@ -1871,6 +2116,13 @@ skill_adjacencies:
     updater:
       foreign_key: ''
       collection: users
+  validations:
+    ? - score
+    : presence: true
+    ? - requested_skill_id
+      - adjacent_skill_id
+    : presence:
+        'on': :create
   create_attributes:
   - adjacent_skill_id
   - requested_skill_id
@@ -1905,6 +2157,11 @@ skill_memberships:
     user:
       foreign_key: user_id
       collection: users
+  validations:
+    ? - skill_id
+      - user_id
+    : presence:
+        'on': :create
   create_attributes:
   - level
   - skill_id
@@ -1932,6 +2189,12 @@ skills:
     roles:
       foreign_key: role_ids
       collection: roles
+  validations:
+    ? - name
+      - max_level
+      - skill_category_id
+    : presence:
+        'on': :create
   create_attributes:
   - description
   - external_reference
@@ -2010,6 +2273,16 @@ staffing_demands:
     custom_field_values:
       foreign_key: custom_field_value_ids
       collection: custom_field_values
+  validations:
+    ? - title
+    : presence: true
+    ? - description
+      - start_date
+      - end_date
+      - quantity
+      - role_id
+    : presence:
+        'on': :create
   create_attributes:
   - description
   - end_date
@@ -2056,6 +2329,13 @@ status_reports:
     updater:
       foreign_key: updater_id
       collection: users
+  validations:
+    ? - workspace_id
+      - creator_id
+      - color
+      - description
+    : presence:
+        'on': :create
   create_attributes:
   - color
   - creator_id
@@ -2227,6 +2507,12 @@ stories:
     assigned_role:
       foreign_key: assigned_role_id
       collection: roles
+  validations:
+    ? - workspace_id
+      - title
+      - story_type
+    : presence:
+        'on': :create
   create_attributes:
   - archived
   - assignee_ids
@@ -2309,6 +2595,13 @@ story_allocation_days:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
+  validations:
+    ? - minutes
+    : presence: true
+    ? - assignment_id
+      - date
+    : presence:
+        'on': :create
   create_attributes:
   - assignment_id
   - date
@@ -2332,6 +2625,12 @@ story_dependencies:
     target:
       foreign_key: target_id
       collection: stories
+  validations:
+    ? - source_id
+      - target_id
+      - workspace_id
+    : presence:
+        'on': :create
   create_attributes:
   - dependency_type
   - lag
@@ -2386,6 +2685,11 @@ story_tasks:
     story:
       foreign_key: story_id
       collection: stories
+  validations:
+    ? - story_id
+      - name
+    : presence:
+        'on': :create
   create_attributes:
   - completed
   - name
@@ -2508,6 +2812,11 @@ survey_answers:
     choices:
       foreign_key: choice_ids
       collection: survey_question_choices
+  validations:
+    ? - survey_response_id
+      - survey_question_id
+    : presence:
+        'on': :create
   create_attributes:
   - choice_ids
   - choice_values
@@ -2544,6 +2853,11 @@ survey_questions:
     choices:
       foreign_key: choice_ids
       collection: survey_question_choices
+  validations:
+    ? - text
+      - question_type
+    : presence:
+        'on': :create
   create_attributes:
   - choices
   - question_type
@@ -2585,6 +2899,10 @@ survey_responses:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
+  validations:
+    ? - survey_template_id
+    : presence:
+        'on': :create
   create_attributes:
   - close_date
   - description
@@ -2640,6 +2958,10 @@ survey_templates:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
+  validations:
+    ? - survey_question_ids
+    : presence:
+        'on': :create
   create_attributes:
   - close_date
   - description
@@ -2700,6 +3022,16 @@ time_adjustments:
     active_invoice:
       foreign_key: active_invoice_id
       collection: invoices
+  validations:
+    ? - workspace_id
+      - user_id
+      - original_date
+      - bill_rate_in_cents
+      - billable
+      - cost_rate_in_cents
+      - time
+    : presence:
+        'on': :create
   create_attributes:
   - bill_rate_in_cents
   - billable
@@ -2777,6 +3109,12 @@ time_entries:
     role:
       foreign_key: role_id
       collection: roles
+  validations:
+    ? - workspace_id
+      - date_performed
+      - time_in_minutes
+    : presence:
+        'on': :create
   create_attributes:
   - billable
   - cost_rate_in_cents
@@ -2795,6 +3133,7 @@ time_entries:
   - cost_rate_in_cents
   - date_performed
   - external_reference
+  - location
   - notes
   - rate_in_cents
   - role_id
@@ -2816,11 +3155,20 @@ time_off_entries:
     user:
       foreign_key: user_id
       collection: users
+  validations:
+    ? - hours
+    : presence: true
+    ? - user_id
+      - requested_date
+    : presence:
+        'on': :create
   create_attributes:
+  - external_reference
   - hours
   - requested_date
   - user_id
   update_attributes:
+  - external_reference
   - hours
 timesheet_submissions:
   attributes:
@@ -2859,18 +3207,18 @@ timesheet_submissions:
     time_entries:
       foreign_key: time_entry_ids
       collection: time_entries
+  validations:
+    ? - line_item_ids
+      - workspace_id
+      - title
+    : presence:
+        'on': :create
   create_attributes:
   - comment
-  - comment
-  - external_reference
   - external_reference
   - line_item_ids
-  - line_item_ids
-  - title
   - title
   - user_id
-  - user_id
-  - workspace_id
   - workspace_id
 user_file_associations:
   attributes:
@@ -2958,6 +3306,10 @@ vendors:
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
+  validations:
+    ? - name
+    : presence:
+        'on': :create
   create_attributes:
   - external_reference
   - name
@@ -3005,6 +3357,13 @@ workspace_allocations:
     updater:
       foreign_key: updater_id
       collection: users
+  validations:
+    ? - resource_id
+      - start_date
+      - end_date
+      - minutes
+    : presence:
+        'on': :create
   create_attributes:
   - end_date
   - external_reference
@@ -3052,6 +3411,9 @@ workspace_baselines:
     payload:
       foreign_key: payload_id
       collection: baseline_payloads
+  validations:
+    ? - title
+    : presence: true
   create_attributes:
   - description
   - title
@@ -3081,6 +3443,9 @@ workspace_groups:
     workspaces:
       foreign_key: workspace_ids
       collection: workspaces
+  validations:
+    ? - name
+    : presence: true
   create_attributes:
   - add_workspace_ids
   - address
@@ -3120,6 +3485,10 @@ workspace_invoice_preferences:
   - project_code
   - purchase_order
   - workspace_id
+  validations:
+    ? - workspace_id
+    : presence:
+        'on': :create
   create_attributes:
   - client_invoice_address
   - client_invoice_name
@@ -3191,6 +3560,11 @@ workspace_posts:
     attachments:
       foreign_key: attachment_ids
       collection: attachments/post_attachments
+  validations:
+    ? - workspace_id
+      - message
+    : presence:
+        'on': :create
   create_attributes:
   - attachment_ids
   - backdated_to
@@ -3225,6 +3599,11 @@ workspace_resource_skills:
     workspace_resource:
       foreign_key: workspace_resource_id
       collection: workspace_resources
+  validations:
+    ? - skill_id
+      - workspace_resource_id
+    : presence:
+        'on': :create
   create_attributes:
   - level
   - skill_id
@@ -3334,6 +3713,10 @@ workspace_resources:
     custom_field_values:
       foreign_key: ''
       collection: custom_field_values
+  validations:
+    ? - workspace_id
+    : presence:
+        'on': :create
   create_attributes:
   - external_reference
   - role_id
@@ -3364,6 +3747,11 @@ workspace_status_changes:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
+  validations:
+    ? - workspace_id
+      - to_status_key
+    : presence:
+        'on': :create
   create_attributes:
   - to_status_key
   - workspace_id
@@ -3531,6 +3919,12 @@ workspaces:
     account_color:
       foreign_key: account_color_id
       collection: account_colors
+  validations:
+    ? - title
+    : presence: true
+    ? - creator_role
+    : presence:
+        'on': :create
   create_attributes:
   - access_level
   - account_color_id
@@ -3624,6 +4018,10 @@ workweek_memberships:
     workweek:
       foreign_key: workweek_id
       collection: workweeks
+  validations:
+    ? - user_id
+    : presence:
+        'on': :create
   create_attributes:
   - friday_minutes
   - monday_minutes

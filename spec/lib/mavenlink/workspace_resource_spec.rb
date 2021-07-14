@@ -4,7 +4,7 @@ describe Mavenlink::WorkspaceResource, stub_requests: true, type: :model do
   it_should_behave_like "model", "workspace_resources"
 
   describe "validations" do
-    it { is_expected.to validate_presence_of "workspace_id" }
+    it { is_expected.to validate_presence_of("workspace_id").on("create") }
   end
 
   describe "associations" do

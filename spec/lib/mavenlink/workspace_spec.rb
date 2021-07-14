@@ -92,7 +92,7 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
   end
 
   describe "validations" do
-    it { is_expected.to validate_presence_of :title }
+    it { is_expected.to validate_presence_of(:title).on(:create) }
     it { is_expected.to validate_inclusion_of(:creator_role).in_array(%w[maven buyer]).on(:create) }
   end
 
