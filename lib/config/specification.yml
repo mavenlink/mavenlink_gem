@@ -1886,7 +1886,7 @@ story_followers:
     - story_id
     - user_id
   associations:
-    stories:
+    story:
       foreign_key: story_ids
       collection: stories
     followers:
