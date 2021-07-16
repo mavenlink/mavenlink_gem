@@ -1878,7 +1878,7 @@ story_dependencies:
       foreign_key: target_id
       collection: stories
 
-story_followers:
+story_follows:
   attributes:
     - created_at
     - updated_at
