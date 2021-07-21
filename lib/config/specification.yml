@@ -1891,7 +1891,7 @@ story_follows:
     story:
       foreign_key: story_id
       collection: stories
-    followers:
+    follower:
       foreign_key: follower_id
       collection: users
 
