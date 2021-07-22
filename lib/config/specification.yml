@@ -1878,6 +1878,23 @@ story_dependencies:
       foreign_key: target_id
       collection: stories
 
+story_follows:
+  attributes:
+    - story_id
+    - follower_id
+    - created_at
+    - updated_at
+  create_attributes:
+    - story_id
+    - user_id
+  associations:
+    story:
+      foreign_key: story_id
+      collection: stories
+    follower:
+      foreign_key: follower_id
+      collection: users
+
 survey_answers:
   attributes:
     - id
