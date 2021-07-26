@@ -2,12 +2,13 @@ module Mavenlink
   class Request
     include Enumerable
 
-    attr_reader :client, :collection_name
+    attr_reader :client, :collection_name, :collection_path
     attr_accessor :scope
 
     # @param collection_name [String, Symbol]
     # @param client [Mavenlink::Client]
-    def initialize(collection_name, client = Mavenlink.client)
+    def initialize(collection_path, collection_name, client = Mavenlink.client)
+      @collection_path = collection_path
       @collection_name = collection_name
       @client = client
       @scope = ActiveSupport::HashWithIndifferentAccess.new
@@ -19,7 +20,7 @@ module Mavenlink
     def chain(new_scope = {})
       new_scope = {} if new_scope.nil?
 
-      self.class.new(collection_name, client).tap do |new_request|
+      self.class.new(collection_path, collection_name, client).tap do |new_request|
         new_request.scope.merge!(scope)
         new_request.scope.merge!(new_scope)
       end
@@ -174,7 +175,7 @@ module Mavenlink
 
     # @return [Mavenlink::Response]
     def perform
-      response = block_given? ? yield : client.get(collection_name, stringify_include_value(scope))
+      response = block_given? ? yield : client.get(collection_path, stringify_include_value(scope))
       Mavenlink::Response.new(response, client, scope: scope, collection_name: collection_name)
     end
 
@@ -239,7 +240,7 @@ module Mavenlink
     # @return [String]
     def resource_path
       (id = @scope[:only]) || raise(ArgumentError, "No route matches source path without an ID")
-      "#{collection_name}/#{id}"
+      "#{collection_path}/#{id}"
     end
 
     private

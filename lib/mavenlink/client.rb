@@ -15,8 +15,8 @@ module Mavenlink
       # Declare API calls client.-->>workspaces<<---.create({})
       Mavenlink.specification.keys.each do |collection_name|
         singleton_class.instance_eval do
-          define_method collection_name do
-            ::Mavenlink::Request.new(collection_name, self)
+          define_method collection_name do |args = {}|
+            ::Mavenlink::Request.new("Mavenlink::#{collection_name.singularize.classify}".constantize.collection_path(**args), collection_name, self)
           end
         end
       end
