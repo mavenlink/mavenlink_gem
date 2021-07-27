@@ -1755,6 +1755,7 @@ stories: # tasks
     - weight # integer representing the weight of the story. Can only be set on a parent-level milestone by a consultant with at least budget permissions (optional)
     - cost_budget_in_cents
     - cost_budget_used_in_cents
+    - foreign_exchange_cost_budget
     - external_reference_ids
     - current_assignments
     - story_state_change_ids
