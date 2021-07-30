@@ -169,7 +169,7 @@ describe Mavenlink::User, stub_requests: true, type: :model do
       subject.id = "1"
       subject.account_id = "12345"
       subject.client.instance_variable_set(:@me, nil)
-      stub_request :get,    "/api/v1/#{collection_name}/me", response
+      stub_request :get, "/api/v1/#{collection_name}/me", response
     end
 
     context "when the client account id == the subject account id" do
