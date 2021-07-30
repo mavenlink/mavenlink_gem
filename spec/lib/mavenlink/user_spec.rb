@@ -145,4 +145,50 @@ describe Mavenlink::User, stub_requests: true, type: :model do
       expect(model.send(:new, id: 1)).not_to be_new_record
     end
   end
+
+  describe "#association_load_filters" do
+    let(:response) do
+      {
+        count: 1,
+        results: [
+          {
+            key: collection_name,
+            id: "2"
+          }
+        ],
+        collection_name => {
+          "2" => {
+            id: "2",
+            account_id: other_account_id
+          }
+        }
+      }.deep_stringify_keys
+    end
+
+    before do
+      subject.id = "1"
+      subject.account_id = "12345"
+      subject.client.instance_variable_set(:@me, nil)
+      stub_request :get,    "/api/v1/#{collection_name}/me", response
+    end
+
+    context "when the client account id == the subject account id" do
+      let(:other_account_id) { "12345" }
+
+      it "includes on_my_account true" do
+        expect(subject.association_load_filters).to eq(
+          show_disabled: true,
+          on_my_account: true
+        )
+      end
+    end
+
+    context "when the client account id != the subject account id" do
+      let(:other_account_id) { "54321" }
+
+      it "does not include on_my_account true" do
+        expect(subject.association_load_filters).to eq(show_disabled: true)
+      end
+    end
+  end
 end
