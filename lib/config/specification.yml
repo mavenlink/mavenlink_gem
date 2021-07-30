@@ -2443,6 +2443,7 @@ workspaces:
   attributes:
     - id # the internal expense ID
     - title # the title of the project
+    - account_id
     - archived # whether the project is archived
     - description # the description of the project
     - due_date # the due date of the project
@@ -2473,11 +2474,41 @@ workspaces:
     - percentage_complete
     - access_level
     - status_key
+    - exclude_archived_stories_percent_complete
+    - show_nonbillable_time_on_invoices
+    - tasks_default_non_billable
+    - rate_card_id
+    - posts_require_privacy_decision
+    - has_active_timesheet_submissions
+    - has_active_expense_report_submissions
+    - account_features
+    - permissions
+    - expenses_in_burn_rate
+    - total_expenses_in_cents
+    - percent_of_budget_used
+    - budget_used_in_cents
+    - budget_remaining
     - account_color_id
     - workspace_group_ids
     - target_margin
     - primary_maven_id
     - custom_field_value_ids
+    - next_uncompleted_milestone_id
+    - creator_id
+    - primary_counterpart_id
+    - approver_id
+    - approver_ids
+    - participant_ids
+    - current_user_participation_id
+    - participation_ids
+    - timesheet_submission_ids
+    - financial_viewer_ids
+    - possible_approver_ids
+    - workspace_resource_ids
+    - workspace_resources_with_unnamed_ids
+    - status_report_ids
+    - current_status_report_id
+    - external_reference_ids
   create_attributes:
     - title
     - creator_role
