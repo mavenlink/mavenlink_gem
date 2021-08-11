@@ -249,6 +249,7 @@ cost_rates:
     - currency
     - amount_in_subunits
     - in_use
+    - account_membership_id
   create_attributes:
     - currency
     - amount_in_subunits
@@ -256,7 +257,7 @@ cost_rates:
   associations:
     account_membership:
       foreign_key: account_membership_id
-      collection: account_membership
+      collection: account_memberships
 
 backup_approver_associations:
   attributes:
