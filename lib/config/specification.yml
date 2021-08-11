@@ -257,7 +257,7 @@ cost_rates:
   associations:
     account_membership:
       foreign_key: account_membership_id
-      collection: account_membership
+      collection: account_memberships
 
 backup_approver_associations:
   attributes:
