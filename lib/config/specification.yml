@@ -249,6 +249,7 @@ cost_rates:
     - currency
     - amount_in_subunits
     - in_use
+    - account_membership_id
   create_attributes:
     - currency
     - amount_in_subunits
