@@ -2833,9 +2833,13 @@ workweeks:
 
 workweek_memberships:
   attributes:
+    - id
+    - created_at
+    - updated_at
     - user_id
     - start_date
     - end_date
+    - workweek_id
   create_attributes:
     - user_id
     - start_date
