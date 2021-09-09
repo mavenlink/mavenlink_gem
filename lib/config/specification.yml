@@ -4,6 +4,7 @@ access_groups:
     - id
     - name
     - created_at
+    - user_ids
     - resource_planning_permissions
   create_attributes:
     - name
