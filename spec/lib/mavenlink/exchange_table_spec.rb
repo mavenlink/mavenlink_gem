@@ -42,7 +42,7 @@ describe Mavenlink::ExchangeTable, stub_requests: true, type: :model do
 
     it "fetches exchange rates with the given filters and returns a mavenlink object for each result" do
       expect_any_instance_of(Mavenlink::Client).to receive(:get).with(path, filters) { response }
-      expect(exchange_table.rates(filters)).to match_array(an_instance_of(Mavenlink::ExchangeRate).and having_attributes(response["exchange_rates"][exchange_rate_id]))
+      expect(exchange_table.rates(filters)).to match_array(an_instance_of(Mavenlink::ExchangeRate).and(having_attributes(response["exchange_rates"][exchange_rate_id])))
     end
   end
 end
