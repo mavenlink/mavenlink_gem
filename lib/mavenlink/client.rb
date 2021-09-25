@@ -34,6 +34,10 @@ module Mavenlink
       end
     end
 
+    def me
+      @me ||= Mavenlink::Response.new(get("users/me"), self, scope: {}, collection_name: "users")&.results&.first
+    end
+
     # Performs custom GET request
     # @param [String] path
     # @param [Hash] arguments

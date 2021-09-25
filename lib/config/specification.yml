@@ -4,6 +4,7 @@ access_groups:
     - id
     - name
     - created_at
+    - user_ids
     - resource_planning_permissions
   create_attributes:
     - name
@@ -249,6 +250,7 @@ cost_rates:
     - currency
     - amount_in_subunits
     - in_use
+    - account_membership_id
   create_attributes:
     - currency
     - amount_in_subunits
@@ -256,7 +258,7 @@ cost_rates:
   associations:
     account_membership:
       foreign_key: account_membership_id
-      collection: account_membership
+      collection: account_memberships
 
 backup_approver_associations:
   attributes:
@@ -1772,6 +1774,7 @@ stories: # tasks
     - weight # integer representing the weight of the story. Can only be set on a parent-level milestone by a consultant with at least budget permissions (optional)
     - cost_budget_in_cents
     - cost_budget_used_in_cents
+    - foreign_exchange_cost_budget
     - external_reference_ids
     - current_assignments
     - story_state_change_ids
@@ -2459,6 +2462,7 @@ workspaces:
   attributes:
     - id # the internal expense ID
     - title # the title of the project
+    - account_id
     - archived # whether the project is archived
     - description # the description of the project
     - due_date # the due date of the project
@@ -2489,11 +2493,41 @@ workspaces:
     - percentage_complete
     - access_level
     - status_key
+    - exclude_archived_stories_percent_complete
+    - show_nonbillable_time_on_invoices
+    - tasks_default_non_billable
+    - rate_card_id
+    - posts_require_privacy_decision
+    - has_active_timesheet_submissions
+    - has_active_expense_report_submissions
+    - account_features
+    - permissions
+    - expenses_in_burn_rate
+    - total_expenses_in_cents
+    - percent_of_budget_used
+    - budget_used_in_cents
+    - budget_remaining
     - account_color_id
     - workspace_group_ids
     - target_margin
     - primary_maven_id
     - custom_field_value_ids
+    - next_uncompleted_milestone_id
+    - creator_id
+    - primary_counterpart_id
+    - approver_id
+    - approver_ids
+    - participant_ids
+    - current_user_participation_id
+    - participation_ids
+    - timesheet_submission_ids
+    - financial_viewer_ids
+    - possible_approver_ids
+    - workspace_resource_ids
+    - workspace_resources_with_unnamed_ids
+    - status_report_ids
+    - current_status_report_id
+    - external_reference_ids
   create_attributes:
     - title
     - creator_role
@@ -2817,9 +2851,13 @@ workweeks:
 
 workweek_memberships:
   attributes:
+    - id
+    - created_at
+    - updated_at
     - user_id
     - start_date
     - end_date
+    - workweek_id
   create_attributes:
     - user_id
     - start_date
