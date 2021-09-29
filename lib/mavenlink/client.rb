@@ -34,6 +34,14 @@ module Mavenlink
       end
     end
 
+    def multipart_connection
+      Faraday.new(connection_options) do |builder|
+        builder.request :multipart
+        builder.request :url_encoded
+        builder.adapter(*Mavenlink.adapter)
+      end
+    end
+
     def me
       @me ||= Mavenlink::Response.new(get("users/me"), self, scope: {}, collection_name: "users")&.results&.first
     end
@@ -52,6 +60,14 @@ module Mavenlink
     def post(path, arguments = {})
       Mavenlink.logger.note "Started POST /#{path} with #{arguments.inspect}"
       parse_request(connection.post(path, arguments).body)
+    end
+
+    # Performs custom POST request with multipart body
+    # @param [String] path
+    # @param [Hash] arguments
+    def post_file(path, arguments = {})
+      Mavenlink.logger.note "Started POST file /#{path} with #{arguments.inspect}"
+      parse_request(multipart_connection.post(path, arguments).body)
     end
 
     # Performs custom PUT request
