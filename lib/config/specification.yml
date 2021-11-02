@@ -1889,7 +1889,7 @@ story_follows:
     - updated_at
   create_attributes:
     - story_id
-    - user_id
+    - follower_id
   associations:
     story:
       foreign_key: story_id
