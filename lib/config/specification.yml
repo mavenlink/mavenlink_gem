@@ -1906,7 +1906,7 @@ story_follows:
     - updated_at
   create_attributes:
     - story_id
-    - user_id
+    - follower_id
   associations:
     story:
       foreign_key: story_id
@@ -2432,6 +2432,9 @@ workspaces:
     workspace_groups:
       foreign_key: workspace_group_ids
       collection: workspace_groups
+    primary_workspace_group:
+      foreign_key: primary_workspace_group_id
+      collection: workspace_groups
     financial_viewers:
       foreign_key: financial_viewer_ids
       collection: users
@@ -2509,6 +2512,7 @@ workspaces:
     - budget_remaining
     - account_color_id
     - workspace_group_ids
+    - primary_workspace_group_id
     - target_margin
     - primary_maven_id
     - custom_field_value_ids
@@ -2557,6 +2561,7 @@ workspaces:
     - status_key
     - external_reference
     - workspace_group_ids
+    - primary_workspace_group_id
     - approver_id
     - target_margin
     - tasks_default_non_billable
@@ -2590,6 +2595,7 @@ workspaces:
     - status_key
     - external_reference
     - workspace_group_ids
+    - primary_workspace_id
     - account_color_id
 
 workspace_allocations:
