@@ -168,6 +168,31 @@ describe Mavenlink::Request, stub_requests: true do
     end
   end
 
+  describe "#show" do
+    before do
+      stub_request :get, "/api/v1/workspaces/7", one_record_response
+      stub_request :get, "/api/v1/workspaces/8", "errors" => [{ "type" => "system", "message" => "Not found" }]
+    end
+
+    context "when id is empty" do
+      it "raises an argument error" do
+        expect { subject.show(nil) }.to raise_error(ArgumentError)
+      end
+    end
+
+    context "existed record" do
+      it "returns record wrapped in a model" do
+        expect(subject.show(7)).to be_a Mavenlink::Workspace
+      end
+    end
+
+    context "record does not exist" do
+      it "raises an error" do
+        expect { subject.show(8) }.to raise_error(Mavenlink::InvalidRequestError)
+      end
+    end
+  end
+
   describe "#search" do
     specify do
       expect(subject.search("text").scope).to include(search: "text")

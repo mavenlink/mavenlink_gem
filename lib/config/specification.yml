@@ -1257,6 +1257,7 @@ project_accounting_records:
     - workspace_id
     - story_id
     - role_id
+    - user_id
   create_attributes:
     - amount
     - amount_to_date
@@ -1283,10 +1284,14 @@ project_accounting_records:
     - workspace_id
     - story_id
     - role_id
+    - user_id
   validations:
     [workspace_id, currency, start_date, end_date, type]:
       presence: true
   associations:
+    user:
+      foreign_key: user_id
+      collection: users
     story:
       foreign_key: story_id
       collection: stories

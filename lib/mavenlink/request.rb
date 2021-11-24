@@ -42,6 +42,15 @@ module Mavenlink
       only(id).perform.results.first
     end
 
+    # @param id [Integer, String]
+    # @return [BrainstemAdaptor::Record, nil]
+    def show(id)
+      raise ArgumentError if id.to_s.strip.empty?
+
+      response = client.get("#{collection_name}/#{id}", stringify_include_value(scope))
+      Mavenlink::Response.new(response, client, scope: scope, collection_name: collection_name).results.first
+    end
+
     # @param text [String]
     # @return [Mavenlink::Request]
     def search(text)
