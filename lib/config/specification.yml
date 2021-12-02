@@ -2501,6 +2501,7 @@ workspaces:
     - percent_of_budget_used
     - budget_used_in_cents
     - budget_remaining
+    - external_link
     - account_color_id
     - workspace_group_ids
     - primary_workspace_group_id
@@ -2557,6 +2558,7 @@ workspaces:
     - target_margin
     - tasks_default_non_billable
     - account_color_id
+    - external_link
   update_attributes:
     - title
     - budgeted
@@ -2588,6 +2590,7 @@ workspaces:
     - workspace_group_ids
     - primary_workspace_id
     - account_color_id
+    - external_link
 
 workspace_allocations:
   attributes:
