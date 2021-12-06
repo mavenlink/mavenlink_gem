@@ -201,6 +201,7 @@ assignments:
     - resource_id
     - external_reference
   update_attributes:
+    - assignee_id
     - current
     - estimated_minutes
     - resource_id
