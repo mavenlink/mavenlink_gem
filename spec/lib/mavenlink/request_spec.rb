@@ -364,6 +364,53 @@ describe Mavenlink::Request, stub_requests: true do
       expect(response).to be_a Mavenlink::Response
       expect(response).to eq two_record_response
     end
+
+    context "when an include filter is passed" do
+      let(:two_record_response) do
+        {
+          "count" => 2,
+          "results" => [
+            {
+              "key" => "workspaces",
+              "id" => "8"
+            },
+            {
+              "key" => "workspaces",
+              "id" => "9"
+            }
+          ],
+          "workspaces" => {
+            "8" => {
+              "title" => "Workspace One",
+              "external_reference_ids" => [10]
+            },
+            "9" => {
+              "title" => "Another Workspace",
+              "external_reference_ids" => [11]
+            }
+          },
+          "external_references": {
+            "10" => {
+              "subject_type" => "workspace",
+              "subject_id" => 8
+            },
+            "11" => {
+              "subject_type" => "workspace",
+              "subject_id" => 9
+            }
+          }
+        }
+      end
+      let(:filters) { { "include" => "external_references" } }
+
+      it "posts to the collection with the given models and include filters" do
+        expect(client).to receive(:post).with(collection_name, { collection_name.pluralize => models }.merge(filters)) { two_record_response }
+
+        response = subject.bulk_create(models, filters)
+        expect(response).to be_a Mavenlink::Response
+        expect(response).to eq two_record_response
+      end
+    end
   end
 
   describe "#create" do
