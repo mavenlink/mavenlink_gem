@@ -120,9 +120,9 @@ module Mavenlink
         when Array
           Mavenlink.logger.whisper "Returned as a plain collection"
         when Hash
-          if parsed_response["errors"]
+          if parsed_response["errors"] || parsed_response["error_message"]
             Mavenlink.logger.disappointment "REQUEST FAILED:"
-            Mavenlink.logger.inspection parsed_response["errors"]
+            Mavenlink.logger.inspection parsed_response["errors"] || parsed_response["error_message"]
             raise InvalidRequestError, parsed_response
           end
         end
