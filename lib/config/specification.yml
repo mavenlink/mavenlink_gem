@@ -1833,6 +1833,7 @@ stories: # tasks
 story_allocation_days:
   attributes:
     - id # the unique identifier for this story allocation day object
+    - created_at
     - updated_at # the date the story allocation day was last updated
     - date # the date of the story allocation day
     - minutes # the minutes allocated to the story allocation day
