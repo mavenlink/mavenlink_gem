@@ -2733,6 +2733,23 @@ workspace_resources:
     - role_initials
     - display_label
     - allocations_count
+    - account_role_name
+    - account_cost
+    - account_rate
+    - refresh_rate_path
+    - role_rate
+    - resource_bill_rate
+    - resource_cost_rate
+    - assignments_count
+    - deletable
+    - total_allocated_minutes
+    - earliest_allocation_date
+    - latest_allocation_date
+    - is_foreign_user
+    - role_available_on_rate_card
+    - can_create_resource_request_for_resource
+    - can_name_resource_with_allocations
+    - can_approve_resource
     - created_at
     - updated_at
     - user_id
