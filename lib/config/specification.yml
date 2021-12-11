@@ -1635,22 +1635,28 @@ status_reports:
     creator:
       foreign_key: creator_id
       collection: users
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
   attributes:
     - color
     - description
     - details
     - created_at
     - updated_at
+    - external_reference_ids
   create_attributes:
     - workspace_id
     - creator_id
     - description
     - color
     - details
+    - external_reference
   update_attributes:
     - color
     - description
     - details
+    - external_reference
 
 stories: # tasks
   associations:
