@@ -1452,6 +1452,38 @@ resolutions:
     - target_id
     - user_id
 
+resource_requests:
+  attributes:
+    - id
+    - status
+    - created_at
+    - resource_id
+    - creator_id
+    - approver_ids
+  create_attributes:
+    - resource_id
+    - resource_workspace_id
+    - resource_role_id
+    - approver_ids
+    - workspace_allocation_start_date
+    - workspace_allocation_end_date
+    - workspace_allocation_percentage
+    - custom_fields
+  update_attributes:
+    - request_resolution_status
+    - user_id
+    - allocations_state
+  associations:
+    resource:
+      foreign_key: resource_id
+      collection: workspace_resources
+    creator:
+      foreign_key: creator_id
+      collection: users
+    approvers:
+      foreign_key: approver_ids
+      collection: users
+
 roles:
   attributes:
     - id
