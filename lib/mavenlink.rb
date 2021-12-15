@@ -149,6 +149,7 @@ require "mavenlink/rate_card_set"
 require "mavenlink/rate_card_set_version"
 require "mavenlink/rate_card_version"
 require "mavenlink/resolution"
+require "mavenlink/resource_request"
 require "mavenlink/role" # NOTE(SZ): remove
 require "mavenlink/user"
 require "mavenlink/vendor"
