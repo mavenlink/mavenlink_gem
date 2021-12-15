@@ -12,10 +12,10 @@ shared_context "model" do |collection_name|
   end
 
   before do
-    stub_request :get,    "/api/v1/#{collection_name}?only=7", response
-    stub_request :get,    "/api/v1/#{collection_name}?only=8", "count" => 0, "results" => []
-    stub_request :post,   "/api/v1/#{collection_name}", response
-    stub_request :delete, "/api/v1/#{collection_name}/4", "count" => 0, "results" => [] # TODO: replace with real one
+    stub_request :get,    "/api/v1/#{model.collection_path}?only=7", response
+    stub_request :get,    "/api/v1/#{model.collection_path}?only=8", "count" => 0, "results" => []
+    stub_request :post,   "/api/v1/#{model.collection_path}", response
+    stub_request :delete, "/api/v1/#{model.collection_path}/4", "count" => 0, "results" => [] # TODO: replace with real one
   end
 
   describe "class methods" do

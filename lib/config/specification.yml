@@ -636,6 +636,23 @@ estimate_scenario_resource_skills:
       foreign_key: estimate_scenario_resource_id
       collection: estimate_scenario_resources
 
+exchange_rates:
+  attributes:
+    - id
+    - exchange_table_id
+    - source_currency
+    - target_currency
+    - effective_date
+    - rate
+    - source_currency_symbol
+
+exchange_tables:
+  attributes:
+    - id
+    - name
+    - account_default
+    - insights_account_default
+
 expenses:
   validations:
     [workspace_id, date, category, amount_in_cents]:

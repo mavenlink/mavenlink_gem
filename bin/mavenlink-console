@@ -10,6 +10,7 @@ require "mavenlink"
 
 token = ENV["TOKEN"]
 Mavenlink.oauth_token = token
+Mavenlink.default_settings[:endpoint] = ENV.fetch("MAVENLINK_API_ENDPOINT", nil)
 
 Mavenlink.logger = Mavenlink::Logger.new(STDOUT)
 Mavenlink.logger.level = Logger::INFO # Change to Logger::DEBUG in order to display responses
