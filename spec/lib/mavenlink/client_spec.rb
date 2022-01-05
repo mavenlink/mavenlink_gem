@@ -172,6 +172,12 @@ describe Mavenlink::Client, stub_requests: true do
       end
     end
 
+    describe "#post_file" do
+      specify do
+        expect(subject.post_file(post_path)).to eq(post_response)
+      end
+    end
+
     describe "#put" do
       specify do
         expect(subject.put(put_path)).to eq(put_response)

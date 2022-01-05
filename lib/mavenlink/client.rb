@@ -15,8 +15,8 @@ module Mavenlink
       # Declare API calls client.-->>workspaces<<---.create({})
       Mavenlink.specification.keys.each do |collection_name|
         singleton_class.instance_eval do
-          define_method collection_name do
-            ::Mavenlink::Request.new(collection_name, self)
+          define_method collection_name do |args = {}|
+            ::Mavenlink::Request.new("Mavenlink::#{collection_name.singularize.classify}".constantize.collection_path(**args), collection_name, self)
           end
         end
       end
@@ -30,6 +30,14 @@ module Mavenlink
         else
           builder.use Faraday::Request::UrlEncoded
         end
+        builder.adapter(*Mavenlink.adapter)
+      end
+    end
+
+    def multipart_connection
+      Faraday.new(connection_options) do |builder|
+        builder.request :multipart
+        builder.request :url_encoded
         builder.adapter(*Mavenlink.adapter)
       end
     end
@@ -52,6 +60,14 @@ module Mavenlink
     def post(path, arguments = {})
       Mavenlink.logger.note "Started POST /#{path} with #{arguments.inspect}"
       parse_request(connection.post(path, arguments).body)
+    end
+
+    # Performs custom POST request with multipart body
+    # @param [String] path
+    # @param [Hash] arguments
+    def post_file(path, arguments = {})
+      Mavenlink.logger.note "Started POST file /#{path} with #{arguments.inspect}"
+      parse_request(multipart_connection.post(path, arguments).body)
     end
 
     # Performs custom PUT request
@@ -104,15 +120,21 @@ module Mavenlink
         when Array
           Mavenlink.logger.whisper "Returned as a plain collection"
         when Hash
-          if parsed_response["errors"]
-            Mavenlink.logger.disappointment "REQUEST FAILED:"
-            Mavenlink.logger.inspection parsed_response["errors"]
-            raise InvalidRequestError, parsed_response
-          end
+          raise_invalid_request_error(parsed_response) if errored_response?(parsed_response)
         end
       end
     rescue JSON::ParserError => e
       raise Mavenlink::InvalidResponseError, e.message
+    end
+
+    def raise_invalid_request_error(parsed_response)
+      Mavenlink.logger.disappointment "REQUEST FAILED:"
+      Mavenlink.logger.inspection parsed_response["errors"] || parsed_response["error_message"]
+      raise InvalidRequestError, parsed_response
+    end
+
+    def errored_response?(parsed_response)
+      parsed_response["errors"] || parsed_response["error_message"]
     end
   end
 end

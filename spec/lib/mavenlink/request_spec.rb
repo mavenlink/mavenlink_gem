@@ -4,7 +4,7 @@ describe Mavenlink::Request, stub_requests: true do
   let(:collection_name) { "workspaces" }
   let(:client) { Mavenlink.client }
 
-  subject { described_class.new(collection_name, client) }
+  subject { described_class.new(collection_name, collection_name, client) }
 
   let(:response) do
     {
@@ -78,6 +78,11 @@ describe Mavenlink::Request, stub_requests: true do
       it { is_expected.to eq("workspaces") }
     end
 
+    describe "#collection_path" do
+      subject { super().collection_path }
+      it { is_expected.to eq("workspaces") }
+    end
+
     describe "#client" do
       subject { super().client }
       it { is_expected.to eq(client) }
@@ -89,7 +94,7 @@ describe Mavenlink::Request, stub_requests: true do
     end
 
     context "no client specified" do
-      subject { described_class.new(collection_name) }
+      subject { described_class.new(collection_name, collection_name) }
 
       describe "#client" do
         subject { super().client }

@@ -201,6 +201,7 @@ assignments:
     - resource_id
     - external_reference
   update_attributes:
+    - assignee_id
     - current
     - estimated_minutes
     - resource_id
@@ -634,6 +635,23 @@ estimate_scenario_resource_skills:
     estimate_scenario_resource:
       foreign_key: estimate_scenario_resource_id
       collection: estimate_scenario_resources
+
+exchange_rates:
+  attributes:
+    - id
+    - exchange_table_id
+    - source_currency
+    - target_currency
+    - effective_date
+    - rate
+    - source_currency_symbol
+
+exchange_tables:
+  attributes:
+    - id
+    - name
+    - account_default
+    - insights_account_default
 
 expenses:
   validations:
@@ -1451,6 +1469,38 @@ resolutions:
     - target_id
     - user_id
 
+resource_requests:
+  attributes:
+    - id
+    - status
+    - created_at
+    - resource_id
+    - creator_id
+    - approver_ids
+  create_attributes:
+    - resource_id
+    - resource_workspace_id
+    - resource_role_id
+    - approver_ids
+    - workspace_allocation_start_date
+    - workspace_allocation_end_date
+    - workspace_allocation_percentage
+    - custom_fields
+  update_attributes:
+    - request_resolution_status
+    - user_id
+    - allocations_state
+  associations:
+    resource:
+      foreign_key: resource_id
+      collection: workspace_resources
+    creator:
+      foreign_key: creator_id
+      collection: users
+    approvers:
+      foreign_key: approver_ids
+      collection: users
+
 roles:
   attributes:
     - id
@@ -1634,22 +1684,28 @@ status_reports:
     creator:
       foreign_key: creator_id
       collection: users
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
   attributes:
     - color
     - description
     - details
     - created_at
     - updated_at
+    - external_reference_ids
   create_attributes:
     - workspace_id
     - creator_id
     - description
     - color
     - details
+    - external_reference
   update_attributes:
     - color
     - description
     - details
+    - external_reference
 
 stories: # tasks
   associations:
@@ -1832,6 +1888,7 @@ stories: # tasks
 story_allocation_days:
   attributes:
     - id # the unique identifier for this story allocation day object
+    - created_at
     - updated_at # the date the story allocation day was last updated
     - date # the date of the story allocation day
     - minutes # the minutes allocated to the story allocation day
@@ -2732,6 +2789,23 @@ workspace_resources:
     - role_initials
     - display_label
     - allocations_count
+    - account_role_name
+    - account_cost
+    - account_rate
+    - refresh_rate_path
+    - role_rate
+    - resource_bill_rate
+    - resource_cost_rate
+    - assignments_count
+    - deletable
+    - total_allocated_minutes
+    - earliest_allocation_date
+    - latest_allocation_date
+    - is_foreign_user
+    - role_available_on_rate_card
+    - can_create_resource_request_for_resource
+    - can_name_resource_with_allocations
+    - can_approve_resource
     - created_at
     - updated_at
     - user_id

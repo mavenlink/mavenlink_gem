@@ -41,13 +41,13 @@ module Mavenlink
 
     # @param client [Mavenlink::Client]
     # @return [Mavenlink::Request]
-    def self.scoped(client = Mavenlink.client)
-      Mavenlink::Request.new(collection_name, client)
+    def self.scoped(client = Mavenlink.client, args = {})
+      Mavenlink::Request.new(collection_path(**args), collection_name, client)
     end
 
     # @return [Mavenlink::Request]
-    def scoped_im
-      Mavenlink::Request.new(collection_name, client)
+    def scoped_im(args = {})
+      Mavenlink::Request.new(self.class.collection_path(**args), client)
     end
 
     # @param model_class [Mavenlink::Model]
@@ -58,6 +58,10 @@ module Mavenlink
       Mavenlink::Specificators::Attribute.apply(model_class)
       Mavenlink::Specificators::Association.apply(model_class)
       Mavenlink::Specificators::Validation.apply(model_class)
+    end
+
+    def self.collection_path(_ = {})
+      collection_name
     end
 
     # Returns all models registered in the app
