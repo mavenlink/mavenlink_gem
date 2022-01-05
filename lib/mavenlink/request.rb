@@ -160,8 +160,8 @@ module Mavenlink
 
     # @param models [Array<Hash>]
     # @return [Mavenlink::Response]
-    def bulk_create(models)
-      perform { client.post(collection_name, collection_name.pluralize => models) }
+    def bulk_create(models, filter = {})
+      perform { client.post(collection_name, { collection_name.pluralize => models }.merge(filter)) }
     end
 
     # @param attributes [Hash]
