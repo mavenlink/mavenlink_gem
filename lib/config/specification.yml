@@ -2581,6 +2581,7 @@ workspaces:
     - status_report_ids
     - current_status_report_id
     - external_reference_ids
+    - revenue_recognition_method
   create_attributes:
     - title
     - creator_role
@@ -2616,6 +2617,7 @@ workspaces:
     - tasks_default_non_billable
     - account_color_id
     - external_link
+    - revenue_recognition_method
   update_attributes:
     - title
     - budgeted
@@ -2648,6 +2650,7 @@ workspaces:
     - primary_workspace_id
     - account_color_id
     - external_link
+    - revenue_recognition_method
 
 workspace_allocations:
   attributes:
