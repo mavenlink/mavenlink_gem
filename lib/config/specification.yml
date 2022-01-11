@@ -2821,6 +2821,7 @@ workspace_resources:
     - workspace_id
     - user_id
     - role_id
+    - external_reference
   update_attributes:
     - label
     - user_id
@@ -2828,6 +2829,7 @@ workspace_resources:
     - auto_update_label
     - cost_rate
     - bill_rate
+    - external_reference
   associations:
     participation:
       foreign_key: participation_id
