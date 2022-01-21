@@ -1688,6 +1688,7 @@ status_reports:
       foreign_key: external_reference_ids
       collection: external_references
   attributes:
+    - id
     - color
     - description
     - details
