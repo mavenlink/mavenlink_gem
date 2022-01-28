@@ -8,7 +8,7 @@ module Mavenlink
     def initialize(response_data, client = Mavenlink.client, specification = Mavenlink.specification, scope: {}, **options)
       @client = client
       @scope = scope
-      super(response_data, specification, options)
+      super(response_data, specification, **options)
     end
 
     # Returns collection records

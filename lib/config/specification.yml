@@ -1693,6 +1693,7 @@ status_reports:
       foreign_key: external_reference_ids
       collection: external_references
   attributes:
+    - id
     - color
     - description
     - details
@@ -2587,6 +2588,7 @@ workspaces:
     - current_status_report_id
     - external_reference_ids
     - primary_group
+    - revenue_recognition_method
   create_attributes:
     - title
     - creator_role
@@ -2623,6 +2625,7 @@ workspaces:
     - account_color_id
     - external_link
     - primary_group
+    - revenue_recognition_method
   update_attributes:
     - title
     - budgeted
@@ -2656,6 +2659,7 @@ workspaces:
     - account_color_id
     - external_link
     - primary_group
+    - revenue_recognition_method
 
 workspace_allocations:
   attributes:
@@ -2829,6 +2833,7 @@ workspace_resources:
     - workspace_id
     - user_id
     - role_id
+    - external_reference
   update_attributes:
     - label
     - user_id
@@ -2836,6 +2841,7 @@ workspace_resources:
     - auto_update_label
     - cost_rate
     - bill_rate
+    - external_reference
   associations:
     participation:
       foreign_key: participation_id
