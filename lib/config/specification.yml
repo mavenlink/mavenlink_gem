@@ -2366,7 +2366,8 @@ timesheet_submissions:
       - current_resolution_creator_id
       - current_resolution_created_at_date
       - time_entry_ids
-      - resolution_ids
+      - user_id
+      - workspace_id
       - permissions
     create_attributes:
       - title
@@ -2385,9 +2386,6 @@ timesheet_submissions:
       time_entries:
         foreign_key: time_entry_ids
         collection: time_entries
-      resolutions:
-        foreign_key: resolution_ids
-        collection: resolutions
       external_references:
         foreign_key: external_reference_ids
         collection: external_references
