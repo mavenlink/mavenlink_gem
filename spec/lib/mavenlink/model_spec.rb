@@ -540,4 +540,16 @@ describe Mavenlink::Model, stub_requests: true, type: :model do
       expect(subject.relatives.first["id"]).to eq("10")
     end
   end
+
+  describe "#to_h" do
+    subject { model.create(name: "Masha") }
+
+    it "return a hash with associated objects" do
+      expect(subject.to_h).to eq({
+                                   "name" => "Masha",
+                                   "id" => "7",
+                                   "relatives" => nil
+                                 })
+    end
+  end
 end

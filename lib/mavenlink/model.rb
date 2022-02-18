@@ -223,6 +223,28 @@ module Mavenlink
       {}
     end
 
+    def to_h
+      # Get a list of association names in this class
+      association_names = Mavenlink::Specificators::Association.apply(self.class)
+
+      pairs = association_names.collect do |association_name|
+        # Get the association object(s)
+        object_or_array = send(association_name)
+        # Build the single pair for this association
+        if object_or_array.is_a? Array
+          # If this is a has_many or the like, use the same array-of-pairs trick
+          # to build a hash of "id => attributes"
+          association_pairs = object_or_array.collect { |o| [o.id, o.attributes] }
+          [association_name, Hash[*association_pairs.flatten(1)]]
+        else
+          # has_one, belongs_to, etc.
+          [association_name, object_or_array]
+        end
+      end
+      # Build the final hash
+      Hash[self].merge(Hash[*pairs.flatten(1)])
+    end
+
     protected
 
     # @return [Mavenlink::Response]
