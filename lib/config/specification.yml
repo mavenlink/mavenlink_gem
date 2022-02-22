@@ -2242,6 +2242,7 @@ time_adjustments:
     - external_reference
 
 time_entries:
+  per_page: 10000
   associations:
     workspace:
       foreign_key: workspace_id
