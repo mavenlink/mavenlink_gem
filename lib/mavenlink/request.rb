@@ -216,7 +216,7 @@ module Mavenlink
       Enumerator.new do |result|
         i = 0
         records_passed = 0
-        request = per_page(batch_size)
+        request = per_page(Mavenlink.specification[collection_name]["per_page"] || batch_size)
         page_records = []
         total_count = Float::INFINITY
 
