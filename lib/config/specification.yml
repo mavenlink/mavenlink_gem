@@ -1550,7 +1550,10 @@ skills:
     - name
     - max_level
     - description
-    - user_count
+    - created_at
+    - updated_at
+    - skill_category_id
+    - id
   create_attributes:
     - skill_category_id
     - name
@@ -1602,6 +1605,7 @@ skill_categories:
       collection: skills
   attributes:
     - name
+    - id
 
 skill_memberships:
   associations:
