@@ -542,13 +542,38 @@ describe Mavenlink::Model, stub_requests: true, type: :model do
   end
 
   describe "#to_h" do
-    subject { model.create(name: "Masha") }
+    subject { model.new(id: "7", name: "Maria") }
+    let(:filters) do
+      {
+        only: "7",
+        include: "relatives",
+        some: "filter"
+      }.stringify_keys
+    end
+    let(:faraday_response) { instance_double(Faraday::Response, body: response_with_relatives.to_json) }
+    let(:response_with_relatives) do
+      original = response
+      original["monkeys"]["7"]["relative_ids"] = ["10"]
+      original["monkeys"]["10"] = {
+        "name" => "John",
+        "id" => "10"
+      }
+      original
+    end
 
     it "return a hash with associated objects" do
+      expect_any_instance_of(Faraday::Connection).to receive(:get).with("monkeys", hash_including(filters)) { faraday_response }
+      expect(subject.relatives.count).to eq(1)
       expect(subject.to_h).to eq({
-                                   "name" => "Masha",
                                    "id" => "7",
-                                   "relatives" => nil
+                                   "name" => "Maria",
+                                   "relative_ids" => ["10"],
+                                   "relatives" => {
+                                     "10" => {
+                                       "name" => "John",
+                                       "id" => "10"
+                                     }
+                                   }
                                  })
     end
   end

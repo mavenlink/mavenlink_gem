@@ -226,20 +226,8 @@ module Mavenlink
     def to_h
       # Get a list of association names in this class
       association_names = Mavenlink::Specificators::Association.apply(self.class)
-
       pairs = association_names.collect do |association_name|
-        # Get the association object(s)
-        object_or_array = send(association_name)
-        # Build the single pair for this association
-        if object_or_array.is_a? Array
-          # If this is a has_many or the like, use the same array-of-pairs trick
-          # to build a hash of "id => attributes"
-          association_pairs = object_or_array.collect { |o| [o.id, o.attributes] }
-          [association_name, Hash[*association_pairs.flatten(1)]]
-        else
-          # has_one, belongs_to, etc.
-          [association_name, object_or_array]
-        end
+        get_association_name_and_attributes_array(association_name)
       end
       # Build the final hash
       Hash[self].merge(Hash[*pairs.flatten(1)])
@@ -312,6 +300,24 @@ module Mavenlink
         to_hash.slice(*self.class.specification[key]).each do |attr_name, value|
           result[attr_name] = value
         end
+      end
+    end
+
+    def get_association_name_and_attributes_array(association_name)
+      # Get the association object(s)
+      association = association_by_name(association_name)
+      return [] unless association.loaded? && associations_cache.key?(association_name)
+
+      object_or_array = associations_cache[association_name]
+      # Build the single pair for this association
+      if object_or_array.is_a? Array
+        # If this is a has_many or the like, use the same array-of-pairs trick
+        # to build a hash of "id => attributes"
+        association_pairs = object_or_array.collect { |o| [o.id, o] }
+        [association_name, Hash[*association_pairs.flatten(1)]]
+      else
+        # has_one, belongs_to, etc.
+        [association_name, object_or_array]
       end
     end
   end
