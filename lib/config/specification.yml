@@ -2593,7 +2593,6 @@ workspaces:
     - status_report_ids
     - current_status_report_id
     - external_reference_ids
-    - primary_group
     - revenue_recognition_method
   create_attributes:
     - title
@@ -2630,7 +2629,6 @@ workspaces:
     - tasks_default_non_billable
     - account_color_id
     - external_link
-    - primary_group
     - revenue_recognition_method
     - primary_maven_id
   update_attributes:
@@ -2662,10 +2660,9 @@ workspaces:
     - status_key
     - external_reference
     - workspace_group_ids
-    - primary_workspace_id
+    - primary_workspace_group_id
     - account_color_id
     - external_link
-    - primary_group
     - revenue_recognition_method
 
 workspace_allocations:
