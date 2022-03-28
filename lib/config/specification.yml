@@ -1027,6 +1027,7 @@ invoices:
     - additional_items # Nested params for AdditionalItem
     - suppress_emails
     - tax_rate
+    - external_reference
   update_attributes:
     - expense_ids # (required)
     - time_entry_ids # (required)
@@ -1037,6 +1038,7 @@ invoices:
     - user_invoice_title
     - purchase_order
     - project_code
+    - external_reference
   associations:
     # time_entries - when included, the time_entry_ids array will reference all of the time entries included in the Invoice
     time_entries:
@@ -1065,6 +1067,9 @@ invoices:
     recipient:
       foreign_key: recipient_id
       collection: users
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
 organizations:
   attributes:
