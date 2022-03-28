@@ -1011,6 +1011,7 @@ invoices:
     - fixed_fee_item_ids
     - expense_ids
     - additional_item_ids
+    - external_reference_ids
   create_attributes:
     - time_entry_ids # (required) An array of time entry IDs to associate with the invoice
     - expense_ids # (required) An array of expense IDs to associate with the invoice
