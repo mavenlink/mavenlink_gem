@@ -1977,6 +1977,23 @@ story_follows:
       foreign_key: follower_id
       collection: users
 
+subscribed_events:
+  attributes:
+    - event_type
+    - account_id
+    - user_id
+    - subject_id
+    - subject_type
+    - subject_changed_at
+    - previous_payload
+    - current_payload
+    - payload
+    - payload_changes
+    - change_summary
+    - change_details
+    - updated_at
+    - created_at
+
 survey_answers:
   attributes:
     - id
