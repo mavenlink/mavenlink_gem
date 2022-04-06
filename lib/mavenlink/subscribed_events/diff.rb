@@ -3,9 +3,13 @@
 module Mavenlink
   module SubscribedEvents
     class Diff
+      extend Forwardable
+
       BAD_COLLECTION_MESSAGE = "Expected an array of two or more subscribed events of the same subject_type"
       MISSING_FIELDS_MESSAGE = "Subscribed events must include optional fields `previous_payload` and `current_payload`"
       SUBJECT_MISMATCH_MESSAGE = "Subscribed events must belong to the same subject"
+
+      def_delegators :to_h, :[], :dig
 
       def self.from_collection(subscribed_events)
         raise ArgumentError, BAD_COLLECTION_MESSAGE if !subscribed_events.is_a?(Array) || subscribed_events.count < 2
@@ -37,12 +41,6 @@ module Mavenlink
         }.with_indifferent_access
       end
 
-      def payload_changes
-        first.previous_payload.each_with_object({}) do |(key, value), hash|
-          hash[key.to_sym] = { from: value, to: last.current_payload[key] } if value != last.current_payload[key]
-        end
-      end
-
       private
 
       attr_reader :first, :last
@@ -53,6 +51,12 @@ module Mavenlink
 
       def subject_differs?
         first.subject_type != last.subject_type || first.subject_id != last.subject_id
+      end
+
+      def payload_changes
+        first.previous_payload.each_with_object({}) do |(key, value), hash|
+          hash[key.to_sym] = { from: value, to: last.current_payload[key] } if value != last.current_payload[key]
+        end
       end
     end
   end

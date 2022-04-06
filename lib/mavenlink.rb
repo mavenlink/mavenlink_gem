@@ -9,6 +9,7 @@ require "yaml"
 require "json"
 require "brainstem-adaptor"
 require "faraday"
+require "forwardable"
 
 module Mavenlink
   VERSION = "0.0.1".freeze
