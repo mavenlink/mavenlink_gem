@@ -100,16 +100,22 @@ describe Mavenlink::SubscribedEvents::Diff, stub_requests: true do
 
     it "returns diff details between the two events" do
       expect(diff.to_h).to eq(
-        subject_type: "Workspace",
-        subject_id: 1,
-        subject_first_changed_at: "2022-01-01T00:00:00Z",
-        subject_last_changed_at: "2022-01-03T00:00:00Z",
-        payload_changes: {
-          changed: {
-            from: "value",
-            to: "updated"
+        {
+          subject_type: "Workspace",
+          subject_id: 1,
+          subject_first_changed_at: "2022-01-01T00:00:00Z",
+          subject_last_changed_at: "2022-01-03T00:00:00Z",
+          payload_changes: {
+            changed: {
+              from: "value",
+              to: "updated"
+            }
+          },
+          current_payload: {
+            not_changed: "value",
+            changed: "updated"
           }
-        }
+        }.with_indifferent_access
       )
     end
   end

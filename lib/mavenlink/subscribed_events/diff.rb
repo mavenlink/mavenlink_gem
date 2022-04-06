@@ -25,14 +25,16 @@ module Mavenlink
         raise ArgumentError, SUBJECT_MISMATCH_MESSAGE if subject_differs?
       end
 
+      # NOTE: Add subscribed event subject association to hash once available
       def to_h
         {
           subject_type: first.subject_type,
           subject_id: first.subject_id,
           subject_first_changed_at: first.subject_changed_at,
           subject_last_changed_at: last.subject_changed_at,
-          payload_changes: payload_changes
-        }
+          payload_changes: payload_changes,
+          current_payload: last.current_payload
+        }.with_indifferent_access
       end
 
       def payload_changes
