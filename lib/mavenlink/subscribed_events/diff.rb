@@ -5,14 +5,16 @@ module Mavenlink
     class Diff
       extend Forwardable
 
-      BAD_COLLECTION_MESSAGE = "Expected an array of two or more subscribed events of the same subject_type"
+      BAD_COLLECTION_MESSAGE = "Expected an array of subscribed events of the same subject_type"
       MISSING_FIELDS_MESSAGE = "Subscribed events must include optional fields `previous_payload` and `current_payload`"
       SUBJECT_MISMATCH_MESSAGE = "Subscribed events must belong to the same subject"
 
       def_delegators :to_h, :[], :dig
 
       def self.from_collection(subscribed_events)
-        raise ArgumentError, BAD_COLLECTION_MESSAGE if !subscribed_events.is_a?(Array) || subscribed_events.count < 2
+        subscribed_events = Array.wrap(subscribed_events)
+
+        raise ArgumentError, BAD_COLLECTION_MESSAGE if subscribed_events.any? { |event| !event.is_a?(Mavenlink::SubscribedEvent) }
 
         events = subscribed_events.sort { |a, b| a.subject_changed_at.to_datetime <=> b.subject_changed_at.to_datetime }
 

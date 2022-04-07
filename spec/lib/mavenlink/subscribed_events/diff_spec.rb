@@ -41,15 +41,8 @@ describe Mavenlink::SubscribedEvents::Diff, stub_requests: true do
       )
     end
 
-    it "raises an ArgumentError if the given argument is not an array" do
-      expect { described_class.from_collection(first_subscribed_event) }.to raise_error(
-        ArgumentError,
-        described_class::BAD_COLLECTION_MESSAGE
-      )
-    end
-
-    it "raises an ArgumentError if the given array has less than two values" do
-      expect { described_class.from_collection([first_subscribed_event]) }.to raise_error(
+    it "raises an ArgumentError if the given array contains non-subscribed events" do
+      expect { described_class.from_collection([first_subscribed_event, OpenStruct.new(leclerc: "WDC")]) }.to raise_error(
         ArgumentError,
         described_class::BAD_COLLECTION_MESSAGE
       )
