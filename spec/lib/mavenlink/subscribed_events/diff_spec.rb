@@ -33,7 +33,7 @@ describe Mavenlink::SubscribedEvents::Diff, stub_requests: true do
       subject_type: "Workspace",
       subject_id: 1,
       user_id: 3333,
-      event_type:  "workspace:deleted"
+      event_type: "workspace:deleted"
     )
   end
 
