@@ -38,6 +38,8 @@ module Mavenlink
           subject_id: first.subject_id,
           subject_first_changed_at: first.subject_changed_at,
           subject_last_changed_at: last.subject_changed_at,
+          last_user_id: last.user_id,
+          last_event_type: last.event_type,
           payload_changes: payload_changes,
           current_payload: last.current_payload
         }.with_indifferent_access

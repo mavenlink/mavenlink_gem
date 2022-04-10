@@ -7,7 +7,9 @@ describe Mavenlink::SubscribedEvents::Diff, stub_requests: true do
       previous_payload: {},
       current_payload: {},
       subject_type: "Workspace",
-      subject_id: 1
+      subject_id: 1,
+      user_id: 1111,
+      event_type: "workspace:created"
     )
   end
 
@@ -17,7 +19,9 @@ describe Mavenlink::SubscribedEvents::Diff, stub_requests: true do
       previous_payload: {},
       current_payload: {},
       subject_type: "Workspace",
-      subject_id: 1
+      subject_id: 1,
+      user_id: 2222,
+      event_type: "workspace:updated"
     )
   end
 
@@ -27,7 +31,9 @@ describe Mavenlink::SubscribedEvents::Diff, stub_requests: true do
       previous_payload: {},
       current_payload: {},
       subject_type: "Workspace",
-      subject_id: 1
+      subject_id: 1,
+      user_id: 3333,
+      event_type:  "workspace:deleted"
     )
   end
 
@@ -98,6 +104,8 @@ describe Mavenlink::SubscribedEvents::Diff, stub_requests: true do
           subject_id: 1,
           subject_first_changed_at: "2022-01-01T00:00:00Z",
           subject_last_changed_at: "2022-01-03T00:00:00Z",
+          last_user_id: 3333,
+          last_event_type: "workspace:deleted",
           payload_changes: {
             changed: {
               from: "value",
