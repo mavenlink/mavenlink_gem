@@ -2404,6 +2404,7 @@ users:
     - disabled
     - account_id
     - role_id
+    - account_permission
     - custom_field_value_ids
   update_attributes:
     - full_name
