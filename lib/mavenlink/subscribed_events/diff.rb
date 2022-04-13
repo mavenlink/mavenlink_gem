@@ -41,6 +41,7 @@ module Mavenlink
           last_user_id: last.user_id,
           last_event_type: last.event_type,
           payload_changes: payload_changes,
+          previous_payload: first.previous_payload,
           current_payload: last.current_payload
         }.with_indifferent_access
       end

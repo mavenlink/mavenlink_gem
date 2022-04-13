@@ -112,6 +112,10 @@ describe Mavenlink::SubscribedEvents::Diff, stub_requests: true do
               to: "updated"
             }
           },
+          previous_payload: {
+            not_changed: "value",
+            changed: "value"
+          },
           current_payload: {
             not_changed: "value",
             changed: "updated"
