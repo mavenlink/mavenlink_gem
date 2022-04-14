@@ -51,7 +51,7 @@ module Mavenlink
     # @param [Hash] arguments
     def get(path, arguments = {})
       Mavenlink.logger.note "Started GET /#{path} with #{arguments.inspect}"
-      parse_request(connection.get(path, arguments).body)
+      parse_request(connection.get(path, format_arguments(arguments)).body)
     end
 
     # Performs custom POST request
@@ -59,7 +59,7 @@ module Mavenlink
     # @param [Hash] arguments
     def post(path, arguments = {})
       Mavenlink.logger.note "Started POST /#{path} with #{arguments.inspect}"
-      parse_request(connection.post(path, arguments).body)
+      parse_request(connection.post(path, format_arguments(arguments)).body)
     end
 
     # Performs custom POST request with multipart body
@@ -67,7 +67,7 @@ module Mavenlink
     # @param [Hash] arguments
     def post_file(path, arguments = {})
       Mavenlink.logger.note "Started POST file /#{path} with #{arguments.inspect}"
-      parse_request(multipart_connection.post(path, arguments).body)
+      parse_request(multipart_connection.post(path, format_arguments(arguments)).body)
     end
 
     # Performs custom PUT request
@@ -75,7 +75,7 @@ module Mavenlink
     # @param [Hash] arguments
     def put(path, arguments = {})
       Mavenlink.logger.note "Started PUT /#{path} with #{arguments.inspect}"
-      parse_request(connection.put(path, arguments).body)
+      parse_request(connection.put(path, format_arguments(arguments)).body)
     end
 
     # Performs custom PUT request
@@ -83,7 +83,7 @@ module Mavenlink
     # @param [Hash] arguments
     def delete(path, arguments = {})
       Mavenlink.logger.note "Started DELETE /#{path} with #{arguments.inspect}"
-      parse_request(connection.delete(path, arguments).body)
+      parse_request(connection.delete(path, format_arguments(arguments)).body)
     end
 
     private
@@ -105,6 +105,12 @@ module Mavenlink
         url: endpoint,
         request: { timeout: TIMEOUT }
       }.freeze
+    end
+
+    def format_arguments(arguments)
+      return arguments unless @use_json
+
+      arguments.to_json
     end
 
     def parse_request(response)
