@@ -26,7 +26,7 @@ module Mavenlink
     def connection
       Faraday.new(connection_options) do |builder|
         if @use_json
-          builder.headers["Content-Type"] = "application/json"
+          builder.request :json
         else
           builder.use Faraday::Request::UrlEncoded
         end
