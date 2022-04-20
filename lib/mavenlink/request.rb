@@ -155,7 +155,7 @@ module Mavenlink
     # @param attributes [Hash]
     # @return [Mavenlink::Model]
     def build(attributes)
-      "Mavenlink::#{collection_name.classify}".constantize.new(attributes, nil, client)
+      "Mavenlink::#{collection_name.classify}".constantize.new(attributes, nil, client, scope)
     end
 
     # @param models [Array<Hash>]

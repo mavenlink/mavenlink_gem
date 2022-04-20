@@ -319,8 +319,14 @@ describe Mavenlink::Request, stub_requests: true do
   end
 
   describe "#build" do
+    before do
+      subject.scope = { include: "external_references" }
+    end
+
     it "returns a model object of the same type as the collection name" do
-      expect(subject.build(title: "New Workspace")).to be_a Mavenlink::Workspace
+      workspace = subject.build(title: "New Workspace")
+      expect(workspace).to be_a Mavenlink::Workspace
+      expect(workspace.scope).to eq(subject.scope)
     end
   end
 
