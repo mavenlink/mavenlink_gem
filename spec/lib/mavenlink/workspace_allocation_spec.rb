@@ -23,7 +23,7 @@ describe Mavenlink::WorkspaceAllocation, stub_requests: true, type: :model do
     let(:date) { Date.today.to_s }
 
     it "puts to the split route with the record id and date" do
-      expect(subject.client).to receive(:put).with("workspace_allocations/5555", end_date: date.to_date.yesterday.to_s)
+      expect(subject.client).to receive(:put).with("workspace_allocations/split", split_date: date, workspace_allocation_id: subject.id)
       subject.split_allocation(date)
     end
   end
