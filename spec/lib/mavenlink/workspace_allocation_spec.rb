@@ -21,9 +21,49 @@ describe Mavenlink::WorkspaceAllocation, stub_requests: true, type: :model do
   describe "#split_allocation" do
     subject { described_class.new(id: "5555") }
     let(:date) { Date.today.to_s }
+    let(:response) do
+      {
+        "count": 2,
+        "results": [
+          {
+            "key": "workspace_allocations",
+            "id": "5555"
+          },
+          {
+            "key": "workspace_allocations",
+            "id": "1111"
+          }
+        ],
+        "workspace_allocations": {
+          "5555": {
+            "start_date": "2022-06-07",
+            "end_date": "2022-06-14",
+            "minutes": 1069,
+            "created_at": "2022-04-08T14:21:47-07:00",
+            "updated_at": "2022-05-09T13:49:55-07:00",
+            "id": "5555"
+          },
+          "1111": {
+            "start_date": "2022-06-15",
+            "end_date": "2022-06-22",
+            "minutes": 1284,
+            "created_at": "2022-05-09T13:49:55-07:00",
+            "updated_at": "2022-05-09T13:49:55-07:00",
+            "id": "1111"
+          }
+        }
+      }.with_indifferent_access
+    end
+
+    before do
+      stub_request :put, "/api/v1/workspace_allocations/split?split_date=#{date},workspace_allocation_id=#{subject.id}", response
+    end
 
     it "puts to the split route with the record id and date" do
-      expect(subject.client).to receive(:put).with("workspace_allocations/split", split_date: date, workspace_allocation_id: subject.id)
+      expect(subject.client).to receive(:put).with("workspace_allocations/split", split_date: date, workspace_allocation_id: subject.id) { response }
+      expect(subject).to receive(:update_attributes).with(response["workspace_allocations"].values.first)
+      expect(Mavenlink::WorkspaceAllocation).to receive(:new).with(response["workspace_allocations"].values.last, nil, subject.client)
+
       subject.split_allocation(date)
     end
   end
