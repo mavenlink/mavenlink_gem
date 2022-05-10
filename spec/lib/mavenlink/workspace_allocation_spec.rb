@@ -55,13 +55,8 @@ describe Mavenlink::WorkspaceAllocation, stub_requests: true, type: :model do
       }.with_indifferent_access
     end
 
-    before do
-      stub_request :put, "/api/v1/workspace_allocations/split?split_date=#{date},workspace_allocation_id=#{subject.id}", response
-    end
-
     it "puts to the split route with the record id and date" do
       expect(subject.client).to receive(:put).with("workspace_allocations/split", split_date: date, workspace_allocation_id: subject.id) { response }
-      # expect(Mavenlink::WorkspaceAllocation.attributes).to eq(response["workspace_allocations"].values.first)
       expect(Mavenlink::WorkspaceAllocation).to receive(:new).with(response["workspace_allocations"].values.last, nil, subject.client)
 
       subject.split_allocation(date)
