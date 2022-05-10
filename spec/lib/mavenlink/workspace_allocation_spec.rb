@@ -56,7 +56,7 @@ describe Mavenlink::WorkspaceAllocation, stub_requests: true, type: :model do
     end
 
     before do
-      allow(Mavenlink).to receive(:specification).and_return("monkeys" => { "attributes" => ["start_date", "end_date", "minutes", "created_at", "updated_at", "id"] })
+      allow(Mavenlink).to receive(:specification).and_return("monkeys" => { "attributes" => %w[start_date end_date minutes created_at updated_at id] })
     end
 
     it "puts to the split route with the record id and date" do
