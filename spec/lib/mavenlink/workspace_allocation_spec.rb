@@ -19,7 +19,7 @@ describe Mavenlink::WorkspaceAllocation, stub_requests: true, type: :model do
   end
 
   describe "#split_allocation" do
-    subject { described_class.new(id: "5555") }
+    subject { described_class.new(id: "5555", end_date: "2022-06-22") }
     let(:date) { Date.today.to_s }
     let(:response) do
       {
@@ -55,11 +55,14 @@ describe Mavenlink::WorkspaceAllocation, stub_requests: true, type: :model do
       }.with_indifferent_access
     end
 
+    before do
+      allow(Mavenlink).to receive(:specification).and_return("monkeys" => { "attributes" => ["start_date", "end_date", "minutes", "created_at", "updated_at", "id"] })
+    end
+
     it "puts to the split route with the record id and date" do
       expect(subject.client).to receive(:put).with("workspace_allocations/split", split_date: date, workspace_allocation_id: subject.id) { response }
       expect(Mavenlink::WorkspaceAllocation).to receive(:new).with(response["workspace_allocations"].values.last, nil, subject.client)
-
-      subject.split_allocation(date)
+      expect { subject.split_allocation(date) }.to change { subject["end_date"] }.from("2022-06-22").to("2022-06-14")
     end
   end
 end
