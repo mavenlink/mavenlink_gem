@@ -48,7 +48,7 @@ module Mavenlink
     def show(id)
       raise ArgumentError if id.to_s.strip.empty?
 
-      response = client.get("#{collection_name}/#{id}", stringify_include_value(scope))
+      response = client.get("#{collection_name}/#{id}", stringify_include_value)
       Mavenlink::Response.new(response, client, scope: scope, collection_name: collection_name).results.first
     end
 
@@ -156,7 +156,7 @@ module Mavenlink
     # @param attributes [Hash]
     # @return [Mavenlink::Model]
     def build(attributes)
-      "Mavenlink::#{collection_name.classify}".constantize.new(attributes, nil, client)
+      "Mavenlink::#{collection_name.classify}".constantize.new(attributes, nil, client, scope)
     end
 
     # @param models [Array<Hash>]
@@ -168,13 +168,13 @@ module Mavenlink
     # @param attributes [Hash]
     # @return [Mavenlink::Response]
     def create(attributes)
-      perform { client.post(collection_name, collection_name.singularize => attributes) }
+      perform { client.post(collection_name, { collection_name.singularize => attributes }.merge(stringify_include_value)) }
     end
 
     # @param attributes [Hash]
     # @return [Mavenlink::Response]
     def update(attributes)
-      perform { client.put(resource_path, collection_name.singularize => attributes) }
+      perform { client.put(resource_path, { collection_name.singularize => attributes }.merge(stringify_include_value)) }
     end
 
     # @note Weird non-json response?
@@ -185,7 +185,7 @@ module Mavenlink
 
     # @return [Mavenlink::Response]
     def perform
-      response = block_given? ? yield : client.get(collection_path, stringify_include_value(scope))
+      response = block_given? ? yield : client.get(collection_path, stringify_include_value)
       Mavenlink::Response.new(response, client, scope: scope, collection_name: collection_name)
     end
 
@@ -259,7 +259,7 @@ module Mavenlink
 
     private
 
-    def stringify_include_value(scope)
+    def stringify_include_value
       scope.each_with_object({}) do |pair, obj|
         value = pair[0].eql?("include") ? pair[1].join(",") : pair[1]
         obj[pair[0]] = value
