@@ -4,6 +4,7 @@ module Mavenlink
 
     attr_reader :client, :collection_name, :collection_path
     attr_accessor :scope
+    DEFAULT_PAGE_LIMIT = 200
 
     # @param collection_name [String, Symbol]
     # @param client [Mavenlink::Client]
@@ -212,11 +213,11 @@ module Mavenlink
     # @todo replace with lazy enumerator for ruby 2.0
     # @param batch_size [Integer]
     # @return [Enumerator<Array<Mavenlink::Model>>]
-    def each_page(batch_size = 200, &block)
+    def each_page(batch_size = nil, &block)
       Enumerator.new do |result|
         i = 0
         records_passed = 0
-        request = per_page(Mavenlink.specification[collection_name]["per_page"] || batch_size)
+        request = per_page(batch_size ||= per_page_size)
         page_records = []
         total_count = Float::INFINITY
 
@@ -227,6 +228,10 @@ module Mavenlink
           break if response.results.empty?
         end
       end.each(&block)
+    end
+
+    def per_page_size
+      Mavenlink.specification[collection_name]["per_page"] || DEFAULT_PAGE_LIMIT
     end
 
     def scoped
