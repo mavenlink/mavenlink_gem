@@ -568,12 +568,12 @@ describe Mavenlink::Model, stub_requests: true, type: :model do
                                    "id" => "7",
                                    "name" => "Maria",
                                    "relative_ids" => ["10"],
-                                   "relatives" => {
-                                     "10" => {
+                                   "relatives" => [
+                                     {
                                        "name" => "John",
                                        "id" => "10"
                                      }
-                                   }
+                                   ]
                                  })
     end
   end

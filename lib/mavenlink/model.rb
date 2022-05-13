@@ -309,16 +309,7 @@ module Mavenlink
       return [] unless association.loaded? && associations_cache.key?(association_name)
 
       object_or_array = associations_cache[association_name]
-      # Build the single pair for this association
-      if object_or_array.is_a? Array
-        # If this is a has_many or the like, use the same array-of-pairs trick
-        # to build a hash of "id => attributes"
-        association_pairs = object_or_array.collect { |o| [o.id, o] }
-        [association_name, Hash[*association_pairs.flatten(1)]]
-      else
-        # has_one, belongs_to, etc.
-        [association_name, object_or_array]
-      end
+      [association_name, object_or_array]
     end
   end
 end
