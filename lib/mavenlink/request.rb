@@ -4,6 +4,7 @@ module Mavenlink
 
     attr_reader :client, :collection_name, :collection_path
     attr_accessor :scope
+    DEFAULT_PAGE_LIMIT = 200
 
     # @param collection_name [String, Symbol]
     # @param client [Mavenlink::Client]
@@ -47,7 +48,7 @@ module Mavenlink
     def show(id)
       raise ArgumentError if id.to_s.strip.empty?
 
-      response = client.get("#{collection_name}/#{id}", stringify_include_value(scope))
+      response = client.get("#{collection_name}/#{id}", stringify_include_value)
       Mavenlink::Response.new(response, client, scope: scope, collection_name: collection_name).results.first
     end
 
@@ -155,7 +156,7 @@ module Mavenlink
     # @param attributes [Hash]
     # @return [Mavenlink::Model]
     def build(attributes)
-      "Mavenlink::#{collection_name.classify}".constantize.new(attributes, nil, client)
+      "Mavenlink::#{collection_name.classify}".constantize.new(attributes, nil, client, scope)
     end
 
     # @param models [Array<Hash>]
@@ -167,13 +168,13 @@ module Mavenlink
     # @param attributes [Hash]
     # @return [Mavenlink::Response]
     def create(attributes)
-      perform { client.post(collection_name, collection_name.singularize => attributes) }
+      perform { client.post(collection_name, { collection_name.singularize => attributes }.merge(stringify_include_value)) }
     end
 
     # @param attributes [Hash]
     # @return [Mavenlink::Response]
     def update(attributes)
-      perform { client.put(resource_path, collection_name.singularize => attributes) }
+      perform { client.put(resource_path, { collection_name.singularize => attributes }.merge(stringify_include_value)) }
     end
 
     # @note Weird non-json response?
@@ -184,7 +185,7 @@ module Mavenlink
 
     # @return [Mavenlink::Response]
     def perform
-      response = block_given? ? yield : client.get(collection_path, stringify_include_value(scope))
+      response = block_given? ? yield : client.get(collection_path, stringify_include_value)
       Mavenlink::Response.new(response, client, scope: scope, collection_name: collection_name)
     end
 
@@ -212,11 +213,11 @@ module Mavenlink
     # @todo replace with lazy enumerator for ruby 2.0
     # @param batch_size [Integer]
     # @return [Enumerator<Array<Mavenlink::Model>>]
-    def each_page(batch_size = 200, &block)
+    def each_page(batch_size = nil, &block)
       Enumerator.new do |result|
         i = 0
         records_passed = 0
-        request = per_page(batch_size)
+        request = per_page(batch_size ||= per_page_size)
         page_records = []
         total_count = Float::INFINITY
 
@@ -227,6 +228,10 @@ module Mavenlink
           break if response.results.empty?
         end
       end.each(&block)
+    end
+
+    def per_page_size
+      Mavenlink.specification[collection_name]["per_page"] || DEFAULT_PAGE_LIMIT
     end
 
     def scoped
@@ -254,7 +259,7 @@ module Mavenlink
 
     private
 
-    def stringify_include_value(scope)
+    def stringify_include_value
       scope.each_with_object({}) do |pair, obj|
         value = pair[0].eql?("include") ? pair[1].join(",") : pair[1]
         obj[pair[0]] = value

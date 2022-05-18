@@ -1011,6 +1011,7 @@ invoices:
     - fixed_fee_item_ids
     - expense_ids
     - additional_item_ids
+    - external_reference_ids
   create_attributes:
     - time_entry_ids # (required) An array of time entry IDs to associate with the invoice
     - expense_ids # (required) An array of expense IDs to associate with the invoice
@@ -1027,6 +1028,7 @@ invoices:
     - additional_items # Nested params for AdditionalItem
     - suppress_emails
     - tax_rate
+    - external_reference
   update_attributes:
     - expense_ids # (required)
     - time_entry_ids # (required)
@@ -1037,6 +1039,7 @@ invoices:
     - user_invoice_title
     - purchase_order
     - project_code
+    - external_reference
   associations:
     # time_entries - when included, the time_entry_ids array will reference all of the time entries included in the Invoice
     time_entries:
@@ -1065,6 +1068,9 @@ invoices:
     recipient:
       foreign_key: recipient_id
       collection: users
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
 organizations:
   attributes:
@@ -1550,7 +1556,10 @@ skills:
     - name
     - max_level
     - description
-    - user_count
+    - created_at
+    - updated_at
+    - skill_category_id
+    - id
   create_attributes:
     - skill_category_id
     - name
@@ -1602,6 +1611,7 @@ skill_categories:
       collection: skills
   attributes:
     - name
+    - id
 
 skill_memberships:
   associations:
@@ -1973,6 +1983,24 @@ story_follows:
       foreign_key: follower_id
       collection: users
 
+subscribed_events:
+  attributes:
+    - id
+    - event_type
+    - account_id
+    - user_id
+    - subject_id
+    - subject_type
+    - subject_changed_at
+    - previous_payload
+    - current_payload
+    - payload
+    - payload_changes
+    - change_summary
+    - change_details
+    - updated_at
+    - created_at
+
 survey_answers:
   attributes:
     - id
@@ -2242,6 +2270,7 @@ time_adjustments:
     - external_reference
 
 time_entries:
+  per_page: 10000
   associations:
     workspace:
       foreign_key: workspace_id
@@ -2400,6 +2429,7 @@ users:
     - disabled
     - account_id
     - role_id
+    - account_permission
     - custom_field_value_ids
   update_attributes:
     - full_name
@@ -2589,7 +2619,6 @@ workspaces:
     - status_report_ids
     - current_status_report_id
     - external_reference_ids
-    - primary_group
     - revenue_recognition_method
   create_attributes:
     - title
@@ -2626,7 +2655,6 @@ workspaces:
     - tasks_default_non_billable
     - account_color_id
     - external_link
-    - primary_group
     - revenue_recognition_method
     - primary_maven_id
   update_attributes:
@@ -2658,10 +2686,9 @@ workspaces:
     - status_key
     - external_reference
     - workspace_group_ids
-    - primary_workspace_id
+    - primary_workspace_group_id
     - account_color_id
     - external_link
-    - primary_group
     - revenue_recognition_method
 
 workspace_allocations:
