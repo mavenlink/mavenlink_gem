@@ -16,7 +16,7 @@ describe Mavenlink::WorkspaceResource, stub_requests: true, type: :model do
   end
 
   describe "#allocations_matching_scheduled_hours" do
-    let(:workspace_resource) {
+    let(:workspace_resource) do
       Mavenlink::WorkspaceResource.new(
         id: 32,
         resource_ids: "11,12,13",
@@ -25,11 +25,11 @@ describe Mavenlink::WorkspaceResource, stub_requests: true, type: :model do
           type: "anytime",
           after_date: "2022-05-20T00:07:18Z",
           before_date: "2022-05-20T00:07:18Z",
-          start_date:  "2022-05-20T00:07:18Z",
+          start_date: "2022-05-20T00:07:18Z",
           end_date: "2022-05-20T00:07:18Z"
         }
       )
-    }
+    end
 
     subject { described_class.new(id: "1") }
 
