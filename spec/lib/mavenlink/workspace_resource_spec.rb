@@ -16,16 +16,16 @@ describe Mavenlink::WorkspaceResource, stub_requests: true, type: :model do
   end
 
   describe "#allocations_matching_scheduled_hours" do
-    let(:workspace_id) { 1 }
-    subject { described_class.new(workspace_id: workspace_id) }
+    let(:id) { 1 }
+    subject { described_class.new(id: id) }
 
     before do
       allow(subject.client).to receive(:post)
     end
 
     it "posts to the allocations_matching_scheduled_hours route" do
-      expect(subject.client).to receive(:post).with("#{described_class.collection_name}/allocations_matching_scheduled_hours", workspace_id: subject.workspace_id)
-      subject.allocations_matching_scheduled_hours(workspace_id)
+      expect(subject.client).to receive(:post).with("#{described_class.collection_name}/allocations_matching_scheduled_hours", id: subject.id)
+      subject.allocations_matching_scheduled_hours(id)
     end
   end
 end
