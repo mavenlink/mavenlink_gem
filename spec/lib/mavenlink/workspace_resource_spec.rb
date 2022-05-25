@@ -26,7 +26,7 @@ describe Mavenlink::WorkspaceResource, stub_requests: true, type: :model do
 
     it "posts to the allocations_matching_scheduled_hours route" do
       expect(subject.client).to receive(:post).with("#{described_class.collection_name}/1/allocations_matching_scheduled_hours", hard: false, occurrence: { type: "anytime" })
-      subject.allocations_matching_scheduled_hours(hard: false, occurrence: { type: "anytime" })
+      subject.allocations_matching_scheduled_hours(false, { type: "anytime" })
     end
   end
 end
