@@ -2651,6 +2651,7 @@ workspaces:
     - workspace_group_ids
     - primary_workspace_group_id
     - approver_id
+    - approver_ids
     - target_margin
     - tasks_default_non_billable
     - account_color_id
@@ -2676,6 +2677,7 @@ workspaces:
     - currency
     - target_margin
     - approver_id
+    - approver_ids
     - change_orders_enabled
     - project_template_start_date
     - project_template_assignment_mappings
