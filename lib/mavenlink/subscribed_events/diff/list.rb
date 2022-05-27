@@ -53,7 +53,7 @@ module Mavenlink
         end
 
         def missing_required_fields?
-          events.any? { |event| !event.key?(:previous_payload) || !event.key?(:current_payload) ||!event.key?(:subject_ref) }
+          events.any? { |event| !event.key?(:previous_payload) || !event.key?(:current_payload) || !event.key?(:subject_ref) }
         end
       end
     end
