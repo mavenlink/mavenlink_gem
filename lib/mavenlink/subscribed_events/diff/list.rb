@@ -4,12 +4,11 @@ module Mavenlink
   module SubscribedEvents
     class Diff
       class List
-        MISSING_FIELDS_MESSAGE = "Subscribed events must include optional fields `previous_payload` and `current_payload`"
+        MISSING_FIELDS_MESSAGE = "Subscribed events must include optional fields `previous_payload`, `current_payload` and include `subject`"
 
         def initialize(events)
           @events = events
 
-          # Validate events include optional fields for `current_payload,previous_payload` like in diff
           raise ArgumentError, MISSING_FIELDS_MESSAGE if missing_required_fields?
         end
 
@@ -54,7 +53,7 @@ module Mavenlink
         end
 
         def missing_required_fields?
-          events.any? { |event| !event.key?(:previous_payload) || !event.key?(:current_payload) }
+          events.any? { |event| !event.key?(:previous_payload) || !event.key?(:current_payload) ||!event.key?(:subject_ref) }
         end
       end
     end
