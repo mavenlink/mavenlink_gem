@@ -6,7 +6,7 @@ module Mavenlink
       extend Forwardable
 
       BAD_COLLECTION_MESSAGE = "Expected an array of subscribed events of the same subject_type"
-      MISSING_FIELDS_MESSAGE = "Subscribed events must include optional fields `previous_payload` and `current_payload`"
+      MISSING_FIELDS_MESSAGE = "Subscribed events must include optional fields `previous_payload`, `current_payload` and include `subject`"
       SUBJECT_MISMATCH_MESSAGE = "Subscribed events must belong to the same subject"
 
       def_delegators :to_h, :[], :dig
@@ -31,7 +31,6 @@ module Mavenlink
         raise ArgumentError, SUBJECT_MISMATCH_MESSAGE if subject_differs?
       end
 
-      # NOTE: Add subscribed event subject association to hash once available
       def to_h
         {
           subject_type: first.subject_type,
@@ -42,7 +41,8 @@ module Mavenlink
           last_event_type: last.event_type,
           payload_changes: payload_changes,
           previous_payload: first.previous_payload,
-          current_payload: last.current_payload
+          current_payload: last.current_payload,
+          subject: subject_attributes
         }.with_indifferent_access
       end
 
@@ -50,8 +50,15 @@ module Mavenlink
 
       attr_reader :first, :last
 
+      # HACK: Eventually we should support polymorphic subject associations properly...
+      def subject_attributes
+        return {} if first.subject_ref.blank?
+
+        first.response.try(:response_data).try(:[], first.subject_ref[:key]).try(:[], first.subject_ref[:id]) || {}
+      end
+
       def missing_required_fields?
-        !first.key?(:previous_payload) || !last.key?(:current_payload)
+        !first.key?(:previous_payload) || !last.key?(:current_payload) || !first.key?(:subject_ref)
       end
 
       def subject_differs?
