@@ -2432,6 +2432,7 @@ users:
     - role_id
     - account_permission
     - custom_field_value_ids
+    - account_membership_id
   update_attributes:
     - full_name
     - headline
