@@ -4,11 +4,13 @@ module Mavenlink
   module SubscribedEvents
     class Diff
       class List
+        BAD_COLLECTION_MESSAGE = "Expected an array of subscribed events"
         MISSING_FIELDS_MESSAGE = "Subscribed events must include optional fields `previous_payload`, `current_payload` and include `subject`"
 
         def initialize(events)
           @events = events
 
+          raise ArgumentError, BAD_COLLECTION_MESSAGE if bad_collection?
           raise ArgumentError, MISSING_FIELDS_MESSAGE if missing_required_fields?
         end
 
@@ -50,6 +52,10 @@ module Mavenlink
 
         def custom_field_event?(event_type)
           event_type.include?(":custom_field_value_")
+        end
+
+        def bad_collection?
+          !events.is_a?(Array) || events.any? { |event| !event.is_a?(Mavenlink::SubscribedEvent) }
         end
 
         def missing_required_fields?
