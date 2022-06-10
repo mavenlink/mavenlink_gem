@@ -9,7 +9,8 @@ describe Mavenlink::SubscribedEvents::Diff, stub_requests: true do
       subject_type: "Workspace",
       subject_id: 1,
       user_id: 1111,
-      event_type: "workspace:created"
+      event_type: "workspace:created",
+      subject_ref: { id: "1", key: "workspaces" }
     )
   end
 
@@ -21,7 +22,8 @@ describe Mavenlink::SubscribedEvents::Diff, stub_requests: true do
       subject_type: "Workspace",
       subject_id: 1,
       user_id: 2222,
-      event_type: "workspace:updated"
+      event_type: "workspace:updated",
+      subject_ref: { id: "1", key: "workspaces" }
     )
   end
 
@@ -33,7 +35,8 @@ describe Mavenlink::SubscribedEvents::Diff, stub_requests: true do
       subject_type: "Workspace",
       subject_id: 1,
       user_id: 3333,
-      event_type: "workspace:deleted"
+      event_type: "workspace:deleted",
+      subject_ref: { id: "1", key: "workspaces" }
     )
   end
 
@@ -91,10 +94,14 @@ describe Mavenlink::SubscribedEvents::Diff, stub_requests: true do
 
   describe "#to_h" do
     subject(:diff) { described_class.new(first_subscribed_event, last_subscribed_event) }
+    let(:subject_attributes) { { id: "1", title: "A workspace" } }
+    let(:response) { instance_double(Mavenlink::Response, response_data: { "workspaces" => { "1" => subject_attributes } }) }
 
     before do
       first_subscribed_event.previous_payload = { not_changed: "value", changed: "value" }
       last_subscribed_event.current_payload = { not_changed: "value", changed: "updated" }
+
+      allow(first_subscribed_event).to receive(:response) { response }
     end
 
     it "returns diff details between the two events" do
@@ -119,7 +126,8 @@ describe Mavenlink::SubscribedEvents::Diff, stub_requests: true do
           current_payload: {
             not_changed: "value",
             changed: "updated"
-          }
+          },
+          subject: subject_attributes
         }.with_indifferent_access
       )
     end
