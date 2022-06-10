@@ -519,7 +519,7 @@ describe Mavenlink::Model, stub_requests: true, type: :model do
         some: "filter"
       }.stringify_keys
     end
-    let(:faraday_response) { instance_double(Faraday::Response, body: response_with_relatives.to_json) }
+    let(:faraday_response) { instance_double(Faraday::Response, body: response_with_relatives.to_json, status: 200) }
     let(:response_with_relatives) do
       original = response
       original["monkeys"]["7"]["relative_ids"] = ["10"]
