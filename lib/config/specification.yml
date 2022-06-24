@@ -1029,6 +1029,7 @@ invoices:
     - suppress_emails
     - tax_rate
     - external_reference
+    - workspace_ids
   update_attributes:
     - expense_ids # (required)
     - time_entry_ids # (required)
