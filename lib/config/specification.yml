@@ -243,6 +243,27 @@ attachments:
     - data
     - type
 
+billable_utilizations:
+  attributes:
+    - id
+    - target
+    - effective_date
+    - created_at
+    - updated_at
+    - account_membership_id
+    - creator_id
+  create_attributes:
+    - effective_date
+    - target
+    - account_membership_id
+  update_attributes:
+    - effective_date
+    - target
+  associations:
+    account_membership:
+      foreign_key: account_membership_id
+      collection: account_memberships
+
 cost_rates:
   attributes:
     - id
