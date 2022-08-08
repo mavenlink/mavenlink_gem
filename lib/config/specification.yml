@@ -427,6 +427,7 @@ custom_field_values:
     - custom_field_name # the name of the associated custom field
     - created_at # the date the custom field value was created in Mavenlink
     - updated_at # the date the custom field value was last updated
+    - subject_ref
   create_attributes:
     - subject_type # (required)
     - subject_id # (required)
@@ -441,6 +442,8 @@ custom_field_values:
     custom_field:
       foreign_key: custom_field_id
       collection: custom_fields
+    subject:
+      foreign_key: subject_id
 
 custom_field_choices:
   attributes:
@@ -874,6 +877,7 @@ external_references:
     - created_at
     - updated_at
     - last_synced_at
+    - subject_ref
   create_or_update_attributes:
    - service_name
    - service_model
@@ -888,6 +892,9 @@ external_references:
   validations:
     [service_model_ref, service_model, service_name, subject_id, subject_type]:
       presence: true
+  associations:
+    subject:
+      foreign_key: subject_id
 
 holidays:
   attributes:

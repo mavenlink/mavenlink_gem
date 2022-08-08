@@ -76,6 +76,14 @@ module Mavenlink
       @specification ||= Mavenlink.specification[collection_name] || {}
     end
 
+    def association_by_name(name)
+      return unless has_association?(name)
+
+      associations_specification[name] = { "foreign_key" => "subject_id", "collection" => subject_ref[:key] } if name == "subject"
+      brainstem_adaptor_association = BrainstemAdaptor::Association.new(self, name)
+      (@associations ||= {})[name] ||= brainstem_adaptor_association
+    end
+
     # @todo REFACTOR NA
     # @param association_name [String, Symbol]
     def self.association(association_name)
@@ -266,7 +274,11 @@ module Mavenlink
     # @param association [BrainstemAdaptor::Association]
     # @return [Array<Mavenlink::Model>, nil]
     def fetch_association_records(association)
-      records = association.reflect
+      records = if association.name == "subject"
+                  BrainstemAdaptor::Record.new(association.collection_name, association.record.subject_id.to_s, response)
+                else
+                  association.reflect
+                end
       return unless records
 
       wrapper = proc { |record| Mavenlink::Model.models[association.collection_name].wrap(record, client) }
