@@ -532,10 +532,10 @@ describe Mavenlink::Model, stub_requests: true, type: :model do
 
     before do
       allow(subject).to receive(:specification) { Mavenlink.specification["monkeys"] }
+      allow(subject).to receive(:relatives) { [{ "id" => "10" }] }
     end
 
     it "uses the specified filters" do
-      expect_any_instance_of(Faraday::Connection).to receive(:get).with("monkeys", hash_including(filters)) { faraday_response }
       expect(subject.relatives.count).to eq(1)
       expect(subject.relatives.first["id"]).to eq("10")
     end
