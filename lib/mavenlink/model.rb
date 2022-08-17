@@ -91,7 +91,7 @@ module Mavenlink
         return nil if new_record?
 
         association = association_by_name(association_name)
-        reload = true unless association.loaded? || associations_cache.key?(association_name)
+        reload = true unless loaded?(association) || associations_cache.key?(association_name)
 
         if reload
           reload_association(association)
@@ -303,6 +303,11 @@ module Mavenlink
           result[attr_name] = value
         end
       end
+    end
+
+    def loaded?(association)
+      associations_cache[association.name] = nil if association.record[association.foreign_key].nil?
+      association.loaded?
     end
   end
 end
