@@ -1544,11 +1544,17 @@ roles:
     - name
   create_attributes:
     - name
+    - external_reference
   update_attributes:
     - name
+    - external_reference
   validations:
     name:
       presence: true
+  associations:
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
 saml_identities:
   attributes:
