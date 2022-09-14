@@ -2688,6 +2688,7 @@ workspaces:
     - external_link
     - revenue_recognition_method
     - primary_maven_id
+    - participations
   update_attributes:
     - title
     - budgeted
