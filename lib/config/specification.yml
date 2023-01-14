@@ -1033,11 +1033,13 @@ invoices:
     - expense_ids
     - additional_item_ids
     - external_reference_ids
+    - time_adjustment_ids
   create_attributes:
     - time_entry_ids # (required) An array of time entry IDs to associate with the invoice
     - expense_ids # (required) An array of expense IDs to associate with the invoice
     - workspace_id # (required) The ID of the workspace this invoice is associated with
     - payment_schedule # (required) The payment schedule (i.e. 30) in days of this invoice
+    - time_adjustment_ids
     - invoice_date # The date the invoice was incurred, format: YYYY-MM-DD#
     - user_invoice_number #
     - user_invoice_title #
@@ -1054,6 +1056,7 @@ invoices:
   update_attributes:
     - expense_ids # (required)
     - time_entry_ids # (required)
+    - time_adjustment_ids
     - payment_schedule
     - user_invoice_number
     - draft
@@ -1093,7 +1096,9 @@ invoices:
     external_references:
       foreign_key: external_reference_ids
       collection: external_references
-
+    time_adjustments:
+      foreign_key: time_adjustment_ids
+      collection: time_adjustments
 organizations:
   attributes:
     - id
