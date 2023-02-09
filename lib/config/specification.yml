@@ -450,7 +450,6 @@ custom_field_values:
       foreign_key: external_reference_ids
       collection: external_references
 
-
 custom_field_choices:
   attributes:
     - id
@@ -1316,6 +1315,7 @@ project_accounting_records:
     - story_id
     - role_id
     - user_id
+    - external_reference_ids
   create_attributes:
     - amount
     - amount_to_date
