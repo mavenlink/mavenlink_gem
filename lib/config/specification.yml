@@ -399,6 +399,7 @@ custom_field_sets:
     - custom_field_ids
     - updated_at
     - created_at
+    - external_reference_ids
   create_attributes:
     - name
     - subject_type
@@ -411,6 +412,9 @@ custom_field_sets:
     custom_fields:
       foreign_key: custom_field_ids
       collection: custom_fields
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
 custom_field_values:
   attributes:
@@ -427,6 +431,7 @@ custom_field_values:
     - custom_field_name # the name of the associated custom field
     - created_at # the date the custom field value was created in Mavenlink
     - updated_at # the date the custom field value was last updated
+    - external_reference_ids
   create_attributes:
     - subject_type # (required)
     - subject_id # (required)
@@ -441,6 +446,10 @@ custom_field_values:
     custom_field:
       foreign_key: custom_field_id
       collection: custom_fields
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+
 
 custom_field_choices:
   attributes:
@@ -702,6 +711,7 @@ expenses:
     - expense_category_id # the id of its category
     - active_submission_id
     - recent_submission_id
+    - external_reference_ids
   create_attributes:
     - workspace_id # (required) the ID of the Workspace in which the expense will be created
     - date # (required) the date of the expense in ISO8601 format
@@ -1162,6 +1172,7 @@ participations:
     - primary_role_id
     - workspace_resource_ids
     - active_role_ids
+    - external_reference_ids
   create_attributes:
     - workspace_id
     - role
@@ -1219,6 +1230,7 @@ posts:
     - subject_type # the class name of the object being replied to
     - story_id # the internal id of the story that this post is linked to
     - google_documents # NOTE: NOT AN ASSOCIATION?
+    - external_reference_ids
   create_attributes:
     - message # - (required) the content to be created in the new post
     - workspace_id # - (required) the ID of the Workspace in which the post will be created
@@ -1271,6 +1283,9 @@ posts:
     attachments:
       foreign_key: attachment_ids
       collection: attachments
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
 project_accounting_records:
   attributes:
@@ -1407,12 +1422,16 @@ rate_cards:
     effective_rate_card_version:
       foreign_key: effective_rate_card_version_id
       collection: rate_card_versions
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
   attributes:
     - currency
     - uses
     - id
     - rate_card_set_id
     - rate_card_version_ids
+    - external_reference_ids
   create_attributes:
     - rate_card_set_id
     - rate_card_set_version_id
@@ -1547,6 +1566,7 @@ roles:
   attributes:
     - id
     - name
+    - external_reference_ids
   create_attributes:
     - name
     - external_reference
@@ -1593,6 +1613,7 @@ skills:
     - updated_at
     - skill_category_id
     - id
+    - external_reference_ids
   create_attributes:
     - skill_category_id
     - name
@@ -1949,6 +1970,7 @@ story_allocation_days:
     - assignment_id # the id of the assignment that owns the story allocation day
     - story_id # the id of the story who owns the story allocation day's assignment
     - workspace_id # the id of the workspace who owns the story allocation day's assignment
+    - external_reference_ids
   create_attributes:
     - assignment_id # required
     - date # required
@@ -1968,6 +1990,9 @@ story_allocation_days:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
 story_dependencies:
   validations:
@@ -2041,6 +2066,7 @@ survey_answers:
     - text
     - created_at
     - updated_at
+    - external_reference_ids
   create_attributes:
     - survey_response_id
     - survey_question_id
@@ -2067,6 +2093,9 @@ survey_answers:
     choices:
       foreign_key: choice_ids
       collection: survey_question_choices
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
   validations:
     [survey_response_id, survey_question_id]:
       presence: true
@@ -2095,6 +2124,7 @@ survey_questions:
     - question_type
     - created_at
     - updated_at
+    - external_reference_ids
   create_attributes:
     - text
     - question_type
@@ -2105,6 +2135,9 @@ survey_questions:
     choices:
       foreign_key: choice_ids
       collection: survey_question_choices
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
   validations:
     [text, question_type]:
       presence: true
@@ -2127,6 +2160,7 @@ survey_responses:
     - due_date
     - created_at
     - updated_at
+    - external_reference_ids
   create_attributes:
     - survey_template_id
     - title
@@ -2162,6 +2196,9 @@ survey_responses:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
   validations:
     survey_template_id:
       presence: true
@@ -2176,6 +2213,7 @@ survey_templates:
     - open_date
     - close_date
     - due_date
+    - external_reference_ids
   create_attributes:
     - survey_question_ids
     - title
@@ -2213,6 +2251,9 @@ survey_templates:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
   validations:
     survey_question_ids:
       presence: true
@@ -2358,6 +2399,7 @@ time_entries:
     - active_submission_id
     - recent_submission_id
     - invoice_id
+    - external_reference_ids
   create_attributes:
     - workspace_id
     - date_performed
@@ -2392,6 +2434,7 @@ time_off_entries:
     - hours
     - requested_date
     - submission_date
+    - external_reference_ids
   create_attributes:
     - user_id
     - hours
@@ -2466,6 +2509,7 @@ users:
     - account_permission
     - custom_field_value_ids
     - account_membership_id
+    - external_reference_ids
   update_attributes:
     - full_name
     - headline
@@ -2495,6 +2539,7 @@ vendors:
     - in_use
     - archived
     - externally_managed
+    - external_reference_ids
   create_attributes:
     - name
     - external_reference
@@ -2792,6 +2837,7 @@ workspace_groups:
     - website
     - notes
     - custom_field_value_ids
+    - external_reference_ids
   create_attributes:
     - name
     - company
