@@ -97,6 +97,7 @@ account_memberships:
     - is_punch_clock_user
     - can_create_workspace
     - can_view_reports
+    - can_log_in
     - default_read_only
     - is_owner
     - should_show_alert_on_timesheet_submission
