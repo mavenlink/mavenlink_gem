@@ -2740,6 +2740,7 @@ workspaces:
     - revenue_recognition_method
     - primary_maven_id
     - participations
+    - exclude_archived_stories_percent_complete
   update_attributes:
     - title
     - budgeted
@@ -2774,6 +2775,7 @@ workspaces:
     - account_color_id
     - external_link
     - revenue_recognition_method
+    - exclude_archived_stories_percent_complete
 
 workspace_allocations:
   attributes:
