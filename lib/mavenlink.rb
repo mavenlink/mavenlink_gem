@@ -10,6 +10,7 @@ require "yaml"
 require "json"
 require "brainstem-adaptor"
 require "faraday"
+require 'faraday/multipart'
 require "forwardable"
 
 module Mavenlink
