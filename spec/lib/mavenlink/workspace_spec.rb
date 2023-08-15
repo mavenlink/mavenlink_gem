@@ -410,21 +410,17 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
 
         specify do
           expect do
-            begin
-                     subject.save!
-            rescue StandardError
-              nil
-                   end
+            subject.save!
+          rescue StandardError
+            nil
           end .not_to change(subject, :persisted?)
         end
 
         it "does not perform any requests" do
           expect do
-            begin
-                     subject.save!
-            rescue StandardError
-              nil
-                   end
+            subject.save!
+          rescue StandardError
+            nil
           end .not_to change { subject.title }
         end
       end
@@ -441,21 +437,17 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
 
         specify do
           expect do
-            begin
-                     subject.save!
-            rescue StandardError
-              nil
-                   end
+            subject.save!
+          rescue StandardError
+            nil
           end .not_to change(subject, :persisted?)
         end
 
         it "does not change anything" do
           expect do
-            begin
-                     subject.save!
-            rescue StandardError
-              nil
-                   end
+            subject.save!
+          rescue StandardError
+            nil
           end .not_to change { subject.title }
         end
       end
