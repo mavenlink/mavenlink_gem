@@ -1,0 +1,47 @@
+name: test
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      RACK_ENV: "test"
+      RAILS_ENV: "test"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: rspec
+        run: bundle exec rspec --color --format progress --format json --out ./rspec-results.json
+      - name: Archive
+        uses: actions/upload-artifact@v3
+        with:
+          name: rspec-report
+          path: |
+            .resultset.json
+  rubocop:
+    runs-on: ubuntu-latest
+    env:
+      RACK_ENV: "test"
+      RAILS_ENV: "test"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: rubocop
+        run: bundle exec rubocop --format progress --format json --out ./rubocop-results.json
+      - name: Archive
+        uses: actions/upload-artifact@v3
+        with:
+          name: rubocop-report
+          path: |
+            ./rubocop-results.json
