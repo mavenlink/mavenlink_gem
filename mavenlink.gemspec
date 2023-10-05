@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = ">= 2.7.0"
   s.add_runtime_dependency "activemodel", ">= 4.2"
-  s.add_runtime_dependency "activesupport", "<= 7.0.8"
+  s.add_runtime_dependency "activesupport", "<= 7.0.8", ">= 4.2"
   s.add_runtime_dependency "brainstem-adaptor", ">= 0.0.4"
   s.add_runtime_dependency "faraday", ">= 2.7.0"
   s.add_runtime_dependency "faraday-multipart", ">= 1.0.0"
