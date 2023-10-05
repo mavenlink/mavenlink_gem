@@ -1136,6 +1136,7 @@ organization_memberships:
     - department_id
     - member_id
     - member_type
+    - primary
   update_attributes:
     - geography_id
     - department_id
