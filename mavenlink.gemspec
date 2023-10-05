@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "activemodel", ">= 4.2"
   s.add_runtime_dependency "activesupport", ">= 4.2", "<= 7.0.8"
   s.add_runtime_dependency "brainstem-adaptor", ">= 0.0.4"
-  s.add_runtime_dependency "faraday", ">= 2.7.0"
+  s.add_runtime_dependency "faraday", "< 2.0"
   s.add_runtime_dependency "faraday-multipart", ">= 1.0.0"
   s.add_development_dependency "awesome_print", "~> 1.8"
   s.add_development_dependency "rspec", "~> 3.0"
