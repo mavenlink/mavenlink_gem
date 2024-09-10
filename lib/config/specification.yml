@@ -2704,6 +2704,9 @@ workspaces:
     - current_status_report_id
     - external_reference_ids
     - revenue_recognition_method
+    - stage
+    - require_notes_on_time_entries
+    - time_trackable
   create_attributes:
     - title
     - creator_role
@@ -2744,6 +2747,9 @@ workspaces:
     - primary_maven_id
     - participations
     - exclude_archived_stories_percent_complete
+    - stage
+    - require_notes_on_time_entries
+    - time_trackable
   update_attributes:
     - title
     - budgeted
@@ -2779,6 +2785,9 @@ workspaces:
     - external_link
     - revenue_recognition_method
     - exclude_archived_stories_percent_complete
+    - stage
+    - require_notes_on_time_entries
+    - time_trackable
 
 workspace_allocations:
   attributes:
