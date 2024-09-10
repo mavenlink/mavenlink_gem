@@ -1068,12 +1068,14 @@ invoices:
     - time_entry_ids # (required)
     - time_adjustment_ids
     - payment_schedule
+    - invoice_date
     - user_invoice_number
     - draft
     - message
     - user_invoice_title
     - purchase_order
     - project_code
+    - tax_rate
     - external_reference
   associations:
     # time_entries - when included, the time_entry_ids array will reference all of the time entries included in the Invoice
