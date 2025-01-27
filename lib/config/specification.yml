@@ -1168,7 +1168,10 @@ participations:
     - can_post
     - can_edit_expense
     - can_edit_time
+    - access_level
     - is_foreign_participant
+    - can_schedule_their_hours
+    - can_schedule_team_hours
     - user_id
     - workspace_id
     - workspace_role_id
@@ -1181,7 +1184,10 @@ participations:
     - role
     - user_id
     - can_invite
+    - can_schedule_their_hours
+    - can_schedule_team_hours
     - permissions
+    - access_level
     - external_reference
   update_attributes:
     - team_lead
@@ -1189,6 +1195,8 @@ participations:
     - rate_in_cents
     - workspace_role_id
     - can_invite
+    - can_schedule_their_hours
+    - can_schedule_team_hours
     - permissions
     - access_level
     - external_reference
