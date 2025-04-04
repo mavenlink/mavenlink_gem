@@ -1936,17 +1936,20 @@ stories: # tasks
     - due_date # (optional) the date the story is due; format should look like YYYY-MM-DD
     - assignee_ids # (optional) an array of User IDs that the new story should be assigned to
     - budget_estimate_in_cents # (optional) the budget in cents of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
+    - cost_budget_in_cents
     - time_estimate_in_minutes # (optional) the time estimate in minutes of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
     - tag_list # (optional) a comma separated String of tags
     - billable # whether or not the task is billable
     - percentage_complete # (optional) a number (0-100) representing the stage of the story
     - state # (optional) the state of the story: not started, started or completed
+    - status
     - sub_stories # (optional) sub stories to be created with the parent
     - fixed_fee # whether or not the story is fixed fee
     - checklist # an array of checklist items (optional)
     - weight # integer representing the weight of the story. Can only be set on a parent-level milestone by a consultant with at least budget permissions (optional)
     - priority # the integer value of the priority for a task
     - time_trackable
+    - project_plan
     - assignments
     - external_reference
   update_attributes:
@@ -1959,11 +1962,13 @@ stories: # tasks
     - due_date # (optional) the date the story is due; format should look like YYYY-MM-DD
     - assignee_ids # (optional) an array of User IDs that the new story should be assigned to
     - budget_estimate_in_cents # (optional) the budget in cents of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
+    - cost_budget_in_cents
     - time_estimate_in_minutes # (optional) the time estimate in minutes of the new story (integer). This is only valid in budgeted Workspaces and if the user can view budget information
     - tag_list # (optional) a comma separated String of tags
     - billable # whether or not the task is billable
     - percentage_complete # (optional) a number (0-100) representing the stage of the story
     - state # (optional) the state of the story: not started, started or completed
+    - status
     - fixed_fee # whether or not the story is fixed fee
     - weight # integer representing the weight of the story. Can only be set on a parent-level milestone by a consultant with at least budget permissions (optional)
     - priority # the integer value of the priority for a task
