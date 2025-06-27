@@ -265,6 +265,25 @@ billable_utilizations:
       foreign_key: account_membership_id
       collection: account_memberships
 
+billing_milestones:
+  attributes:
+    - id
+    - title
+    - description
+    - date_to_invoice
+    - amount_in_cents
+    - workspace_id
+  create_attributes:
+    - title
+    - description
+    - date_to_invoice
+    - amount_in_cents
+    - workspace_id
+  associations:
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+
 cost_rates:
   attributes:
     - id
