@@ -279,7 +279,7 @@ billing_milestones:
     - date_to_invoice
     - amount_in_cents
     - workspace_id
-    update_attributes:
+  update_attributes:
     - title
     - description
     - date_to_invoice
