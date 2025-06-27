@@ -279,6 +279,12 @@ billing_milestones:
     - date_to_invoice
     - amount_in_cents
     - workspace_id
+    update_attributes:
+    - title
+    - description
+    - date_to_invoice
+    - amount_in_cents
+    - workspace_id
   associations:
     workspace:
       foreign_key: workspace_id
@@ -865,6 +871,7 @@ external_payments:
     - message
     - invoice_id
     - workspace_id
+  update_attributes:
   associations:
     user:
       foreign_key: user_id
