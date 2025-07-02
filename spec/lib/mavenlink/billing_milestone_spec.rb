@@ -39,6 +39,3 @@ describe ".update_attributes" do
     is_expected.to match_array(%w[title date_to_invoice amount_in_cents])
   end
 end
-
-
-end
