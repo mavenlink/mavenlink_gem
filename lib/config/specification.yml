@@ -272,21 +272,33 @@ billing_milestones:
     - date_to_invoice
     - amount_in_cents
     - workspace_id
+    - billing_type
+    - created_at
+    - updated_at
+    - currency
+    - external_reference_ids
+    - invoice_id
+    - invoice_ids
+    - story_id
   create_attributes:
     - title
     - date_to_invoice
     - amount_in_cents
     - workspace_id
+    - story_id
+    - external_reference
   update_attributes:
     - title
     - date_to_invoice
     - amount_in_cents
-    - workspace_id
   associations:
     workspace:
       foreign_key: workspace_id
       collection: workspaces
-
+    invoice:
+      foreign_key: invoice_id
+      collection: invoices
+    
 cost_rates:
   attributes:
     - id
