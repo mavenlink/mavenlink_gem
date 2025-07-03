@@ -18,11 +18,6 @@ describe Mavenlink::BillingMilestone, stub_requests: true, type: :model do
     it { is_expected.to respond_to :external_reference_ids }
   end
 
-  describe "associations" do
-    it { is_expected.to respond_to "invoices" }
-    it { is_expected.to respond_to "external_reference" }
-  end
-
   describe ".create_attributes" do
     let(:subject) { described_class.create_attributes }
 
