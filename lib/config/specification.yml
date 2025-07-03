@@ -291,6 +291,7 @@ billing_milestones:
     - title
     - date_to_invoice
     - amount_in_cents
+    - external_reference
   associations:
     workspace:
       foreign_key: workspace_id
@@ -298,7 +299,10 @@ billing_milestones:
     invoices:
       foreign_key: invoice_ids
       collection: invoices
-    
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
+
 cost_rates:
   attributes:
     - id
