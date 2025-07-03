@@ -22,20 +22,20 @@ describe Mavenlink::BillingMilestone, stub_requests: true, type: :model do
     it { is_expected.to respond_to "invoices" }
     it { is_expected.to respond_to "external_reference" }
   end
-end
 
-describe ".create_attributes" do
-  let(:subject) { described_class.create_attributes }
+  describe ".create_attributes" do
+    let(:subject) { described_class.create_attributes }
 
-  it "includes expected attributes" do
-    is_expected.to match_array(%w[title date_to_invoice amount_in_cents workspace_id story_id external_reference])
+    it "includes expected attributes" do
+      is_expected.to match_array(%w[title date_to_invoice amount_in_cents workspace_id story_id external_reference])
+    end
   end
-end
 
-describe ".update_attributes" do
-  let(:subject) { described_class.update_attributes }
+  describe ".update_attributes" do
+    let(:subject) { described_class.update_attributes }
 
-  it "includes expected attributes" do
-    is_expected.to match_array(%w[title date_to_invoice amount_in_cents])
+    it "includes expected attributes" do
+      is_expected.to match_array(%w[title date_to_invoice amount_in_cents])
+    end
   end
 end
