@@ -30,7 +30,7 @@ describe Mavenlink::BillingMilestone, stub_requests: true, type: :model do
     let(:subject) { described_class.update_attributes }
 
     it "includes expected attributes" do
-      is_expected.to match_array(%w[title date_to_invoice amount_in_cents])
+      is_expected.to match_array(%w[title date_to_invoice amount_in_cents external_reference])
     end
   end
 end
