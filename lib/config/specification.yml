@@ -721,6 +721,53 @@ exchange_tables:
     - account_default
     - insights_account_default
 
+expense_budgets:
+  attributes:
+    - id
+    - billable
+    - burns_budget
+    - cost_per_unit_in_subunits
+    - description
+    - expected_by
+    - expense_ids
+    - fixed_fee
+    - fixed_fee_item_ids
+    - story_id
+    - title
+    - workspace_id
+  create_attributes:
+    - billable
+    - burns_budget
+    - cost_per_unit_in_subunits
+    - description
+    - expected_by
+    - fixed_fee
+    - story_id
+    - title
+    - workspace_id
+  update_attributes:
+    - billable
+    - burns_budget
+    - cost_per_unit_in_subunits
+    - description
+    - expected_by
+    - fixed_fee
+    - story_id
+    - title
+  associations:
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    expenses:
+      foreign_key: expense_ids
+      collection: expenses
+    fixed_fee_items:
+      foreign_key: fixed_fee_item_ids
+      collection: fixed_fee_items
+    story:
+      foreign_key: story_id
+      collection: stories
+
 expenses:
   validations:
     [workspace_id, date, category, amount_in_cents]:
