@@ -730,6 +730,7 @@ expense_budgets:
     - description
     - expected_by
     - expense_ids
+    - external_reference_ids
     - fixed_fee
     - fixed_fee_item_ids
     - story_id
@@ -741,6 +742,7 @@ expense_budgets:
     - cost_per_unit_in_subunits
     - description
     - expected_by
+    - external_reference
     - fixed_fee
     - story_id
     - title
@@ -751,6 +753,7 @@ expense_budgets:
     - cost_per_unit_in_subunits
     - description
     - expected_by
+    - external_reference
     - fixed_fee
     - story_id
     - title
@@ -767,6 +770,9 @@ expense_budgets:
     story:
       foreign_key: story_id
       collection: stories
+    external_references:
+      foreign_key: external_reference_ids
+      collection: external_references
 
 expenses:
   validations:
