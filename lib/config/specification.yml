@@ -948,6 +948,20 @@ external_payments:
       foreign_key: invoice_id
       collection: invoices
 
+financial_periods:
+  attributes:
+    - id
+    - start_date
+    - end_date
+    - status
+    - period_type
+    - created_at
+    - updated_at
+    - timesheets_approved
+    - expense_reports_approved
+    - forecasted_revenue_verified
+    - revenue_submissions_approved
+
 fixed_fee_items:
   attributes:
     - id
