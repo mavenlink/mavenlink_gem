@@ -1487,6 +1487,29 @@ project_accounting_records:
       foreign_key: external_reference_ids
       collection: external_references
 
+project_financial_periods:
+  attributes:
+    - id
+    - workspace_id
+    - financial_period_id
+    - status
+    - created_at
+    - updated_at
+    - timesheets_approved
+    - expense_reports_approved
+    - forecasted_revenue_verified
+  create_attributes:
+    - project_accounting_record_id
+  update_attributes:
+    - forecasted_revenue_verified
+  associations:
+    workspace:
+      foreign_key: workspace_id
+      collection: workspaces
+    financial_period:
+      foreign_key: financial_period_id
+      collection: financial_periods
+
 project_templates:
   attributes:
     - id # the internal project template ID
