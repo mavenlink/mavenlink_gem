@@ -1453,6 +1453,7 @@ project_accounting_records:
     - story_id
     - role_id
     - user_id
+    - external_reference
   validations:
     [workspace_id, currency, start_date, end_date, type]:
       presence: true
