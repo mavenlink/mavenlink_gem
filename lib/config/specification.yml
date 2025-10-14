@@ -1500,6 +1500,10 @@ project_financial_periods:
     - forecasted_revenue_verified
   create_attributes:
     - project_accounting_record_id
+    - status
+    - timesheets_approved
+    - expense_reports_approved
+    - forecasted_revenue_verified
   update_attributes:
     - forecasted_revenue_verified
   associations:
