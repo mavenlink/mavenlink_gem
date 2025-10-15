@@ -1440,6 +1440,12 @@ project_accounting_records:
     - role_id
     - user_id
     - external_reference_ids
+    - system_generated
+    - cost_to_date
+    - revenue_method_name
+    - forecast
+    - has_revenue_override
+    - calculated_revenue_amount
   create_attributes:
     - amount
     - amount_to_date
