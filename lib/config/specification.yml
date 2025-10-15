@@ -1474,6 +1474,9 @@ project_accounting_records:
     - role_id
     - user_id
     - external_reference
+    - cost_to_date
+    - revenue_method_name
+    - forecast
   validations:
     [workspace_id, currency, start_date, end_date, type]:
       presence: true
