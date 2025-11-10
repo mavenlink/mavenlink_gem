@@ -817,6 +817,7 @@ expenses:
     - reimbursable
     - vendor_id
     - foreign_exchange_amount
+    - expense_budget_id
     - external_reference
   update_attributes:
     # NOTE(AC): check
@@ -830,6 +831,7 @@ expenses:
     - story_id
     - expense_category_id # the id of its category
     - foreign_exchange_amount
+    - expense_budget_id
     - external_reference
   associations:
     workspace:
