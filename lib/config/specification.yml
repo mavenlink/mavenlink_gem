@@ -733,6 +733,10 @@ expense_budgets:
     - external_reference_ids
     - fixed_fee
     - fixed_fee_item_ids
+    - markup_per_unit_in_subunits
+    - markup_percentage
+    - markup_type
+    - quantity
     - story_id
     - title
     - workspace_id
@@ -744,6 +748,10 @@ expense_budgets:
     - expected_by
     - external_reference
     - fixed_fee
+    - markup_per_unit_in_subunits
+    - markup_percentage
+    - markup_type
+    - quantity
     - story_id
     - title
     - workspace_id
@@ -755,6 +763,10 @@ expense_budgets:
     - expected_by
     - external_reference
     - fixed_fee
+    - markup_per_unit_in_subunits
+    - markup_percentage
+    - markup_type
+    - quantity
     - story_id
     - title
   associations:
