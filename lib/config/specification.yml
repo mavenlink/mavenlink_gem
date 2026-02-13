@@ -2900,6 +2900,8 @@ workspaces:
     - project_template_assignment_mappings
     - project_template_weekends_as_workdays
     - project_template_create_unnamed_resources
+    - project_template_checklist_as_todos
+    - project_template_distribute_hours
     - status_key
     - external_reference
     - workspace_group_ids
@@ -2944,6 +2946,8 @@ workspaces:
     - project_tracker_template_id
     - project_template_before_story_id
     - project_template_create_unnamed_resources
+    - project_template_checklist_as_todos
+    - project_template_distribute_hours
     - status_key
     - external_reference
     - workspace_group_ids
