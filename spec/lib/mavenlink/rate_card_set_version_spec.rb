@@ -1,6 +1,13 @@
 require "spec_helper"
 
 describe Mavenlink::RateCardSetVersion, stub_requests: true, type: :model do
+  it_should_behave_like "model", "rate_card_set_versions"
+
+  describe "associations" do
+    it { is_expected.to respond_to :rate_card_set }
+    it { is_expected.to respond_to :rate_card_versions }
+  end
+
   subject { described_class.new(id: "7", rate_card_set_id: "1") }
 
   describe "#publish!" do
