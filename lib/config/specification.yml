@@ -1592,10 +1592,15 @@ rate_cards:
       foreign_key: external_reference_ids
       collection: external_references
   attributes:
-    - currency
-    - uses
     - id
+    - currency
+    - rate_card_set_title
+    - removable
+    - uses
+    - created_at
+    - updated_at
     - rate_card_set_id
+    - effective_rate_card_version_id
     - rate_card_version_ids
     - external_reference_ids
   create_attributes:
@@ -1613,6 +1618,9 @@ rate_card_sets:
     rate_card_set_versions:
       foreign_key: rate_card_set_version_ids
       collection: rate_card_set_versions
+    workspace_groups:
+      foreign_key: workspace_group_ids
+      collection: workspace_groups
   attributes:
     - id
     - title
@@ -1620,6 +1628,11 @@ rate_card_sets:
     - active_currencies
     - default_currencies
     - destroyable
+    - created_at
+    - updated_at
+    - rate_card_ids
+    - rate_card_set_version_ids
+    - workspace_group_ids
   create_attributes:
     - clone_version_id
     - title
@@ -1639,6 +1652,8 @@ rate_card_set_versions:
     - active
     - effective_date
     - used_currencies
+    - created_at
+    - updated_at
     - rate_card_set_id
     - rate_card_version_ids
   create_attributes:
@@ -1662,6 +1677,11 @@ rate_card_versions:
   attributes:
     - id
     - default_rate
+    - created_at
+    - updated_at
+    - rate_card_id
+    - rate_card_set_version_id
+    - rate_card_role_ids
   create_attributes:
     - default_rate
   update_attributes:
@@ -1678,6 +1698,10 @@ rate_card_roles:
   attributes:
     - id
     - rate
+    - created_at
+    - updated_at
+    - role_id
+    - rate_card_version_id
   create_attributes:
     - rate_card_version_id
     - role_id
