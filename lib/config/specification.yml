@@ -2937,6 +2937,7 @@ workspaces:
     - account_color_id
     - external_link
     - revenue_recognition_method
+    - legacy_revenue_recognition_method
     - primary_maven_id
     - participations
     - exclude_archived_stories_percent_complete
@@ -2979,6 +2980,7 @@ workspaces:
     - account_color_id
     - external_link
     - revenue_recognition_method
+    - legacy_revenue_recognition_method
     - exclude_archived_stories_percent_complete
     - stage
     - require_notes_on_time_entries
