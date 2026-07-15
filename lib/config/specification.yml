@@ -2894,7 +2894,8 @@ workspaces:
     - status_report_ids
     - current_status_report_id
     - external_reference_ids
-    - revenue_recognition_method
+    - revenue_recognition_method_name
+    - legacy_revenue_recognition_method
     - stage
     - require_notes_on_time_entries
     - time_trackable
@@ -2936,7 +2937,7 @@ workspaces:
     - tasks_default_non_billable
     - account_color_id
     - external_link
-    - revenue_recognition_method
+    - revenue_recognition_method_name
     - legacy_revenue_recognition_method
     - primary_maven_id
     - participations
@@ -2979,7 +2980,7 @@ workspaces:
     - primary_workspace_group_id
     - account_color_id
     - external_link
-    - revenue_recognition_method
+    - revenue_recognition_method_name
     - legacy_revenue_recognition_method
     - exclude_archived_stories_percent_complete
     - stage
