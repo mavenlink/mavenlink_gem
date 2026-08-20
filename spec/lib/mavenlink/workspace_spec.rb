@@ -229,6 +229,10 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
       specify do
         expect(model.create_attributes).not_to be_empty
       end
+
+      it "includes legacy_revenue_recognition_method" do
+        expect(model.create_attributes).to include("legacy_revenue_recognition_method")
+      end
     end
 
     describe ".update_attributes" do
@@ -238,6 +242,10 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
 
       specify do
         expect(model.update_attributes).not_to be_empty
+      end
+
+      it "includes legacy_revenue_recognition_method" do
+        expect(model.update_attributes).to include("legacy_revenue_recognition_method")
       end
     end
 
