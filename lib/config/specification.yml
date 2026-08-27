@@ -1456,7 +1456,7 @@ project_accounting_records:
     - external_reference_ids
     - system_generated
     - cost_to_date
-    - revenue_method_name
+    - revenue_method
     - forecast
     - has_revenue_override
     - calculated_revenue_amount
@@ -1489,7 +1489,7 @@ project_accounting_records:
     - user_id
     - external_reference
     - cost_to_date
-    - revenue_method_name
+    - revenue_method
     - forecast
   validations:
     [workspace_id, currency, start_date, end_date, type]:
