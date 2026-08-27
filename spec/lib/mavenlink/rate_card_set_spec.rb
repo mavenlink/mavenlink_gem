@@ -1,6 +1,14 @@
 require "spec_helper"
 
 describe Mavenlink::RateCardSet, stub_requests: true, type: :model do
+  it_should_behave_like "model", "rate_card_sets"
+
+  describe "associations" do
+    it { is_expected.to respond_to :rate_cards }
+    it { is_expected.to respond_to :rate_card_set_versions }
+    it { is_expected.to respond_to :workspace_groups }
+  end
+
   subject { described_class.new(id: "7") }
   let(:client) { double(Mavenlink::Client) }
   let(:rate_card_set_id) { "9" }

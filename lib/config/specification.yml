@@ -733,6 +733,10 @@ expense_budgets:
     - external_reference_ids
     - fixed_fee
     - fixed_fee_item_ids
+    - markup_per_unit_in_subunits
+    - markup_percentage
+    - markup_type
+    - quantity
     - story_id
     - title
     - workspace_id
@@ -744,6 +748,10 @@ expense_budgets:
     - expected_by
     - external_reference
     - fixed_fee
+    - markup_per_unit_in_subunits
+    - markup_percentage
+    - markup_type
+    - quantity
     - story_id
     - title
     - workspace_id
@@ -755,6 +763,10 @@ expense_budgets:
     - expected_by
     - external_reference
     - fixed_fee
+    - markup_per_unit_in_subunits
+    - markup_percentage
+    - markup_type
+    - quantity
     - story_id
     - title
   associations:
@@ -817,6 +829,7 @@ expenses:
     - reimbursable
     - vendor_id
     - foreign_exchange_amount
+    - expense_budget_id
     - external_reference
   update_attributes:
     # NOTE(AC): check
@@ -830,6 +843,7 @@ expenses:
     - story_id
     - expense_category_id # the id of its category
     - foreign_exchange_amount
+    - expense_budget_id
     - external_reference
   associations:
     workspace:
@@ -1587,10 +1601,15 @@ rate_cards:
       foreign_key: external_reference_ids
       collection: external_references
   attributes:
-    - currency
-    - uses
     - id
+    - currency
+    - rate_card_set_title
+    - removable
+    - uses
+    - created_at
+    - updated_at
     - rate_card_set_id
+    - effective_rate_card_version_id
     - rate_card_version_ids
     - external_reference_ids
   create_attributes:
@@ -1608,6 +1627,9 @@ rate_card_sets:
     rate_card_set_versions:
       foreign_key: rate_card_set_version_ids
       collection: rate_card_set_versions
+    workspace_groups:
+      foreign_key: workspace_group_ids
+      collection: workspace_groups
   attributes:
     - id
     - title
@@ -1615,6 +1637,11 @@ rate_card_sets:
     - active_currencies
     - default_currencies
     - destroyable
+    - created_at
+    - updated_at
+    - rate_card_ids
+    - rate_card_set_version_ids
+    - workspace_group_ids
   create_attributes:
     - clone_version_id
     - title
@@ -1634,6 +1661,8 @@ rate_card_set_versions:
     - active
     - effective_date
     - used_currencies
+    - created_at
+    - updated_at
     - rate_card_set_id
     - rate_card_version_ids
   create_attributes:
@@ -1657,6 +1686,11 @@ rate_card_versions:
   attributes:
     - id
     - default_rate
+    - created_at
+    - updated_at
+    - rate_card_id
+    - rate_card_set_version_id
+    - rate_card_role_ids
   create_attributes:
     - default_rate
   update_attributes:
@@ -1673,6 +1707,10 @@ rate_card_roles:
   attributes:
     - id
     - rate
+    - created_at
+    - updated_at
+    - role_id
+    - rate_card_version_id
   create_attributes:
     - rate_card_version_id
     - role_id
@@ -2865,7 +2903,8 @@ workspaces:
     - status_report_ids
     - current_status_report_id
     - external_reference_ids
-    - revenue_recognition_method
+    - revenue_recognition_method_name
+    - legacy_revenue_recognition_method
     - stage
     - require_notes_on_time_entries
     - time_trackable
@@ -2895,6 +2934,8 @@ workspaces:
     - project_template_assignment_mappings
     - project_template_weekends_as_workdays
     - project_template_create_unnamed_resources
+    - project_template_checklist_as_todos
+    - project_template_distribute_hours
     - status_key
     - external_reference
     - workspace_group_ids
@@ -2905,7 +2946,8 @@ workspaces:
     - tasks_default_non_billable
     - account_color_id
     - external_link
-    - revenue_recognition_method
+    - revenue_recognition_method_name
+    - legacy_revenue_recognition_method
     - primary_maven_id
     - participations
     - exclude_archived_stories_percent_complete
@@ -2939,13 +2981,16 @@ workspaces:
     - project_tracker_template_id
     - project_template_before_story_id
     - project_template_create_unnamed_resources
+    - project_template_checklist_as_todos
+    - project_template_distribute_hours
     - status_key
     - external_reference
     - workspace_group_ids
     - primary_workspace_group_id
     - account_color_id
     - external_link
-    - revenue_recognition_method
+    - revenue_recognition_method_name
+    - legacy_revenue_recognition_method
     - exclude_archived_stories_percent_complete
     - stage
     - require_notes_on_time_entries

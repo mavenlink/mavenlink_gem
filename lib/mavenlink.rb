@@ -1,4 +1,5 @@
 require "logger"
+require "active_support"
 require "active_support/core_ext/array/wrap"
 require "active_support/core_ext/hash/indifferent_access"
 require "active_support/core_ext/hash/slice"
