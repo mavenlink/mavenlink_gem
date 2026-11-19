@@ -369,7 +369,7 @@ describe Mavenlink::Request, stub_requests: true do
     end
 
     it "posts to the collection with the given models" do
-      expect(client).to receive(:post).with(collection_name, collection_name.pluralize => models) { two_record_response }
+      expect(client).to receive(:post).with(collection_name, { collection_name.pluralize => models }) { two_record_response }
 
       response = subject.bulk_create(models)
       expect(response).to be_a Mavenlink::Response

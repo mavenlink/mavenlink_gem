@@ -1,4 +1,5 @@
 require "spec_helper"
+require "ostruct"
 
 describe Mavenlink::SubscribedEvents::Diff, stub_requests: true do
   let(:first_subscribed_event) do
