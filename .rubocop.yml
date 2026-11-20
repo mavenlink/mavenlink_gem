@@ -1,6 +1,7 @@
 AllCops:
   DisplayCopNames: true
   TargetRubyVersion: 3.1.7
+  NewCops: disable
   Exclude:
     - 'doc/**/*'
     - 'vendor/**/*'
@@ -18,7 +19,7 @@ Metrics/AbcSize:
 Metrics/ClassLength:
   Enabled: false
 
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
 
 Metrics/MethodLength:
