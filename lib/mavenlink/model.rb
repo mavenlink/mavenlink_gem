@@ -52,6 +52,7 @@ module Mavenlink
 
     # @param model_class [Mavenlink::Model]
     def self.inherited(model_class)
+      super
       ::Mavenlink::Model.models[model_class.collection_name] = model_class
 
       # Applies specification file to the model
@@ -140,7 +141,7 @@ module Mavenlink
     # @param client [Mavenlink::Client]
     # @param scope [Hash] filters used when requesting the model
     def initialize(attributes = {}, source_record = nil, client = Mavenlink.client, scope = {})
-      super(self.class.collection_name, (attributes[:id] || attributes["id"] || source_record.try(:id)), source_record.try(:response))
+      super(self.class.collection_name, attributes[:id] || attributes["id"] || source_record.try(:id), source_record.try(:response))
       @client = client
       @associations_specification = self.class.specification["associations"]
       @scope = scope.deep_dup.except("page", "per_page", "only")

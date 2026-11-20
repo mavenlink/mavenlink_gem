@@ -421,7 +421,7 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
             subject.save!
           rescue StandardError
             nil
-          end .not_to change(subject, :persisted?)
+          end.not_to change(subject, :persisted?)
         end
 
         it "does not perform any requests" do
@@ -429,7 +429,7 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
             subject.save!
           rescue StandardError
             nil
-          end .not_to change { subject.title }
+          end.not_to change { subject.title }
         end
       end
 
@@ -448,7 +448,7 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
             subject.save!
           rescue StandardError
             nil
-          end .not_to change(subject, :persisted?)
+          end.not_to change(subject, :persisted?)
         end
 
         it "does not change anything" do
@@ -456,7 +456,7 @@ describe Mavenlink::Workspace, stub_requests: true, type: :model do
             subject.save!
           rescue StandardError
             nil
-          end .not_to change { subject.title }
+          end.not_to change { subject.title }
         end
       end
     end

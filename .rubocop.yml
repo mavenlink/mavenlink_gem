@@ -16,6 +16,13 @@ Metrics/BlockLength:
 Metrics/AbcSize:
   Max: 20
 
+Metrics/ParameterLists:
+  MaxOptionalParameters: 4
+
+Lint/ConstantDefinitionInBlock:
+  AllowedMethods:
+    - subject
+
 Metrics/ClassLength:
   Enabled: false
 
@@ -30,6 +37,10 @@ Style/AccessModifierDeclarations:
 
 Style/Documentation:
   Enabled: false
+
+Style/OptionalBooleanParameter:
+  AllowedMethods:
+    - allocations_matching_scheduled_hours
 
 Style/DoubleNegation:
   Enabled: false

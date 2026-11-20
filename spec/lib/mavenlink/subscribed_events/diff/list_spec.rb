@@ -26,17 +26,17 @@ describe Mavenlink::SubscribedEvents::Diff::List, stub_requests: true do
     subject(:list) do
       described_class.new(
         [
-          subscribed_event_1,
-          subscribed_event_2,
-          subscribed_event_3,
-          subscribed_event_4,
-          subscribed_event_5,
-          subscribed_event_6
+          subscribed_event1,
+          subscribed_event2,
+          subscribed_event3,
+          subscribed_event4,
+          subscribed_event5,
+          subscribed_event6
         ]
       )
     end
 
-    let(:subscribed_event_1) do
+    let(:subscribed_event1) do
       Mavenlink::SubscribedEvent.new(
         subject_changed_at: "2022-01-01T00:00:00Z",
         previous_payload: {},
@@ -49,7 +49,7 @@ describe Mavenlink::SubscribedEvents::Diff::List, stub_requests: true do
       )
     end
 
-    let(:subscribed_event_2) do
+    let(:subscribed_event2) do
       Mavenlink::SubscribedEvent.new(
         subject_changed_at: "2022-01-02T00:00:00Z",
         previous_payload: {},
@@ -62,7 +62,7 @@ describe Mavenlink::SubscribedEvents::Diff::List, stub_requests: true do
       )
     end
 
-    let(:subscribed_event_3) do
+    let(:subscribed_event3) do
       Mavenlink::SubscribedEvent.new(
         subject_changed_at: "2022-01-03T00:00:00Z",
         previous_payload: {},
@@ -75,7 +75,7 @@ describe Mavenlink::SubscribedEvents::Diff::List, stub_requests: true do
       )
     end
 
-    let(:subscribed_event_4) do
+    let(:subscribed_event4) do
       Mavenlink::SubscribedEvent.new(
         subject_changed_at: "2022-01-04T00:00:00Z",
         previous_payload: {},
@@ -88,7 +88,7 @@ describe Mavenlink::SubscribedEvents::Diff::List, stub_requests: true do
       )
     end
 
-    let(:subscribed_event_5) do
+    let(:subscribed_event5) do
       Mavenlink::SubscribedEvent.new(
         subject_changed_at: "2022-01-05T00:00:00Z",
         previous_payload: {},
@@ -101,7 +101,7 @@ describe Mavenlink::SubscribedEvents::Diff::List, stub_requests: true do
       )
     end
 
-    let(:subscribed_event_6) do
+    let(:subscribed_event6) do
       Mavenlink::SubscribedEvent.new(
         subject_changed_at: "2022-01-06T00:00:00Z",
         previous_payload: {},
