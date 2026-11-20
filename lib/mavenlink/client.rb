@@ -13,7 +13,7 @@ module Mavenlink
 
       # TODO: implement with method_missing?
       # Declare API calls client.-->>workspaces<<---.create({})
-      Mavenlink.specification.keys.each do |collection_name|
+      Mavenlink.specification.each_key do |collection_name|
         singleton_class.instance_eval do
           define_method collection_name do |args = {}|
             ::Mavenlink::Request.new("Mavenlink::#{collection_name.singularize.classify}".constantize.collection_path(**args), collection_name, self)

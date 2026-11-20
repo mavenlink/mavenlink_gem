@@ -4,6 +4,7 @@ module Mavenlink
 
     attr_reader :client, :collection_name, :collection_path
     attr_accessor :scope
+
     DEFAULT_PAGE_LIMIT = 200
 
     # @param collection_name [String, Symbol]

@@ -17,7 +17,7 @@ module Mavenlink
         options.tap do
           if options.is_a?(Hash)
             options.symbolize_keys!
-            options.keys.each { |key| to_validation_options(options[key]) }
+            options.each_key { |key| to_validation_options(options[key]) }
           end
         end
       end

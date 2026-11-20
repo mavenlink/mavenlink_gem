@@ -1,6 +1,7 @@
 AllCops:
   DisplayCopNames: true
-  TargetRubyVersion: 3.0.7
+  TargetRubyVersion: 3.1.7
+  NewCops: disable
   Exclude:
     - 'doc/**/*'
     - 'vendor/**/*'
@@ -15,10 +16,17 @@ Metrics/BlockLength:
 Metrics/AbcSize:
   Max: 20
 
+Metrics/ParameterLists:
+  MaxOptionalParameters: 4
+
+Lint/ConstantDefinitionInBlock:
+  AllowedMethods:
+    - subject
+
 Metrics/ClassLength:
   Enabled: false
 
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
 
 Metrics/MethodLength:
@@ -29,6 +37,10 @@ Style/AccessModifierDeclarations:
 
 Style/Documentation:
   Enabled: false
+
+Style/OptionalBooleanParameter:
+  AllowedMethods:
+    - allocations_matching_scheduled_hours
 
 Style/DoubleNegation:
   Enabled: false
