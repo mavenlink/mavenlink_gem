@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.description = "Simple Ruby API for the Mavenlink API"
   s.summary = "Mavenlink API Ruby Wrapper"
 
-  s.required_ruby_version = ">= 3.0.7"
+  s.required_ruby_version = ">= 3.1.7"
   s.add_runtime_dependency "activemodel", ">= 4.2"
   s.add_runtime_dependency "activesupport", ">= 4.2", "< 8"
   s.add_runtime_dependency "brainstem-adaptor", ">= 0.0.4"

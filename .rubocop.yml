@@ -1,6 +1,6 @@
 AllCops:
   DisplayCopNames: true
-  TargetRubyVersion: 3.0.7
+  TargetRubyVersion: 3.1.7
   Exclude:
     - 'doc/**/*'
     - 'vendor/**/*'
